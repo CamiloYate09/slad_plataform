@@ -4,44 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="62981eb4-61cd-4c42-94fe-99f98c73b136" name="Changes" comment="ajuste de dominio">
+    <list default="true" id="62981eb4-61cd-4c42-94fe-99f98c73b136" name="Changes" comment="Soporte nuevo codigo">
+      <change afterPath="$PROJECT_DIR$/static/css/style.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/img/01.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/img/02.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/img/03.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/img/04.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sass/_globals.scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sass/_root.scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sass/_variables.scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sass/components/_button.scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sass/components/_footer.scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sass/components/_header.scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sass/components/_hero.scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sass/components/_icon.scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sass/components/_latest-articles.scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sass/components/_menu.scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sass/components/_why-easybank.scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sass/styles.scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/css/styles.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/css/styles.css.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/images/bg-intro-desktop.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/images/bg-intro-mobile.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/images/favicon-32x32.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/images/icon-api.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/images/icon-budgeting.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/images/icon-close.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/images/icon-facebook.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/images/icon-hamburger.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/images/icon-instagram.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/images/icon-onboarding.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/images/icon-online.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/images/icon-pinterest.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/images/icon-twitter.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/images/icon-youtube.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/images/image-confetti.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/images/image-currency.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/images/image-mockups.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/images/image-plane.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/images/image-restaurant.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/images/logo-white.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/images/logo.svg" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,6 +22,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="HTML File" />
+        <option value="CSS File" />
       </list>
     </option>
   </component>
@@ -76,6 +47,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
     "last_opened_file_path": "D:/SLAD_APP_PAGINA_WEB/ejemplo/easybank-landing-page",
+    "list.type.of.created.stylesheet": "CSS",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -87,6 +59,7 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\SLAD_APP_PAGINA_WEB\slad_plataform\static\img" />
       <recent name="D:\SLAD_APP_PAGINA_WEB\slad_plataform" />
       <recent name="D:\SLAD_APP_PAGINA_WEB\slad_plataform\public" />
     </key>
@@ -101,6 +74,7 @@
       <updated>1688274147055</updated>
       <workItem from="1688274148177" duration="424000" />
       <workItem from="1688274905019" duration="4002000" />
+      <workItem from="1688334575551" duration="562000" />
     </task>
     <task id="LOCAL-00001" summary="Index base">
       <created>1688274935956</created>
@@ -130,7 +104,14 @@
       <option name="project" value="LOCAL" />
       <updated>1688279207637</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Soporte nuevo codigo">
+      <created>1688334646732</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1688334646732</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -141,6 +122,7 @@
     <MESSAGE value="gitlab ci" />
     <MESSAGE value="gitlab ci 2" />
     <MESSAGE value="ajuste de dominio" />
-    <option name="LAST_COMMIT_MESSAGE" value="ajuste de dominio" />
+    <MESSAGE value="Soporte nuevo codigo" />
+    <option name="LAST_COMMIT_MESSAGE" value="Soporte nuevo codigo" />
   </component>
 </project>
