@@ -4,7 +4,45 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="62981eb4-61cd-4c42-94fe-99f98c73b136" name="Changes" comment="gitlab ci 2" />
+    <list default="true" id="62981eb4-61cd-4c42-94fe-99f98c73b136" name="Changes" comment="ajuste de dominio">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sass/_globals.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sass/_root.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sass/_variables.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sass/components/_button.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sass/components/_footer.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sass/components/_header.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sass/components/_hero.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sass/components/_icon.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sass/components/_latest-articles.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sass/components/_menu.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sass/components/_why-easybank.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sass/styles.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/styles.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/styles.css.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/images/bg-intro-desktop.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/images/bg-intro-mobile.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/images/favicon-32x32.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/images/icon-api.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/images/icon-budgeting.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/images/icon-close.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/images/icon-facebook.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/images/icon-hamburger.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/images/icon-instagram.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/images/icon-onboarding.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/images/icon-online.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/images/icon-pinterest.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/images/icon-twitter.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/images/icon-youtube.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/images/image-confetti.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/images/image-currency.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/images/image-mockups.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/images/image-plane.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/images/image-restaurant.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/images/logo-white.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/images/logo.svg" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -43,7 +81,7 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "vcs.Git",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -62,7 +100,7 @@
       <option name="presentableId" value="Default" />
       <updated>1688274147055</updated>
       <workItem from="1688274148177" duration="424000" />
-      <workItem from="1688274905019" duration="2457000" />
+      <workItem from="1688274905019" duration="4002000" />
     </task>
     <task id="LOCAL-00001" summary="Index base">
       <created>1688274935956</created>
@@ -85,7 +123,14 @@
       <option name="project" value="LOCAL" />
       <updated>1688277088963</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="ajuste de dominio">
+      <created>1688279207637</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1688279207637</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -95,6 +140,7 @@
     <MESSAGE value="Index base" />
     <MESSAGE value="gitlab ci" />
     <MESSAGE value="gitlab ci 2" />
-    <option name="LAST_COMMIT_MESSAGE" value="gitlab ci 2" />
+    <MESSAGE value="ajuste de dominio" />
+    <option name="LAST_COMMIT_MESSAGE" value="ajuste de dominio" />
   </component>
 </project>
