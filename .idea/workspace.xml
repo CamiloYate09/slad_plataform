@@ -4,12 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="62981eb4-61cd-4c42-94fe-99f98c73b136" name="Changes" comment="Soporte nuevo codigo">
-      <change afterPath="$PROJECT_DIR$/static/css/style.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/img/01.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/img/02.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/img/03.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/img/04.png" afterDir="false" />
+    <list default="true" id="62981eb4-61cd-4c42-94fe-99f98c73b136" name="Changes" comment="Soporte nuevo codigo 2">
+      <change afterPath="$PROJECT_DIR$/static/img/101.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/img/30.jpg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
     </list>
@@ -46,7 +43,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "D:/SLAD_APP_PAGINA_WEB/ejemplo/easybank-landing-page",
+    "last_opened_file_path": "D:/SLAD_APP_PAGINA_WEB/slad_plataform/static/img",
     "list.type.of.created.stylesheet": "CSS",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -58,6 +55,9 @@
   }
 }]]></component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\SLAD_APP_PAGINA_WEB\slad_plataform\static\img" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\SLAD_APP_PAGINA_WEB\slad_plataform\static\img" />
       <recent name="D:\SLAD_APP_PAGINA_WEB\slad_plataform" />
@@ -74,7 +74,7 @@
       <updated>1688274147055</updated>
       <workItem from="1688274148177" duration="424000" />
       <workItem from="1688274905019" duration="4002000" />
-      <workItem from="1688334575551" duration="562000" />
+      <workItem from="1688334575551" duration="849000" />
     </task>
     <task id="LOCAL-00001" summary="Index base">
       <created>1688274935956</created>
@@ -111,7 +111,14 @@
       <option name="project" value="LOCAL" />
       <updated>1688334646732</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Soporte nuevo codigo 2">
+      <created>1688335173592</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1688335173592</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -123,6 +130,7 @@
     <MESSAGE value="gitlab ci 2" />
     <MESSAGE value="ajuste de dominio" />
     <MESSAGE value="Soporte nuevo codigo" />
-    <option name="LAST_COMMIT_MESSAGE" value="Soporte nuevo codigo" />
+    <MESSAGE value="Soporte nuevo codigo 2" />
+    <option name="LAST_COMMIT_MESSAGE" value="Soporte nuevo codigo 2" />
   </component>
 </project>
