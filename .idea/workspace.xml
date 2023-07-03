@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="62981eb4-61cd-4c42-94fe-99f98c73b136" name="Changes" comment="Soporte nuevo codigo 5">
+    <list default="true" id="62981eb4-61cd-4c42-94fe-99f98c73b136" name="Changes" comment="Soporte nuevo codigo 6">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/static/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/css/style.css" afterDir="false" />
@@ -73,7 +73,7 @@
       <updated>1688274147055</updated>
       <workItem from="1688274148177" duration="424000" />
       <workItem from="1688274905019" duration="4002000" />
-      <workItem from="1688334575551" duration="5999000" />
+      <workItem from="1688334575551" duration="6599000" />
     </task>
     <task id="LOCAL-00001" summary="Index base">
       <created>1688274935956</created>
@@ -145,7 +145,14 @@
       <option name="project" value="LOCAL" />
       <updated>1688350888277</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Soporte nuevo codigo 6">
+      <created>1688353263681</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1688353263681</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -161,6 +168,7 @@
     <MESSAGE value="Soporte nuevo codigo 3" />
     <MESSAGE value="Soporte nuevo codigo 4" />
     <MESSAGE value="Soporte nuevo codigo 5" />
-    <option name="LAST_COMMIT_MESSAGE" value="Soporte nuevo codigo 5" />
+    <MESSAGE value="Soporte nuevo codigo 6" />
+    <option name="LAST_COMMIT_MESSAGE" value="Soporte nuevo codigo 6" />
   </component>
 </project>

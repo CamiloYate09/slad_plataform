@@ -40,7 +40,7 @@
 
 .team-content {
   width: 100%;
-  max-width: 1350px;
+  max-width: 1062px;
   margin: 0 auto;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(150px, auto));
@@ -57,9 +57,10 @@
   margin-bottom: 15px;
 }
 
-.center h1 {
-  color: #fff;
-  font-size: 4rem;
+.center h3 {
+  margin-top: 2%;
+  color: #ffffff;
+  font-size: 3rem;
   text-align: center;
 }
 
@@ -73,7 +74,7 @@
 .box h3 {
   font-size: 23px;
   font-weight: 600;
-  color: #fff;
+  color: #0f051d;
   margin-bottom: 8px;
 }
 
