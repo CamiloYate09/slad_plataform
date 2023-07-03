@@ -7,6 +7,7 @@
     <list default="true" id="62981eb4-61cd-4c42-94fe-99f98c73b136" name="Changes" comment="Soporte nuevo codigo 5">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/css/style.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -72,7 +73,7 @@
       <updated>1688274147055</updated>
       <workItem from="1688274148177" duration="424000" />
       <workItem from="1688274905019" duration="4002000" />
-      <workItem from="1688334575551" duration="3754000" />
+      <workItem from="1688334575551" duration="5999000" />
     </task>
     <task id="LOCAL-00001" summary="Index base">
       <created>1688274935956</created>
@@ -137,7 +138,14 @@
       <option name="project" value="LOCAL" />
       <updated>1688350207609</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Soporte nuevo codigo 5">
+      <created>1688350888277</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1688350888277</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
