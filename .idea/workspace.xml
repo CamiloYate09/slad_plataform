@@ -5,6 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="62981eb4-61cd-4c42-94fe-99f98c73b136" name="Changes" comment="Soporte nuevo codigo 6">
+      <change afterPath="$PROJECT_DIR$/pages/admin.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/css/styleAdmin.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/img/logoSlad.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/js/script.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/static/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/css/style.css" afterDir="false" />
@@ -42,7 +46,8 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "D:/SLAD_APP_PAGINA_WEB/slad_plataform/static/img",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "D:/SLAD_APP_PAGINA_WEB/slad_plataform/static/js",
     "list.type.of.created.stylesheet": "CSS",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -55,6 +60,9 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\SLAD_APP_PAGINA_WEB\slad_plataform\static\js" />
+      <recent name="D:\SLAD_APP_PAGINA_WEB\slad_plataform\pages" />
+      <recent name="D:\SLAD_APP_PAGINA_WEB\slad_plataform\static\css" />
       <recent name="D:\SLAD_APP_PAGINA_WEB\slad_plataform\static\img" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
@@ -73,7 +81,10 @@
       <updated>1688274147055</updated>
       <workItem from="1688274148177" duration="424000" />
       <workItem from="1688274905019" duration="4002000" />
-      <workItem from="1688334575551" duration="6599000" />
+      <workItem from="1688334575551" duration="8530000" />
+      <workItem from="1688700277292" duration="1369000" />
+      <workItem from="1688863780391" duration="89000" />
+      <workItem from="1688863935680" duration="2005000" />
     </task>
     <task id="LOCAL-00001" summary="Index base">
       <created>1688274935956</created>
@@ -152,11 +163,29 @@
       <option name="project" value="LOCAL" />
       <updated>1688353263681</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Soporte nuevo codigo 6">
+      <created>1688353866313</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1688353866313</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Index base" />
