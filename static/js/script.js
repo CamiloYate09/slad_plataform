@@ -1,26 +1,24 @@
-const body = document.querySelector('body'),
-      sidebar = body.querySelector('nav'),
-      toggle = body.querySelector(".toggle"),
-      searchBtn = body.querySelector(".search-box"),
-      modeSwitch = body.querySelector(".toggle-switch"),
-      modeText = body.querySelector(".mode-text");
+const wrapper = document.querySelector(".wrapper");
+const registerLink = document.querySelector(".register-link");
+const loginLink = document.querySelector(".login-link");
+const btnPopup = document.querySelector(".btnLogin-popup");
+const iconClose = document.querySelector(".icon-close");
+
+registerLink.onclick = () => {
+  wrapper.classList.add("active");
+}
 
 
-toggle.addEventListener("click" , () =>{
-    sidebar.classList.toggle("close");
-})
+loginLink.onclick = () => {
+  wrapper.classList.remove("active");
+}
 
-searchBtn.addEventListener("click" , () =>{
-    sidebar.classList.remove("close");
-})
+btnPopup.onclick = () => {
+  wrapper.classList.add("active-popup");
+}
 
-modeSwitch.addEventListener("click" , () =>{
-    body.classList.toggle("dark");
-    
-    if(body.classList.contains("dark")){
-        modeText.innerText = "Light mode";
-    }else{
-        modeText.innerText = "Dark mode";
-        
-    }
-});
+iconClose.onclick = () => {
+  wrapper.classList.remove("active-popup");
+  wrapper.classList.remove("active");
+}
+

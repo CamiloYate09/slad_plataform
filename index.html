@@ -1,70 +1,151 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Team Slad-CityStream Colombia</title>
-  <link rel="stylesheet" type="text/css" href="static/css/style.css">
-
-  <!--  <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">-->
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
-        rel="stylesheet">
-  <!--  <script type="text/javascript"-->
-  <!--          src="https://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=7brvTiVHJNJ9FpYNpChxrZf44MqFmm5bMRWu9fwknuSFlfNibG8tFOt919DMiGnmho9CczM7TP1U6g87JRRAKwYuLUQveDC8fdYLhWCSewaKGvVKuJWDJQ86nyFYSHJyXX1XFSPTDu9XST1BTnNDsr7Wo-vLifhFmhzlaubqW-WvOJTKlXr0qfrqeJSfSY4ZR9b2SA4MHDVQihrKXxeh4OWHO3LHg6YMUzhglWrGJyedblR-CpcKaJUtO08kxj-O6H5a-dPg7xtpDmOlS-H7-niOnKtCCZrqoK2s2fAUFnC51MdwU9_Z_A85Eq595vJUWoQ_Bnx7f8FaTqcdUdfWhrwqwaXfG1tglvcxggCWcqj9cBLE44YT7WiDbXnhpet5lE5WuWiaiSHvIR4cbJqev266fEyD2JkBOrRA36lS_tXqo42mkj14GVERnQd4cxrjIC75DsyTkxpOqDnrD__jYcmXmf4sjpBBaYhIxWNhCNu40ov608eSd_DNfOfO-1eltqgiO3PksKxIiejh88yyctoThBjokE-gYcStEnPWAsfhaALS754RJ7A_boW9AK88j-tGi3-glmmOQQw3jAKU-x63wumeqbB6cDr6I8_33R9m9zg0QzFGAdnwQoifLuIQes4e6pkz3yMW_kSmE5rn_g5br0vYkCspTdxCtC3OdG6TFylQpvxPDBQ4X7Qr5CdjZlz8RLvo0DzRaVOXjQfA3_cGSS9pO7NQO17v8ONiWsyawqa1LfiduMhqF5gAQJRNy78tkdikTEXTfVV2e3ZEom-jbl6OyFIn9o2DnAeQTaooa6rZTsr2PnQNPdrkEiWjAsbiPkfkYN0qYnXRywtqCEmuwWJrqdZLGZWZVlI0R14H88hV7y5XTnepQ7flv95XmqbpH4jfbZ0bwnhBcNPxebqWIFcQbNLBlfgO5gUAQhQqb2ufj544ySrZrz-xXvym-LanGoG0m-Ta5jVDJ3PG3CzFe9PRIZnKrBnoXHOHenu2dbEIl-4x99NA2WXDvVFyPMGtvLjJr8jz3LNfy4Jfi94vaVC8T9wsXXqB3hLaGyY3n1lFWx5j3uRbXh4EdBiUyzPumB5xIMUFHPK14R_WNkxtlXhfZ-a3xJZ2xHbV9k4x3v-QTu28I181DiJY4bF3Rfqar6sn8kwTCKmlB0JIP1PdNmPbwKOiPbwglym9FFznVWG0akzC35Ja6NeSnVa2iXZwgLZEkeJXVi5Atv-dO_D-2eHcpS0BvPA3I9VziUAjPCrILb13Qp-PjhjRouOWuMN7fHFnE6iIfKHh6vUkcpdnNTdGGomZwphhDd6GkRO84vHwE_bVmppSdZ7o9sMXS76w2kdf_H7oYzJHXKZTmgSHivOAJsvQ1FBj0TYVQllo_HjtHg5zrSBbtM2HEpRr-l2H1WrvtoXjpRoaXCznqlzFpCfEVHb8IVnZwRQMVc0JW295PjyTwskGAFwDWg-H_SB5niItQmApqYPyypNrN1YkWLpN4ApLh3aeQxiZY7rV994bap3Zy_0srAgFe3TvWkr_aLjLE-13GQqhxY7vbZJFLMx5pOvZR-WBzEcZWnxu1k5rTrwcfb6ftJ8FPf0T-eDL8ZrqVp-1jDZ4RJdXFYw66271jC-va4IFCJjhm_dD4Nc3-n58i3ufMtcD0vDITw_aro2JToK9B0RmSTU1LjGKorvimp-rPhhG-aCxXrLOnlPjRCLpSOZBZfEMPDgJ"-->
-  <!--          charset="UTF-8"></script>-->
-  <!--  <link rel="stylesheet" crossorigin="anonymous"-->
-  <!--        href="https://gc.kis.v2.scr.kaspersky-labs.com/E3E8934C-235A-4B0E-825A-35A08381A191/abn/main.css?attr=aHR0cHM6Ly9kb2MtMDQtMTAtZG9jcy5nb29nbGV1c2VyY29udGVudC5jb20vZG9jcy9zZWN1cmVzYy9hdWswdWIzMHMwdWlybmk3MWthOGxpcmIwdjA1ZWkzNy81ZTllb2Y2ZjRkam5naTRrdTJzMXJtMmw4bGFodjU4cS8xNjg4MzM0NzUwMDAwLzE0NzI1NzA4MTI4NjIzMjAzMzY1LzA2NDg0NTc0NTEyODY1NjI0MjU5LzFkRC1PUlJwMWplbmFSMk1XajRadmVkSzctbEhMSmZVcz9lPWRvd25sb2FkJmF4PUFHdEZNUFVYa0xmck03elczWGJud2E1QlctRndqRjU5b3ZMdWJMSU5GUHVHaXh3RXFYT3pwR0VCQzZob3hqSzhrZ2czTjdTSlB6eFFPYjVQVS1Nem0xUk1NM3p0cXZmbU8zY0p2V0V3X0NHdm52TWM1c2hsQmViZkdIQjNLV1hyWjFtWHExM3ZuZUp3V184X1Z4ZXJpeWx6R2RyTzFDdk5LZTcxSlhPRWxLcVFWbUtNT2pYMzJxNlRteC1lLUhzSm44V0VSWjZoNkVNNFRjU2lBYU5Pa0lFZnk4Ync4WjZnWTFWM092bHlPTHotMjVJaUVlenpBQ1hFRVBKSXpNSjdfeW82UWdfc2xfY2ZOa2s2QkN5ZWNDRVRQT041NklIOE81YkhEckRxdVlfZlhVZEh6VHhOdGplRmhoRElOQ0Nkblhoa0o2cnZVaTU5UmJqc0E5eXBVbnNoSlE2Q0NPbWYtaWlvb3RYczFuS3VjVG9mUHdUVmRoSGJ6YWVjSXVqeDNVUUwzaTZnMU1XZE9vQ2stbjUzemY0MDZjeHdFeUIwV2NtRVV1cENhN0JGQlBjTU0zcDdaejdwM1hNRWtGLWNpNUpRM0ZrWnBZWnBlWXVwOHlhOXdaY285Vkw4UmozRjF1QzNLZGFzcE5MOHZFOWwxdzJXMmwtOWJWSzd6Z0pSQ1kzNUdnb1hzNldZVlRBVGxRMFRwRWxQUFFEcmM0VW5LSnNiZWlkQmFWOHBrWHJ6UXdYUXd6cDZTcmlST280ZzZtOE5iSDVUQW55N3U2X3Q4Y3E5am1XMnVyS2ZhdVJzdTFtRVhrTUFSVGJ2Tlh3UXZxSHp0djkxOEV4QVgtZHAzSEgtOUVncHk0Sk9aMl8tOHd1ZHdCUWNfX2FPUEhlMFp4NHg5dHhtcVMzakhPTHNQWTZrUlpuTWJSNmpNb2JYYkQxeUo2bEdrQ0ZYdEZ6cTJWdW9ORFlqa0JnNjhvOWVTYnI4M3lzVzhweExyMzQ4WFpmSTB6T2xDOEUyT0FJTUtibWVQT1QxLUNEM25WUzJNbXBJQjFHb05naURDZkVCeHVtYkhCR2xYd0tFNk1MVHY3QW1CaDhGQUV6OU5meDZwVjYwQnhVMVA4RVJiYWtVQmpTZkI3Y0tEaWlIck5PZXdhbl9SXzhnS0xnZnA3MW9pM3dLWjJkOUJjYjFISHUzY1lFJnV1aWQ9OWJkOTJmOTYtZmYxNi00NmE4LTgzNzQtYjg5ZmY1YzkwMzk2JmF1dGh1c2VyPTAmbm9uY2U9cm9vbWZkNXQwMnZiNiZ1c2VyPTA2NDg0NTc0NTEyODY1NjI0MjU5Jmhhc2g9bmszZjRuamM4N2ZndDRyamU2Yjhja2o5MmQwbnBnZGw"/>-->
-
+  <meta charset="UTF-8">
+  <meta http-equiv="x-ua-compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link rel="stylesheet" href="./static/css/style.css">
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
 <body>
 
-<section class="team">
-  <div class="container">
-    <div class="center">
-      <h3>Our Team Slad-CityStream Colombia</h3>
-    </div>
+<header class="header">
+  <a href="#" class="logo">
+    <img class="logo-slad" src="./static/img/logoSlad.jpg" alt="">
+  </a>
+  <nav class="navbar">
+    <a href="#">Home</a>
+    <a href="#">About</a>
+    <a href="#">Services</a>
+    <a href="#">Contact</a>
+
+    <button class="btnLogin-popup">Login</button>
+
+
+  </nav>
+
+</header>
+
+<section class="section">
+  <div class="wrapper">
     
-
-    <div class="team-content">
-      <div class="box">
-        <img class="ImageSlad" src="static/img/logoSlad.jpg">
-        <a href="pages/admin.html"><h3>Bienvenido</h3></a>
-        
-      </div>
+    <span class="icon-close">
+      <i class="bx bx-x"></i>
       
-      
-      <div class="box">
-        <img src="static/img/101.jpg">
-        <h3>Cristian Jimenez</h3>
-        <h3>Founder</h3>
-        <a href="mailto: cristianjimenez@citystream.co">Send Email</a>
-        <div class="icons">
-          <a href="#"><i class="ri-twitter-fill"></i></a>
-          <a href="#"><i class="ri-facebook-box-fill"></i></a>
-          <a href="#"><i class="ri-instagram-fill"></i></a>
+    </span>
+
+    <div class="logreg-box">
+      <div class="form-box login">
+        <div class="logreg-title">
+          <h2>Login</h2>
+          <p>Please login to use the platform</p>
+          <form action="#">
+            <div class="input-box">
+              <span class="icon">
+                <i class="bx bxs-envelope"></i>
+              </span>
+              <input type="email" required>
+              <label>Email</label>
+            </div>
+            <div class="input-box">
+              <span class="icon">
+                <i class="bx bxs-lock-alt"></i>
+              </span>
+              <input type="password" required>
+              <label>Password</label>
+            </div>
+            <div class="remember-forgot">
+              <label>
+                <input type="checkbox" name="remember"> Remember me
+              </label>
+              <a href="#"> Forgot password?</a>
+
+            </div>
+
+            <button type="submit" class="btn">
+              Login
+            </button>
+
+            <div class="logreg-link">
+              <p> Don´t have an account? <a href="#" class="register-link">Register</a></p>
+
+            </div>
+
+          </form>
+
         </div>
+
       </div>
 
-      <div class="box">
-        <img src="static/img/30.jpg">
-        <h3>Camilo Yate</h3>
-        <h3>founder</h3>
-        <a href="mailto: camiloyate@citystream.co">Send Email</a>
-        <div class="icons">
-          <a href="#"><i class="ri-twitter-fill"></i></a>
-          <a href="#"><i class="ri-facebook-box-fill"></i></a>
-          <a href="#"><i class="ri-instagram-fill"></i></a>
-        </div>
-      </div>
+      <!--      register form -->
 
+      <div class="form-box register">
+        <div class="logreg-title">
+          <h2>Registration</h2>
+          <p>Please provide the following to verify your identity</p>
+          <form action="#">
+            <div class="input-box">
+              <span class="icon">
+                <i class="bx bxs-user"></i>
+              </span>
+              <input type="text" required>
+              <label>Full Name</label>
+            </div>
+
+            <div class="input-box">
+              <span class="icon">
+                <i class="bx bxs-envelope"></i>
+              </span>
+              <input type="email" required>
+              <label>Email</label>
+            </div>
+            <div class="input-box">
+              <span class="icon">
+                <i class="bx bxs-lock-alt"></i>
+              </span>
+              <input type="password" required>
+              <label>Password</label>
+            </div>
+
+            <div class="remember-forgot">
+              <label>
+                <input type="checkbox" name="remember">I agree to the <a href="#">terms and conditions</a>
+              </label>
+            </div>
+
+            <button type="submit" class="btn">
+              Register
+            </button>
+
+            <div class="logreg-link">
+              <p>Already have an account? <a href="#" class="login-link">Login</a></p>
+
+            </div>
+
+          </form>
+
+        </div>
+
+      </div>
 
     </div>
-  </div>
 
+    <div class="media-options">
+      <a href="#">
+        <i class="bx bxl-google"></i>
+        <span>Login with Google</span>
+      </a>
+      <a href="#">
+        <i class="bx bxl-facebook-circle"></i>
+        <span>Login with Facebook</span>
+      </a>
+    </div>
+
+  </div>
 </section>
 
+<script src="./static/js/script.js"></script>
 </body>
 </html>
