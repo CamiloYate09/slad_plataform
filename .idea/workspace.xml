@@ -5,7 +5,33 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="62981eb4-61cd-4c42-94fe-99f98c73b136" name="Changes" comment="Nueva plataforma 3">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/airtel-DsqPnjqY.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/app_frame-BW7N_n18.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/bedc-DA8lm9su.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/dstv-B8Z9V11q.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/frames-wCFIW5HX.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/hero-2y0szmO4.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/ikeja-DPcIypQu.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/index-BAr3Vur8.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/index-dcLeM35S.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/klarna-Ch_xMeFX.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/kobodrop_favicon-B-YDmtXE.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/kobodrop_logo-CCoXNtB7.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/kobodrop_logo_bright-xtZZgm2w.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/mastercard-FyOClcKl.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/mobile-BjHl3flr.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/mockup-DgGCcc-D.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/mtn-CEDNTC6c.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/payoneer-BDIUktw3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/paypal-tghhrfNN.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/stripe-CVWrKqvZ.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/visa-BSA3QA2V.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/style.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/img/background.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/img/logo-citystream.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/img/logoSlad.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/js/script.js" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,6 +49,9 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitToolBoxStore">
+    <option name="projectConfigVersion" value="5" />
+  </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
@@ -37,26 +66,27 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/SLAD_APP_PAGINA_WEB/slad_plataform/static/img&quot;,
-    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "DefaultHtmlFileTemplate": "HTML File",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "/Users/camiloyate/Desktop/GENERAL CITY-STREAM/CITY-STREAM/1-APP-WEB/PAGINA ORIGINAL/slad_plataform",
+    "list.type.of.created.stylesheet": "CSS",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.lookFeel",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
       <recent name="D:\SLAD_APP_PAGINA_WEB\slad_plataform\static\img" />
       <recent name="D:\SLAD_APP_PAGINA_WEB\slad_plataform\static\js" />
       <recent name="D:\SLAD_APP_PAGINA_WEB\slad_plataform\pages" />
@@ -67,6 +97,13 @@
       <recent name="D:\SLAD_APP_PAGINA_WEB\slad_plataform" />
       <recent name="D:\SLAD_APP_PAGINA_WEB\slad_plataform\public" />
     </key>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-1d06a55b98c1-2e7d6887c066-JavaScript-WS-241.15989.47" />
+      </set>
+    </attachedChunks>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -84,6 +121,7 @@
       <workItem from="1688863935680" duration="2678000" />
       <workItem from="1692064520986" duration="9641000" />
       <workItem from="1692486257111" duration="1175000" />
+      <workItem from="1715826980433" duration="196000" />
     </task>
     <task id="LOCAL-00001" summary="Index base">
       <created>1688274935956</created>
