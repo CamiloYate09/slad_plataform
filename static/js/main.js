@@ -45,7 +45,7 @@ ScrollReveal().reveal(".footer p", {
 });
 
 document.addEventListener('DOMContentLoaded', function() {
-    const backgrounds = document.querySelectorAll('.bg-slideshow div');
+    const backgrounds = document.querySelectorAll('.bg-slide');
     let currentIndex = 0;
 
     function changeBackground() {

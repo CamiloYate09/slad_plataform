@@ -17,11 +17,31 @@
 </head>
 <body>
 <div class="bg-slideshow">
-  <div class="active" style="background-image: url('static/img/5.jpg');"></div>
-  <div style="background-image: url('static/img/1.jpg');"></div>
-  <div style="background-image: url('static/img/8.jpg');"></div>
-  <div style="background-image: url('static/img/7.jpg');"></div>
-  <div style="background-image: url('static/img/6.jpg');"></div>
+  <picture class="bg-slide active">
+    <source media="(max-width: 480px)" srcset="static/img/mobile/5.jpg">
+    <source media="(max-width: 768px)" srcset="static/img/tablet/5.jpg">
+    <div style="background-image: url('static/img/5.jpg');"></div>
+  </picture>
+  <picture class="bg-slide">
+    <source media="(max-width: 480px)" srcset="static/img/mobile/1.jpg">
+    <source media="(max-width: 768px)" srcset="static/img/tablet/1.jpg">
+    <div style="background-image: url('static/img/1.jpg');"></div>
+  </picture>
+  <picture class="bg-slide">
+    <source media="(max-width: 480px)" srcset="static/img/mobile/8.jpg">
+    <source media="(max-width: 768px)" srcset="static/img/tablet/8.jpg">
+    <div style="background-image: url('static/img/8.jpg');"></div>
+  </picture>
+  <picture class="bg-slide">
+    <source media="(max-width: 480px)" srcset="static/img/mobile/7.jpg">
+    <source media="(max-width: 768px)" srcset="static/img/tablet/7.jpg">
+    <div style="background-image: url('static/img/7.jpg');"></div>
+  </picture>
+  <picture class="bg-slide">
+    <source media="(max-width: 480px)" srcset="static/img/mobile/6.jpg">
+    <source media="(max-width: 768px)" srcset="static/img/tablet/6.jpg">
+    <div style="background-image: url('static/img/6.jpg');"></div>
+  </picture>
 </div>
 <div class="container">
   <nav>

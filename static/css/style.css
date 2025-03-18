@@ -68,19 +68,25 @@ body {
   overflow: hidden;
 }
 
-.bg-slideshow div {
+.bg-slide {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 2s ease-in-out;
+}
+
+.bg-slide.active {
+  opacity: 1;
+}
+
+.bg-slide div {
   position: absolute;
   width: 100%;
   height: 100%;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  opacity: 0;
-  transition: opacity 2s ease-in-out;
-}
-
-.bg-slideshow div.active {
-  opacity: 1;
 }
 
 body::after {
@@ -362,9 +368,10 @@ nav {
     --fs-md: clamp(1rem, 2.5vw, 1.5rem);
   }
 
-  .bg-slideshow div {
+  .bg-slide div {
+    background-size: cover;
+    background-position: center;
     height: 100vh;
-    background-position: center center;
   }
 
   .container {
@@ -428,8 +435,22 @@ nav {
     --fs-sm: clamp(0.7rem, 1.5vw, 0.9rem);
   }
 
-  .bg-slideshow div {
-    background-position: center center;
+  .bg-slideshow::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.3);
+    z-index: 1;
+  }
+
+  .bg-slide div {
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    width: 100%;
   }
 
   .letter-s {
@@ -482,7 +503,7 @@ nav {
     --fs-base: clamp(1.2rem, 2.2vw, 1.4rem);
   }
 
-  .bg-slideshow div {
+  .bg-slide div {
     background-size: cover;
     background-position: center center;
   }
