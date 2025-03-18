@@ -43,3 +43,22 @@ ScrollReveal().reveal(".footer p", {
   duration: 1000,
   delay: 7000,
 });
+
+document.addEventListener('DOMContentLoaded', function() {
+    const backgrounds = document.querySelectorAll('.bg-slideshow div');
+    let currentIndex = 0;
+
+    function changeBackground() {
+        // Remover la clase active de todos los fondos
+        backgrounds.forEach(bg => bg.classList.remove('active'));
+        
+        // Incrementar el índice
+        currentIndex = (currentIndex + 1) % backgrounds.length;
+        
+        // Añadir la clase active al siguiente fondo
+        backgrounds[currentIndex].classList.add('active');
+    }
+
+    // Cambiar el fondo cada 5 segundos
+    setInterval(changeBackground, 5000);
+});
