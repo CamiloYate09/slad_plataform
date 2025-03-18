@@ -8,6 +8,13 @@
   --text-color: #ffffff;
   --text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
   --text-border: #6658DD;
+  
+  /* Tamaños de fuente base */
+  --fs-xl: clamp(2.5rem, 8vw, 4rem);     /* Para títulos muy grandes */
+  --fs-lg: clamp(2rem, 5vw, 3rem);       /* Para títulos grandes */
+  --fs-md: clamp(1.2rem, 3vw, 1.8rem);   /* Para subtítulos */
+  --fs-base: clamp(1rem, 2vw, 1.2rem);   /* Para texto general */
+  --fs-sm: clamp(0.8rem, 1.5vw, 1rem);   /* Para texto pequeño */
 }
 
 * {
@@ -26,10 +33,11 @@ h1, h2, h3, h4, h5, p, a, button, .letter-s {
 
 .btn {
   position: absolute;
-  padding: 1rem 2rem;
+  padding: clamp(0.8rem, 2vw, 1.2rem) clamp(1.5rem, 3vw, 2rem);
   outline: none;
   border: none;
   font-weight: 600;
+  font-size: var(--fs-base);
   cursor: pointer;
   background-color: rgba(255, 255, 255, 0.9);
   color: var(--text-dark);
@@ -136,12 +144,13 @@ nav {
 
 .nav__links a {
   font-weight: 500;
+  font-size: var(--fs-base);
   color: var(--text-color);
   text-shadow: var(--text-shadow);
 }
 
 .nav__links .logo {
-  font-size: 1.2rem;
+  font-size: var(--fs-md);
   font-weight: 800;
 }
 
@@ -163,8 +172,8 @@ nav {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-size: 40rem;
-  line-height: 40rem;
+  font-size: clamp(15rem, 30vw, 40rem);
+  line-height: 1;
   font-weight: 900;
   color: rgba(255, 255, 255, 0.15);
   text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
@@ -232,7 +241,7 @@ nav {
   position: absolute;
   top: 50%;
   left: 50%;
-  font-size: 1.2rem;
+  font-size: var(--fs-md);
   font-weight: 500;
   -webkit-text-stroke: 1px var(--text-border);
   text-stroke: 1px var(--text-border);
@@ -242,7 +251,7 @@ nav {
   position: absolute;
   content: "";
   height: 1px;
-  width: 100px;
+  width: clamp(50px, 10vw, 100px);
   top: 50%;
 }
 
@@ -298,7 +307,7 @@ nav {
 }
 
 .footer p {
-  font-size: 0.9rem;
+  font-size: var(--fs-sm);
   color: var(--text-color);
   text-shadow: var(--text-shadow);
 }
@@ -336,6 +345,7 @@ nav {
 }
 
 .footer__links a {
+  font-size: var(--fs-base);
   color: var(--text-color);
   text-shadow: var(--text-shadow);
 }
@@ -346,6 +356,12 @@ nav {
 }
 
 @media (max-width: 768px) {
+  :root {
+    --fs-xl: clamp(2rem, 6vw, 3rem);
+    --fs-lg: clamp(1.8rem, 4vw, 2.5rem);
+    --fs-md: clamp(1rem, 2.5vw, 1.5rem);
+  }
+
   .bg-slideshow div {
     height: 100vh;
     background-position: center center;
@@ -360,8 +376,8 @@ nav {
   }
 
   .letter-s {
-    font-size: 20rem;
-    line-height: 20rem;
+    font-size: clamp(15rem, 30vw, 40rem);
+    line-height: 1;
   }
 
   .container img {
@@ -393,16 +409,32 @@ nav {
   .footer__links {
     justify-content: center;
   }
+
+  .container h5::after {
+    width: clamp(50px, 10vw, 100px);
+  }
+
+  .feature-1, .feature-2, .feature-3, .feature-4 {
+    font-size: var(--fs-base);
+  }
 }
 
 @media (max-width: 480px) {
+  :root {
+    --fs-xl: clamp(1.8rem, 5vw, 2.5rem);
+    --fs-lg: clamp(1.5rem, 3vw, 2rem);
+    --fs-md: clamp(0.9rem, 2vw, 1.2rem);
+    --fs-base: clamp(0.8rem, 1.8vw, 1rem);
+    --fs-sm: clamp(0.7rem, 1.5vw, 0.9rem);
+  }
+
   .bg-slideshow div {
     background-position: center center;
   }
 
   .letter-s {
-    font-size: 15rem;
-    line-height: 15rem;
+    font-size: clamp(15rem, 30vw, 40rem);
+    line-height: 1;
   }
 
   .container img {
@@ -418,11 +450,11 @@ nav {
   }
 
   .container h5 {
-    font-size: 1rem;
+    font-size: var(--fs-base);
   }
 
   .container h5::after {
-    width: 50px;
+    width: clamp(50px, 10vw, 100px);
   }
 
   .nav__links {
@@ -430,11 +462,26 @@ nav {
   }
 
   .nav__links .logo {
-    font-size: 1rem;
+    font-size: var(--fs-base);
+  }
+
+  .footer p {
+    font-size: var(--fs-sm);
+  }
+
+  .footer__links a {
+    font-size: var(--fs-sm);
   }
 }
 
 @media (min-width: 1920px) {
+  :root {
+    --fs-xl: clamp(3rem, 10vw, 5rem);
+    --fs-lg: clamp(2.5rem, 6vw, 3.5rem);
+    --fs-md: clamp(1.5rem, 3.5vw, 2rem);
+    --fs-base: clamp(1.2rem, 2.2vw, 1.4rem);
+  }
+
   .bg-slideshow div {
     background-size: cover;
     background-position: center center;
@@ -445,7 +492,6 @@ nav {
   }
 
   .letter-s {
-    font-size: 50rem;
-    line-height: 50rem;
+    font-size: clamp(40rem, 40vw, 50rem);
   }
 }
