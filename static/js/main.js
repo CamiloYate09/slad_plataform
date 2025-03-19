@@ -62,3 +62,47 @@ document.addEventListener('DOMContentLoaded', function() {
     // Cambiar el fondo cada 5 segundos
     setInterval(changeBackground, 5000);
 });
+
+// Manejo del formulario y modales
+document.addEventListener('DOMContentLoaded', function() {
+  const formOverlay = document.querySelector('.form-overlay');
+  const welcomeOverlay = document.querySelector('.welcome-overlay');
+  const openFormBtn = document.querySelector('.open-form');
+  const closeFormBtn = document.querySelector('.close-form');
+  const closeWelcomeBtn = document.querySelector('.close-welcome');
+  const form = document.querySelector('.form');
+
+  // Abrir formulario
+  openFormBtn.addEventListener('click', function(e) {
+    e.preventDefault();
+    formOverlay.style.display = 'flex';
+  });
+
+  // Cerrar formulario
+  closeFormBtn.addEventListener('click', function() {
+    formOverlay.style.display = 'none';
+  });
+
+  // Cerrar modal de bienvenida
+  closeWelcomeBtn.addEventListener('click', function() {
+    welcomeOverlay.style.display = 'none';
+  });
+
+  // Manejar envío del formulario
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    formOverlay.style.display = 'none';
+    welcomeOverlay.style.display = 'flex';
+    form.reset();
+  });
+
+  // Cerrar al hacer clic fuera
+  window.addEventListener('click', function(e) {
+    if (e.target === formOverlay) {
+      formOverlay.style.display = 'none';
+    }
+    if (e.target === welcomeOverlay) {
+      welcomeOverlay.style.display = 'none';
+    }
+  });
+});

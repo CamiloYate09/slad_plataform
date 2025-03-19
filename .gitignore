@@ -43,3 +43,8 @@ Temporary Items
 .apdisk
 
 # End of https://www.toptal.com/developers/gitignore/api/macos,linux
+/.idea/git_toolbox_blame.xml
+/.idea/git_toolbox_prj.xml
+/.idea/modules.xml
+/.idea/slad_plataform.iml
+/.idea/vcs.xml
