@@ -24,7 +24,7 @@
 }
 
 /* Estilo global para textos */
-h1, h2, h3, h4, h5, p, a, button, .letter-s {
+h1, h2, h3, h4, h5, p, a, .letter-s {
   color: var(--text-color);
   text-shadow: var(--text-shadow);
   position: relative;
@@ -35,7 +35,7 @@ h1, h2, h3, h4, h5, p, a, button, .letter-s {
   text-stroke: 4px transparent;
 }
 
-h1::before, h2::before, h3::before, h4::before, h5::before, p::before, a::before, button::before, .letter-s::before {
+h1::before, h2::before, h3::before, h4::before, h5::before, p::before, a::before, .letter-s::before {
   content: attr(data-text);
   position: absolute;
   left: 0;
@@ -72,14 +72,6 @@ h1::before, h2::before, h3::before, h4::before, h5::before, p::before, a::before
   white-space: nowrap;
   cursor: pointer;
   transition: all 0.3s;
-  text-shadow: none;
-  -webkit-text-stroke: 0;
-  text-stroke: 0;
-}
-
-.btn:active,
-.btn:hover {
-  outline: 0;
 }
 
 .btn span {
@@ -90,10 +82,16 @@ h1::before, h2::before, h3::before, h4::before, h5::before, p::before, a::before
   height: 100%;
   transition: 300ms;
   display: block;
+  color: #ffffff;
 }
 
 .btn:hover span {
   background: none;
+}
+
+.btn:active,
+.btn:hover {
+  outline: 0;
 }
 
 .btn:active {
