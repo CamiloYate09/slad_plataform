@@ -110,9 +110,54 @@
 
   <img src="static/img/logo-citystream.png" alt="header" />
 
-  <a href="mockup.html" class="btn explore">
-    <span>Descubre tú ciudad</span>
-  </a>
+  <div class="button-container" style="
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    margin: 20px 0;
+  ">
+    <a href="mockup.html" class="btn explore">
+      <span>Descubre tú ciudad</span>
+    </a>
+
+    <a 
+      href="https://www.bluelizard-on.com" 
+      target="_blank" 
+      rel="noopener noreferrer" 
+      class="btn explore" 
+      onclick="window.open(this.href, '_blank'); return false;"
+      style="
+        background: linear-gradient(45deg, #2193b0, #6dd5ed);
+        border: 2px solid rgba(255, 255, 255, 0.2);
+        position: relative;
+        overflow: hidden;
+        cursor: pointer;
+    ">
+      <span style="position: relative; z-index: 1;">Visita BlueLizard 🦎</span>
+      <div class="btn-hover-effect" style="
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(45deg, #6dd5ed, #2193b0);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      "></div>
+    </a>
+  </div>
+
+  <style>
+    .btn-hover-effect {
+      pointer-events: none;
+    }
+    
+    .btn:hover .btn-hover-effect {
+      opacity: 1;
+    }
+  </style>
+
   <h5 class="feature-1" data-text="Cuidades">Cuidades</h5>
   <h5 class="feature-2" data-text="Eventos">Eventos</h5>
   <h5 class="feature-3" data-text="Ropa">Ropa</h5>
