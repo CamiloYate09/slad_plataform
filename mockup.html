@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="CityStream: Mockups de la aplicación iOS - Visualiza las diferentes pantallas y funcionalidades de nuestra app." />
+  <meta name="keywords" content="CityStream app, iOS app, mockups, diseño de aplicación, interfaz de usuario" />
+  <meta name="author" content="CityStream" />
+  <meta name="robots" content="index, follow" />
+  <link rel="icon" href="image/favicon-32x32.png" type="favicon.png"/>
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet" />
+  <link rel="stylesheet" href="static/css/style.css" />
+  <style>
+    .mockup-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2.5rem;
+      padding: 2rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    
+    .mockup-card {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 1.5rem;
+      text-align: center;
+      transition: all 0.4s ease;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .mockup-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      border-radius: 20px;
+      padding: 2px;
+      background: linear-gradient(
+        45deg,
+        rgba(255, 255, 255, 0.1),
+        rgba(255, 255, 255, 0.2),
+        rgba(255, 255, 255, 0.1),
+        rgba(255, 255, 255, 0.2)
+      );
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      pointer-events: none;
+    }
+
+    .mockup-card:hover::before {
+      background: linear-gradient(
+        45deg,
+        rgba(255, 255, 255, 0.2),
+        rgba(255, 255, 255, 0.4),
+        rgba(255, 255, 255, 0.2),
+        rgba(255, 255, 255, 0.4)
+      );
+    }
+
+    .mockup-card.principal {
+      grid-column: 1 / -1;
+      background: rgba(255, 255, 255, 0.15);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+      display: flex;
+      align-items: center;
+      gap: 3rem;
+      padding: 2rem;
+      border: none;
+    }
+
+    .mockup-card.principal::before {
+      padding: 3px;
+      background: linear-gradient(
+        45deg,
+        rgba(255, 255, 255, 0.2),
+        rgba(255, 255, 255, 0.3),
+        rgba(255, 255, 255, 0.2),
+        rgba(255, 255, 255, 0.3)
+      );
+    }
+
+    .mockup-card.principal .phone-container {
+      flex: 0 0 320px;
+      position: relative;
+      padding: 20px;
+    }
+
+    .mockup-card.principal .phone-frame {
+      position: relative;
+      width: 320px;
+      height: 650px;
+      background: #1a1a1a;
+      border-radius: 40px;
+      padding: 15px;
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .mockup-card.principal .phone-frame::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      width: 150px;
+      height: 30px;
+      background: #1a1a1a;
+      border-radius: 0 0 20px 20px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .mockup-card.principal img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 25px;
+    }
+
+    .mockup-card.principal .content {
+      flex: 1;
+      text-align: left;
+      padding-right: 2rem;
+    }
+
+    .mockup-card.principal h3 {
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
+      color: #fff;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    .mockup-card.principal p {
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+      line-height: 1.8;
+    }
+
+    .mockup-card.principal .mockup-tags {
+      text-align: left;
+    }
+
+    .mockup-card.principal .mockup-tag {
+      background: rgba(255, 255, 255, 0.3);
+      font-size: 1rem;
+      padding: 0.6rem 1.2rem;
+    }
+
+    @media (max-width: 1024px) {
+      .mockup-card.principal {
+        flex-direction: column;
+        gap: 2rem;
+      }
+
+      .mockup-card.principal .content {
+        text-align: center;
+        padding-right: 0;
+      }
+
+      .mockup-card.principal .mockup-tags {
+        text-align: center;
+      }
+    }
+    
+    .mockup-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 45px rgba(0, 0, 0, 0.2);
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .mockup-card.principal:hover {
+      transform: translateY(-10px) scale(1.02);
+    }
+    
+    .mockup-card.principal:hover::before {
+      background: linear-gradient(
+        45deg,
+        rgba(255, 255, 255, 0.3),
+        rgba(255, 255, 255, 0.5),
+        rgba(255, 255, 255, 0.3),
+        rgba(255, 255, 255, 0.5)
+      );
+    }
+    
+    .mockup-card img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 15px;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s ease;
+    }
+    
+    .mockup-card:hover img {
+      transform: scale(1.02);
+    }
+    
+    .mockup-card h3 {
+      color: white;
+      margin-bottom: 0.8rem;
+      font-size: 1.4rem;
+      font-weight: 600;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    
+    .mockup-card p {
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 1rem;
+      line-height: 1.6;
+      margin-bottom: 1rem;
+    }
+
+    .back-button {
+      position: fixed;
+      top: 2rem;
+      left: 2rem;
+      padding: 0.8rem 1.5rem;
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(10px);
+      border: none;
+      border-radius: 30px;
+      color: white;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 1rem;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .back-button:hover {
+      background: rgba(255, 255, 255, 0.25);
+      transform: translateY(-2px);
+    }
+
+    .page-title {
+      color: white;
+      text-align: center;
+      margin: 3rem 0;
+      font-size: 2.5rem;
+      font-weight: 700;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      position: relative;
+    }
+
+    .page-title::after {
+      content: '';
+      display: block;
+      width: 100px;
+      height: 4px;
+      background: linear-gradient(90deg, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0.2) 100%);
+      margin: 1rem auto;
+      border-radius: 2px;
+    }
+
+    .mockup-tag {
+      background: rgba(255, 255, 255, 0.2);
+      padding: 0.4rem 1rem;
+      border-radius: 15px;
+      font-size: 0.9rem;
+      color: white;
+      display: inline-block;
+      margin: 0.3rem;
+    }
+  </style>
+  <title>CityStream | Mockups iOS App 📱</title>
+</head>
+<body>
+  <div class="bg-slideshow">
+    <picture class="bg-slide active">
+      <source media="(max-width: 480px)" srcset="static/img/mobile/5.jpg">
+      <source media="(max-width: 768px)" srcset="static/img/tablet/5.jpg">
+      <div style="background-image: url('static/img/5.jpg');"></div>
+    </picture>
+  </div>
+
+  <a href="index.html" class="back-button">
+    <i class="ri-arrow-left-line"></i> Volver al inicio
+  </a>
+
+  <div class="container">
+    <h1 class="page-title">Diseño de la Aplicación CityStream</h1>
+    
+    <div class="mockup-container">
+      <div class="mockup-card principal">
+        <div class="phone-container">
+          <div class="phone-frame">
+            <img src="image/mockups/principal.png" alt="Login de la Aplicación" />
+          </div>
+        </div>
+        <div class="content">
+          <h3>Login de CityStream</h3>
+          <p>Bienvenido a la experiencia CityStream. Una interfaz de inicio de sesión elegante y segura, diseñada para brindarte acceso rápido a todas las funcionalidades de la aplicación. Con un diseño moderno y minimalista, priorizamos la facilidad de uso sin comprometer la seguridad.</p>
+          <div class="mockup-tags">
+            <span class="mockup-tag">Login</span>
+            <span class="mockup-tag">Seguridad</span>
+            <span class="mockup-tag">UI/UX</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="mockup-card">
+        <img src="image/mockups/image copy.png" alt="Perfil de Usuario" />
+        <h3>Perfil de Usuario</h3>
+        <p>Gestiona tu perfil personal, preferencias y configuración de la aplicación.</p>
+        <div class="mockup-tags">
+          <span class="mockup-tag">Perfil</span>
+          <span class="mockup-tag">Personalización</span>
+        </div>
+      </div>
+      
+      <div class="mockup-card">
+        <img src="image/mockups/image.png" alt="Explorar Eventos" />
+        <h3>Explorar Eventos</h3>
+        <p>Descubre eventos locales y actividades en tu ciudad de manera sencilla.</p>
+        <div class="mockup-tags">
+          <span class="mockup-tag">Eventos</span>
+          <span class="mockup-tag">Explorar</span>
+        </div>
+      </div>
+
+      <div class="mockup-card">
+        <img src="image/mockups/image copy 3.png" alt="Detalles de Evento" />
+        <h3>Detalles de Evento</h3>
+        <p>Información detallada sobre eventos, incluyendo ubicación, fecha y participantes.</p>
+        <div class="mockup-tags">
+          <span class="mockup-tag">Detalles</span>
+          <span class="mockup-tag">Información</span>
+        </div>
+      </div>
+
+      <div class="mockup-card">
+        <img src="image/mockups/image copy 4.png" alt="Social Feed" />
+        <h3>Feed Social</h3>
+        <p>Mantente conectado con tu comunidad y descubre contenido relevante.</p>
+        <div class="mockup-tags">
+          <span class="mockup-tag">Social</span>
+          <span class="mockup-tag">Comunidad</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <p data-text="Copyright © 2025 CityStream. All rights reserved.">Copyright © 2025 CityStream. All rights reserved.</p>
+    <div class="footer__links">
+      <li><a href="#" data-text="Facebook">Facebook</a></li>
+      <li><a target="_blank" href="https://www.instagram.com/citystream.co/" data-text="Instagram">Instagram</a></li>
+      <li><a href="#" data-text="Twitter">Twitter</a></li>
+    </div>
+  </footer>
+
+  <script src="https://unpkg.com/scrollreveal"></script>
+  <script>
+    ScrollReveal().reveal('.mockup-card', {
+      delay: 200,
+      distance: '20px',
+      duration: 1000,
+      easing: 'cubic-bezier(0.5, 0, 0, 1)',
+      interval: 200,
+      origin: 'bottom',
+      scale: 0.9
+    });
+  </script>
+</body>
+</html> 
