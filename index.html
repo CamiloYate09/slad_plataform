@@ -18,6 +18,11 @@
 <body>
 <div class="bg-slideshow">
   <picture class="bg-slide active">
+    <source media="(max-width: 480px)" srcset="static/img/mobile/background.png">
+    <source media="(max-width: 768px)" srcset="static/img/tablet/background.png">
+    <div style="background-image: url('static/img/background.png');"></div>
+  </picture>
+  <picture class="bg-slide active">
     <source media="(max-width: 480px)" srcset="static/img/mobile/5.jpg">
     <source media="(max-width: 768px)" srcset="static/img/tablet/5.jpg">
     <div style="background-image: url('static/img/5.jpg');"></div>
