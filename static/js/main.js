@@ -241,34 +241,4 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
 
-  // Agregar protección adicional para prevenir acceso no autorizado al formulario
-  // mediante manipulación directa del DOM
-  function securityCheck() {
-    if (formOverlay.style.display === 'flex') {
-      // Verificar autorización y validez de tokens
-      const authToken = localStorage.getItem('authToken');
-      const csrfToken = localStorage.getItem('csrfToken');
-      const formAuthToken = document.getElementById('auth_token')?.value;
-      const formCsrfToken = document.getElementById('csrf_token')?.value;
-
-      // Si no está autorizado o los tokens no coinciden, cerrar el formulario
-      if (!checkAuthorization() || 
-          authToken !== formAuthToken || 
-          csrfToken !== formCsrfToken) {
-
-        formOverlay.style.display = 'none';
-        alert("Acceso no autorizado detectado y bloqueado. Se ha registrado este intento.");
-
-        // En un entorno real, aquí se registraría el intento de acceso no autorizado
-        console.warn("Intento de acceso no autorizado detectado", {
-          timestamp: new Date().toISOString(),
-          authorized: checkAuthorization(),
-          tokensValid: authToken === formAuthToken && csrfToken === formCsrfToken
-        });
-      }
-    }
-  }
-
-  // Verificar periódicamente la seguridad
-  setInterval(securityCheck, 2000);
 });
