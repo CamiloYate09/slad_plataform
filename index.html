@@ -56,15 +56,11 @@
     </ul>
   </nav>
 
-  <!-- Formulario Popup con protección de autorización -->
+  <!-- Formulario Popup -->
   <div class="form-overlay">
     <div class="form-container">
       <button class="close-form" aria-label="Cerrar formulario">&times;</button>
       <form class="form" method="POST" action="submit_form.php" autocomplete="off">
-        <!-- Campo oculto para token CSRF -->
-        <input type="hidden" id="csrf_token" name="csrf_token" value="">
-        <!-- Campo oculto para token de autorización -->
-        <input type="hidden" id="auth_token" name="auth_token" value="">
 
         <div class="form-group">
           <label for="name">Nombre</label>
