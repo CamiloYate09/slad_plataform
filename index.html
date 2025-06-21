@@ -56,11 +56,16 @@
     </ul>
   </nav>
 
-  <!-- Formulario Popup -->
+  <!-- Formulario Popup con protección de autorización -->
   <div class="form-overlay">
     <div class="form-container">
-      <button class="close-form">&times;</button>
-      <form class="form">
+      <button class="close-form" aria-label="Cerrar formulario">&times;</button>
+      <form class="form" method="POST" action="submit_form.php" autocomplete="off">
+        <!-- Campo oculto para token CSRF -->
+        <input type="hidden" id="csrf_token" name="csrf_token" value="">
+        <!-- Campo oculto para token de autorización -->
+        <input type="hidden" id="auth_token" name="auth_token" value="">
+
         <div class="form-group">
           <label for="name">Nombre</label>
           <input 
@@ -97,6 +102,9 @@
             maxlength="40"
             pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
             title="Ingresa un correo válido">
+        </div>
+        <div class="form-group form-disclaimer">
+          <p>Sus datos serán procesados de forma segura y de acuerdo con nuestra <a href="#" class="privacy-link">política de privacidad</a>.</p>
         </div>
         <button class="form-submit-btn" type="submit">Enviar</button>
       </form>
@@ -155,7 +163,7 @@
     .btn-hover-effect {
       pointer-events: none;
     }
-    
+
     .btn:hover .btn-hover-effect {
       opacity: 1;
     }
