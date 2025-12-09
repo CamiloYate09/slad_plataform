@@ -23,7 +23,7 @@
   box-sizing: border-box;
 }
 
-/* Estilo global para textos - Improved Accessibility */
+/* Estilo global para textos */
 h1, h2, h3, h4, h5, p, a, .letter-s {
   color: var(--text-color);
   text-shadow: var(--text-shadow);
@@ -31,28 +31,31 @@ h1, h2, h3, h4, h5, p, a, .letter-s {
   background: linear-gradient(144deg, #af40ff, #5b42f3 50%, #00ddeb);
   -webkit-background-clip: text;
   background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: transparent;
+  -webkit-text-stroke: 4px transparent;
+  text-stroke: 4px transparent;
 }
 
-/* Removed pseudo-elements ::before to improve accessibility and performance */
-/* data-text attribute is kept in HTML for potential aria-label use but not rendered as pseudo-content */
-
-.button-container {
+h1::before, h2::before, h3::before, h4::before, h5::before, p::before, a::before, .letter-s::before {
+  content: attr(data-text);
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, calc(-50% + 225px));
-  z-index: 10;
+  left: 0;
+  top: 0;
+  z-index: -1;
+  background: rgb(5, 6, 45);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-stroke: 2px var(--text-border);
+  text-stroke: 2px var(--text-border);
 }
 
 .btn {
-  position: relative;
+  position: absolute;
   align-items: center;
   background-image: linear-gradient(144deg, #af40ff, #5b42f3 50%, #00ddeb);
   border: 0;
   border-radius: 8px;
-  box-shadow: rgba(151, 65, 252, 0.3) 0 15px 30px -5px;
+  box-shadow: rgba(151, 65, 252, 0.2) 0 15px 30px -5px;
   box-sizing: border-box;
   color: #ffffff;
   display: flex;
@@ -68,8 +71,7 @@ h1, h2, h3, h4, h5, p, a, .letter-s {
   touch-action: manipulation;
   white-space: nowrap;
   cursor: pointer;
-  transition: all 0.3s ease;
-  font-weight: 600;
+  transition: all 0.3s;
 }
 
 .btn span {
@@ -78,26 +80,28 @@ h1, h2, h3, h4, h5, p, a, .letter-s {
   border-radius: 6px;
   width: 100%;
   height: 100%;
-  transition: all 300ms ease;
+  transition: 300ms;
   display: block;
   color: #ffffff;
-  font-weight: 600;
-}
-
-.btn:hover {
-  box-shadow: rgba(151, 65, 252, 0.5) 0 20px 40px -5px;
-  transform: translateY(-2px);
-  outline: 0;
 }
 
 .btn:hover span {
-  background: linear-gradient(144deg, #af40ff, #5b42f3 50%, #00ddeb);
-  color: #ffffff;
+  background: none;
+}
+
+.btn:active,
+.btn:hover {
+  outline: 0;
 }
 
 .btn:active {
-  transform: scale(0.98);
-  outline: 0;
+  transform: scale(0.9) translate(-50%, calc(-50% + 225px));
+}
+
+.container .explore {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, calc(-50% + 225px));
 }
 
 .btn:focus-visible {
@@ -309,48 +313,6 @@ nav {
   border: 1px solid var(--text-dark);
 }
 
-.container section {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-}
-
-.container section h1 {
-  position: absolute;
-  top: -9999px;
-  left: -9999px;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-}
-
-.feature-card {
-  position: static;
-}
-
-.feature-card p {
-  position: absolute;
-  top: -9999px;
-  left: -9999px;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-}
-
-header {
-  position: relative;
-  z-index: 100;
-}
-
-main {
-  position: relative;
-  width: 100%;
-  height: 100%;
-}
-
-.container h2,
 .container h5 {
   position: absolute;
   top: 50%;
@@ -359,17 +321,8 @@ main {
   font-weight: 500;
   -webkit-text-stroke: 1px var(--text-border);
   text-stroke: 1px var(--text-border);
-  transition: all 0.3s ease;
 }
 
-.container h2:hover,
-.container h5:hover {
-  transform: scale(1.1);
-  opacity: 0.9;
-  cursor: pointer;
-}
-
-.container h2::after,
 .container h5::after {
   position: absolute;
   content: "";
@@ -533,10 +486,6 @@ main {
     max-width: 150px;
   }
 
-  .button-container {
-    transform: translate(-50%, calc(-50% + 150px));
-  }
-
   .feature-1 {
     transform: translate(calc(-50% - 120px), calc(-50% - 90px));
   }
@@ -625,10 +574,6 @@ main {
 
   .container img {
     max-width: 120px;
-  }
-
-  .button-container {
-    transform: translate(-50%, calc(-50% + 100px));
   }
 
   .feature-1 {

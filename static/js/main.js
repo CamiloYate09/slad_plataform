@@ -36,12 +36,11 @@ ScrollReveal().reveal(".container .text__right", {
   origin: "left",
   delay: 2000,
 });
-ScrollReveal().reveal(".button-container", {
+ScrollReveal().reveal(".container .explore", {
   duration: 1000,
   delay: 2500,
 });
-// Updated selector to include h2 and h5
-ScrollReveal().reveal(".container h2, .container h5", {
+ScrollReveal().reveal(".container h5", {
   duration: 1000,
   interval: 500,
   delay: 3000,

@@ -56,55 +56,38 @@
   </picture>
 </div>
 <div class="container">
-  <header>
-    <nav role="navigation" aria-label="Navegación principal">
-      <ul class="nav__links nav__left">
-        <li><a href="#inicio" class="logo" title="Volver al inicio">CityStream 🇨🇴</a></li>
-      </ul>
-      <ul class="nav__links nav__right">
-        <li><a href="#features" title="Ver características">Características</a></li>
-        <li><a href="#contacto" title="Contactar">Contacto</a></li>
-      </ul>
-    </nav>
-  </header>
+  <nav role="navigation" aria-label="Navegación principal">
+    <ul class="nav__links nav__left">
+      <li><a href="#inicio" class="logo" data-text="CityStream 🇨🇴" title="Volver al inicio" aria-label="CityStream Colombia - Ir al inicio">CityStream 🇨🇴</a></li>
+    </ul>
+    <ul class="nav__links nav__right">
+      <li><a href="#features" data-text="Características" title="Ver características">Características</a></li>
+      <li><a href="#contacto" data-text="Contacto" title="Contactar">Contacto</a></li>
+    </ul>
+  </nav>
 
-  <main>
-    <img src="static/img/logo-citystream.png" alt="Logo de CityStream - La primera red social creada en Colombia" id="inicio" />
+  <img src="static/img/logo-citystream.png" alt="Logo de CityStream - La primera red social creada en Colombia" id="inicio" role="img" />
 
-    <div class="button-container">
-      <a href="#features" class="btn explore" title="Explora características de CityStream">
-        <span>Descubre tu ciudad</span>
-      </a>
-    </div>
+  <div class="button-container">
+    <a href="#features" class="btn explore" title="Explora características de CityStream">
+      <span>Descubre tu ciudad</span>
+    </a>
+  </div>
 
-    <section id="features" aria-label="Características principales">
-      <h1>Características de CityStream</h1>
-      <article class="feature-card">
-        <h2 class="feature-1" title="Descubre ciudades">Ciudades</h2>
-        <p>Descubre y explora ciudades de Colombia</p>
-      </article>
-      <article class="feature-card">
-        <h2 class="feature-2" title="Explora eventos locales">Eventos</h2>
-        <p>Encuentra eventos y actividades locales</p>
-      </article>
-      <article class="feature-card">
-        <h2 class="feature-3" title="Conecta con personas">Personas</h2>
-        <p>Conecta con personas de tu comunidad</p>
-      </article>
-      <article class="feature-card">
-        <h2 class="feature-4" title="Encuentra conciertos">Conciertos</h2>
-        <p>Explora conciertos y entretenimiento</p>
-      </article>
-    </section>
-  </main>
+  <div role="region" aria-label="Características principales">
+    <h5 class="feature-1" data-text="Ciudades" title="Descubre ciudades" tabindex="0">Ciudades</h5>
+    <h5 class="feature-2" data-text="Eventos" title="Explora eventos locales" tabindex="0">Eventos</h5>
+    <h5 class="feature-3" data-text="Personas" title="Conecta con personas" tabindex="0">Personas</h5>
+    <h5 class="feature-4" data-text="Conciertos" title="Encuentra conciertos" tabindex="0">Conciertos</h5>
+  </div>
 
-  <footer class="footer" id="contacto" role="contentinfo">
-    <p>&copy; 2025 CityStream. Todos los derechos reservados.</p>
+  <footer class="footer" id="contacto" role="contentinfo" aria-label="Información de contacto">
+    <p data-text="Copyright © 2025 CityStream. All rights reserved.">Copyright © 2025 CityStream. All rights reserved.</p>
     <ul class="footer__links" aria-label="Enlaces de redes sociales">
-      <li><a target="_blank" rel="noopener noreferrer" href="https://www.youtube.com/@CityStream-CO" title="Síguenos en YouTube">Youtube</a></li>
-      <li><a target="_blank" rel="noopener noreferrer" href="https://www.facebook.com/citystream" title="Síguenos en Facebook">Facebook</a></li>
-      <li><a target="_blank" rel="noopener noreferrer" href="https://www.instagram.com/citystream.co/" title="Síguenos en Instagram">Instagram</a></li>
-      <li><a target="_blank" rel="noopener noreferrer" href="https://twitter.com/citystream" title="Síguenos en Twitter">Twitter</a></li>
+      <li><a target="_blank" rel="noopener noreferrer" href="https://www.youtube.com/@CityStream-CO" data-text="Youtube" title="Síguenos en YouTube" aria-label="YouTube - CityStream Colombia">Youtube</a></li>
+      <li><a target="_blank" rel="noopener noreferrer" href="https://www.facebook.com/citystream" data-text="Facebook" title="Síguenos en Facebook" aria-label="Facebook - CityStream Colombia">Facebook</a></li>
+      <li><a target="_blank" rel="noopener noreferrer" href="https://www.instagram.com/citystream.co/" data-text="Instagram" title="Síguenos en Instagram" aria-label="Instagram - CityStream Colombia">Instagram</a></li>
+      <li><a target="_blank" rel="noopener noreferrer" href="https://twitter.com/citystream" data-text="Twitter" title="Síguenos en Twitter" aria-label="Twitter - CityStream Colombia">Twitter</a></li>
     </ul>
   </footer>
 </div>
