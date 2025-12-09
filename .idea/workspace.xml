@@ -4,13 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="62981eb4-61cd-4c42-94fe-99f98c73b136" name="Changes" comment="Add meta tags for SEO optimization&#10;&#10;Included meta tags for description, keywords, author, and robots to enhance the site's search engine visibility and ranking. This helps improve discoverability and provides better context for search engines.">
-      <change afterPath="$PROJECT_DIR$/static/img/5.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/img/6.jpg" afterDir="false" />
+    <list default="true" id="62981eb4-61cd-4c42-94fe-99f98c73b136" name="Changes" comment="Update text content for feature-3 section in index.html to reflect &quot;Personas&quot; instead of &quot;Ropa&quot;.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/css/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/js/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/js/main.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mockup.html" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,7 +36,7 @@
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;https://github.com/CamiloYate09/slad_plataform.git&quot;,
-    &quot;accountId&quot;: &quot;6d92f9c2-5880-4506-a685-2a22ba2a1fcb&quot;
+    &quot;accountId&quot;: &quot;b8ac6a00-493b-4546-ab30-815f7ac3ad05&quot;
   }
 }</component>
   <component name="KubernetesApiPersistence">{}</component>
@@ -61,26 +57,27 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/camiloyate/WebstormProjects/slad_plataform/static/img&quot;,
-    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "DefaultHtmlFileTemplate": "HTML File",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "main",
+    "junie.onboarding.icon.badge.shown": "true",
+    "last_opened_file_path": "/Users/camiloyate/Documents/CityStream-PaginaWeb/slad_plataform",
+    "list.type.of.created.stylesheet": "CSS",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/static/img" />
@@ -100,7 +97,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-1632447f56bf-JavaScript-WS-243.26053.12" />
+        <option value="bundled-js-predefined-d6986cc7102b-6a121458b545-JavaScript-WS-251.25410.117" />
       </set>
     </attachedChunks>
   </component>
@@ -129,6 +126,9 @@
       <workItem from="1742273406903" duration="1491000" />
       <workItem from="1742274908693" duration="156000" />
       <workItem from="1742275071996" duration="539000" />
+      <workItem from="1750519044527" duration="1026000" />
+      <workItem from="1752296398274" duration="1382000" />
+      <workItem from="1757553929352" duration="2746000" />
     </task>
     <task id="LOCAL-00001" summary="Index base">
       <created>1688274935956</created>
@@ -310,7 +310,47 @@
       <option name="project" value="LOCAL" />
       <updated>1741575071702</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="Enhance form security with CSRF and authorization tokens&#10;&#10;Implemented CSRF protection and authorization checks for form interactions. Added token generation, validation, and error handling mechanisms to prevent unauthorized access and enhance overall security. Updated HTML for accessibility improvements and included form privacy disclaimer.">
+      <option name="closed" value="true" />
+      <created>1750519416283</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1750519416283</updated>
+    </task>
+    <task id="LOCAL-00026" summary="Remove redundant DOM-based security check function and periodic validation&#10;&#10;Eliminated the `securityCheck` function and associated `setInterval` logic from `main.js`, as these security measures were redundant and unnecessary given existing protections.">
+      <option name="closed" value="true" />
+      <created>1750519746865</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1750519746865</updated>
+    </task>
+    <task id="LOCAL-00027" summary="Add metadata to improve SEO and minor HTML formatting fixes">
+      <option name="closed" value="true" />
+      <created>1752296557110</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1752296557110</updated>
+    </task>
+    <task id="LOCAL-00028" summary="Comment out unused HTML code in index.html for better clarity and maintainability.">
+      <option name="closed" value="true" />
+      <created>1757554156369</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1757554156369</updated>
+    </task>
+    <task id="LOCAL-00029" summary="Update text content for feature-3 section in index.html to reflect &quot;Personas&quot; instead of &quot;Ropa&quot;.">
+      <option name="closed" value="true" />
+      <created>1757554526588</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1757554526588</updated>
+    </task>
+    <option name="localTasksCounter" value="30" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -321,16 +361,25 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="origin/CamiloYate09-patch-1" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
       </map>
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Index base" />
-    <MESSAGE value="gitlab ci" />
-    <MESSAGE value="gitlab ci 2" />
     <MESSAGE value="ajuste de dominio" />
     <MESSAGE value="Soporte nuevo codigo" />
     <MESSAGE value="Soporte nuevo codigo 2" />
@@ -351,6 +400,11 @@
     <MESSAGE value="Add favicon and update page title  &#10;&#10;Added a favicon with multiple icon sizes to enhance branding and improve the site's presentation. Updated the page title to include &quot;Conectando Mundos&quot; for a more descriptive and engaging identity." />
     <MESSAGE value="Update favicon link and type in index.html&#10;&#10;Corrected the favicon file path and adjusted the type attribute value. This ensures the favicon loads properly and aligns with standard conventions." />
     <MESSAGE value="Add meta tags for SEO optimization&#10;&#10;Included meta tags for description, keywords, author, and robots to enhance the site's search engine visibility and ranking. This helps improve discoverability and provides better context for search engines." />
-    <option name="LAST_COMMIT_MESSAGE" value="Add meta tags for SEO optimization&#10;&#10;Included meta tags for description, keywords, author, and robots to enhance the site's search engine visibility and ranking. This helps improve discoverability and provides better context for search engines." />
+    <MESSAGE value="Enhance form security with CSRF and authorization tokens&#10;&#10;Implemented CSRF protection and authorization checks for form interactions. Added token generation, validation, and error handling mechanisms to prevent unauthorized access and enhance overall security. Updated HTML for accessibility improvements and included form privacy disclaimer." />
+    <MESSAGE value="Remove redundant DOM-based security check function and periodic validation&#10;&#10;Eliminated the `securityCheck` function and associated `setInterval` logic from `main.js`, as these security measures were redundant and unnecessary given existing protections." />
+    <MESSAGE value="Add metadata to improve SEO and minor HTML formatting fixes" />
+    <MESSAGE value="Comment out unused HTML code in index.html for better clarity and maintainability." />
+    <MESSAGE value="Update text content for feature-3 section in index.html to reflect &quot;Personas&quot; instead of &quot;Ropa&quot;." />
+    <option name="LAST_COMMIT_MESSAGE" value="Update text content for feature-3 section in index.html to reflect &quot;Personas&quot; instead of &quot;Ropa&quot;." />
   </component>
 </project>

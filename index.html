@@ -1,12 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="CityStream: información sobre la primera red social creada en Colombia. Descubre eventos, conciertos, ropa y más desde nuestra plataforma." />
-  <meta name="keywords" content="primera red social en Colombia, Sónico, redes sociales, CityStream, eventos en Colombia, ropa, conciertos, turismo en Colombia" />
+  <meta name="description" content="CityStream - La primera red social de Colombia. Conecta con tu ciudad, descubre eventos, personas y conciertos. ¡Únete ahora!" />
+  <meta name="keywords" content="red social Colombia, eventos locales, CityStream, ciudades, conciertos, personas" />
   <meta name="author" content="CityStream" />
   <meta name="robots" content="index, follow" />
+  <meta name="theme-color" content="#3f133e" />
+  <meta property="og:title" content="CityStream | La Primera Red Social Colombiana" />
+  <meta property="og:description" content="Conecta con tu ciudad, descubre eventos, personas y conciertos en CityStream - La primera red social creada en Colombia." />
+  <meta property="og:url" content="https://citystream.co" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://citystream.co/image/apple-touch-icon.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="CityStream | La Primera Red Social Colombiana" />
+  <meta name="twitter:description" content="Conecta con tu ciudad en CityStream - La primera red social creada en Colombia." />
   <link rel="icon" href="image/favicon-32x32.png" type="favicon.png"/>
   <link
     href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css"
@@ -47,80 +56,56 @@
   </picture>
 </div>
 <div class="container">
-  <nav>
-    <ul class="nav__links nav__left">
-      <li><a href="#" class="logo" data-text="CityStream 🇨🇴">CityStream 🇨🇴</a></li>
-    </ul>
-    <ul class="nav__links nav__right">
-      <li><a href="#" data-text="Próximamente...">Próximamente...</a></li>
-    </ul>
-  </nav>
+  <header>
+    <nav role="navigation" aria-label="Navegación principal">
+      <ul class="nav__links nav__left">
+        <li><a href="#inicio" class="logo" title="Volver al inicio">CityStream 🇨🇴</a></li>
+      </ul>
+      <ul class="nav__links nav__right">
+        <li><a href="#features" title="Ver características">Características</a></li>
+        <li><a href="#contacto" title="Contactar">Contacto</a></li>
+      </ul>
+    </nav>
+  </header>
 
+  <main>
+    <img src="static/img/logo-citystream.png" alt="Logo de CityStream - La primera red social creada en Colombia" id="inicio" />
 
-  <img src="static/img/logo-citystream.png" alt="header" />
-<!--
-
-  <div class="button-container" style="
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-    margin: 20px 0;
-  ">
-    <a href="mockup.html" class="btn explore">
-      <span>Descubre tú ciudad</span>
-    </a>
-
-    <a
-      href="https://www.bluelizard-on.com"
-      target="_blank"
-      rel="noopener noreferrer"
-      class="btn explore"
-      onclick="window.open(this.href, '_blank'); return false;"
-      style="
-        background: linear-gradient(45deg, #2193b0, #6dd5ed);
-        border: 2px solid rgba(255, 255, 255, 0.2);
-        position: relative;
-        overflow: hidden;
-        cursor: pointer;
-    ">
-      <span style="position: relative; z-index: 1;">Visita BlueLizard 🦎</span>
-      <div class="btn-hover-effect" style="
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(45deg, #6dd5ed, #2193b0);
-        opacity: 0;
-        transition: opacity 0.3s ease;
-      "></div>
-    </a>
-  </div>
--->
-
-  <style>
-    .btn-hover-effect {
-      pointer-events: none;
-    }
-
-    .btn:hover .btn-hover-effect {
-      opacity: 1;
-    }
-  </style>
-
-  <h5 class="feature-1" data-text="Cuidades">Cuidades</h5>
-  <h5 class="feature-2" data-text="Eventos">Eventos</h5>
-  <h5 class="feature-3" data-text="Personas">Personas</h5>
-  <h5 class="feature-4" data-text="Conciertos">Conciertos</h5>
-  <footer class="footer">
-    <p data-text="Copyright © 2025 CityStream. All rights reserved.">Copyright © 2025 CityStream. All rights reserved.</p>
-    <div class="footer__links">
-      <li><a target="_blank" href="https://www.youtube.com/@CityStream-CO" data-text="Youtube">Youtube</a></li>
-      <li><a href="#" data-text="Facebook">Facebook</a></li>
-      <li><a target="_blank" href="https://www.instagram.com/citystream.co/" data-text="Instagram">Instagram</a></li>
-      <li><a href="#" data-text="Twitter">Twitter</a></li>
+    <div class="button-container">
+      <a href="#features" class="btn explore" title="Explora características de CityStream">
+        <span>Descubre tu ciudad</span>
+      </a>
     </div>
+
+    <section id="features" aria-label="Características principales">
+      <h1>Características de CityStream</h1>
+      <article class="feature-card">
+        <h2 class="feature-1" title="Descubre ciudades">Ciudades</h2>
+        <p>Descubre y explora ciudades de Colombia</p>
+      </article>
+      <article class="feature-card">
+        <h2 class="feature-2" title="Explora eventos locales">Eventos</h2>
+        <p>Encuentra eventos y actividades locales</p>
+      </article>
+      <article class="feature-card">
+        <h2 class="feature-3" title="Conecta con personas">Personas</h2>
+        <p>Conecta con personas de tu comunidad</p>
+      </article>
+      <article class="feature-card">
+        <h2 class="feature-4" title="Encuentra conciertos">Conciertos</h2>
+        <p>Explora conciertos y entretenimiento</p>
+      </article>
+    </section>
+  </main>
+
+  <footer class="footer" id="contacto" role="contentinfo">
+    <p>&copy; 2025 CityStream. Todos los derechos reservados.</p>
+    <ul class="footer__links" aria-label="Enlaces de redes sociales">
+      <li><a target="_blank" rel="noopener noreferrer" href="https://www.youtube.com/@CityStream-CO" title="Síguenos en YouTube">Youtube</a></li>
+      <li><a target="_blank" rel="noopener noreferrer" href="https://www.facebook.com/citystream" title="Síguenos en Facebook">Facebook</a></li>
+      <li><a target="_blank" rel="noopener noreferrer" href="https://www.instagram.com/citystream.co/" title="Síguenos en Instagram">Instagram</a></li>
+      <li><a target="_blank" rel="noopener noreferrer" href="https://twitter.com/citystream" title="Síguenos en Twitter">Twitter</a></li>
+    </ul>
   </footer>
 </div>
 <script src="https://unpkg.com/scrollreveal"></script>

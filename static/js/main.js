@@ -1,3 +1,17 @@
+// Smooth scrolling for anchor links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function (e) {
+    e.preventDefault();
+    const target = document.querySelector(this.getAttribute('href'));
+    if (target) {
+      target.scrollIntoView({
+        behavior: 'smooth'
+      });
+    }
+  });
+});
+
+// ScrollReveal animations
 const scrollRevealOption = {
   distance: "50px",
   origin: "bottom",
@@ -22,11 +36,12 @@ ScrollReveal().reveal(".container .text__right", {
   origin: "left",
   delay: 2000,
 });
-ScrollReveal().reveal(".container .explore", {
+ScrollReveal().reveal(".button-container", {
   duration: 1000,
   delay: 2500,
 });
-ScrollReveal().reveal(".container h5", {
+// Updated selector to include h2 and h5
+ScrollReveal().reveal(".container h2, .container h5", {
   duration: 1000,
   interval: 500,
   delay: 3000,
@@ -39,7 +54,7 @@ ScrollReveal().reveal(".container .print", {
   duration: 1000,
   delay: 5500,
 });
-ScrollReveal().reveal(".footer p", {
+ScrollReveal().reveal(".footer", {
   duration: 1000,
   delay: 7000,
 });
