@@ -44,6 +44,7 @@ h1::before, h2::before, h3::before, h4::before, h5::before, p::before, a::before
   color: transparent;
   -webkit-text-stroke: 0px transparent;
   text-stroke: 0px transparent;
+  visibility: hidden;
 }
 
 .btn {
