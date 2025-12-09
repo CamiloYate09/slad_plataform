@@ -333,22 +333,22 @@ nav {
 
 .feature-1 {
   color: var(--text-color);
-  transform: translate(calc(-50% - 300px), calc(-50% - 200px));
+  transform: translate(-350px, -250px);
 }
 
 .feature-2 {
   color: var(--text-color);
-  transform: translate(calc(-50% + 300px), calc(-50% - 200px));
+  transform: translate(350px, -250px);
 }
 
 .feature-3 {
   color: var(--text-color);
-  transform: translate(calc(-50% - 300px), calc(-50% + 200px));
+  transform: translate(-350px, 250px);
 }
 
 .feature-4 {
   color: var(--text-color);
-  transform: translate(calc(-50% + 300px), calc(-50% + 200px));
+  transform: translate(350px, 250px);
 }
 
 .feature-1::after,
