@@ -222,11 +222,11 @@ nav {
   font-size: var(--fs-md);
   font-weight: 800;
   padding: 8px 12px;
-  color: var(--text-color);
-  background: none;
-  -webkit-background-clip: unset;
-  background-clip: unset;
-  -webkit-text-fill-color: unset;
+  color: #ffffff !important;
+  background: none !important;
+  -webkit-background-clip: unset !important;
+  background-clip: unset !important;
+  -webkit-text-fill-color: #ffffff !important;
 }
 
 .nav__left a {
