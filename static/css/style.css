@@ -26,7 +26,6 @@
 /* Estilo global para textos */
 h1, h2, h3, h4, h5, p, a, .letter-s {
   color: var(--text-color);
-  text-shadow: var(--text-shadow);
   position: relative;
   background: linear-gradient(144deg, #af40ff, #5b42f3 50%, #00ddeb);
   -webkit-background-clip: text;
@@ -213,7 +212,6 @@ nav {
   font-weight: 500;
   font-size: var(--fs-base);
   color: var(--text-color);
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.9);
   padding: 8px 12px;
   border-radius: 4px;
   transition: all 0.3s ease;
@@ -240,7 +238,6 @@ nav {
 
 .nav__links a:hover {
   color: var(--primary-color);
-  text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.7);
   background: rgba(175, 64, 255, 0.1);
   border-radius: 4px;
   padding: 8px 12px;
@@ -333,25 +330,21 @@ nav {
 
 .feature-1 {
   color: var(--text-color);
-  text-shadow: var(--text-shadow);
   transform: translate(calc(-50% - 300px), calc(-50% - 200px));
 }
 
 .feature-2 {
   color: var(--text-color);
-  text-shadow: var(--text-shadow);
   transform: translate(calc(-50% + 300px), calc(-50% - 200px));
 }
 
 .feature-3 {
   color: var(--text-color);
-  text-shadow: var(--text-shadow);
   transform: translate(calc(-50% - 300px), calc(-50% + 200px));
 }
 
 .feature-4 {
   color: var(--text-color);
-  text-shadow: var(--text-shadow);
   transform: translate(calc(-50% + 300px), calc(-50% + 200px));
 }
 
@@ -385,7 +378,6 @@ nav {
 .footer p {
   font-size: var(--fs-sm);
   color: var(--text-color);
-  text-shadow: var(--text-shadow);
 }
 
 .footer__links {
@@ -423,10 +415,6 @@ nav {
 .footer__links a {
   font-size: var(--fs-base);
   color: var(--text-color);
-  text-shadow: var(--text-shadow);
-}
-
-.footer__links a {
   position: relative;
   transition: all 0.3s ease;
 }
@@ -444,7 +432,6 @@ nav {
 
 .footer__links a:hover {
   color: var(--primary-color);
-  text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.7);
 }
 
 .footer__links a:hover::before {
