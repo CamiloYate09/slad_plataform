@@ -25,7 +25,7 @@
 
 /* Estilo global para textos */
 h1, h2, h3, h4, h5, p, a, .letter-s {
-  color: var(--text-color);
+  color: transparent;
   position: relative;
   background: linear-gradient(144deg, #af40ff, #5b42f3 50%, #00ddeb);
   -webkit-background-clip: text;
@@ -212,7 +212,6 @@ nav {
 .nav__links a {
   font-weight: 500;
   font-size: var(--fs-base);
-  color: var(--text-color);
   padding: 8px 12px;
   border-radius: 4px;
   transition: all 0.3s ease;
@@ -230,11 +229,9 @@ nav {
 }
 
 .nav__left a {
-  color: var(--text-color);
 }
 
 .nav__right a {
-  color: var(--text-color);
 }
 
 .nav__links a:hover {
@@ -331,22 +328,18 @@ nav {
 }
 
 .feature-1 {
-  color: var(--text-color);
   transform: translate(calc(-50% - 300px), calc(-50% - 200px));
 }
 
 .feature-2 {
-  color: var(--text-color);
   transform: translate(calc(-50% + 300px), calc(-50% - 200px));
 }
 
 .feature-3 {
-  color: var(--text-color);
   transform: translate(calc(-50% - 300px), calc(-50% + 200px));
 }
 
 .feature-4 {
-  color: var(--text-color);
   transform: translate(calc(-50% + 300px), calc(-50% + 200px));
 }
 
@@ -379,7 +372,6 @@ nav {
 
 .footer p {
   font-size: var(--fs-sm);
-  color: var(--text-color);
 }
 
 .footer__links {
@@ -416,7 +408,6 @@ nav {
 
 .footer__links a {
   font-size: var(--fs-base);
-  color: var(--text-color);
   position: relative;
   transition: all 0.3s ease;
 }
