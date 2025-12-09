@@ -222,11 +222,11 @@ nav {
   font-size: var(--fs-md);
   font-weight: 800;
   padding: 8px 12px;
-  background: linear-gradient(144deg, #af40ff, #5b42f3 50%, #00ddeb);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: transparent;
+  color: var(--text-color);
+  background: none;
+  -webkit-background-clip: unset;
+  background-clip: unset;
+  -webkit-text-fill-color: unset;
 }
 
 .nav__left a {
