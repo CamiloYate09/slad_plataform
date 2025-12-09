@@ -22,7 +22,7 @@
     rel="stylesheet"
   />
   <link rel="stylesheet" href="static/css/style.css" />
-  <title>CityStream | Colombia 🇨🇴 | Conectando Mundos....</title>
+  <title>CityStream | Colombia | Conectando Mundos....</title>
 </head>
 <body>
 <div class="bg-slideshow">
@@ -51,44 +51,205 @@
     <source media="(max-width: 768px)" srcset="static/img/tablet/7.jpg">
     <div style="background-image: url('static/img/7.jpg');"></div>
   </picture>
-  <picture class="bg-slide">
-
-  </picture>
 </div>
-<div class="container">
-  <nav role="navigation" aria-label="Navegación principal">
-    <ul class="nav__links nav__left">
-      <li><a href="#inicio" class="logo" data-text="CityStream 🇨🇴" title="Volver al inicio" aria-label="CityStream Colombia - Ir al inicio">CityStream 🇨🇴</a></li>
-    </ul>
-    <ul class="nav__links nav__right">
-      <li><a href="#features" data-text="Características" title="Ver características">Características</a></li>
-      <li><a href="#contacto" data-text="Contacto" title="Contactar">Contacto</a></li>
-    </ul>
-  </nav>
 
-  <img src="static/img/logo-citystream.png" alt="Logo de CityStream - La primera red social creada en Colombia" id="inicio" role="img" />
+<!-- Navbar con Blur Backdrop -->
+<nav role="navigation" aria-label="Navegacion principal" id="navbar">
+  <ul class="nav__links nav__left">
+    <li><a href="#inicio" class="logo" data-text="CityStream" title="Volver al inicio" aria-label="CityStream Colombia - Ir al inicio">CityStream</a></li>
+  </ul>
+  <ul class="nav__links nav__right">
+    <li><a href="#features" data-text="Caracteristicas" title="Ver caracteristicas">Caracteristicas</a></li>
+    <li><a href="#cursos" data-text="Descubre" title="Descubre mas">Descubre</a></li>
+    <li><a href="#contacto" data-text="Contacto" title="Contactar">Contacto</a></li>
+  </ul>
+</nav>
 
-  <div class="button-container">
-    <a href="#features" class="btn explore" title="Explora características de CityStream">
-      <span>Descubre tu ciudad</span>
-    </a>
+<main>
+  <!-- Hero Section -->
+  <section class="hero-section" id="inicio">
+    <!-- Cubos decorativos animados -->
+    <div class="decorative-cube"></div>
+    <div class="decorative-cube"></div>
+    <div class="decorative-cube"></div>
+
+    <div class="hero-content">
+      <img src="static/img/logo-citystream.png" alt="Logo de CityStream" class="animate-float" style="max-width: 180px; margin-bottom: 2rem;" />
+      <h1 class="hero-title" data-text="Conecta con tu Ciudad">Conecta con tu Ciudad</h1>
+      <p class="hero-subtitle" data-text="La primera red social creada en Colombia. Descubre eventos, conecta con personas y vive experiencias unicas en tu ciudad.">La primera red social creada en Colombia. Descubre eventos, conecta con personas y vive experiencias unicas en tu ciudad.</p>
+      <div class="hero-cta">
+        <a href="#features" class="btn-primary animate-gradient">
+          <i class="ri-rocket-line"></i>
+          <span>Explorar Ahora</span>
+        </a>
+        <a href="#contacto" class="btn-secondary">
+          <i class="ri-mail-line"></i>
+          <span>Contactanos</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section con Grid -->
+  <section class="features-section" id="features">
+    <div class="section-header">
+      <h2 class="section-title" data-text="Descubre lo que puedes hacer">Descubre lo que puedes hacer</h2>
+      <p class="section-subtitle" data-text="Explora todas las funcionalidades que CityStream tiene para ti">Explora todas las funcionalidades que CityStream tiene para ti</p>
+    </div>
+
+    <div class="features-grid">
+      <article class="feature-card" tabindex="0">
+        <div class="feature-icon">
+          <i class="ri-building-line" style="color: var(--accent-orange);"></i>
+        </div>
+        <h3 class="feature-card-title" data-text="Ciudades">Ciudades</h3>
+        <p class="feature-card-description" data-text="Explora diferentes ciudades de Colombia y descubre lo mejor que cada una tiene para ofrecer.">Explora diferentes ciudades de Colombia y descubre lo mejor que cada una tiene para ofrecer.</p>
+      </article>
+
+      <article class="feature-card" tabindex="0">
+        <div class="feature-icon">
+          <i class="ri-calendar-event-line" style="color: var(--accent-green);"></i>
+        </div>
+        <h3 class="feature-card-title" data-text="Eventos">Eventos</h3>
+        <p class="feature-card-description" data-text="Encuentra eventos locales, desde conciertos hasta ferias gastronómicas. Nunca te pierdas de nada.">Encuentra eventos locales, desde conciertos hasta ferias gastronomicas. Nunca te pierdas de nada.</p>
+      </article>
+
+      <article class="feature-card" tabindex="0">
+        <div class="feature-icon">
+          <i class="ri-group-line" style="color: var(--accent-blue);"></i>
+        </div>
+        <h3 class="feature-card-title" data-text="Personas">Personas</h3>
+        <p class="feature-card-description" data-text="Conecta con personas que comparten tus intereses y amplía tu red social en tu ciudad.">Conecta con personas que comparten tus intereses y amplia tu red social en tu ciudad.</p>
+      </article>
+
+      <article class="feature-card" tabindex="0">
+        <div class="feature-icon">
+          <i class="ri-music-2-line" style="color: var(--accent-cyan);"></i>
+        </div>
+        <h3 class="feature-card-title" data-text="Conciertos">Conciertos</h3>
+        <p class="feature-card-description" data-text="Descubre los mejores conciertos y espectáculos en vivo cerca de ti. La música te espera.">Descubre los mejores conciertos y espectaculos en vivo cerca de ti. La musica te espera.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- Cursos/Descubre Section -->
+  <section class="courses-section" id="cursos">
+    <div class="section-header">
+      <h2 class="section-title" data-text="Experiencias Destacadas">Experiencias Destacadas</h2>
+      <p class="section-subtitle" data-text="Lo mejor de Colombia al alcance de tu mano">Lo mejor de Colombia al alcance de tu mano</p>
+    </div>
+
+    <div class="courses-grid">
+      <article class="course-card">
+        <div style="overflow: hidden; border-radius: 20px 20px 0 0;">
+          <img src="static/img/1.jpg" alt="Bogota - Capital de Colombia" class="course-image" />
+        </div>
+        <div class="course-content">
+          <span class="course-tag">Ciudad Capital</span>
+          <h3 class="course-title" data-text="Bogota">Bogota</h3>
+          <p class="course-description" data-text="Descubre la vibrante capital colombiana, sus museos, gastronomia y vida nocturna.">Descubre la vibrante capital colombiana, sus museos, gastronomia y vida nocturna.</p>
+        </div>
+      </article>
+
+      <article class="course-card">
+        <div style="overflow: hidden; border-radius: 20px 20px 0 0;">
+          <img src="static/img/5.jpg" alt="Medellin - Ciudad de la eterna primavera" class="course-image" />
+        </div>
+        <div class="course-content">
+          <span class="course-tag">Innovacion</span>
+          <h3 class="course-title" data-text="Medellin">Medellin</h3>
+          <p class="course-description" data-text="La ciudad de la eterna primavera te espera con su clima perfecto y su gente acogedora.">La ciudad de la eterna primavera te espera con su clima perfecto y su gente acogedora.</p>
+        </div>
+      </article>
+
+      <article class="course-card">
+        <div style="overflow: hidden; border-radius: 20px 20px 0 0;">
+          <img src="static/img/7.jpg" alt="Cartagena - Ciudad amurallada" class="course-image" />
+        </div>
+        <div class="course-content">
+          <span class="course-tag">Patrimonio</span>
+          <h3 class="course-title" data-text="Cartagena">Cartagena</h3>
+          <p class="course-description" data-text="Sumérgete en la historia de la ciudad amurallada y disfruta de sus playas caribeñas.">Sumergete en la historia de la ciudad amurallada y disfruta de sus playas caribenas.</p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- Newsletter Section -->
+  <section class="newsletter-section" id="newsletter">
+    <div class="newsletter-container">
+      <div class="newsletter-content">
+        <h2 class="newsletter-title" data-text="Mantente Conectado">Mantente Conectado</h2>
+        <p class="newsletter-text" data-text="Suscríbete para recibir las últimas novedades, eventos y actualizaciones de CityStream directamente en tu correo.">Suscribete para recibir las ultimas novedades, eventos y actualizaciones de CityStream directamente en tu correo.</p>
+      </div>
+      <form class="newsletter-form" action="#" method="POST">
+        <input type="email" class="newsletter-input" placeholder="Tu correo electronico" required aria-label="Correo electronico" />
+        <button type="submit" class="btn-primary animate-gradient">
+          <i class="ri-send-plane-line"></i>
+          <span>Suscribirme</span>
+        </button>
+      </form>
+    </div>
+  </section>
+</main>
+
+<!-- Footer Mejorado -->
+<footer class="footer-new" id="contacto" role="contentinfo" aria-label="Informacion de contacto">
+  <div class="footer-grid">
+    <div class="footer-column">
+      <h4 data-text="CityStream">CityStream</h4>
+      <ul>
+        <li><a href="#inicio" data-text="Inicio">Inicio</a></li>
+        <li><a href="#features" data-text="Caracteristicas">Caracteristicas</a></li>
+        <li><a href="#cursos" data-text="Descubre">Descubre</a></li>
+      </ul>
+    </div>
+    <div class="footer-column">
+      <h4 data-text="Ciudades">Ciudades</h4>
+      <ul>
+        <li><a href="#" data-text="Bogota">Bogota</a></li>
+        <li><a href="#" data-text="Medellin">Medellin</a></li>
+        <li><a href="#" data-text="Cartagena">Cartagena</a></li>
+        <li><a href="#" data-text="Cali">Cali</a></li>
+      </ul>
+    </div>
+    <div class="footer-column">
+      <h4 data-text="Legal">Legal</h4>
+      <ul>
+        <li><a href="#" data-text="Terminos de Uso">Terminos de Uso</a></li>
+        <li><a href="#" data-text="Privacidad">Privacidad</a></li>
+        <li><a href="#" data-text="Cookies">Cookies</a></li>
+      </ul>
+    </div>
+    <div class="footer-column">
+      <h4 data-text="Contacto">Contacto</h4>
+      <ul>
+        <li><a href="mailto:info@citystream.co" data-text="info@citystream.co">info@citystream.co</a></li>
+        <li><a href="#" data-text="Soporte">Soporte</a></li>
+        <li><a href="#" data-text="FAQ">FAQ</a></li>
+      </ul>
+    </div>
   </div>
 
-  <h5 class="feature-1" data-text="Ciudades" title="Descubre ciudades" tabindex="0">Ciudades</h5>
-  <h5 class="feature-2" data-text="Eventos" title="Explora eventos locales" tabindex="0">Eventos</h5>
-  <h5 class="feature-3" data-text="Personas" title="Conecta con personas" tabindex="0">Personas</h5>
-  <h5 class="feature-4" data-text="Conciertos" title="Encuentra conciertos" tabindex="0">Conciertos</h5>
+  <div class="footer-bottom">
+    <p data-text="Copyright 2025 CityStream. Todos los derechos reservados.">Copyright 2025 CityStream. Todos los derechos reservados.</p>
+    <div class="footer-social" aria-label="Redes sociales">
+      <a href="https://www.youtube.com/@CityStream-CO" target="_blank" rel="noopener noreferrer" title="YouTube" aria-label="YouTube">
+        <i class="ri-youtube-line"></i>
+      </a>
+      <a href="https://www.facebook.com/citystream" target="_blank" rel="noopener noreferrer" title="Facebook" aria-label="Facebook">
+        <i class="ri-facebook-line"></i>
+      </a>
+      <a href="https://www.instagram.com/citystream.co/" target="_blank" rel="noopener noreferrer" title="Instagram" aria-label="Instagram">
+        <i class="ri-instagram-line"></i>
+      </a>
+      <a href="https://twitter.com/citystream" target="_blank" rel="noopener noreferrer" title="Twitter" aria-label="Twitter">
+        <i class="ri-twitter-x-line"></i>
+      </a>
+    </div>
+  </div>
+</footer>
 
-  <footer class="footer" id="contacto" role="contentinfo" aria-label="Información de contacto">
-    <p data-text="Copyright © 2025 CityStream. All rights reserved.">Copyright © 2025 CityStream. All rights reserved.</p>
-    <ul class="footer__links" aria-label="Enlaces de redes sociales">
-      <li><a target="_blank" rel="noopener noreferrer" href="https://www.youtube.com/@CityStream-CO" data-text="Youtube" title="Síguenos en YouTube" aria-label="YouTube - CityStream Colombia">Youtube</a></li>
-      <li><a target="_blank" rel="noopener noreferrer" href="https://www.facebook.com/citystream" data-text="Facebook" title="Síguenos en Facebook" aria-label="Facebook - CityStream Colombia">Facebook</a></li>
-      <li><a target="_blank" rel="noopener noreferrer" href="https://www.instagram.com/citystream.co/" data-text="Instagram" title="Síguenos en Instagram" aria-label="Instagram - CityStream Colombia">Instagram</a></li>
-      <li><a target="_blank" rel="noopener noreferrer" href="https://twitter.com/citystream" data-text="Twitter" title="Síguenos en Twitter" aria-label="Twitter - CityStream Colombia">Twitter</a></li>
-    </ul>
-  </footer>
-</div>
 <script src="https://unpkg.com/scrollreveal"></script>
 <script src="static/js/main.js"></script>
 </body>

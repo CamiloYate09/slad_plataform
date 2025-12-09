@@ -11,69 +11,167 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   });
 });
 
-// ScrollReveal animations
+// Navbar scroll effect - adds blur and shadow on scroll
+const navbar = document.getElementById('navbar');
+let lastScroll = 0;
+
+window.addEventListener('scroll', () => {
+  const currentScroll = window.pageYOffset;
+
+  if (currentScroll > 50) {
+    navbar.classList.add('scrolled');
+  } else {
+    navbar.classList.remove('scrolled');
+  }
+
+  lastScroll = currentScroll;
+});
+
+// ScrollReveal animations - Updated for new sections
 const scrollRevealOption = {
   distance: "50px",
   origin: "bottom",
   duration: 1000,
+  easing: 'cubic-bezier(0.5, 0, 0, 1)',
+  reset: false
 };
 
-ScrollReveal().reveal(".container .letter-s", {
-  duration: 1000,
+// Hero Section animations
+ScrollReveal().reveal(".hero-content img", {
+  ...scrollRevealOption,
+  delay: 200,
+  origin: "top"
+});
+
+ScrollReveal().reveal(".hero-title", {
+  ...scrollRevealOption,
+  delay: 400,
+});
+
+ScrollReveal().reveal(".hero-subtitle", {
+  ...scrollRevealOption,
+  delay: 600,
+});
+
+ScrollReveal().reveal(".hero-cta", {
+  ...scrollRevealOption,
+  delay: 800,
+});
+
+// Decorative cubes
+ScrollReveal().reveal(".decorative-cube", {
+  ...scrollRevealOption,
   delay: 1000,
-});
-ScrollReveal().reveal(".container img", {
-  duration: 1000,
-  delay: 1500,
-});
-ScrollReveal().reveal(".container .text__left", {
-  ...scrollRevealOption,
-  origin: "right",
-  delay: 2000,
-});
-ScrollReveal().reveal(".container .text__right", {
-  ...scrollRevealOption,
-  origin: "left",
-  delay: 2000,
-});
-ScrollReveal().reveal(".container .explore", {
-  duration: 1000,
-  delay: 2500,
-});
-ScrollReveal().reveal(".container h5", {
-  duration: 1000,
-  interval: 500,
-  delay: 3000,
-});
-ScrollReveal().reveal(".container .catalog", {
-  duration: 1000,
-  delay: 5000,
-});
-ScrollReveal().reveal(".container .print", {
-  duration: 1000,
-  delay: 5500,
-});
-ScrollReveal().reveal(".footer", {
-  duration: 1000,
-  delay: 7000,
+  interval: 200,
+  origin: "left"
 });
 
+// Features Section
+ScrollReveal().reveal(".section-header", {
+  ...scrollRevealOption,
+  delay: 200,
+});
+
+ScrollReveal().reveal(".feature-card", {
+  ...scrollRevealOption,
+  delay: 300,
+  interval: 150,
+});
+
+// Courses/Cities Section
+ScrollReveal().reveal(".course-card", {
+  ...scrollRevealOption,
+  delay: 200,
+  interval: 200,
+});
+
+// Newsletter Section
+ScrollReveal().reveal(".newsletter-container", {
+  ...scrollRevealOption,
+  delay: 200,
+  scale: 0.95
+});
+
+// Footer
+ScrollReveal().reveal(".footer-column", {
+  ...scrollRevealOption,
+  delay: 100,
+  interval: 100,
+});
+
+ScrollReveal().reveal(".footer-bottom", {
+  ...scrollRevealOption,
+  delay: 400,
+});
+
+// Background slideshow
 document.addEventListener('DOMContentLoaded', function() {
-    const backgrounds = document.querySelectorAll('.bg-slide');
-    let currentIndex = 0;
+  const backgrounds = document.querySelectorAll('.bg-slide');
+  let currentIndex = 0;
 
-    function changeBackground() {
-        // Remover la clase active de todos los fondos
-        backgrounds.forEach(bg => bg.classList.remove('active'));
+  function changeBackground() {
+    // Remove active class from all backgrounds
+    backgrounds.forEach(bg => bg.classList.remove('active'));
 
-        // Incrementar el índice
-        currentIndex = (currentIndex + 1) % backgrounds.length;
+    // Increment index
+    currentIndex = (currentIndex + 1) % backgrounds.length;
 
-        // Añadir la clase active al siguiente fondo
-        backgrounds[currentIndex].classList.add('active');
-    }
+    // Add active class to next background
+    backgrounds[currentIndex].classList.add('active');
+  }
 
-    // Cambiar el fondo cada 5 segundos
-    setInterval(changeBackground, 5000);
+  // Change background every 5 seconds
+  setInterval(changeBackground, 5000);
+
+  // Feature cards hover effect enhancement
+  const featureCards = document.querySelectorAll('.feature-card');
+  featureCards.forEach(card => {
+    card.addEventListener('mouseenter', function() {
+      this.style.transform = 'translateY(-1rem)';
+    });
+    card.addEventListener('mouseleave', function() {
+      this.style.transform = 'translateY(0)';
+    });
+  });
+
+  // Newsletter form handling
+  const newsletterForm = document.querySelector('.newsletter-form');
+  if (newsletterForm) {
+    newsletterForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const email = this.querySelector('.newsletter-input').value;
+
+      // Show success message (you can customize this)
+      const button = this.querySelector('button');
+      const originalText = button.innerHTML;
+      button.innerHTML = '<i class="ri-check-line"></i> <span>Suscrito!</span>';
+      button.style.background = 'var(--accent-green)';
+
+      // Reset after 3 seconds
+      setTimeout(() => {
+        button.innerHTML = originalText;
+        button.style.background = '';
+        this.reset();
+      }, 3000);
+    });
+  }
 });
 
+// Intersection Observer for animation on scroll
+const observerOptions = {
+  threshold: 0.1,
+  rootMargin: '0px 0px -50px 0px'
+};
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('animate-in');
+    }
+  });
+}, observerOptions);
+
+// Observe elements that should animate
+document.querySelectorAll('.feature-card, .course-card, .newsletter-container').forEach(el => {
+  observer.observe(el);
+});
