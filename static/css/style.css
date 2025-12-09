@@ -30,8 +30,8 @@ h1, h2, h3, h4, h5, p, a, .letter-s {
   background: linear-gradient(144deg, #af40ff, #5b42f3 50%, #00ddeb);
   -webkit-background-clip: text;
   background-clip: text;
-  -webkit-text-stroke: 1px transparent;
-  text-stroke: 1px transparent;
+  -webkit-text-stroke: 0px transparent;
+  text-stroke: 0px transparent;
 }
 
 h1::before, h2::before, h3::before, h4::before, h5::before, p::before, a::before, .letter-s::before {
