@@ -14,15 +14,17 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   });
 });
 
-// Navbar scroll effect
+// Navbar scroll effect — transparent → solid
 const navbar = document.getElementById('navbar');
-window.addEventListener('scroll', () => {
+function updateNavbar() {
   if (window.pageYOffset > 50) {
     navbar.classList.add('scrolled');
   } else {
     navbar.classList.remove('scrolled');
   }
-});
+}
+updateNavbar();
+window.addEventListener('scroll', updateNavbar);
 
 // Mobile hamburger menu toggle
 const navToggle = document.querySelector('.nav__toggle');
