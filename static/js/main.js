@@ -1,21 +1,16 @@
-// Smooth scrolling for anchor links
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-  anchor.addEventListener('click', function (e) {
-    e.preventDefault();
-    const target = document.querySelector(this.getAttribute('href'));
-    if (target) {
-      target.scrollIntoView({ behavior: 'smooth' });
-    }
-    // Close mobile menu if open
-    const navRight = document.querySelector('.nav__right');
-    const navOverlay = document.querySelector('.nav__overlay');
-    if (navRight) navRight.classList.remove('active');
-    if (navOverlay) navOverlay.classList.remove('active');
-  });
-});
+// ============================================
+// GSAP + ScrollTrigger Initialization
+// ============================================
+gsap.registerPlugin(ScrollTrigger);
 
-// Navbar scroll effect — transparent → solid
+// Respect reduced motion preference
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+// ============================================
+// NAVBAR — Transparent → Solid on scroll
+// ============================================
 const navbar = document.getElementById('navbar');
+
 function updateNavbar() {
   if (window.pageYOffset > 50) {
     navbar.classList.add('scrolled');
@@ -23,18 +18,21 @@ function updateNavbar() {
     navbar.classList.remove('scrolled');
   }
 }
+
 updateNavbar();
-window.addEventListener('scroll', updateNavbar);
+window.addEventListener('scroll', updateNavbar, { passive: true });
 
-// Mobile hamburger menu toggle
-const navToggle = document.querySelector('.nav__toggle');
-const navRight = document.querySelector('.nav__right');
-const navOverlay = document.querySelector('.nav__overlay');
+// ============================================
+// MOBILE HAMBURGER MENU
+// ============================================
+const navToggle = document.querySelector('.nav-toggle');
+const navLinks = document.querySelector('.nav-links');
+const navOverlay = document.querySelector('.nav-overlay');
 
-if (navToggle) {
+if (navToggle && navLinks) {
   navToggle.addEventListener('click', () => {
-    const isOpen = navRight.classList.toggle('active');
-    navOverlay.classList.toggle('active');
+    const isOpen = navLinks.classList.toggle('active');
+    if (navOverlay) navOverlay.classList.toggle('active');
     navToggle.setAttribute('aria-expanded', isOpen);
     navToggle.setAttribute('aria-label', isOpen ? 'Cerrar menu' : 'Abrir menu');
   });
@@ -42,59 +40,204 @@ if (navToggle) {
 
 if (navOverlay) {
   navOverlay.addEventListener('click', () => {
-    navRight.classList.remove('active');
+    navLinks.classList.remove('active');
     navOverlay.classList.remove('active');
     navToggle.setAttribute('aria-expanded', 'false');
     navToggle.setAttribute('aria-label', 'Abrir menu');
   });
 }
 
-// Background slideshow
-const backgrounds = document.querySelectorAll('.bg-slide');
-let currentSlide = 0;
-
-function changeBackground() {
-  backgrounds.forEach(bg => bg.classList.remove('active'));
-  currentSlide = (currentSlide + 1) % backgrounds.length;
-  backgrounds[currentSlide].classList.add('active');
-}
-
-if (backgrounds.length > 1) {
-  setInterval(changeBackground, 5000);
-}
-
-// IntersectionObserver for scroll animations
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('animate-in');
-      observer.unobserve(entry.target);
+// Close mobile menu on anchor click
+document.querySelectorAll('.nav-links a').forEach(link => {
+  link.addEventListener('click', () => {
+    navLinks.classList.remove('active');
+    if (navOverlay) navOverlay.classList.remove('active');
+    if (navToggle) {
+      navToggle.setAttribute('aria-expanded', 'false');
+      navToggle.setAttribute('aria-label', 'Abrir menu');
     }
   });
-}, {
-  threshold: 0.1,
-  rootMargin: '0px 0px -50px 0px'
 });
 
-document.querySelectorAll('.animate-on-scroll').forEach(el => {
-  observer.observe(el);
-});
-
-// Newsletter form handling
-const newsletterForm = document.querySelector('.newsletter-form');
-if (newsletterForm) {
-  newsletterForm.addEventListener('submit', function (e) {
+// ============================================
+// SMOOTH SCROLL for anchor links
+// ============================================
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function (e) {
     e.preventDefault();
-    const button = this.querySelector('button');
-    const originalHTML = button.innerHTML;
+    const target = document.querySelector(this.getAttribute('href'));
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth' });
+    }
+  });
+});
 
-    button.innerHTML = '<i class="ri-check-line"></i> <span>Suscrito!</span>';
-    button.style.background = 'var(--accent-green)';
+// ============================================
+// TAB SWITCHING with GSAP transitions
+// ============================================
+const tabButtons = document.querySelectorAll('.tab-btn');
+const tabPanels = document.querySelectorAll('.tab-panel');
 
-    setTimeout(() => {
-      button.innerHTML = originalHTML;
-      button.style.background = '';
-      this.reset();
-    }, 3000);
+tabButtons.forEach(btn => {
+  btn.addEventListener('click', () => {
+    const targetTab = btn.dataset.tab;
+    const targetPanel = document.getElementById('panel-' + targetTab);
+
+    if (!targetPanel || btn.classList.contains('active')) return;
+
+    // Update button states
+    tabButtons.forEach(b => {
+      b.classList.remove('active');
+      b.setAttribute('aria-selected', 'false');
+    });
+    btn.classList.add('active');
+    btn.setAttribute('aria-selected', 'true');
+
+    // Get current active panel
+    const currentPanel = document.querySelector('.tab-panel.active');
+
+    if (prefersReducedMotion) {
+      // No animation — instant switch
+      if (currentPanel) {
+        currentPanel.classList.remove('active');
+        currentPanel.hidden = true;
+      }
+      targetPanel.hidden = false;
+      targetPanel.classList.add('active');
+    } else {
+      // GSAP animated transition
+      if (currentPanel) {
+        gsap.to(currentPanel, {
+          opacity: 0,
+          y: -10,
+          duration: 0.2,
+          ease: 'power2.in',
+          onComplete: () => {
+            currentPanel.classList.remove('active');
+            currentPanel.hidden = true;
+            gsap.set(currentPanel, { opacity: 1, y: 0 });
+
+            targetPanel.hidden = false;
+            targetPanel.classList.add('active');
+            gsap.fromTo(targetPanel,
+              { opacity: 0, y: 20 },
+              { opacity: 1, y: 0, duration: 0.4, ease: 'power2.out' }
+            );
+          }
+        });
+      } else {
+        targetPanel.hidden = false;
+        targetPanel.classList.add('active');
+      }
+    }
+  });
+});
+
+// ============================================
+// GSAP SCROLL ANIMATIONS
+// ============================================
+if (!prefersReducedMotion) {
+  // Hero entrance timeline
+  const heroTl = gsap.timeline({ defaults: { ease: 'power2.out' } });
+
+  heroTl
+    .from('.hero-logo', { opacity: 0, y: 30, duration: 0.6 })
+    .from('.hero-title', { opacity: 0, y: 30, duration: 0.6 }, '-=0.3')
+    .from('.hero-subtitle', { opacity: 0, y: 20, duration: 0.5 }, '-=0.3')
+    .from('.hero-actions', { opacity: 0, y: 20, duration: 0.4 }, '-=0.2');
+
+  // Section headers — scroll reveal
+  gsap.utils.toArray('.section-header').forEach(header => {
+    gsap.from(header, {
+      scrollTrigger: {
+        trigger: header,
+        start: 'top 85%',
+        once: true
+      },
+      opacity: 0,
+      y: 40,
+      duration: 0.8,
+      ease: 'power2.out'
+    });
+  });
+
+  // Features tabs container
+  gsap.from('.features-tabs', {
+    scrollTrigger: {
+      trigger: '.features-tabs',
+      start: 'top 85%',
+      once: true
+    },
+    opacity: 0,
+    y: 40,
+    duration: 0.8,
+    ease: 'power2.out'
+  });
+
+  // Value proposition — staggered columns
+  gsap.from('.value-prop-content', {
+    scrollTrigger: {
+      trigger: '.value-prop',
+      start: 'top 80%',
+      once: true
+    },
+    opacity: 0,
+    x: -30,
+    duration: 0.8,
+    ease: 'power2.out'
+  });
+
+  gsap.from('.value-prop-image', {
+    scrollTrigger: {
+      trigger: '.value-prop',
+      start: 'top 80%',
+      once: true
+    },
+    opacity: 0,
+    x: 30,
+    duration: 0.8,
+    delay: 0.2,
+    ease: 'power2.out'
+  });
+
+  // Experience cards — staggered reveal
+  gsap.from('.exp-card', {
+    scrollTrigger: {
+      trigger: '.experiences-grid',
+      start: 'top 85%',
+      once: true
+    },
+    opacity: 0,
+    y: 40,
+    duration: 0.8,
+    stagger: 0.15,
+    ease: 'power2.out'
+  });
+
+  // Footer — fade in
+  gsap.from('.footer', {
+    scrollTrigger: {
+      trigger: '.footer',
+      start: 'top 90%',
+      once: true
+    },
+    opacity: 0,
+    y: 30,
+    duration: 0.8,
+    ease: 'power2.out'
+  });
+
+  // Footer columns — stagger
+  gsap.from('.footer-col', {
+    scrollTrigger: {
+      trigger: '.footer-grid',
+      start: 'top 90%',
+      once: true
+    },
+    opacity: 0,
+    y: 20,
+    duration: 0.6,
+    stagger: 0.1,
+    ease: 'power2.out'
   });
 }
