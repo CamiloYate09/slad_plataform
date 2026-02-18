@@ -78,6 +78,10 @@
 </head>
 <body>
 
+<!-- Custom Cursor -->
+<div class="cursor" aria-hidden="true"></div>
+<div class="cursor-follower" aria-hidden="true"></div>
+
 <!-- Skip to main content -->
 <a href="#inicio" class="skip-link">Saltar al contenido principal</a>
 
@@ -90,6 +94,10 @@
     <li><a href="#contacto">Contacto</a></li>
   </ul>
   <div class="nav-cta">
+    <button class="theme-toggle" aria-label="Cambiar tema" title="Cambiar tema">
+      <i class="ri-moon-line theme-icon-dark" aria-hidden="true"></i>
+      <i class="ri-sun-line theme-icon-light" aria-hidden="true"></i>
+    </button>
     <a href="#contacto" class="btn-outline-sm">Contacto</a>
     <a href="#features" class="btn-primary-sm">Comenzar</a>
   </div>
@@ -106,8 +114,8 @@
   <section class="hero" id="inicio">
     <div class="hero-content">
       <img src="static/img/logo-citystream.png" alt="Logo de CityStream" class="hero-logo" width="667" height="374" />
-      <h1 class="hero-title gradient-text">Conecta con tu Ciudad</h1>
-      <p class="hero-subtitle">La primera red social creada en Colombia. Descubre eventos, conecta con personas y vive experiencias unicas en tu ciudad.</p>
+      <h1 class="hero-title gradient-text">Tu ciudad, tus reglas</h1>
+      <p class="hero-subtitle">La red social que nacio en Colombia para transformar la forma en que vives tu ciudad. Eventos, personas, cultura — todo en un solo lugar.</p>
       <div class="hero-actions">
         <a href="#features" class="btn-primary">
           <span>Explorar Ahora</span>
@@ -198,8 +206,8 @@
   <!-- Features Section (Tabbed) -->
   <section class="features" id="features">
     <div class="section-header">
-      <h2 class="gradient-text">Descubre lo que puedes hacer</h2>
-      <p>Explora todas las funcionalidades que CityStream tiene para ti</p>
+      <h2 class="gradient-text">Todo lo que necesitas, en una app</h2>
+      <p>Cuatro pilares para vivir Colombia como nunca antes</p>
     </div>
 
     <div class="features-tabs">
@@ -225,8 +233,8 @@
       <div class="tab-panels">
         <div class="tab-panel active" id="panel-ciudades" role="tabpanel">
           <div class="tab-text">
-            <h3>Explora diferentes ciudades</h3>
-            <p>Descubre lo mejor que cada ciudad de Colombia tiene para ofrecer. Desde la vibrante Bogota hasta la historica Cartagena, explora gastronomia, cultura y vida nocturna.</p>
+            <h3>El mapa vivo de Colombia</h3>
+            <p>Cada ciudad tiene su propia energia. Navega por Bogota, Medellin, Cartagena y mas — con recomendaciones locales de gastronomia, cultura y vida nocturna que solo los locales conocen.</p>
             <a href="#experiencias" class="link-arrow">Mas informacion <i class="ri-arrow-right-line" aria-hidden="true"></i></a>
           </div>
           <div class="tab-image">
@@ -239,8 +247,8 @@
 
         <div class="tab-panel" id="panel-eventos" role="tabpanel" hidden>
           <div class="tab-text">
-            <h3>Encuentra eventos locales</h3>
-            <p>Desde conciertos hasta ferias gastronomicas, nunca te pierdas de nada. Filtra por ciudad, fecha y categoria para encontrar exactamente lo que buscas.</p>
+            <h3>Nunca mas te pierdas de nada</h3>
+            <p>Conciertos, ferias, exposiciones, meetups — filtra por ciudad, fecha y categoria. CityStream te avisa antes de que se agoten las entradas.</p>
             <a href="#experiencias" class="link-arrow">Mas informacion <i class="ri-arrow-right-line" aria-hidden="true"></i></a>
           </div>
           <div class="tab-image">
@@ -253,8 +261,8 @@
 
         <div class="tab-panel" id="panel-personas" role="tabpanel" hidden>
           <div class="tab-text">
-            <h3>Conecta con personas</h3>
-            <p>Encuentra personas que comparten tus intereses y amplia tu red social en tu ciudad. CityStream conecta gente real en experiencias reales.</p>
+            <h3>Personas reales, conexiones reales</h3>
+            <p>Sin algoritmos que deciden por ti. Encuentra personas que comparten tus intereses en tu misma ciudad y construye relaciones que van mas alla de la pantalla.</p>
             <a href="#experiencias" class="link-arrow">Mas informacion <i class="ri-arrow-right-line" aria-hidden="true"></i></a>
           </div>
           <div class="tab-image">
@@ -267,8 +275,8 @@
 
         <div class="tab-panel" id="panel-conciertos" role="tabpanel" hidden>
           <div class="tab-text">
-            <h3>Vive la musica en vivo</h3>
-            <p>Descubre los mejores conciertos y espectaculos en vivo cerca de ti. Desde artistas locales hasta festivales internacionales, la musica te espera.</p>
+            <h3>El ritmo de Colombia en tus manos</h3>
+            <p>Desde artistas emergentes en bares de Chapinero hasta festivales masivos en el Movistar Arena. Compra entradas, arma tu grupo y vive la musica.</p>
             <a href="#experiencias" class="link-arrow">Mas informacion <i class="ri-arrow-right-line" aria-hidden="true"></i></a>
           </div>
           <div class="tab-image">
@@ -286,12 +294,12 @@
   <section class="value-prop">
     <div class="value-prop-grid">
       <div class="value-prop-content">
-        <span class="value-prop-label">La red social de Colombia</span>
-        <h2>Tecnologia que conecta comunidades, no que las reemplaza</h2>
-        <p>CityStream nacio para unir a los colombianos con sus ciudades. Cada evento, cada lugar, cada persona — todo en una plataforma disenada para ti.</p>
+        <span class="value-prop-label">Hecho en Colombia, para Colombia</span>
+        <h2>Tecnologia que amplifica comunidades, no que las reemplaza</h2>
+        <p>No somos otra red social mas. CityStream fue construida desde cero para entender como vivimos, celebramos y nos conectamos los colombianos. Cada feature nacio de escuchar a la calle.</p>
         <div class="value-prop-links">
-          <a href="#features" class="link-arrow">Conoce nuestras funcionalidades <i class="ri-arrow-right-line" aria-hidden="true"></i></a>
-          <a href="#contacto" class="link-arrow">Contacta con nosotros <i class="ri-arrow-right-line" aria-hidden="true"></i></a>
+          <a href="#features" class="link-arrow">Explorar funcionalidades <i class="ri-arrow-right-line" aria-hidden="true"></i></a>
+          <a href="#contacto" class="link-arrow">Hablar con el equipo <i class="ri-arrow-right-line" aria-hidden="true"></i></a>
         </div>
       </div>
       <div class="value-prop-image">
@@ -306,8 +314,8 @@
   <!-- Experiences Section -->
   <section class="experiences" id="experiencias">
     <div class="section-header">
-      <h2 class="gradient-text">Experiencias Destacadas</h2>
-      <p>Lo mejor de Colombia al alcance de tu mano</p>
+      <h2 class="gradient-text">Vive Colombia de verdad</h2>
+      <p>Experiencias curadas por locales que conocen cada rincon</p>
     </div>
 
     <div class="experiences-grid">
@@ -321,7 +329,7 @@
         <div class="exp-content">
           <span class="exp-tag">Ciudad Capital</span>
           <h3>Bogota</h3>
-          <p>Descubre la vibrante capital colombiana, sus museos, gastronomia y vida nocturna.</p>
+          <p>8 millones de historias. Museos, gastronomia de autor, rumba en Chapinero y amaneceres en Monserrate.</p>
           <a href="#" class="link-arrow">Mas informacion <i class="ri-arrow-right-line" aria-hidden="true"></i></a>
         </div>
       </article>
@@ -336,7 +344,7 @@
         <div class="exp-content">
           <span class="exp-tag tag-green">Innovacion</span>
           <h3>Medellin</h3>
-          <p>La ciudad de la eterna primavera te espera con su clima perfecto y su gente acogedora.</p>
+          <p>De capital de la innovacion a epicentro cultural. Clima perfecto, gente calida y una escena gastronomica que no para de crecer.</p>
           <a href="#" class="link-arrow">Mas informacion <i class="ri-arrow-right-line" aria-hidden="true"></i></a>
         </div>
       </article>
@@ -351,7 +359,7 @@
         <div class="exp-content">
           <span class="exp-tag tag-cyan">Patrimonio</span>
           <h3>Cartagena</h3>
-          <p>Sumergete en la historia de la ciudad amurallada y disfruta de sus playas caribenas.</p>
+          <p>Murallas centenarias, atardeceres caribenos y la mejor cocina del Caribe colombiano. Historia que se vive, no solo se lee.</p>
           <a href="#" class="link-arrow">Mas informacion <i class="ri-arrow-right-line" aria-hidden="true"></i></a>
         </div>
       </article>

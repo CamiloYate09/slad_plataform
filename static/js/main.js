@@ -25,6 +25,80 @@ if (!prefersReducedMotion && typeof Lenis !== 'undefined') {
 }
 
 // ============================================
+// CUSTOM CURSOR — Desktop only
+// ============================================
+const cursor = document.querySelector('.cursor');
+const cursorFollower = document.querySelector('.cursor-follower');
+
+if (cursor && cursorFollower && window.matchMedia('(pointer: fine)').matches) {
+  let mouseX = 0, mouseY = 0;
+  let followerX = 0, followerY = 0;
+
+  document.addEventListener('mousemove', (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+    cursor.style.left = mouseX + 'px';
+    cursor.style.top = mouseY + 'px';
+  });
+
+  function animateFollower() {
+    followerX += (mouseX - followerX) * 0.15;
+    followerY += (mouseY - followerY) * 0.15;
+    cursorFollower.style.left = followerX + 'px';
+    cursorFollower.style.top = followerY + 'px';
+    requestAnimationFrame(animateFollower);
+  }
+  animateFollower();
+
+  const interactiveElements = document.querySelectorAll('a, button, .tab-btn, .exp-card');
+  interactiveElements.forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      cursor.classList.add('active');
+      cursorFollower.classList.add('active');
+    });
+    el.addEventListener('mouseleave', () => {
+      cursor.classList.remove('active');
+      cursorFollower.classList.remove('active');
+    });
+  });
+
+  document.body.style.cursor = 'none';
+  document.querySelectorAll('a, button').forEach(el => {
+    el.style.cursor = 'none';
+  });
+}
+
+// ============================================
+// THEME TOGGLE — Dark/Light
+// ============================================
+const themeToggle = document.querySelector('.theme-toggle');
+
+if (themeToggle) {
+  const savedTheme = localStorage.getItem('citystream-theme');
+  if (savedTheme === 'light') {
+    document.body.classList.add('light-theme');
+  }
+
+  themeToggle.addEventListener('click', () => {
+    document.body.classList.toggle('light-theme');
+    const isLight = document.body.classList.contains('light-theme');
+    localStorage.setItem('citystream-theme', isLight ? 'light' : 'dark');
+  });
+}
+
+// ============================================
+// SPLIT TEXT ANIMATION — Hero title
+// ============================================
+const heroTitle = document.querySelector('.hero-title');
+if (heroTitle && !prefersReducedMotion) {
+  const text = heroTitle.textContent;
+  const words = text.split(' ');
+  heroTitle.innerHTML = words.map(word =>
+    '<span class="split-word" style="display:inline-block;opacity:0">' + word + '</span>'
+  ).join(' ');
+}
+
+// ============================================
 // NAVBAR — Transparent → Solid on scroll
 // ============================================
 const navbar = document.getElementById('navbar');
@@ -159,9 +233,24 @@ if (!prefersReducedMotion) {
   const heroTl = gsap.timeline({ defaults: { ease: 'power2.out' } });
 
   heroTl
-    .from('.hero-logo', { opacity: 0, y: 30, duration: 0.6 })
-    .from('.hero-title', { opacity: 0, y: 30, duration: 0.6 }, '-=0.3')
-    .from('.hero-subtitle', { opacity: 0, y: 20, duration: 0.5 }, '-=0.3')
+    .from('.hero-logo', { opacity: 0, y: 30, duration: 0.6 });
+
+  // Split text word animation or fallback
+  const splitWords = document.querySelectorAll('.split-word');
+  if (splitWords.length > 0) {
+    heroTl.from(splitWords, {
+      opacity: 0,
+      y: 40,
+      duration: 0.5,
+      stagger: 0.08,
+      ease: 'power3.out'
+    }, '-=0.3');
+  } else {
+    heroTl.from('.hero-title', { opacity: 0, y: 30, duration: 0.6 }, '-=0.3');
+  }
+
+  heroTl
+    .from('.hero-subtitle', { opacity: 0, y: 20, duration: 0.5 }, '-=0.2')
     .from('.hero-actions', { opacity: 0, y: 20, duration: 0.4 }, '-=0.2');
 
   // Section headers — scroll reveal
