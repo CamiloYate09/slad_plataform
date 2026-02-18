@@ -4,52 +4,55 @@
 TBD - created by archiving change redesign-factory-style. Update Purpose after archive.
 ## Requirements
 ### Requirement: Transparent-to-Solid Navbar
-El navbar MUST iniciar transparente (sin fondo) sobre la sección hero y transicionar a un fondo negro sólido con blur al hacer scroll.
+El navbar MUST ser sticky con border-bottom, siguiendo el patrón exacto de factory.ai. MUST contener: logo (izquierda), nav items centro-derecha, y botones CTA (derecha). La transición transparent → solid se controla via GSAP ScrollTrigger.
 
-#### Scenario: Navbar transparente en top
-- **WHEN** el scroll está en la posición 0 (top de la página)
-- **THEN** el navbar tiene `background: transparent` y `border-bottom: none`
-- **AND** el logo y los links son visibles en blanco sobre el hero
+#### Scenario: Navbar con estructura factory.ai
+- **WHEN** la página renderiza
+- **THEN** el navbar es `position: sticky; top: 0; z-index: 60`
+- **AND** contiene: logo a la izquierda, nav items (Características, Ciudades, Experiencias, Contacto), CTAs (Iniciar Sesión, Contacto)
+- **AND** padding: `py-5 px-4` en mobile, `px-9` en desktop
+- **AND** border-bottom: `1px solid var(--border-base)` en `border-base-800` equivalente
 
 #### Scenario: Navbar se solidifica al scroll
 - **WHEN** el usuario scrollea más de 50px
 - **THEN** el navbar transiciona a `background: rgba(10, 10, 10, 0.85)` con `backdrop-filter: blur(16px)`
-- **AND** aparece un `border-bottom: 1px solid rgba(255, 255, 255, 0.08)`
+- **AND** la transición es controlada por ScrollTrigger o scroll event listener
 - **AND** la transición dura 300ms
 
-#### Scenario: Navbar links con underline-reveal
-- **WHEN** el usuario hace hover sobre un link del nav (excepto logo)
-- **THEN** un pseudo-elemento `::after` crece de `width: 0%` a `width: 100%` debajo del texto
-- **AND** el color del underline es `--accent-cyan`
-- **AND** la transición es `all 300ms ease`
+#### Scenario: Navbar links con underline-reveal naranja
+- **WHEN** el usuario hace hover sobre un link del nav (excepto logo y CTAs)
+- **THEN** el texto cambia a `--accent-orange-hover` (#f97316)
+- **AND** un pseudo-elemento `::after` crece de `width: 0%` a `width: 100%` debajo del texto
+- **AND** la transición es `all 300ms ease-in-out`
 
 ### Requirement: Card-Style Rounded Footer
-El footer MUST renderizarse como una card con bordes redondeados, separada visualmente del body, con layout multi-columna y fondo secundario oscuro.
+El footer MUST renderizarse como una card con bordes redondeados siguiendo el patrón exacto de factory.ai: `rounded-3xl` (24px) en desktop, con width `calc(100% - 72px)` centrado, fondo oscuro secundario, y min-height generoso.
 
 #### Scenario: Footer como card flotante en desktop
 - **WHEN** la página renderiza en desktop
-- **THEN** el footer tiene `border-radius: 24px` (top y bottom)
-- **AND** tiene márgenes laterales (`margin-inline: 1.5rem`) para crear efecto de card separada
-- **AND** el fondo es `#111111` (gris muy oscuro, diferenciado del negro base)
-- **AND** tiene `min-height: 400px` para presencia generosa
-- **AND** tiene un `margin-bottom: 1.5rem` para no tocar el borde inferior
+- **THEN** el footer tiene `border-radius: 24px` (`rounded-3xl`)
+- **AND** tiene width `calc(100% - 72px)` con `margin: 0 auto`
+- **AND** el fondo es `#111111` (dark-base-secondary equivalente)
+- **AND** tiene `min-height: 430px` en desktop, `580px` en mobile
+- **AND** tiene `margin-bottom: 1.5rem`
 
 #### Scenario: Footer en mobile
 - **WHEN** la página renderiza en mobile (<768px)
-- **THEN** el footer tiene `border-radius: 16px`
-- **AND** los márgenes laterales se reducen a `0.5rem`
+- **THEN** el footer tiene `border-radius: 12px` (`rounded-xl`)
+- **AND** el width es `calc(100% - 32px)` con `margin: 0 auto`
 - **AND** el grid de columnas colapsa a 1 columna
 
-#### Scenario: Footer links con hover sutil
+#### Scenario: Footer links con hover naranja
 - **WHEN** el usuario hace hover sobre un link del footer
-- **THEN** el color cambia a `--accent-cyan` con transición de `200ms`
+- **THEN** el color cambia a `--accent-orange-hover` (#f97316) con underline-reveal
+- **AND** la transición es `all 300ms ease-in-out`
 
 ### Requirement: Social Icons Refined Style
-Los iconos sociales del footer MUST tener un estilo más refinado acorde a la estética negra.
+Los iconos sociales del footer MUST mostrarse como links de texto con separadores de coma entre ellos, siguiendo el patrón factory.ai (X, LinkedIn, GitHub) en lugar de iconos circulares.
 
-#### Scenario: Social icons sobre fondo negro
-- **WHEN** los iconos sociales se renderizan
-- **THEN** cada icono tiene fondo `rgba(255, 255, 255, 0.06)` (casi invisible)
-- **AND** borde `1px solid rgba(255, 255, 255, 0.1)`
-- **AND** al hover, el fondo cambia a `rgba(255, 255, 255, 0.12)` y se eleva `translateY(-2px)`
+#### Scenario: Social links estilo texto factory.ai
+- **WHEN** los links sociales se renderizan en el footer
+- **THEN** se muestran como texto (YouTube, Facebook, Instagram, Twitter) separados por comas
+- **AND** cada link tiene hover naranja con underline-reveal
+- **AND** no hay iconos circulares ni fondos — solo texto limpio
 

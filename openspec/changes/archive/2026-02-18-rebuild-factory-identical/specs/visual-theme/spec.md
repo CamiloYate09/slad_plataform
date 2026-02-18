@@ -1,3 +1,7 @@
+## RENAMED Requirements
+- FROM: `### Requirement: Inter Typography`
+- TO: `### Requirement: Geist Sans Typography`
+
 ## MODIFIED Requirements
 ### Requirement: Black Base Theme
 El sitio MUST usar un fondo base negro (`#0a0a0a`) con max-width `1920px` en el html. Los colores de acento CityStream se mantienen para gradientes y branding, pero se agrega un naranja brillante (`#f97316`) como color interactivo principal para hovers, siguiendo el patrón de factory.ai.

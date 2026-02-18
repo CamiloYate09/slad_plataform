@@ -10,6 +10,7 @@ Landing page para CityStream, la primera red social de Colombia. El sitio presen
 - Google Fonts: Geist Sans (100-900, variable)
 - RemixIcon v4.2.0 (CDN)
 - GSAP v3.12.5 + ScrollTrigger (CDN: cdnjs.cloudflare.com)
+- Lenis v1.1.18 (CDN: unpkg.com) — smooth scroll
 - GitHub Pages (hosting en citystream.co)
 
 ## Project Conventions
@@ -17,7 +18,8 @@ Landing page para CityStream, la primera red social de Colombia. El sitio presen
 ### Code Style
 - Idioma del contenido: espanol (lang="es")
 - CSS: variables custom properties, responsive breakpoints (1024px, 768px, 480px)
-- Animaciones: GSAP + ScrollTrigger para scroll-driven animations, CSS @keyframes para carousel y progress bar
+- Animaciones: GSAP + ScrollTrigger para scroll-driven animations y parallax, CSS @keyframes para carousel y progress bar
+- Smooth scroll: Lenis integrado con GSAP ticker (respeta prefers-reduced-motion)
 - Gradient text: solo via clase `.gradient-text` en h1/h2
 - Link hover: naranja `#f97316` (--accent-orange-hover) con underline-reveal
 
@@ -39,10 +41,11 @@ Landing page para CityStream, la primera red social de Colombia. El sitio presen
 ## Important Constraints
 - Sitio estatico (sin backend, sin build tools)
 - Hosting en GitHub Pages (sin server-side processing)
-- Sin framework JS (vanilla + GSAP)
+- Sin framework JS (vanilla + GSAP + Lenis)
 
 ## External Dependencies
 - Google Fonts CDN (fonts.googleapis.com) — Geist Sans
 - RemixIcon CDN (cdn.jsdelivr.net)
 - GSAP CDN (cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/)
 - ScrollTrigger CDN (cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/)
+- Lenis CDN (unpkg.com/lenis@1.1.18/)

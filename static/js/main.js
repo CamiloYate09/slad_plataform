@@ -7,6 +7,24 @@ gsap.registerPlugin(ScrollTrigger);
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 // ============================================
+// LENIS SMOOTH SCROLL
+// ============================================
+if (!prefersReducedMotion && typeof Lenis !== 'undefined') {
+  const lenis = new Lenis({
+    lerp: 0.1,
+    duration: 1.2,
+    smoothWheel: true
+  });
+
+  lenis.on('scroll', ScrollTrigger.update);
+
+  gsap.ticker.add((time) => {
+    lenis.raf(time * 1000);
+  });
+  gsap.ticker.lagSmoothing(0);
+}
+
+// ============================================
 // NAVBAR — Transparent → Solid on scroll
 // ============================================
 const navbar = document.getElementById('navbar');
@@ -239,5 +257,29 @@ if (!prefersReducedMotion) {
     duration: 0.6,
     stagger: 0.1,
     ease: 'power2.out'
+  });
+
+  // Parallax — hero logo moves slower
+  gsap.to('.hero-logo', {
+    scrollTrigger: {
+      trigger: '.hero',
+      start: 'top top',
+      end: 'bottom top',
+      scrub: true
+    },
+    y: -40,
+    ease: 'none'
+  });
+
+  // Parallax — value-prop image moves slightly faster
+  gsap.to('.value-prop-image', {
+    scrollTrigger: {
+      trigger: '.value-prop',
+      start: 'top bottom',
+      end: 'bottom top',
+      scrub: true
+    },
+    y: -30,
+    ease: 'none'
   });
 }

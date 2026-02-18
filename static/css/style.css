@@ -26,8 +26,8 @@
 
   /* Typography */
   --font-sans: "Geist", ui-sans-serif, system-ui, -apple-system, sans-serif;
-  --fs-display: clamp(2.5rem, 7vw, 4.5rem);
-  --fs-h2: clamp(1.8rem, 4vw, 3rem);
+  --fs-display: clamp(3rem, 8vw, 5.5rem);
+  --fs-h2: clamp(2rem, 5vw, 3.5rem);
   --fs-h3: clamp(1.25rem, 2.5vw, 1.75rem);
   --fs-body: 0.875rem;
   --fs-sm: 0.8125rem;
@@ -55,7 +55,6 @@
 html {
   max-width: 1920px;
   margin: 0 auto;
-  scroll-behavior: smooth;
 }
 
 body {
@@ -86,7 +85,7 @@ a {
 }
 
 h1, h2, h3, h4 {
-  letter-spacing: -0.02em;
+  letter-spacing: -0.03em;
   line-height: 1.1;
 }
 
@@ -173,7 +172,7 @@ ul {
 
 .btn-primary:hover {
   background-position: 100% 0;
-  transform: translateY(-2px);
+  transform: translateY(-2px) scale(1.02);
   box-shadow: 0 8px 30px rgba(91, 66, 243, 0.35);
   color: var(--white);
 }
@@ -344,7 +343,7 @@ ul {
 
 .hero-title {
   font-size: var(--fs-display);
-  font-weight: 800;
+  font-weight: 900;
   margin-bottom: 1.5rem;
 }
 
@@ -381,6 +380,7 @@ ul {
   width: 40%;
   background: linear-gradient(90deg, #af40ff, #5b42f3, #00ddeb);
   animation: progress-slide 2s linear infinite;
+  will-change: transform;
 }
 
 @keyframes progress-slide {
@@ -403,6 +403,7 @@ ul {
   gap: 3rem;
   width: max-content;
   animation: carousel-scroll 25s linear infinite;
+  will-change: transform;
 }
 
 .carousel-item {
@@ -538,6 +539,11 @@ ul {
   width: 100%;
   height: 300px;
   object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.tab-image:hover img {
+  transform: scale(1.03);
 }
 
 /* ============================================
@@ -624,7 +630,7 @@ ul {
 .exp-card:hover {
   transform: translateY(-4px);
   border-color: var(--border-hover);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 0 60px rgba(91, 66, 243, 0.08);
 }
 
 .exp-image {
@@ -982,8 +988,8 @@ ul {
    ============================================ */
 @media (max-width: 480px) {
   :root {
-    --fs-display: clamp(2rem, 6vw, 3rem);
-    --fs-h2: clamp(1.5rem, 3.5vw, 2.25rem);
+    --fs-display: clamp(2.25rem, 7vw, 3.5rem);
+    --fs-h2: clamp(1.75rem, 4vw, 2.5rem);
     --fs-h3: clamp(1.1rem, 2vw, 1.4rem);
   }
 
@@ -1010,8 +1016,8 @@ ul {
    ============================================ */
 @media (min-width: 1920px) {
   :root {
-    --fs-display: 5rem;
-    --fs-h2: 3.5rem;
+    --fs-display: 6rem;
+    --fs-h2: 4rem;
     --fs-h3: 2rem;
     --fs-body: 1rem;
     --px-desktop: 3rem;
