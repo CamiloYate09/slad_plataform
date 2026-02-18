@@ -7,6 +7,13 @@ gsap.registerPlugin(ScrollTrigger);
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 // ============================================
+// DISABLE TRANSITIONS ON MOUNT
+// ============================================
+requestAnimationFrame(() => {
+  document.body.classList.remove('no-transitions');
+});
+
+// ============================================
 // LENIS SMOOTH SCROLL
 // ============================================
 if (!prefersReducedMotion && typeof Lenis !== 'undefined') {
@@ -76,6 +83,8 @@ const themeToggle = document.querySelector('.theme-toggle');
 if (themeToggle) {
   const savedTheme = localStorage.getItem('citystream-theme');
   if (savedTheme === 'light') {
+    document.body.classList.add('light-theme');
+  } else if (!savedTheme && window.matchMedia('(prefers-color-scheme: light)').matches) {
     document.body.classList.add('light-theme');
   }
 
@@ -305,6 +314,20 @@ if (!prefersReducedMotion) {
     ease: 'power2.out'
   });
 
+  // Numbered feature cards — staggered reveal
+  gsap.from('.num-card', {
+    scrollTrigger: {
+      trigger: '.numbered-grid',
+      start: 'top 85%',
+      once: true
+    },
+    opacity: 0,
+    y: 40,
+    duration: 0.8,
+    stagger: 0.15,
+    ease: 'power2.out'
+  });
+
   // Experience cards — staggered reveal
   gsap.from('.exp-card', {
     scrollTrigger: {
@@ -316,6 +339,33 @@ if (!prefersReducedMotion) {
     y: 40,
     duration: 0.8,
     stagger: 0.15,
+    ease: 'power2.out'
+  });
+
+  // News cards — staggered reveal
+  gsap.from('.news-card', {
+    scrollTrigger: {
+      trigger: '.news-grid',
+      start: 'top 85%',
+      once: true
+    },
+    opacity: 0,
+    y: 40,
+    duration: 0.8,
+    stagger: 0.1,
+    ease: 'power2.out'
+  });
+
+  // CTA section — fade in
+  gsap.from('.cta-section', {
+    scrollTrigger: {
+      trigger: '.cta-section',
+      start: 'top 85%',
+      once: true
+    },
+    opacity: 0,
+    y: 40,
+    duration: 0.8,
     ease: 'power2.out'
   });
 
