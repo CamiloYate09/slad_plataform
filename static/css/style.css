@@ -107,6 +107,13 @@ ul {
   background-clip: text;
 }
 
+.gradient-text .split-word {
+  color: transparent;
+  background: linear-gradient(144deg, #af40ff, #5b42f3 50%, #00ddeb);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
 /* ============================================
    LINK ARROW — factory.ai "Learn more" style
    ============================================ */

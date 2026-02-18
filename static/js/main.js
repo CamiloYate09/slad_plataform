@@ -238,13 +238,11 @@ if (!prefersReducedMotion) {
   // Split text word animation or fallback
   const splitWords = document.querySelectorAll('.split-word');
   if (splitWords.length > 0) {
-    heroTl.from(splitWords, {
-      opacity: 0,
-      y: 40,
-      duration: 0.5,
-      stagger: 0.08,
-      ease: 'power3.out'
-    }, '-=0.3');
+    heroTl.fromTo(splitWords,
+      { opacity: 0, y: 40 },
+      { opacity: 1, y: 0, duration: 0.5, stagger: 0.08, ease: 'power3.out' },
+      '-=0.3'
+    );
   } else {
     heroTl.from('.hero-title', { opacity: 0, y: 30, duration: 0.6 }, '-=0.3');
   }
