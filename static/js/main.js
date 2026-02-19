@@ -420,3 +420,41 @@ if (!prefersReducedMotion) {
     ease: 'none'
   });
 }
+
+// ============================================
+// COUNT-UP — Stats section
+// ============================================
+function formatStat(val) {
+  if (val >= 1000000) return Math.round(val / 1000000) + 'M';
+  if (val >= 1000) return Math.round(val / 1000) + '';
+  return Math.round(val) + '';
+}
+
+const statNumbers = document.querySelectorAll('.stat-number');
+
+if (prefersReducedMotion) {
+  statNumbers.forEach(el => {
+    const target = parseInt(el.dataset.target, 10);
+    const suffix = el.dataset.suffix || '';
+    el.textContent = formatStat(target) + suffix;
+  });
+} else {
+  statNumbers.forEach(el => {
+    const target = parseInt(el.dataset.target, 10);
+    const suffix = el.dataset.suffix || '';
+    const proxy = { val: 0 };
+    gsap.to(proxy, {
+      val: target,
+      duration: 2,
+      ease: 'power2.out',
+      scrollTrigger: {
+        trigger: el,
+        start: 'top 80%',
+        once: true
+      },
+      onUpdate() {
+        el.textContent = formatStat(Math.round(proxy.val)) + suffix;
+      }
+    });
+  });
+}

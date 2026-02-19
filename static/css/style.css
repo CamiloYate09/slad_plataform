@@ -42,6 +42,11 @@
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   --duration-fast: 200ms;
   --duration-base: 300ms;
+
+  /* Ambient glow colors */
+  --glow-purple: rgba(175, 64, 255, 0.18);
+  --glow-blue: rgba(91, 66, 243, 0.12);
+  --glow-cyan: rgba(0, 221, 235, 0.08);
 }
 
 *,
@@ -355,10 +360,22 @@ body.no-transitions *::after {
   text-align: center;
   padding: 6rem var(--px-desktop) 4rem;
   position: relative;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 50% -10%, var(--glow-purple) 0%, transparent 65%);
+  pointer-events: none;
+  z-index: 0;
 }
 
 .hero-content {
   max-width: 800px;
+  position: relative;
+  z-index: 1;
 }
 
 .hero-logo {
@@ -498,12 +515,99 @@ body.no-transitions *::after {
 }
 
 /* ============================================
+   STATS — Social proof metrics
+   ============================================ */
+.stats {
+  padding: 3rem var(--px-desktop);
+  border-top: 1px solid var(--border-base);
+  border-bottom: 1px solid var(--border-base);
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+.stats-grid {
+  display: flex;
+  gap: 0;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.stat-item {
+  flex: 1;
+  text-align: center;
+  padding: 1.5rem 2rem;
+  border-right: 1px solid var(--border-base);
+}
+
+.stat-item:last-child {
+  border-right: none;
+}
+
+.stat-number {
+  display: block;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 0.5rem;
+  background: linear-gradient(144deg, #af40ff, #5b42f3 50%, #00ddeb);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.stat-label {
+  display: block;
+  font-size: var(--fs-sm);
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 500;
+}
+
+@media (max-width: 768px) {
+  .stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .stat-item {
+    border-right: none;
+    border-bottom: 1px solid var(--border-base);
+    padding: 1.25rem 1rem;
+  }
+
+  .stat-item:nth-child(odd) {
+    border-right: 1px solid var(--border-base);
+  }
+
+  .stat-item:nth-last-child(-n+2) {
+    border-bottom: none;
+  }
+}
+
+/* ============================================
    FEATURES — Tabbed section
    ============================================ */
 .features {
   padding: var(--section-gap) var(--px-desktop);
   max-width: 1440px;
   margin: 0 auto;
+  position: relative;
+  overflow: hidden;
+}
+
+.features::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 100% 0%, var(--glow-blue) 0%, transparent 65%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.features > * {
+  position: relative;
+  z-index: 1;
 }
 
 .features-tabs {
@@ -671,6 +775,22 @@ body.no-transitions *::after {
   padding: var(--section-gap) var(--px-desktop);
   max-width: 1440px;
   margin: 0 auto;
+  position: relative;
+  overflow: hidden;
+}
+
+.experiences::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 0% 50%, var(--glow-cyan) 0%, transparent 65%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.experiences > * {
+  position: relative;
+  z-index: 1;
 }
 
 .experiences-grid {
@@ -1460,6 +1580,19 @@ body.light-theme .exp-image::after {
 
 body.light-theme .progress-fill {
   background: linear-gradient(90deg, #7c2dbd, #4338ca, #0891b2);
+}
+
+body.light-theme .hero::before,
+body.light-theme .features::before,
+body.light-theme .experiences::before {
+  opacity: 0.5;
+}
+
+body.light-theme .stat-number {
+  background: linear-gradient(144deg, #7c2dbd, #4338ca 50%, #0891b2);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
 /* ============================================

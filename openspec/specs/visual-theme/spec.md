@@ -45,3 +45,39 @@ El sitio SHALL usar la familia tipografica Geist Sans (la misma de factory.ai: `
 - **THEN** `font-display: swap` previene FOIT durante la carga
 - **AND** no hay animaciones tipograficas
 
+### Requirement: Image Asset Management
+Los assets de imagen de contenido del sitio MUST seguir una convención de nombrado limpia y estar centralizados en `static/img/` con conversión WebP para rendimiento óptimo.
+
+#### Scenario: Convención de nombrado de imágenes de contenido
+- **WHEN** se inspeccionan los archivos en `static/img/`
+- **THEN** las imágenes de contenido de ciudad/evento siguen el patrón `img-NN.jpg` / `img-NN.webp` (NN = 01 a 15)
+- **AND** las imágenes de marca (`logo-citystream.png`) mantienen su nombre original
+- **AND** no existen imágenes de ciudad antiguas con nombres numéricos cortos (`1.jpg`, `5.jpg`, `7.jpg`, `8.jpg`, `background.png`)
+
+#### Scenario: Compatibilidad de orientaciones mixtas
+- **WHEN** una imagen portrait (960×1280 o 720×1280) se coloca en un slot landscape (ancho fijo, altura fija)
+- **THEN** `object-fit: cover` recorta la imagen para llenar el contenedor sin distorsión
+- **AND** `object-position: center top` asegura que la zona superior (sujeto principal) sea visible
+- **AND** el resultado visual es aceptable en todos los breakpoints definidos (1024px, 768px, 480px)
+
+### Requirement: Ambient Section Glow System
+El sitio SHALL usar radial-gradient pseudo-elementos en secciones clave para añadir profundidad luminosa al fondo oscuro, replicando el aspecto premium de factory.ai. Los glows son CSS puro (sin JS) y no interfieren con `prefers-reduced-motion`.
+
+#### Scenario: Glows en dark mode (default)
+- **WHEN** la página renderiza en dark mode (default)
+- **THEN** la sección `.hero` muestra un radial-gradient purple (`rgba(175, 64, 255, 0.18)`) centrado arriba
+- **AND** la sección `.features` muestra un glow azul-índigo (`rgba(91, 66, 243, 0.12)`) desde la esquina derecha
+- **AND** la sección `.experiences` muestra un glow cyan (`rgba(0, 221, 235, 0.08)`) desde la izquierda
+- **AND** todos los glows son implementados como `::before` con `position: absolute`, `pointer-events: none`, `z-index: 0`
+- **AND** el contenido de las secciones tiene `position: relative; z-index: 1` para renderizar sobre los glows
+
+#### Scenario: Glows reducidos en light mode
+- **WHEN** el usuario activa `body.light-theme`
+- **THEN** los glows de todas las secciones tienen opacidad máxima del 50% respecto al dark mode
+- **AND** no hay colores saturados visibles sobre el fondo claro
+
+#### Scenario: Glows no afectan performance
+- **WHEN** se inspecciona el render de la página
+- **THEN** los glows son elementos CSS composited (GPU) sin JavaScript
+- **AND** no hay layout thrashing ni repaints causados por los glows
+
