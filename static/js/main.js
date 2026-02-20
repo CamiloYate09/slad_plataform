@@ -7,6 +7,19 @@ gsap.registerPlugin(ScrollTrigger);
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 // ============================================
+// SPLITTING.JS — Character split init
+// ============================================
+if (typeof Splitting !== 'undefined') {
+  Splitting({ target: '[data-splitting]' });
+}
+
+// Hide hero subtitle early so scramble can reveal it
+const heroSubtitleEl = document.querySelector('.hero-subtitle');
+if (heroSubtitleEl && !prefersReducedMotion) {
+  heroSubtitleEl.style.opacity = '0';
+}
+
+// ============================================
 // DISABLE TRANSITIONS ON MOUNT
 // ============================================
 requestAnimationFrame(() => {
@@ -92,20 +105,22 @@ if (themeToggle) {
     document.body.classList.toggle('light-theme');
     const isLight = document.body.classList.contains('light-theme');
     localStorage.setItem('citystream-theme', isLight ? 'light' : 'dark');
+    // Reapply gradient inline on hero chars (CSS can't override compositing-layer inline style)
+    const grad = isLight
+      ? 'linear-gradient(144deg, #7c2dbd, #4338ca 50%, #0891b2)'
+      : 'linear-gradient(144deg, #af40ff, #5b42f3 50%, #00ddeb)';
+    document.querySelectorAll('.hero-title .char').forEach(c => {
+      c.style.background = grad;
+      c.style.webkitBackgroundClip = 'text';
+      c.style.backgroundClip = 'text';
+    });
   });
 }
 
 // ============================================
-// SPLIT TEXT ANIMATION — Hero title
+// SPLIT TEXT — hero title handled by Splitting.js
+// (data-splitting attribute on .hero-title in HTML)
 // ============================================
-const heroTitle = document.querySelector('.hero-title');
-if (heroTitle && !prefersReducedMotion) {
-  const text = heroTitle.textContent;
-  const words = text.split(' ');
-  heroTitle.innerHTML = words.map(word =>
-    '<span class="split-word" style="display:inline-block;opacity:0">' + word + '</span>'
-  ).join(' ');
-}
 
 // ============================================
 // NAVBAR — Transparent → Solid on scroll
@@ -235,6 +250,50 @@ tabButtons.forEach(btn => {
 });
 
 // ============================================
+// TEXT SCRAMBLE — Hero subtitle
+// ============================================
+const SCRAMBLE_CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%&*()';
+
+function scrambleText(el, finalText, durationMs) {
+  const totalChars = finalText.length;
+  const framesPerChar = Math.round((durationMs / 1000 * 60) / totalChars);
+  let frame = 0;
+  let resolved = 0;
+
+  el.style.opacity = '1';
+
+  function tick() {
+    resolved = Math.floor(frame / framesPerChar);
+    if (resolved >= totalChars) {
+      el.textContent = finalText;
+      return;
+    }
+    let output = finalText.slice(0, resolved);
+    for (let i = resolved; i < totalChars; i++) {
+      const ch = finalText[i] === ' ' ? ' ' : SCRAMBLE_CHARS[Math.floor(Math.random() * SCRAMBLE_CHARS.length)];
+      output += ch;
+    }
+    el.textContent = output;
+    frame++;
+    requestAnimationFrame(tick);
+  }
+
+  requestAnimationFrame(tick);
+}
+
+function startSubtitleScramble() {
+  const subtitle = document.querySelector('.hero-subtitle');
+  if (!subtitle) return;
+  const finalText = subtitle.textContent.trim();
+  subtitle.style.opacity = '0';
+  if (prefersReducedMotion) {
+    subtitle.style.opacity = '1';
+    return;
+  }
+  scrambleText(subtitle, finalText, 1200);
+}
+
+// ============================================
 // GSAP SCROLL ANIMATIONS
 // ============================================
 if (!prefersReducedMotion) {
@@ -244,12 +303,24 @@ if (!prefersReducedMotion) {
   heroTl
     .from('.hero-logo', { opacity: 0, y: 30, duration: 0.6 });
 
-  // Split text word animation or fallback
-  const splitWords = document.querySelectorAll('.split-word');
-  if (splitWords.length > 0) {
-    heroTl.fromTo(splitWords,
-      { opacity: 0, y: 40 },
-      { opacity: 1, y: 0, duration: 0.5, stagger: 0.08, ease: 'power3.out' },
+  // Char-level animation (Splitting.js) or word fallback
+  const heroChars = document.querySelectorAll('.hero-title .char');
+  if (heroChars.length > 0) {
+    // Workaround: GSAP creates a compositing stacking context on chars (translate/rotate/scale: none)
+    // which prevents CSS background-clip:text + background-image from rendering. Apply inline.
+    const isDark = !document.body.classList.contains('light-theme');
+    const heroGrad = isDark
+      ? 'linear-gradient(144deg, #af40ff, #5b42f3 50%, #00ddeb)'
+      : 'linear-gradient(144deg, #7c2dbd, #4338ca 50%, #0891b2)';
+    heroChars.forEach(c => {
+      c.style.background = heroGrad;
+      c.style.webkitBackgroundClip = 'text';
+      c.style.backgroundClip = 'text';
+      c.style.color = 'transparent';
+    });
+    heroTl.fromTo(heroChars,
+      { opacity: 0, y: 30 },
+      { opacity: 1, y: 0, duration: 0.5, stagger: 0.03, ease: 'power3.out' },
       '-=0.3'
     );
   } else {
@@ -257,8 +328,8 @@ if (!prefersReducedMotion) {
   }
 
   heroTl
-    .from('.hero-subtitle', { opacity: 0, y: 20, duration: 0.5 }, '-=0.2')
-    .from('.hero-actions', { opacity: 0, y: 20, duration: 0.4 }, '-=0.2');
+    .call(() => { startSubtitleScramble(); }, null, '+=0.1')
+    .from('.hero-actions', { opacity: 0, y: 20, duration: 0.4 }, '+=0.35');
 
   // Section headers — scroll reveal
   gsap.utils.toArray('.section-header').forEach(header => {
@@ -418,6 +489,131 @@ if (!prefersReducedMotion) {
     },
     y: -30,
     ease: 'none'
+  });
+}
+
+// ============================================
+// TOP SCROLL PROGRESS BAR
+// ============================================
+if (!prefersReducedMotion) {
+  gsap.to('#top-progress', {
+    width: '100%',
+    ease: 'none',
+    scrollTrigger: {
+      trigger: document.documentElement,
+      start: 'top top',
+      end: 'bottom bottom',
+      scrub: 0.3
+    }
+  });
+}
+
+// ============================================
+// SCROLL INDICATOR — Hide on scroll
+// ============================================
+const scrollIndicator = document.querySelector('.scroll-indicator');
+if (scrollIndicator) {
+  ScrollTrigger.create({
+    trigger: '.hero',
+    start: 'top top',
+    end: '20% top',
+    onLeave: () => scrollIndicator.classList.add('hidden'),
+    onEnterBack: () => scrollIndicator.classList.remove('hidden')
+  });
+}
+
+// ============================================
+// MAGNETIC CTA BUTTON — Desktop only
+// ============================================
+if (!prefersReducedMotion && window.matchMedia('(pointer: fine)').matches) {
+  const magnetBtn = document.querySelector('.hero-actions .btn-primary');
+  if (magnetBtn) {
+    magnetBtn.addEventListener('mousemove', (e) => {
+      const rect = magnetBtn.getBoundingClientRect();
+      const cx = rect.left + rect.width / 2;
+      const cy = rect.top + rect.height / 2;
+      const dx = (e.clientX - cx) * 0.35;
+      const dy = (e.clientY - cy) * 0.35;
+      gsap.to(magnetBtn, { x: dx, y: dy, duration: 0.3, ease: 'power2.out' });
+    });
+    magnetBtn.addEventListener('mouseleave', () => {
+      gsap.to(magnetBtn, { x: 0, y: 0, duration: 0.6, ease: 'elastic.out(1, 0.4)' });
+    });
+  }
+}
+
+// ============================================
+// ACTIVE NAV SECTION INDICATOR
+// ============================================
+const navSections = [
+  { id: 'inicio',      href: '#inicio' },
+  { id: 'features',   href: '#features' },
+  { id: 'experiencias', href: '#experiencias' },
+  { id: 'contacto',   href: '#contacto' }
+];
+
+navSections.forEach(({ id, href }) => {
+  const section = document.getElementById(id);
+  const link = document.querySelector(`.nav-links a[href="${href}"]`);
+  if (!section || !link) return;
+
+  ScrollTrigger.create({
+    trigger: section,
+    start: 'top 60%',
+    end: 'bottom 40%',
+    onEnter: () => {
+      document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('nav-active'));
+      link.classList.add('nav-active');
+    },
+    onEnterBack: () => {
+      document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('nav-active'));
+      link.classList.add('nav-active');
+    },
+    onLeave: () => link.classList.remove('nav-active'),
+    onLeaveBack: () => link.classList.remove('nav-active')
+  });
+});
+
+// ============================================
+// CHAR-LEVEL HEADING REVEAL (Splitting.js)
+// ============================================
+if (!prefersReducedMotion) {
+  document.querySelectorAll('.section-header h2[data-splitting]').forEach(h2 => {
+    const chars = h2.querySelectorAll('.char');
+    if (chars.length === 0) return;
+    gsap.from(chars, {
+      scrollTrigger: {
+        trigger: h2,
+        start: 'top 88%',
+        once: true
+      },
+      yPercent: 110,
+      opacity: 0,
+      duration: 0.6,
+      stagger: 0.025,
+      ease: 'power3.out'
+    });
+  });
+}
+
+// ============================================
+// EXPERIENCE CARDS PARALLAX
+// ============================================
+if (!prefersReducedMotion) {
+  gsap.utils.toArray('.exp-card .exp-image img').forEach(img => {
+    gsap.fromTo(img,
+      { y: 12 },
+      {
+        y: -12,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: img.closest('.exp-card'),
+          start: 'top bottom',
+          end: 'bottom top',
+          scrub: true
+        }
+      }
+    );
   });
 }
 

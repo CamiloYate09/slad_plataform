@@ -78,6 +78,9 @@
 </head>
 <body class="no-transitions">
 
+<!-- Top Scroll Progress Bar -->
+<div id="top-progress" aria-hidden="true"></div>
+
 <!-- Custom Cursor -->
 <div class="cursor" aria-hidden="true"></div>
 <div class="cursor-follower" aria-hidden="true"></div>
@@ -112,9 +115,14 @@
 <main>
   <!-- Hero Section -->
   <section class="hero" id="inicio">
+    <!-- Ambient orbs -->
+    <div class="hero-orb hero-orb--1" aria-hidden="true"></div>
+    <div class="hero-orb hero-orb--2" aria-hidden="true"></div>
+    <div class="hero-orb hero-orb--3" aria-hidden="true"></div>
+
     <div class="hero-content">
       <img src="static/img/logo-citystream.png" alt="Logo de CityStream" class="hero-logo" width="667" height="374" />
-      <h1 class="hero-title gradient-text">Tu ciudad, tus reglas</h1>
+      <h1 class="hero-title gradient-text" data-splitting>Tu ciudad, tus reglas</h1>
       <p class="hero-subtitle">La red social que nacio en Colombia para transformar la forma en que vives tu ciudad. Eventos, personas, cultura — todo en un solo lugar.</p>
       <div class="hero-actions">
         <a href="#features" class="btn-primary">
@@ -122,6 +130,11 @@
           <i class="ri-arrow-right-line" aria-hidden="true"></i>
         </a>
       </div>
+    </div>
+    <!-- Scroll indicator -->
+    <div class="scroll-indicator" aria-hidden="true">
+      <span>Scroll</span>
+      <i class="ri-arrow-down-s-line"></i>
     </div>
     <div class="progress-bar"><div class="progress-fill"></div></div>
   </section>
@@ -269,7 +282,7 @@
   <section class="numbered-features">
     <div class="section-header">
       <span class="section-label">Por que CityStream</span>
-      <h2>Construido diferente</h2>
+      <h2 data-splitting>Construido diferente</h2>
     </div>
     <div class="numbered-grid">
       <article class="num-card">
@@ -375,7 +388,7 @@
   <section class="news" id="noticias">
     <div class="section-header">
       <span class="section-label">Novedades</span>
-      <h2>Lo ultimo de CityStream</h2>
+      <h2 data-splitting>Lo ultimo de CityStream</h2>
     </div>
     <div class="news-grid">
       <article class="news-card">
@@ -468,6 +481,8 @@
   </div>
 </footer>
 
+<!-- Splitting.js — character-level text split -->
+<script src="https://unpkg.com/splitting/dist/splitting.min.js"></script>
 <!-- Lenis Smooth Scroll -->
 <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
 <!-- GSAP -->
