@@ -522,7 +522,55 @@ body.no-transitions *::after {
   border-color: var(--border-base);
 }
 
-.carousel-item picture,
+.carousel-item picture {
+  display: inline-flex;
+  position: relative;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Apple Intelligence rotating ring */
+@keyframes ai-ring-spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+.carousel-item picture::before,
+.carousel-item picture::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+/* Rotating conic-gradient — Apple Intelligence colors */
+.carousel-item picture::before {
+  inset: -3px;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0%,
+    #f9a8d4 12%,
+    #c4b5fd 30%,
+    #93c5fd 50%,
+    #6ee7b7 65%,
+    #f9a8d4 80%,
+    transparent 95%
+  );
+  animation: ai-ring-spin 2.8s linear infinite;
+  z-index: 0;
+}
+
+/* Inner mask — matches page background to create ring gap */
+.carousel-item picture::after {
+  inset: 0px;
+  background: var(--bg-primary);
+  z-index: 1;
+}
+
 .carousel-item img {
   width: 48px;
   height: 48px;
@@ -532,6 +580,8 @@ body.no-transitions *::after {
   filter: grayscale(100%);
   opacity: 0.7;
   transition: filter var(--duration-base), opacity var(--duration-base);
+  position: relative;
+  z-index: 2;
 }
 
 .carousel-item:hover picture,
