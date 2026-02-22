@@ -25,7 +25,7 @@ Landing page para CityStream, la primera red social de Colombia. El sitio presen
 
 ### Architecture Patterns
 - Single HTML page con secciones ancla (#inicio, #features, #experiencias, #contacto)
-- Secciones en orden factory.ai: navbar → hero → trusted-by → features (tabs) → value-prop → experiences → footer
+- Secciones en orden factory.ai: navbar → hero → trusted-by → features (sticky scroll narrative) → value-prop → experiences → footer
 - CSS organizado por secciones con comentarios de separacion
 - JS: GSAP para animaciones, vanilla para interacciones (tabs, menu)
 

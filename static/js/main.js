@@ -45,6 +45,66 @@ if (!prefersReducedMotion && typeof Lenis !== 'undefined') {
 }
 
 // ============================================
+// HERO PARTICLES — tsParticles node grid
+// ============================================
+function getHeroParticlesConfig(isLight) {
+  const isMobile = window.innerWidth <= 768;
+  const count = isMobile ? 20 : 45;
+  return {
+    fpsLimit: 60,
+    background: { color: { value: 'transparent' } },
+    particles: {
+      number: { value: count, density: { enable: true, area: 900 } },
+      color: {
+        value: isLight
+          ? ['#374151', '#6b7280', '#f97316']
+          : ['#d1d5db', '#9ca3af', '#f97316']
+      },
+      opacity: { value: { min: 0.15, max: 0.55 } },
+      size: { value: { min: 1, max: 3.5 } },
+      links: {
+        enable: true,
+        distance: 140,
+        color: isLight ? '#9ca3af' : '#6b7280',
+        opacity: isLight ? 0.25 : 0.2,
+        width: 1
+      },
+      move: {
+        enable: !prefersReducedMotion,
+        speed: 0.4,
+        direction: 'none',
+        random: true,
+        outModes: { default: 'bounce' }
+      }
+    },
+    interactivity: {
+      events: {
+        onHover: {
+          enable: !prefersReducedMotion && !isMobile,
+          mode: 'repulse'
+        },
+        resize: { enable: true }
+      },
+      modes: { repulse: { distance: 90, duration: 0.4 } }
+    },
+    detectRetina: true
+  };
+}
+
+let heroParticlesContainer = null;
+async function initHeroParticles() {
+  if (!document.getElementById('hero-particles') || typeof tsParticles === 'undefined') return;
+  if (heroParticlesContainer) {
+    await heroParticlesContainer.destroy();
+    heroParticlesContainer = null;
+  }
+  const isLight = document.body.classList.contains('light-theme');
+  heroParticlesContainer = await tsParticles.load('hero-particles', getHeroParticlesConfig(isLight));
+}
+
+initHeroParticles();
+
+// ============================================
 // CUSTOM CURSOR — Desktop only
 // ============================================
 const cursor = document.querySelector('.cursor');
@@ -114,6 +174,8 @@ if (themeToggle) {
       c.style.webkitBackgroundClip = 'text';
       c.style.backgroundClip = 'text';
     });
+    // Re-init particles with updated theme colors
+    initHeroParticles();
   });
 }
 
