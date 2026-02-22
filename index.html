@@ -78,6 +78,9 @@
 </head>
 <body class="no-transitions">
 
+<!-- Background diagonal texture -->
+<div class="bg-texture" aria-hidden="true"></div>
+
 <!-- Top Scroll Progress Bar -->
 <div id="top-progress" aria-hidden="true"></div>
 
@@ -190,90 +193,86 @@
     </div>
   </section>
 
-  <!-- Features Section (Tabbed) -->
+  <!-- Features Section (Sticky Scroll Narrative) -->
   <section class="features" id="features">
     <div class="section-header">
       <span class="section-label">Funcionalidades</span>
       <h2 class="gradient-text">Todo lo que necesitas, en una app</h2>
-      <p>Cuatro pilares para vivir Colombia como nunca antes</p>
     </div>
 
-    <div class="features-tabs">
-      <div class="tab-buttons" role="tablist">
-        <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="panel-ciudades" data-tab="ciudades">
-          <i class="ri-building-line" aria-hidden="true"></i>
-          <span>Ciudades</span>
-        </button>
-        <button class="tab-btn" role="tab" aria-selected="false" aria-controls="panel-eventos" data-tab="eventos">
-          <i class="ri-calendar-event-line" aria-hidden="true"></i>
-          <span>Eventos</span>
-        </button>
-        <button class="tab-btn" role="tab" aria-selected="false" aria-controls="panel-personas" data-tab="personas">
-          <i class="ri-group-line" aria-hidden="true"></i>
-          <span>Personas</span>
-        </button>
-        <button class="tab-btn" role="tab" aria-selected="false" aria-controls="panel-conciertos" data-tab="conciertos">
-          <i class="ri-music-2-line" aria-hidden="true"></i>
-          <span>Conciertos</span>
-        </button>
+    <div class="features-sticky-wrap">
+      <!-- Left: sticky nav -->
+      <div class="features-sticky-left">
+        <p class="features-tagline">Cuatro pilares para vivir Colombia como nunca antes</p>
+        <nav class="features-nav" aria-label="Navegacion de funcionalidades">
+          <button class="fnav-item active" data-scroll-to="fi-0">
+            <span class="fnav-num">01</span>
+            <span class="fnav-text"><i class="ri-building-line" aria-hidden="true"></i> Ciudades</span>
+          </button>
+          <button class="fnav-item" data-scroll-to="fi-1">
+            <span class="fnav-num">02</span>
+            <span class="fnav-text"><i class="ri-calendar-event-line" aria-hidden="true"></i> Eventos</span>
+          </button>
+          <button class="fnav-item" data-scroll-to="fi-2">
+            <span class="fnav-num">03</span>
+            <span class="fnav-text"><i class="ri-group-line" aria-hidden="true"></i> Personas</span>
+          </button>
+          <button class="fnav-item" data-scroll-to="fi-3">
+            <span class="fnav-num">04</span>
+            <span class="fnav-text"><i class="ri-music-2-line" aria-hidden="true"></i> Conciertos</span>
+          </button>
+        </nav>
       </div>
 
-      <div class="tab-panels">
-        <div class="tab-panel active" id="panel-ciudades" role="tabpanel">
-          <div class="tab-text">
-            <h3>El mapa vivo de Colombia</h3>
-            <p>Cada ciudad tiene su propia energia. Navega por Bogota, Medellin, Cartagena y mas — con recomendaciones locales de gastronomia, cultura y vida nocturna que solo los locales conocen.</p>
-            <a href="#experiencias" class="link-arrow">Mas informacion <i class="ri-arrow-right-line" aria-hidden="true"></i></a>
-          </div>
-          <div class="tab-image">
+      <!-- Right: scroll items -->
+      <div class="features-items-col">
+        <article class="features-item active" id="fi-0">
+          <h3>El mapa vivo de Colombia</h3>
+          <p>Cada ciudad tiene su propia energia. Navega por Bogota, Medellin, Cartagena y mas — con recomendaciones locales de gastronomia, cultura y vida nocturna que solo los locales conocen.</p>
+          <a href="#experiencias" class="link-arrow">Mas informacion <i class="ri-arrow-right-line" aria-hidden="true"></i></a>
+          <div class="features-item-image">
             <picture>
               <source srcset="static/img/img-03.webp" type="image/webp" />
               <img src="static/img/img-03.jpg" alt="Vista de Bogota" loading="lazy" width="1280" height="720" />
             </picture>
           </div>
-        </div>
+        </article>
 
-        <div class="tab-panel" id="panel-eventos" role="tabpanel" hidden>
-          <div class="tab-text">
-            <h3>Nunca mas te pierdas de nada</h3>
-            <p>Conciertos, ferias, exposiciones, meetups — filtra por ciudad, fecha y categoria. CityStream te avisa antes de que se agoten las entradas.</p>
-            <a href="#experiencias" class="link-arrow">Mas informacion <i class="ri-arrow-right-line" aria-hidden="true"></i></a>
-          </div>
-          <div class="tab-image">
+        <article class="features-item" id="fi-1">
+          <h3>Nunca mas te pierdas de nada</h3>
+          <p>Conciertos, ferias, exposiciones, meetups — filtra por ciudad, fecha y categoria. CityStream te avisa antes de que se agoten las entradas.</p>
+          <a href="#experiencias" class="link-arrow">Mas informacion <i class="ri-arrow-right-line" aria-hidden="true"></i></a>
+          <div class="features-item-image">
             <picture>
               <source srcset="static/img/img-04.webp" type="image/webp" />
               <img src="static/img/img-04.jpg" alt="Eventos en Colombia" loading="lazy" width="1280" height="720" />
             </picture>
           </div>
-        </div>
+        </article>
 
-        <div class="tab-panel" id="panel-personas" role="tabpanel" hidden>
-          <div class="tab-text">
-            <h3>Personas reales, conexiones reales</h3>
-            <p>Sin algoritmos que deciden por ti. Encuentra personas que comparten tus intereses en tu misma ciudad y construye relaciones que van mas alla de la pantalla.</p>
-            <a href="#experiencias" class="link-arrow">Mas informacion <i class="ri-arrow-right-line" aria-hidden="true"></i></a>
-          </div>
-          <div class="tab-image">
+        <article class="features-item" id="fi-2">
+          <h3>Personas reales, conexiones reales</h3>
+          <p>Sin algoritmos que deciden por ti. Encuentra personas que comparten tus intereses en tu misma ciudad y construye relaciones que van mas alla de la pantalla.</p>
+          <a href="#experiencias" class="link-arrow">Mas informacion <i class="ri-arrow-right-line" aria-hidden="true"></i></a>
+          <div class="features-item-image">
             <picture>
               <source srcset="static/img/img-05.webp" type="image/webp" />
               <img src="static/img/img-05.jpg" alt="Personas conectando en Medellin" loading="lazy" width="1280" height="720" />
             </picture>
           </div>
-        </div>
+        </article>
 
-        <div class="tab-panel" id="panel-conciertos" role="tabpanel" hidden>
-          <div class="tab-text">
-            <h3>El ritmo de Colombia en tus manos</h3>
-            <p>Desde artistas emergentes en bares de Chapinero hasta festivales masivos en el Movistar Arena. Compra entradas, arma tu grupo y vive la musica.</p>
-            <a href="#experiencias" class="link-arrow">Mas informacion <i class="ri-arrow-right-line" aria-hidden="true"></i></a>
-          </div>
-          <div class="tab-image">
+        <article class="features-item" id="fi-3">
+          <h3>El ritmo de Colombia en tus manos</h3>
+          <p>Desde artistas emergentes en bares de Chapinero hasta festivales masivos en el Movistar Arena. Compra entradas, arma tu grupo y vive la musica.</p>
+          <a href="#experiencias" class="link-arrow">Mas informacion <i class="ri-arrow-right-line" aria-hidden="true"></i></a>
+          <div class="features-item-image">
             <picture>
               <source srcset="static/img/img-06.webp" type="image/webp" />
               <img src="static/img/img-06.jpg" alt="Conciertos en Cartagena" loading="lazy" width="1280" height="720" />
             </picture>
           </div>
-        </div>
+        </article>
       </div>
     </div>
   </section>
@@ -420,12 +419,14 @@
 
   <!-- CTA Section -->
   <section class="cta-section">
-    <h2>Listo para descubrir Colombia de otra forma?</h2>
-    <p>Unete a miles de colombianos que ya estan viviendo sus ciudades al maximo.</p>
-    <a href="#features" class="btn-primary">
-      <span>Comenzar Ahora</span>
-      <i class="ri-arrow-right-line" aria-hidden="true"></i>
-    </a>
+    <div class="cta-card">
+      <span class="cta-label">• Unete a la red</span>
+      <h2>Listo para descubrir Colombia de otra forma?</h2>
+      <p class="cta-sub">Miles de colombianos ya estan viviendo sus ciudades al maximo con CityStream.</p>
+      <a href="#features" class="cta-btn">
+        Comenzar Ahora <i class="ri-arrow-right-line" aria-hidden="true"></i>
+      </a>
+    </div>
   </section>
 </main>
 

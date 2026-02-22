@@ -47,6 +47,9 @@
   --glow-purple: rgba(175, 64, 255, 0.18);
   --glow-blue: rgba(91, 66, 243, 0.12);
   --glow-cyan: rgba(0, 221, 235, 0.08);
+
+  /* Dark contrast band */
+  --bg-dark-band: #111111;
 }
 
 *,
@@ -81,6 +84,33 @@ body::before {
   inset: 3px;
   background: var(--bg-dark);
   z-index: -1;
+}
+
+/* ============================================
+   BACKGROUND TEXTURE — Diagonal diagonal overlay
+   ============================================ */
+.bg-texture {
+  position: fixed;
+  inset: 3px;
+  background-image: repeating-linear-gradient(
+    -45deg,
+    transparent,
+    transparent 3px,
+    rgba(255, 255, 255, 0.013) 3px,
+    rgba(255, 255, 255, 0.013) 4px
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+body.light-theme .bg-texture {
+  background-image: repeating-linear-gradient(
+    -45deg,
+    transparent,
+    transparent 3px,
+    rgba(0, 0, 0, 0.012) 3px,
+    rgba(0, 0, 0, 0.012) 4px
+  );
 }
 
 a {
@@ -602,14 +632,14 @@ body.no-transitions *::after {
 }
 
 /* ============================================
-   FEATURES — Tabbed section
+   FEATURES — Sticky Scroll Narrative
    ============================================ */
 .features {
   padding: var(--section-gap) var(--px-desktop);
   max-width: 1440px;
   margin: 0 auto;
   position: relative;
-  overflow: hidden;
+  overflow-x: clip;
 }
 
 .features::before {
@@ -626,81 +656,127 @@ body.no-transitions *::after {
   z-index: 1;
 }
 
-.features-tabs {
+/* 2-col sticky layout */
+.features-sticky-wrap {
+  display: grid;
+  grid-template-columns: 5fr 7fr;
+  gap: 5rem;
+  align-items: start;
   max-width: 1100px;
   margin: 0 auto;
 }
 
-.tab-buttons {
-  display: flex;
-  gap: 0.5rem;
-  margin-bottom: 2.5rem;
-  border-bottom: 1px solid var(--border-base);
-  padding-bottom: 0;
+/* Left: sticky nav column */
+.features-sticky-left {
+  position: sticky;
+  top: 100px;
 }
 
-.tab-btn {
+.features-tagline {
+  color: var(--text-secondary);
+  line-height: 1.7;
+  margin-bottom: 2.5rem;
+  font-size: var(--fs-body);
+}
+
+.features-nav {
+  display: flex;
+  flex-direction: column;
+}
+
+.fnav-item {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0.75rem 1.5rem;
+  gap: 1rem;
+  padding: 1rem 0;
   background: none;
   border: none;
-  border-bottom: 2px solid transparent;
+  border-top: 1px solid var(--border-base);
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
   color: var(--text-secondary);
   font-family: var(--font-sans);
   font-size: var(--fs-body);
-  font-weight: 500;
-  cursor: pointer;
-  transition: color var(--duration-base), border-color var(--duration-base);
-  margin-bottom: -1px;
+  transition: color var(--duration-base);
 }
 
-.tab-btn:hover {
+.fnav-item:last-child {
+  border-bottom: 1px solid var(--border-base);
+}
+
+.fnav-item:hover {
+  color: var(--text-primary);
+}
+
+.fnav-item.active {
+  color: var(--text-primary);
+}
+
+.fnav-num {
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  color: var(--text-secondary);
+  font-variant-numeric: tabular-nums;
+  min-width: 1.75rem;
+  transition: color var(--duration-base);
+  font-family: monospace;
+}
+
+.fnav-item.active .fnav-num {
   color: var(--accent-orange-hover);
 }
 
-.tab-btn.active {
-  color: var(--white);
-  border-bottom-color: var(--white);
-}
-
-.tab-btn i {
-  font-size: 1.125rem;
-}
-
-/* Tab panels */
-.tab-panel {
-  display: none;
-  grid-template-columns: 1fr 1fr;
-  gap: 3rem;
+.fnav-text {
+  font-weight: 500;
+  display: flex;
   align-items: center;
+  gap: 0.5rem;
 }
 
-.tab-panel.active {
-  display: grid;
+.fnav-text i {
+  font-size: 1rem;
+  opacity: 0.7;
 }
 
-.tab-text h3 {
+/* Right: scroll items column */
+.features-items-col {
+  display: flex;
+  flex-direction: column;
+  gap: 5rem;
+  padding-top: 0.25rem;
+}
+
+.features-item {
+  opacity: 0.3;
+  transition: opacity 0.5s ease;
+}
+
+.features-item.active {
+  opacity: 1;
+}
+
+.features-item h3 {
   font-size: var(--fs-h3);
   font-weight: 700;
   margin-bottom: 1rem;
 }
 
-.tab-text p {
+.features-item > p {
   color: var(--text-secondary);
   line-height: 1.7;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.25rem;
 }
 
-.tab-image {
+.features-item-image {
   border-radius: 16px;
   overflow: hidden;
   border: 1px solid var(--border-base);
+  margin-top: 1.5rem;
   position: relative;
 }
 
-.tab-image::after {
+.features-item-image::after {
   content: '';
   position: absolute;
   inset: 0;
@@ -710,11 +786,11 @@ body.no-transitions *::after {
   transition: opacity 0.3s;
 }
 
-.tab-image:hover::after {
+.features-item-image:hover::after {
   opacity: 0;
 }
 
-.tab-image img {
+.features-item-image img {
   width: 100%;
   height: 300px;
   object-fit: cover;
@@ -722,7 +798,7 @@ body.no-transitions *::after {
   transition: transform 0.5s ease;
 }
 
-.tab-image:hover img {
+.features-item-image:hover img {
   transform: scale(1.03);
 }
 
@@ -908,12 +984,41 @@ body.no-transitions *::after {
 }
 
 /* ============================================
-   NUMBERED FEATURE CARDS
+   NUMBERED FEATURE CARDS — Dark contrast band
    ============================================ */
 .numbered-features {
   padding: var(--section-gap) var(--px-desktop);
+  position: relative;
+}
+
+/* Full-bleed dark background via pseudo-element */
+.numbered-features::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100vw;
+  background: var(--bg-dark-band);
+  z-index: 0;
+}
+
+.numbered-features > * {
+  position: relative;
+  z-index: 1;
   max-width: 1440px;
-  margin: 0 auto;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Override section-label and heading colors for dark band */
+.numbered-features .section-label {
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.numbered-features h2 {
+  color: rgba(255, 255, 255, 0.92);
 }
 
 .numbered-grid {
@@ -923,35 +1028,37 @@ body.no-transitions *::after {
 }
 
 .num-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border-base);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 16px;
   padding: 2rem;
   transition: border-color var(--duration-base), background var(--duration-base);
 }
 
 .num-card:hover {
-  border-color: var(--border-hover);
-  background: var(--bg-card-hover);
+  border-color: rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.07);
 }
 
 .num-card-number {
   display: block;
   font-size: var(--fs-xs);
-  font-weight: 600;
-  color: var(--text-secondary);
+  font-weight: 700;
+  color: var(--accent-orange-hover);
   margin-bottom: 1.25rem;
   font-variant-numeric: tabular-nums;
+  font-family: monospace;
 }
 
 .num-card h3 {
   font-size: var(--fs-h3);
   font-weight: 700;
   margin-bottom: 0.75rem;
+  color: rgba(255, 255, 255, 0.9);
 }
 
 .num-card p {
-  color: var(--text-secondary);
+  color: rgba(255, 255, 255, 0.55);
   line-height: 1.7;
 }
 
@@ -1025,28 +1132,76 @@ body.no-transitions *::after {
 }
 
 /* ============================================
-   CTA SECTION
+   CTA SECTION — Dark card pre-footer
    ============================================ */
 .cta-section {
   padding: var(--section-gap) var(--px-desktop);
   max-width: 1440px;
   margin: 0 auto;
+}
+
+.cta-card {
+  max-width: 760px;
+  margin: 0 auto;
+  background: #0a0a0a;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 4rem 3rem;
   text-align: center;
 }
 
-.cta-section h2 {
+.cta-label {
+  display: block;
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--accent-orange-hover);
+  margin-bottom: 1.5rem;
+  font-family: monospace;
+}
+
+.cta-card h2 {
   font-size: var(--fs-h2);
   font-weight: 700;
+  color: #ffffff;
   margin-bottom: 1rem;
 }
 
-.cta-section p {
-  color: var(--text-secondary);
-  font-size: clamp(1rem, 2vw, 1.125rem);
+.cta-sub {
+  color: rgba(255, 255, 255, 0.45);
+  font-size: var(--fs-sm);
   margin-bottom: 2.5rem;
-  max-width: 500px;
-  margin-left: auto;
-  margin-right: auto;
+  line-height: 1.6;
+  font-family: monospace;
+}
+
+.cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.875rem 2.25rem;
+  background: #ffffff;
+  color: #0a0a0a;
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: var(--fs-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  border-radius: 8px;
+  transition: background var(--duration-base), color var(--duration-base), transform var(--duration-fast);
+  min-height: 44px;
+}
+
+.cta-btn:hover {
+  background: var(--accent-orange-hover);
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
+.cta-btn:focus-visible {
+  outline: 2px solid var(--accent-cyan);
+  outline-offset: 2px;
 }
 
 /* ============================================
@@ -1203,12 +1358,25 @@ body.no-transitions *::after {
    RESPONSIVE: Tablet (1024px)
    ============================================ */
 @media (max-width: 1024px) {
-  .tab-panel.active {
+  .features-sticky-wrap {
     grid-template-columns: 1fr;
+    gap: 2rem;
   }
 
-  .tab-image {
-    order: -1;
+  .features-sticky-left {
+    position: static;
+  }
+
+  .features-nav {
+    display: none;
+  }
+
+  .features-items-col {
+    gap: 3.5rem;
+  }
+
+  .features-item {
+    opacity: 1 !important;
   }
 
   .value-prop-grid {
@@ -1338,6 +1506,10 @@ body.no-transitions *::after {
   .cta-section {
     padding-left: var(--px-mobile);
     padding-right: var(--px-mobile);
+  }
+
+  .cta-card {
+    padding: 2.5rem 1.5rem;
   }
 
   .experiences-grid {
@@ -1584,9 +1756,9 @@ body.light-theme .news-tag.tag-cyan {
   color: #0891b2;
 }
 
-body.light-theme .num-card-number {
-  color: rgba(0, 0, 0, 0.35);
-}
+/* num-card-number: dark band is always dark regardless of theme */
+/* intentionally not overriding num-card-number color in light-theme
+   because dark band stays dark */
 
 body.light-theme .section-label {
   color: rgba(0, 0, 0, 0.5);

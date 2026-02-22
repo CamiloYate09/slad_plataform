@@ -70,7 +70,7 @@ if (cursor && cursorFollower && window.matchMedia('(pointer: fine)').matches) {
   }
   animateFollower();
 
-  const interactiveElements = document.querySelectorAll('a, button, .tab-btn, .exp-card');
+  const interactiveElements = document.querySelectorAll('a, button, .fnav-item, .exp-card, .cta-btn');
   interactiveElements.forEach(el => {
     el.addEventListener('mouseenter', () => {
       cursor.classList.add('active');
@@ -189,65 +189,45 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 });
 
 // ============================================
-// TAB SWITCHING with GSAP transitions
+// STICKY SCROLL FEATURES — IntersectionObserver
 // ============================================
-const tabButtons = document.querySelectorAll('.tab-btn');
-const tabPanels = document.querySelectorAll('.tab-panel');
+const featuresItems = document.querySelectorAll('.features-item');
+const fnavItems = document.querySelectorAll('.fnav-item');
 
-tabButtons.forEach(btn => {
-  btn.addEventListener('click', () => {
-    const targetTab = btn.dataset.tab;
-    const targetPanel = document.getElementById('panel-' + targetTab);
+function activateFeature(idx) {
+  fnavItems.forEach((nav, i) => nav.classList.toggle('active', i === idx));
+  featuresItems.forEach((item, i) => item.classList.toggle('active', i === idx));
+}
 
-    if (!targetPanel || btn.classList.contains('active')) return;
+if (featuresItems.length > 0) {
+  // Only use observer on desktop — mobile shows all items at full opacity
+  const isDesktop = window.matchMedia('(min-width: 1025px)').matches;
 
-    // Update button states
-    tabButtons.forEach(b => {
-      b.classList.remove('active');
-      b.setAttribute('aria-selected', 'false');
+  if (isDesktop) {
+    const featureObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const idx = Array.from(featuresItems).indexOf(entry.target);
+          activateFeature(idx);
+        }
+      });
+    }, {
+      threshold: 0.4,
+      rootMargin: '-5% 0px -40% 0px'
     });
-    btn.classList.add('active');
-    btn.setAttribute('aria-selected', 'true');
 
-    // Get current active panel
-    const currentPanel = document.querySelector('.tab-panel.active');
+    featuresItems.forEach(item => featureObserver.observe(item));
+  }
 
-    if (prefersReducedMotion) {
-      // No animation — instant switch
-      if (currentPanel) {
-        currentPanel.classList.remove('active');
-        currentPanel.hidden = true;
+  // Click nav items to scroll to corresponding item
+  fnavItems.forEach((navBtn, i) => {
+    navBtn.addEventListener('click', () => {
+      if (featuresItems[i]) {
+        featuresItems[i].scrollIntoView({ behavior: 'smooth', block: 'center' });
       }
-      targetPanel.hidden = false;
-      targetPanel.classList.add('active');
-    } else {
-      // GSAP animated transition
-      if (currentPanel) {
-        gsap.to(currentPanel, {
-          opacity: 0,
-          y: -10,
-          duration: 0.2,
-          ease: 'power2.in',
-          onComplete: () => {
-            currentPanel.classList.remove('active');
-            currentPanel.hidden = true;
-            gsap.set(currentPanel, { opacity: 1, y: 0 });
-
-            targetPanel.hidden = false;
-            targetPanel.classList.add('active');
-            gsap.fromTo(targetPanel,
-              { opacity: 0, y: 20 },
-              { opacity: 1, y: 0, duration: 0.4, ease: 'power2.out' }
-            );
-          }
-        });
-      } else {
-        targetPanel.hidden = false;
-        targetPanel.classList.add('active');
-      }
-    }
+    });
   });
-});
+}
 
 // ============================================
 // TEXT SCRAMBLE — Hero subtitle
@@ -346,10 +326,23 @@ if (!prefersReducedMotion) {
     });
   });
 
-  // Features tabs container
-  gsap.from('.features-tabs', {
+  // Features sticky wrap entrance
+  gsap.from('.features-sticky-wrap', {
     scrollTrigger: {
-      trigger: '.features-tabs',
+      trigger: '.features-sticky-wrap',
+      start: 'top 85%',
+      once: true
+    },
+    opacity: 0,
+    y: 40,
+    duration: 0.8,
+    ease: 'power2.out'
+  });
+
+  // CTA card entrance
+  gsap.from('.cta-card', {
+    scrollTrigger: {
+      trigger: '.cta-section',
       start: 'top 85%',
       once: true
     },
@@ -424,19 +417,6 @@ if (!prefersReducedMotion) {
     y: 40,
     duration: 0.8,
     stagger: 0.1,
-    ease: 'power2.out'
-  });
-
-  // CTA section — fade in
-  gsap.from('.cta-section', {
-    scrollTrigger: {
-      trigger: '.cta-section',
-      start: 'top 85%',
-      once: true
-    },
-    opacity: 0,
-    y: 40,
-    duration: 0.8,
     ease: 'power2.out'
   });
 
