@@ -1124,6 +1124,53 @@ body.no-transitions *::after {
 }
 
 /* ============================================
+   VIDEO SHOWCASE
+   ============================================ */
+.video-showcase {
+  padding: var(--section-gap) var(--px-desktop);
+  text-align: center;
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+.video-showcase-caption {
+  color: var(--text-secondary);
+  line-height: 1.7;
+  font-size: var(--fs-body);
+  margin-top: 0.5rem;
+}
+
+.video-showcase-container {
+  max-width: 960px;
+  margin: 2.5rem auto 0;
+  aspect-ratio: 1920 / 1608;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid var(--border-base);
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.4);
+}
+
+.showcase-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+@media (max-width: 768px) {
+  .video-showcase-container {
+    max-width: 100%;
+    border-radius: 10px;
+  }
+}
+
+/* Light theme overrides */
+body.light-theme .video-showcase-container {
+  border-color: rgba(0, 0, 0, 0.08);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.12);
+}
+
+/* ============================================
    NEWS / UPDATES GRID
    ============================================ */
 .news {
