@@ -939,6 +939,11 @@ function wlSetLoading(on) {
   wlSubmit.disabled = on;
 }
 
+// Callback de Turnstile (invocado cuando genera token exitoso)
+window.onTurnstileSuccess = function(token) {
+  // El token queda en el campo hidden cf-turnstile-response — el submit lo lee
+};
+
 if (wlForm) {
   wlForm.addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -951,6 +956,15 @@ if (wlForm) {
       return;
     }
 
+    // Verificación Turnstile (degradación elegante si no está cargado)
+    const turnstileInput = wlForm.querySelector('[name="cf-turnstile-response"]');
+    const turnstileToken = turnstileInput ? turnstileInput.value : null;
+    const turnstileLoaded = typeof window.turnstile !== 'undefined';
+    if (turnstileLoaded && !turnstileToken) {
+      wlSetStatus('Verifica que no eres un bot e intenta de nuevo.', 'error');
+      return;
+    }
+
     if (!supabaseClient) {
       wlSetStatus('El formulario no está disponible aún. Escríbenos a citystreamCO@pm.me', 'info');
       return;
@@ -960,9 +974,13 @@ if (wlForm) {
     wlSetStatus('');
 
     try {
+      // Incluir token de Turnstile para validación futura en el backend Go
+      const payload = { email };
+      if (turnstileToken) payload.turnstile_token = turnstileToken;
+
       const { error } = await supabaseClient
         .from('waitlist')
-        .insert({ email });
+        .insert(payload);
 
       if (error) {
         // Código 23505 = unique_violation (email duplicado)

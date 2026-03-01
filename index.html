@@ -37,8 +37,16 @@
   <link rel="preload" href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap" as="style" />
   <link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap" rel="stylesheet" />
 
-  <!-- Icons -->
-  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet" />
+  <!-- Icons — SRI protege contra CDN comprometido -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css"
+    rel="stylesheet"
+    integrity="sha384-6FSSi597BTd6QcnsBNoLclRKxTOyyYqkaucRjFgCNr8wHVCp0COLClSPY4Vy/bjh"
+    crossorigin="anonymous"
+  />
+
+  <!-- Cloudflare Turnstile — bot protection para formulario de waitlist -->
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 
   <!-- Styles -->
   <link rel="stylesheet" href="static/css/style.css" />
@@ -75,6 +83,38 @@
   </script>
 
   <title>CityStream - La Red Social de Colombia</title>
+
+  <!-- ============================================================
+       SECURITY HEADERS (meta equivalents — full headers via Cloudflare)
+       ============================================================ -->
+  <!-- Referrer Policy: solo envía el origen al navegar a sitios externos -->
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <!-- Content Security Policy: restringe orígenes permitidos de scripts, estilos y conexiones -->
+  <meta http-equiv="Content-Security-Policy" content="
+    default-src 'none';
+    script-src 'self' 'unsafe-inline'
+      https://cdn.jsdelivr.net
+      https://unpkg.com
+      https://cdnjs.cloudflare.com
+      https://static.cloudflareinsights.com
+      https://challenges.cloudflare.com;
+    style-src 'self' 'unsafe-inline'
+      https://fonts.googleapis.com
+      https://cdn.jsdelivr.net;
+    font-src 'self'
+      https://fonts.gstatic.com
+      https://cdn.jsdelivr.net;
+    img-src 'self' data:
+      https://zeqnlntgimxtjuffoilg.supabase.co;
+    connect-src 'self'
+      https://zeqnlntgimxtjuffoilg.supabase.co
+      https://cloudflareinsights.com;
+    frame-src
+      https://challenges.cloudflare.com;
+    frame-ancestors 'none';
+    base-uri 'self';
+    form-action 'self';
+  " />
 </head>
 <body class="no-transitions">
 
@@ -463,6 +503,15 @@
           </button>
         </div>
         <p id="wl-status" class="wl-status" aria-live="polite" aria-atomic="true"></p>
+        <!-- Cloudflare Turnstile — bot protection invisible
+             IMPORTANTE: reemplaza data-sitekey con tu Site Key del dashboard de Turnstile -->
+        <div
+          class="cf-turnstile"
+          data-sitekey="0x4AAAAAACkJpMIzNuPy__9Z"
+          data-size="invisible"
+          data-callback="onTurnstileSuccess"
+          aria-hidden="true"
+        ></div>
       </form>
 
       <p class="wl-privacy"><i class="ri-lock-line" aria-hidden="true"></i> Tu email es privado y nunca será vendido ni compartido.</p>
@@ -522,17 +571,41 @@
   </div>
 </footer>
 
-<!-- Supabase JS SDK — waitlist data layer -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<!-- Supabase JS SDK — SRI: hash SHA-384 verifica integridad del archivo -->
+<script
+  src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"
+  integrity="sha384-Sm2s7OXxsAMTyJ4iIyRBgVpeGUvMPk2lRQnnZhE78Wej7oggIoolKt+SCt0XJbUB"
+  crossorigin="anonymous"
+></script>
 <!-- Splitting.js — character-level text split -->
-<script src="https://unpkg.com/splitting/dist/splitting.min.js"></script>
+<script
+  src="https://unpkg.com/splitting/dist/splitting.min.js"
+  integrity="sha384-QgxPWXpRukl1Nd0WP/PR30fzuu+zxlhdjS9roCVo3887QzWmGyhFMfC+CKM3KcZT"
+  crossorigin="anonymous"
+></script>
 <!-- Lenis Smooth Scroll -->
-<script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
-<!-- GSAP -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script
+  src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"
+  integrity="sha384-tKsJDT6PlUI0pSBt9/sBKJluKgA19/a6mBrDsZaXotLB4ZYfMGM6xt6/WgGpYhTm"
+  crossorigin="anonymous"
+></script>
+<!-- GSAP + ScrollTrigger -->
+<script
+  src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"
+  integrity="sha384-g4NTh/Iv5PPU4xPyhEWqPcwtNXOvdaDI8LLnyYfyNZOjKJeYQyjzQ9X5275eBjpt"
+  crossorigin="anonymous"
+></script>
+<script
+  src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"
+  integrity="sha384-Z3REaz79l2IaAZqJsSABtTbhjgOUYyV3p90XNnAPCSHg3EMTz1fouunq9WZRtj3d"
+  crossorigin="anonymous"
+></script>
 <!-- tsParticles — hero node grid animation -->
-<script src="https://cdn.jsdelivr.net/npm/tsparticles@2.12.0/tsparticles.bundle.min.js"></script>
+<script
+  src="https://cdn.jsdelivr.net/npm/tsparticles@2.12.0/tsparticles.bundle.min.js"
+  integrity="sha384-gZSNMuUgSbqcltOBBRNXCH+szg+2C69ISFyCk2w+xsZc0iFU+bIVPfYPmLwLtNzz"
+  crossorigin="anonymous"
+></script>
 <script src="static/js/main.js"></script>
 <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "387eafbec0ae4fa2a28276906b729ce9"}'></script><!-- End Cloudflare Web Analytics -->
 </body>
