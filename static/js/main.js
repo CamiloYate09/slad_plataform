@@ -693,54 +693,42 @@ if (!prefersReducedMotion) {
 // ============================================
 // COUNT-UP — Stats section
 // ============================================
-function formatStat(val) {
-  if (val >= 1000000) return Math.round(val / 1000000) + 'M';
-  if (val >= 1000) return Math.round(val / 1000) + '';
-  return Math.round(val) + '';
-}
-
-const statNumbers = document.querySelectorAll('.stat-number');
-
-if (prefersReducedMotion) {
-  statNumbers.forEach(el => {
-    const target = parseInt(el.dataset.target, 10);
-    const suffix = el.dataset.suffix || '';
-    el.textContent = formatStat(target) + suffix;
-  });
-} else {
-  statNumbers.forEach(el => {
-    const target = parseInt(el.dataset.target, 10);
-    const suffix = el.dataset.suffix || '';
-    const proxy = { val: 0 };
-    gsap.to(proxy, {
-      val: target,
-      duration: 2,
-      ease: 'power2.out',
-      scrollTrigger: {
-        trigger: el,
-        start: 'top 80%',
-        once: true
-      },
-      onUpdate() {
-        el.textContent = formatStat(Math.round(proxy.val)) + suffix;
-      }
-    });
-  });
-}
-
+// WAITLIST COUNTER — animated count-up (driven by Supabase RPC)
 // ============================================
-// STATS SECTION — staggered entrance (Task 3.3)
-// ============================================
-if (!prefersReducedMotion) {
-  gsap.from('.stat-item', {
+function animateWaitlistCount(target) {
+  const countEl = document.getElementById('wl-count');
+  if (!countEl) return;
+  if (prefersReducedMotion || target === 0) {
+    countEl.textContent = target;
+    return;
+  }
+  const proxy = { val: 0 };
+  gsap.to(proxy, {
+    val: target,
+    duration: 1.8,
+    ease: 'power2.out',
     scrollTrigger: {
-      trigger: '.stats-grid',
+      trigger: '.stats',
+      start: 'top 85%',
+      once: true
+    },
+    onUpdate() {
+      countEl.textContent = Math.round(proxy.val).toLocaleString('es-CO');
+    }
+  });
+}
+
+// Waitlist bar entrance animation
+if (!prefersReducedMotion) {
+  gsap.from('.waitlist-bar > *', {
+    scrollTrigger: {
+      trigger: '.stats',
       start: 'top 85%',
       once: true
     },
     opacity: 0,
-    y: 30,
-    duration: 0.7,
+    y: 20,
+    duration: 0.6,
     stagger: 0.12,
     ease: 'power2.out'
   });
@@ -894,4 +882,107 @@ if (showcaseVideo) {
     }, { threshold: 0.3 });
     videoObserver.observe(showcaseVideo);
   }
+}
+
+// ============================================
+// SUPABASE WAITLIST — Contador + Formulario
+// ============================================
+// IMPORTANTE: Reemplaza estos valores con los de tu proyecto en supabase.com
+// Settings → API → Project URL y anon public key
+const SUPABASE_URL  = 'https://zeqnlntgimxtjuffoilg.supabase.co';    // ej: https://xyzxyz.supabase.co
+const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InplcW5sbnRnaW14dGp1ZmZvaWxnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUyOTI3NDYsImV4cCI6MjA4MDg2ODc0Nn0.rtGWkgenZiTvbnSN-uC2FLuJN61sdP5m-aaNcya8K_o';       // ej: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+
+let supabaseClient = null;
+
+if (typeof window.supabase !== 'undefined' &&
+    SUPABASE_URL !== 'REEMPLAZA_CON_TU_PROJECT_URL') {
+  supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
+}
+
+// --- Contador de waitlist ---
+async function fetchWaitlistCount() {
+  if (!supabaseClient) {
+    // Supabase no configurado aún — mostrar 0 sin error
+    animateWaitlistCount(0);
+    return;
+  }
+  try {
+    const { data, error } = await supabaseClient.rpc('get_waitlist_count');
+    if (error) throw error;
+    animateWaitlistCount(Number(data) || 0);
+  } catch {
+    // Falla silenciosa — el contador queda en 0
+    animateWaitlistCount(0);
+  }
+}
+
+fetchWaitlistCount();
+
+// --- Formulario de lista de espera ---
+const wlForm   = document.querySelector('.wl-form');
+const wlEmail  = document.getElementById('wl-email');
+const wlStatus = document.getElementById('wl-status');
+const wlBtnTxt = wlForm && wlForm.querySelector('.wl-btn-text');
+const wlBtnSpn = wlForm && wlForm.querySelector('.wl-btn-loading');
+const wlSubmit = wlForm && wlForm.querySelector('[type="submit"]');
+
+function wlSetStatus(msg, type) {
+  if (!wlStatus) return;
+  wlStatus.textContent = msg;
+  wlStatus.className = 'wl-status' + (type ? ' wl-status--' + type : '');
+}
+
+function wlSetLoading(on) {
+  if (!wlBtnTxt || !wlBtnSpn || !wlSubmit) return;
+  wlBtnTxt.hidden = on;
+  wlBtnSpn.hidden = !on;
+  wlSubmit.disabled = on;
+}
+
+if (wlForm) {
+  wlForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const email = wlEmail ? wlEmail.value.trim() : '';
+
+    // Validación básica de formato
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      wlSetStatus('Por favor ingresa un correo válido.', 'error');
+      if (wlEmail) wlEmail.focus();
+      return;
+    }
+
+    if (!supabaseClient) {
+      wlSetStatus('El formulario no está disponible aún. Escríbenos a citystreamCO@pm.me', 'info');
+      return;
+    }
+
+    wlSetLoading(true);
+    wlSetStatus('');
+
+    try {
+      const { error } = await supabaseClient
+        .from('waitlist')
+        .insert({ email });
+
+      if (error) {
+        // Código 23505 = unique_violation (email duplicado)
+        if (error.code === '23505') {
+          wlSetStatus('¡Este correo ya está en la lista! 🎉', 'info');
+        } else {
+          throw error;
+        }
+      } else {
+        // Éxito — ocultar el grupo de input y mostrar mensaje
+        const inputGroup = wlForm.querySelector('.wl-input-group');
+        if (inputGroup) inputGroup.style.display = 'none';
+        wlSetStatus('¡Ya estás en la lista! Te avisaremos cuando lancemos. 🚀', 'success');
+        // Actualizar el contador en vivo
+        fetchWaitlistCount();
+      }
+    } catch {
+      wlSetStatus('Algo salió mal. Intenta de nuevo.', 'error');
+    } finally {
+      wlSetLoading(false);
+    }
+  });
 }
