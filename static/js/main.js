@@ -698,6 +698,152 @@ if (prefersReducedMotion) {
 }
 
 // ============================================
+// STATS SECTION — staggered entrance (Task 3.3)
+// ============================================
+if (!prefersReducedMotion) {
+  gsap.from('.stat-item', {
+    scrollTrigger: {
+      trigger: '.stats-grid',
+      start: 'top 85%',
+      once: true
+    },
+    opacity: 0,
+    y: 30,
+    duration: 0.7,
+    stagger: 0.12,
+    ease: 'power2.out'
+  });
+}
+
+// ============================================
+// SECTION LABEL CLIP-PATH REVEAL (Task 3.4)
+// Runs AFTER section-header GSAP (which uses opacity+y on the parent).
+// The label reveal is triggered independently at a slightly later scroll position
+// to create a secondary reveal effect inside the already-visible header.
+// ============================================
+if (!prefersReducedMotion) {
+  gsap.utils.toArray('.section-label').forEach(label => {
+    // Set initial hidden state via JS (not CSS) to avoid FOUC
+    label.classList.add('section-label--reveal-pending');
+    gsap.to(label, {
+      scrollTrigger: {
+        trigger: label,
+        start: 'top 92%',
+        once: true
+      },
+      clipPath: 'inset(0 0% 0 0)',
+      opacity: 1,
+      duration: 0.65,
+      ease: 'power3.out',
+      delay: 0.15 // slight delay so parent section-header reveal plays first
+    });
+  });
+}
+
+// ============================================
+// VALUE-PROP H2 CHAR REVEAL (Task 3.5)
+// ============================================
+if (!prefersReducedMotion) {
+  const valuePropH2 = document.querySelector('.value-prop-content h2[data-splitting]');
+  if (valuePropH2) {
+    const vpChars = valuePropH2.querySelectorAll('.char');
+    if (vpChars.length > 0) {
+      gsap.from(vpChars, {
+        scrollTrigger: {
+          trigger: valuePropH2,
+          start: 'top 85%',
+          once: true
+        },
+        yPercent: 110,
+        opacity: 0,
+        duration: 0.55,
+        stagger: 0.02,
+        ease: 'power3.out'
+      });
+    }
+  }
+}
+
+// ============================================
+// 3D TILT EFFECT — exp-cards & num-cards (Task 3.1)
+// ============================================
+if (!prefersReducedMotion && window.matchMedia('(pointer: fine)').matches) {
+  function applyTilt(cards, maxDeg) {
+    cards.forEach(card => {
+      card.addEventListener('mouseenter', () => {
+        gsap.to(card, { y: -6, duration: 0.3, ease: 'power2.out', overwrite: 'auto' });
+      });
+
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const cx = rect.left + rect.width / 2;
+        const cy = rect.top + rect.height / 2;
+        const dx = (e.clientX - cx) / (rect.width / 2);
+        const dy = (e.clientY - cy) / (rect.height / 2);
+        const rotX = -dy * maxDeg;
+        const rotY = dx * maxDeg;
+        gsap.to(card, {
+          rotateX: rotX,
+          rotateY: rotY,
+          duration: 0.25,
+          ease: 'power2.out',
+          overwrite: 'auto'
+        });
+      });
+
+      card.addEventListener('mouseleave', () => {
+        gsap.to(card, {
+          rotateX: 0,
+          rotateY: 0,
+          y: 0,
+          duration: 0.8,
+          ease: 'elastic.out(1, 0.5)',
+          overwrite: 'auto'
+        });
+      });
+    });
+  }
+
+  applyTilt(document.querySelectorAll('.exp-card'), 6);
+  applyTilt(document.querySelectorAll('.num-card'), 7);
+}
+
+// ============================================
+// HERO ORBS MOUSE PARALLAX (Task 3.2)
+// ============================================
+if (!prefersReducedMotion && window.matchMedia('(pointer: fine)').matches) {
+  const heroSection = document.querySelector('.hero');
+  const orb1 = document.querySelector('.hero-orb--1');
+  const orb2 = document.querySelector('.hero-orb--2');
+  const orb3 = document.querySelector('.hero-orb--3');
+
+  if (heroSection && orb1 && orb2 && orb3) {
+    heroSection.addEventListener('mousemove', (e) => {
+      const rect = heroSection.getBoundingClientRect();
+      const cx = rect.width / 2;
+      const cy = rect.height / 2;
+      const nx = (e.clientX - rect.left - cx) / cx; // -1 to 1
+      const ny = (e.clientY - rect.top - cy) / cy;  // -1 to 1
+
+      // Uses top/left offsets (not transform) so float @keyframes don't conflict
+      orb1.style.setProperty('--orb-dx', `${-nx * 18}px`);
+      orb1.style.setProperty('--orb-dy', `${-ny * 12}px`);
+      orb2.style.setProperty('--orb-dy', `${ny * 10}px`);
+      orb3.style.setProperty('--orb-dx', `${nx * 10}px`);
+      orb3.style.setProperty('--orb-dy', `${-ny * 14}px`);
+    });
+
+    heroSection.addEventListener('mouseleave', () => {
+      orb1.style.setProperty('--orb-dx', '0px');
+      orb1.style.setProperty('--orb-dy', '0px');
+      orb2.style.setProperty('--orb-dy', '0px');
+      orb3.style.setProperty('--orb-dx', '0px');
+      orb3.style.setProperty('--orb-dy', '0px');
+    });
+  }
+}
+
+// ============================================
 // VIDEO SHOWCASE — lazy autoplay
 // ============================================
 const showcaseVideo = document.querySelector('.showcase-video');
