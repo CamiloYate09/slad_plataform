@@ -161,7 +161,8 @@ if (themeToggle) {
     document.body.classList.add('light-theme');
   }
 
-  themeToggle.addEventListener('click', () => {
+  // T4 — Extraemos la lógica de toggle a función reutilizable
+  function applyTheme() {
     document.body.classList.toggle('light-theme');
     const isLight = document.body.classList.contains('light-theme');
     localStorage.setItem('citystream-theme', isLight ? 'light' : 'dark');
@@ -176,6 +177,21 @@ if (themeToggle) {
     });
     // Re-init particles with updated theme colors
     initHeroParticles();
+  }
+
+  // T4 — View Transitions API: circle reveal desde el botón del tema
+  themeToggle.addEventListener('click', (e) => {
+    if (!prefersReducedMotion && document.startViewTransition) {
+      // Calcula el origen del círculo desde la posición del botón
+      const rect = themeToggle.getBoundingClientRect();
+      const originX = `${Math.round(rect.left + rect.width / 2)}px`;
+      const originY = `${Math.round(rect.top + rect.height / 2)}px`;
+      document.documentElement.style.setProperty('--vt-origin-x', originX);
+      document.documentElement.style.setProperty('--vt-origin-y', originY);
+      document.startViewTransition(applyTheme);
+    } else {
+      applyTheme();
+    }
   });
 }
 
@@ -365,6 +381,21 @@ if (!prefersReducedMotion) {
       { opacity: 1, y: 0, duration: 0.5, stagger: 0.03, ease: 'power3.out' },
       '-=0.3'
     );
+
+    // T1 — Variable font weight bloom: wght 100 → 700 sincronizado con la entrada
+    const heroTitleEl = document.querySelector('.hero-title');
+    if (heroTitleEl) {
+      const wghtProxy = { wght: 100 };
+      heroTitleEl.style.fontVariationSettings = '"wght" 100';
+      heroTl.to(wghtProxy, {
+        wght: 700,
+        duration: 0.75,
+        ease: 'power2.inOut',
+        onUpdate() {
+          heroTitleEl.style.fontVariationSettings = `"wght" ${Math.round(wghtProxy.wght)}`;
+        }
+      }, '<+0.05'); // empieza casi al mismo tiempo que el char reveal
+    }
   } else {
     heroTl.from('.hero-title', { opacity: 0, y: 30, duration: 0.6 }, '-=0.3');
   }
