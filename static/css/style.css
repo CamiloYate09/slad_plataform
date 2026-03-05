@@ -50,6 +50,16 @@
 
   /* Dark contrast band */
   --bg-dark-band: #111111;
+
+  /* Glassmorphism tokens */
+  --glass-bg: rgba(255, 255, 255, 0.05);
+  --glass-border: rgba(255, 255, 255, 0.12);
+  --glass-blur: blur(8px);
+
+  /* Premium shadow tokens */
+  --shadow-premium: 0 20px 50px -10px rgba(175, 64, 255, 0.25);
+  --shadow-glow: 0 0 30px rgba(175, 64, 255, 0.35);
+  --shadow-cyan-glow: 0 0 20px rgba(0, 221, 235, 0.2);
 }
 
 *,
@@ -174,6 +184,11 @@ ul {
   letter-spacing: 0.1em;
   color: var(--text-secondary);
   margin-bottom: 0.75rem;
+  padding: 0.25rem 0.75rem;
+  background: rgba(255, 255, 255, 0.10);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 50px;
+  width: fit-content;
 }
 
 /* Disable transitions on mount */
@@ -462,6 +477,7 @@ body.no-transitions *::after {
   font-size: var(--fs-display);
   font-weight: 900;
   margin-bottom: 1.5rem;
+  filter: drop-shadow(0 0 20px rgba(175, 64, 255, 0.4));
 }
 
 .hero-subtitle {
@@ -528,14 +544,16 @@ body.no-transitions *::after {
   align-items: center;
   gap: 0.75rem;
   flex-shrink: 0;
-  padding: 0.5rem 1rem;
-  border-radius: 50px;
-  border: 1px solid transparent;
-  transition: border-color var(--duration-base);
+  padding: 0.5rem 1.25rem;
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.07);
+  transition: border-color var(--duration-base), background var(--duration-base);
 }
 
 .carousel-item:hover {
-  border-color: var(--border-base);
+  border-color: rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.11);
 }
 
 .carousel-item picture {
@@ -1105,10 +1123,12 @@ body.no-transitions *::after {
 }
 
 .exp-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border-base);
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
   border-radius: 16px;
   overflow: hidden;
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
   /* transform handled by GSAP tilt on desktop; CSS transition for non-pointer:fine devices */
   transition: border-color var(--duration-base), box-shadow var(--duration-base);
 }
@@ -1121,7 +1141,7 @@ body.no-transitions *::after {
 
 .exp-card:hover {
   border-color: var(--border-hover);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 0 60px rgba(91, 66, 243, 0.08);
+  box-shadow: var(--shadow-premium), 0 8px 32px rgba(0, 0, 0, 0.4);
 }
 
 /* translateY lift only on touch devices (no GSAP tilt on touch) */
@@ -1253,16 +1273,19 @@ body.no-transitions *::after {
 }
 
 .num-card {
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
   border-radius: 16px;
   padding: 2rem;
-  transition: border-color var(--duration-base), background var(--duration-base);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  transition: border-color var(--duration-base), background var(--duration-base), box-shadow var(--duration-base);
 }
 
 .num-card:hover {
-  border-color: rgba(255, 255, 255, 0.15);
-  background: rgba(255, 255, 255, 0.07);
+  border-color: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: var(--shadow-premium);
 }
 
 .num-card-number {
@@ -1350,19 +1373,22 @@ body.light-theme .video-showcase-container {
 }
 
 .news-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border-base);
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
   border-radius: 16px;
   padding: 1.75rem;
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
-  transition: border-color var(--duration-base), background var(--duration-base);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  transition: border-color var(--duration-base), background var(--duration-base), box-shadow var(--duration-base);
 }
 
 .news-card:hover {
-  border-color: var(--border-hover);
-  background: var(--bg-card-hover);
+  border-color: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: var(--shadow-premium);
 }
 
 .news-tag {
@@ -1953,6 +1979,13 @@ body.light-theme {
   --border-base: rgba(0, 0, 0, 0.1);
   --border-hover: rgba(0, 0, 0, 0.2);
   background-image: linear-gradient(144deg, #af40ff, #5b42f3 50%, #00ddeb);
+
+  /* Glass + shadow token overrides for light mode */
+  --glass-bg: rgba(255, 255, 255, 0.7);
+  --glass-border: rgba(0, 0, 0, 0.08);
+  --shadow-premium: 0 20px 50px -10px rgba(124, 45, 189, 0.15);
+  --shadow-glow: 0 0 30px rgba(67, 56, 202, 0.15);
+  --shadow-cyan-glow: 0 0 20px rgba(8, 145, 178, 0.12);
 }
 
 body.light-theme::before {
@@ -2035,6 +2068,22 @@ body.light-theme .news-tag.tag-cyan {
 
 body.light-theme .section-label {
   color: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.06);
+  border-color: rgba(0, 0, 0, 0.15);
+}
+
+body.light-theme .hero-title {
+  filter: drop-shadow(0 0 12px rgba(91, 66, 243, 0.2));
+}
+
+body.light-theme .carousel-item {
+  background: rgba(0, 0, 0, 0.05);
+  border-color: rgba(0, 0, 0, 0.12);
+}
+
+body.light-theme .carousel-item:hover {
+  background: rgba(0, 0, 0, 0.09);
+  border-color: rgba(0, 0, 0, 0.2);
 }
 
 body.light-theme .value-prop-label {
@@ -2328,15 +2377,16 @@ body.light-theme .wl-status--error   { color: #dc2626; }
    ENHANCE-ANIMATION-IMPACT — New styles
    ============================================ */
 
-/* 1.1 — CTA card animated glow border (box-shadow cycle through brand palette) */
+/* 1.1 — CTA card animated glow border + premium base shadow */
 .cta-card {
   animation: cta-border-glow 5s ease-in-out infinite;
+  box-shadow: var(--shadow-glow);
 }
 
 @keyframes cta-border-glow {
-  0%,  100% { box-shadow: 0 0 0 1px rgba(175, 64, 255, 0.45), 0 0 28px rgba(175, 64, 255, 0.12); }
-  33%        { box-shadow: 0 0 0 1px rgba(91, 66, 243, 0.5),  0 0 32px rgba(91, 66, 243, 0.14); }
-  66%        { box-shadow: 0 0 0 1px rgba(0, 221, 235, 0.4),  0 0 28px rgba(0, 221, 235, 0.11); }
+  0%,  100% { box-shadow: var(--shadow-glow), 0 0 0 1px rgba(175, 64, 255, 0.45), 0 0 28px rgba(175, 64, 255, 0.15); }
+  33%        { box-shadow: var(--shadow-glow), 0 0 0 1px rgba(91, 66, 243, 0.5),  0 0 32px rgba(91, 66, 243, 0.18); }
+  66%        { box-shadow: var(--shadow-cyan-glow), 0 0 0 1px rgba(0, 221, 235, 0.4),  0 0 28px rgba(0, 221, 235, 0.14); }
 }
 
 /* 1.2 — CTA button glow pulse */
@@ -2398,7 +2448,7 @@ body.light-theme .wl-status--error   { color: #dc2626; }
 
 .exp-card:hover,
 .num-card:hover {
-  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.35);
+  box-shadow: var(--shadow-premium), 0 16px 48px rgba(0, 0, 0, 0.35);
 }
 
 /* 1.5 — Section label reveal: initial state set by JS (see main.js).
