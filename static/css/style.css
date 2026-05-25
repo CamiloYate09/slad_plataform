@@ -2011,6 +2011,7 @@ body.light-theme {
   --bg-card: rgba(0, 0, 0, 0.03);
   --bg-card-hover: rgba(0, 0, 0, 0.06);
   --bg-footer: #f0f0f0;
+  --bg-dark-band: #efefef;
   --white: #0a0a0a;
   --text-primary: #0a0a0a;
   --text-secondary: rgba(0, 0, 0, 0.6);
@@ -2805,14 +2806,36 @@ body.light-theme .cta-btn:hover {
   font-weight: 400;
 }
 
-/* Light theme overrides */
+/* Light theme overrides — phone se mantiene oscuro intencionalmente */
 body.light-theme .phone-frame {
   background: #1a1a2e;
-  border-color: rgba(0, 0, 0, 0.12);
+  border-color: rgba(255, 255, 255, 0.18);
+  box-shadow:
+    0 20px 50px -10px rgba(124, 45, 189, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
 body.light-theme .phone-screen {
   background: #12121f;
+}
+
+body.light-theme .phone-card {
+  background: rgba(255, 255, 255, 0.1);
+  border-top-color: rgba(255, 255, 255, 0.12);
+}
+
+/* Textos dentro del phone: forzar colores claros ya que el phone se mantiene oscuro */
+body.light-theme .phone-card-title {
+  color: rgba(255, 255, 255, 0.95);
+}
+
+body.light-theme .phone-card-sub,
+body.light-theme .map-dot-label {
+  color: rgba(255, 255, 255, 0.45);
+}
+
+body.light-theme .phone-ui-bar {
+  color: rgba(255, 255, 255, 0.45);
 }
 
 /* ============================================
