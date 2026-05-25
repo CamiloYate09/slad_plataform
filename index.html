@@ -45,9 +45,6 @@
     crossorigin="anonymous"
   />
 
-  <!-- Cloudflare Turnstile — bot protection para formulario de waitlist -->
-  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
-
   <!-- Styles -->
   <link rel="stylesheet" href="static/css/style.css" />
 
@@ -96,25 +93,21 @@
       https://cdn.jsdelivr.net
       https://unpkg.com
       https://cdnjs.cloudflare.com
-      https://static.cloudflareinsights.com
-      https://challenges.cloudflare.com;
+      https://static.cloudflareinsights.com;
     style-src 'self' 'unsafe-inline'
       https://fonts.googleapis.com
       https://cdn.jsdelivr.net;
     font-src 'self'
       https://fonts.gstatic.com
       https://cdn.jsdelivr.net;
-    img-src 'self' data:
-      https://zeqnlntgimxtjuffoilg.supabase.co;
+    img-src 'self' data:;
     connect-src 'self'
-      https://zeqnlntgimxtjuffoilg.supabase.co
       https://cloudflareinsights.com;
     media-src 'self';
-    frame-src
-      https://challenges.cloudflare.com;
+    frame-src 'none';
     frame-ancestors 'none';
     base-uri 'self';
-    form-action 'self';
+    form-action 'none';
   " />
 </head>
 <body class="no-transitions">
@@ -138,7 +131,6 @@
   <ul class="nav-links">
     <li><a href="#features">Caracteristicas</a></li>
     <li><a href="#experiencias">Experiencias</a></li>
-    <li><a href="#waitlist">Lista de espera</a></li>
     <li><a href="#contacto">Contacto</a></li>
   </ul>
   <div class="nav-cta">
@@ -213,20 +205,6 @@
       <div class="carousel-item" aria-hidden="true"><picture><source srcset="static/img/img-11.webp" type="image/webp" /><img src="static/img/img-11.jpg" alt="" width="48" height="48" /></picture><span>Cartagena</span></div>
       <div class="carousel-item" aria-hidden="true"><picture><source srcset="static/img/img-12.webp" type="image/webp" /><img src="static/img/img-12.jpg" alt="" width="48" height="48" /></picture><span>Cali</span></div>
       <div class="carousel-item" aria-hidden="true"><picture><source srcset="static/img/img-13.webp" type="image/webp" /><img src="static/img/img-13.jpg" alt="" width="48" height="48" /></picture><span>Barranquilla</span></div>
-    </div>
-  </section>
-
-  <!-- Waitlist Counter Bar (reemplaza Stats) -->
-  <section class="stats" id="waitlist" aria-label="Lista de espera CityStream">
-    <div class="waitlist-bar">
-      <div class="waitlist-count-wrap">
-        <span class="waitlist-count-number"><span id="wl-count">0</span></span>
-        <span class="waitlist-count-label">personas ya en la lista de espera</span>
-      </div>
-      <div class="waitlist-bar-divider" aria-hidden="true"></div>
-      <a href="#waitlist-form" class="waitlist-scroll-cta">
-        Únete tú también <i class="ri-arrow-down-line" aria-hidden="true"></i>
-      </a>
     </div>
   </section>
 
@@ -475,47 +453,15 @@
     </div>
   </section>
 
-  <!-- Waitlist Form / CTA Section -->
+  <!-- CTA Section -->
   <section class="cta-section">
-    <div class="cta-card" id="waitlist-form">
-      <span class="cta-label">• Únete a los primeros</span>
-      <h2>Sé de los primeros en vivir Colombia diferente</h2>
-      <p class="cta-sub">Regístrate ahora y recibe acceso anticipado cuando lancemos. Sin spam, solo CityStream.</p>
-
-      <form class="wl-form" novalidate aria-label="Formulario de lista de espera">
-        <div class="wl-input-group">
-          <label for="wl-email" class="sr-only">Tu correo electrónico</label>
-          <input
-            type="email"
-            id="wl-email"
-            name="email"
-            class="wl-input"
-            placeholder="tucorreo@ejemplo.com"
-            autocomplete="email"
-            required
-            aria-required="true"
-            aria-describedby="wl-status"
-          />
-          <button type="submit" class="cta-btn wl-submit-btn" aria-label="Unirme a la lista de espera">
-            <span class="wl-btn-text">Unirme <i class="ri-arrow-right-line" aria-hidden="true"></i></span>
-            <span class="wl-btn-loading" hidden aria-hidden="true">
-              <span class="wl-dot"></span><span class="wl-dot"></span><span class="wl-dot"></span>
-            </span>
-          </button>
-        </div>
-        <p id="wl-status" class="wl-status" aria-live="polite" aria-atomic="true"></p>
-        <!-- Cloudflare Turnstile — bot protection invisible
-             IMPORTANTE: reemplaza data-sitekey con tu Site Key del dashboard de Turnstile -->
-        <div
-          class="cf-turnstile"
-          data-sitekey="0x4AAAAAACkJpMIzNuPy__9Z"
-          data-size="invisible"
-          data-callback="onTurnstileSuccess"
-          aria-hidden="true"
-        ></div>
-      </form>
-
-      <p class="wl-privacy"><i class="ri-lock-line" aria-hidden="true"></i> Tu email es privado y nunca será vendido ni compartido.</p>
+    <div class="cta-card">
+      <span class="cta-label">• En construcción</span>
+      <h2>CityStream está llegando</h2>
+      <p class="cta-sub">Estamos construyendo la primera red social hecha en Colombia para vivir tu ciudad al máximo. ¿Quieres saber más?</p>
+      <a href="mailto:citystreamCO@pm.me" class="cta-btn">
+        Contáctanos <i class="ri-arrow-right-line" aria-hidden="true"></i>
+      </a>
     </div>
   </section>
 </main>
@@ -572,12 +518,6 @@
   </div>
 </footer>
 
-<!-- Supabase JS SDK — SRI: hash SHA-384 verifica integridad del archivo -->
-<script
-  src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"
-  integrity="sha384-Sm2s7OXxsAMTyJ4iIyRBgVpeGUvMPk2lRQnnZhE78Wej7oggIoolKt+SCt0XJbUB"
-  crossorigin="anonymous"
-></script>
 <!-- Splitting.js — character-level text split -->
 <script
   src="https://unpkg.com/splitting/dist/splitting.min.js"
