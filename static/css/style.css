@@ -265,7 +265,7 @@ body.no-transitions *::after {
 .btn-primary:hover {
   background-position: 100% 0;
   transform: translateY(-2px) scale(1.02);
-  box-shadow: 0 8px 30px rgba(91, 66, 243, 0.35);
+  box-shadow: 0 8px 30px rgba(91, 66, 243, 0.35), 0 0 24px rgba(249, 115, 22, 0.35);
   color: var(--white);
 }
 
@@ -434,7 +434,6 @@ body.no-transitions *::after {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  text-align: center;
   padding: 6rem var(--px-desktop) 4rem;
   position: relative;
   overflow: hidden;
@@ -450,9 +449,13 @@ body.no-transitions *::after {
 }
 
 .hero-content {
-  max-width: 800px;
+  max-width: 1100px;
+  width: 100%;
   position: relative;
   z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 4rem;
 }
 
 /* Hero particle grid (tsParticles) */
@@ -473,6 +476,12 @@ body.no-transitions *::after {
   filter: drop-shadow(0 0 40px rgba(91, 66, 243, 0.4));
 }
 
+/* Split layout: logo alineado a la izquierda */
+.hero-left .hero-logo {
+  margin-left: 0;
+  margin-right: 0;
+}
+
 .hero-title {
   font-size: var(--fs-display);
   font-weight: 900;
@@ -491,9 +500,33 @@ body.no-transitions *::after {
   margin-right: auto;
 }
 
+/* Split layout: subtitle y actions alineados izquierda */
+.hero-left .hero-subtitle {
+  margin-left: 0;
+  margin-right: 0;
+}
+
 .hero-actions {
   display: flex;
   gap: 1rem;
+  justify-content: center;
+}
+
+.hero-left .hero-actions {
+  justify-content: flex-start;
+}
+
+/* Hero split columns */
+.hero-left {
+  flex: 1;
+  min-width: 0;
+  text-align: left;
+}
+
+.hero-right {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
   justify-content: center;
 }
 
@@ -529,6 +562,7 @@ body.no-transitions *::after {
   overflow: hidden;
   padding: 2.5rem 0;
   border-bottom: 1px solid var(--border-base);
+  background: var(--bg-dark-band);
 }
 
 .carousel-track {
@@ -876,7 +910,9 @@ body.no-transitions *::after {
   content: '';
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse at 100% 0%, var(--glow-blue) 0%, transparent 65%);
+  background:
+    radial-gradient(ellipse 70% 50% at 50% 0%, rgba(175, 64, 255, 0.08), transparent 70%),
+    radial-gradient(ellipse at 100% 0%, var(--glow-blue) 0%, transparent 65%);
   pointer-events: none;
   z-index: 0;
 }
@@ -1105,7 +1141,9 @@ body.no-transitions *::after {
   content: '';
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse at 0% 50%, var(--glow-cyan) 0%, transparent 65%);
+  background:
+    radial-gradient(ellipse 70% 50% at 50% 0%, rgba(0, 221, 235, 0.07), transparent 70%),
+    radial-gradient(ellipse at 0% 50%, var(--glow-cyan) 0%, transparent 65%);
   pointer-events: none;
   z-index: 0;
 }
@@ -2571,5 +2609,256 @@ body.light-theme .cta-btn:hover {
   .section-label--reveal-pending {
     clip-path: none !important;
     opacity: 1 !important;
+  }
+
+  /* Disable phone mockup animations */
+  .phone-frame {
+    animation: none;
+    transform: rotate(-1.5deg);
+  }
+  .map-dot-pulse {
+    animation: none;
+  }
+}
+
+/* ============================================================
+   PHONE MOCKUP — Hero visual inspirado en Pomelo
+   ============================================================ */
+
+.phone-frame {
+  width: 220px;
+  height: 440px;
+  border: 2px solid var(--glass-border);
+  border-radius: 36px;
+  background: #0d0d14;
+  box-shadow:
+    var(--shadow-premium),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 0 0 1px rgba(255, 255, 255, 0.04);
+  position: relative;
+  overflow: hidden;
+  animation: phoneFloat 4.5s ease-in-out infinite;
+  transform-origin: center center;
+}
+
+.phone-notch {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 12px;
+  background: rgba(0, 0, 0, 0.85);
+  border-radius: 6px;
+  z-index: 10;
+}
+
+.phone-screen {
+  position: absolute;
+  inset: 4px;
+  border-radius: 32px;
+  overflow: hidden;
+  background: #0a0a12;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Status bar */
+.phone-ui-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 16px 6px;
+  font-size: 9px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.5);
+  flex-shrink: 0;
+  letter-spacing: 0.02em;
+}
+
+.phone-ui-icons {
+  display: flex;
+  gap: 4px;
+  font-size: 10px;
+}
+
+/* Mapa abstracto */
+.phone-map {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  background: radial-gradient(
+    ellipse 80% 60% at 40% 50%,
+    rgba(91, 66, 243, 0.1),
+    transparent
+  );
+}
+
+/* Líneas SVG conectoras */
+.map-lines {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  color: var(--accent-cyan);
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+/* City dots */
+.map-dot {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.map-dot--cartagena { left: 30%; top: 20%; }
+.map-dot--medellin  { left: 35%; top: 45%; }
+.map-dot--bogota    { left: 55%; top: 60%; }
+.map-dot--cali      { left: 30%; top: 70%; }
+
+.map-dot-core {
+  display: block;
+  width: 6px;
+  height: 6px;
+  background: var(--accent-cyan);
+  border-radius: 50%;
+  position: relative;
+  z-index: 2;
+  box-shadow: 0 0 6px var(--accent-cyan), 0 0 12px rgba(0, 221, 235, 0.4);
+  flex-shrink: 0;
+}
+
+.map-dot-pulse {
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(1);
+  width: 6px;
+  height: 6px;
+  border: 1px solid var(--accent-cyan);
+  border-radius: 50%;
+  animation: dotPulse 2.4s ease-out infinite;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.map-dot--cartagena .map-dot-pulse { animation-delay: 0s; }
+.map-dot--medellin  .map-dot-pulse { animation-delay: 0.6s; }
+.map-dot--bogota    .map-dot-pulse { animation-delay: 1.2s; }
+.map-dot--cali      .map-dot-pulse { animation-delay: 1.8s; }
+
+.map-dot-label {
+  position: absolute;
+  top: 50%;
+  left: calc(100% + 7px);
+  transform: translateY(-50%);
+  font-size: 8px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  white-space: nowrap;
+  pointer-events: none;
+  letter-spacing: 0.01em;
+}
+
+/* Bogotá: label a la izquierda para evitar overflow */
+.map-dot--bogota .map-dot-label {
+  left: auto;
+  right: calc(100% + 7px);
+}
+
+/* Tarjeta de evento */
+.phone-card {
+  flex-shrink: 0;
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-top: 1px solid var(--glass-border);
+  padding: 10px 14px 12px;
+  transition: opacity 0.5s ease;
+}
+
+.phone-card-badge {
+  display: inline-block;
+  font-size: 9px;
+  font-weight: 700;
+  color: var(--accent-orange-hover);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 3px;
+}
+
+.phone-card-title {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 2px;
+  line-height: 1.3;
+}
+
+.phone-card-sub {
+  font-size: 9px;
+  color: var(--text-secondary);
+  font-weight: 400;
+}
+
+/* Light theme overrides */
+body.light-theme .phone-frame {
+  background: #1a1a2e;
+  border-color: rgba(0, 0, 0, 0.12);
+}
+
+body.light-theme .phone-screen {
+  background: #12121f;
+}
+
+/* ============================================
+   KEYFRAMES — phone + dots
+   ============================================ */
+
+@keyframes phoneFloat {
+  0%, 100% { transform: translateY(0px)   rotate(-1.5deg); }
+  50%       { transform: translateY(-14px) rotate(-1.5deg); }
+}
+
+@keyframes dotPulse {
+  0%   { transform: translate(-50%, -50%) scale(1);   opacity: 0.7; }
+  100% { transform: translate(-50%, -50%) scale(3.8); opacity: 0;   }
+}
+
+/* ============================================================
+   RESPONSIVE — Hero Split
+   ============================================================ */
+
+@media (max-width: 1024px) {
+  .hero-content {
+    flex-direction: column;
+    gap: 3rem;
+    text-align: center;
+  }
+
+  .hero-left {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .hero-left .hero-logo    { margin-left: auto; margin-right: auto; }
+  .hero-left .hero-subtitle { margin-left: auto; margin-right: auto; }
+  .hero-left .hero-actions  { justify-content: center; }
+
+  .hero-right {
+    transform: scale(0.82);
+    margin-top: -1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-right {
+    display: none;
   }
 }
