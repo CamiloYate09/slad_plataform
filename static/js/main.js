@@ -899,3 +899,24 @@ if (phoneCardEl && !prefersReducedMotion) {
   setInterval(rotatePhoneCard, 3500);
 }
 
+/* ============================================
+   Botones magnéticos — los CTAs primarios siguen sutilmente el cursor
+   (solo desktop con puntero fino; respeta prefers-reduced-motion)
+   ============================================ */
+if (!prefersReducedMotion && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+  const MAG_MAX = 8; // desplazamiento máximo en px
+  document.querySelectorAll('.btn-primary, .cta-btn').forEach((btn) => {
+    btn.addEventListener('pointermove', (e) => {
+      const r = btn.getBoundingClientRect();
+      const x = ((e.clientX - r.left) / r.width - 0.5) * 2 * MAG_MAX;
+      const y = ((e.clientY - r.top) / r.height - 0.5) * 2 * MAG_MAX;
+      btn.style.transition = 'transform 0.12s linear'; // seguimiento rápido durante el hover
+      btn.style.transform = `translate(${x}px, ${y}px)`;
+    });
+    btn.addEventListener('pointerleave', () => {
+      btn.style.transition = ''; // restaura la transición CSS (retorno suave)
+      btn.style.transform = '';
+    });
+  });
+}
+

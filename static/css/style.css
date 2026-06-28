@@ -1,7 +1,7 @@
 /* ============================================
    FOUNDATION: Font, Reset, Custom Properties
    ============================================ */
-@import url("https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Geist:wght@100..900&display=swap");
 
 :root {
   /* CityStream brand colors — preserved */
@@ -26,12 +26,17 @@
 
   /* Typography */
   --font-sans: "Geist", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-display: "Bricolage Grotesque", var(--font-sans);
   --fs-display: clamp(3rem, 8vw, 5.5rem);
   --fs-h2: clamp(2rem, 5vw, 3.5rem);
   --fs-h3: clamp(1.25rem, 2.5vw, 1.75rem);
   --fs-body: 0.875rem;
   --fs-sm: 0.8125rem;
   --fs-xs: 0.75rem;
+
+  /* Radius scale */
+  --radius-md: 16px;
+  --radius-lg: 24px;
 
   /* Spacing */
   --section-gap: 5rem;
@@ -483,8 +488,9 @@ body.no-transitions *::after {
 }
 
 .hero-title {
+  font-family: var(--font-display);
   font-size: var(--fs-display);
-  font-weight: 900;
+  font-weight: 800;
   margin-bottom: 1.5rem;
   filter: drop-shadow(0 0 20px rgba(175, 64, 255, 0.4));
 }
@@ -679,6 +685,7 @@ body.no-transitions *::after {
 }
 
 .section-header h2 {
+  font-family: var(--font-display);
   font-size: var(--fs-h2);
   font-weight: 700;
   margin-bottom: 0.5rem;
@@ -1035,11 +1042,31 @@ body.no-transitions *::after {
 }
 
 .features-item-image {
-  border-radius: 16px;
+  border-radius: var(--radius-lg);
   overflow: hidden;
   border: 1px solid var(--border-base);
   margin-top: 1.5rem;
   position: relative;
+}
+
+/* Duotone brand overlay — integra fotos a la paleta morado→cyan */
+.features-item-image::before,
+.exp-image::before,
+.value-prop-image::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(175, 64, 255, 0.55), rgba(0, 221, 235, 0.55));
+  mix-blend-mode: soft-light;
+  opacity: 0.5;
+  pointer-events: none;
+  z-index: 1;
+}
+
+body.light-theme .features-item-image::before,
+body.light-theme .exp-image::before,
+body.light-theme .value-prop-image::before {
+  opacity: 0.28;
 }
 
 .features-item-image::after {
@@ -1095,6 +1122,7 @@ body.no-transitions *::after {
 }
 
 .value-prop-content h2 {
+  font-family: var(--font-display);
   font-size: var(--fs-h2);
   font-weight: 700;
   margin-bottom: 1.25rem;
@@ -1114,9 +1142,10 @@ body.no-transitions *::after {
 }
 
 .value-prop-image {
-  border-radius: 16px;
+  border-radius: var(--radius-lg);
   overflow: hidden;
   border: 1px solid var(--border-base);
+  position: relative;
 }
 
 .value-prop-image img {
@@ -1571,6 +1600,7 @@ body.light-theme .video-showcase-container {
 }
 
 .cta-card h2 {
+  font-family: var(--font-display);
   font-size: var(--fs-h2);
   font-weight: 700;
   color: #ffffff;
@@ -2956,5 +2986,32 @@ body.light-theme .phone-ui-bar {
 @media (max-width: 768px) {
   .hero-right {
     display: none;
+  }
+}
+
+/* ============================================
+   SCROLL-LINKED MEDIA REVEAL — CSS nativo (scroll-driven)
+   Anima opacity/scale del contenedor según su posición en viewport.
+   Fallback: navegadores sin animation-timeline muestran el estado final.
+   ============================================ */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .features-item-image,
+    .value-prop-image {
+      animation: media-reveal linear both;
+      animation-timeline: view();
+      animation-range: entry 5% cover 30%;
+    }
+  }
+}
+
+@keyframes media-reveal {
+  from {
+    opacity: 0;
+    transform: scale(1.06);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
   }
 }
