@@ -354,6 +354,22 @@ function startSubtitleScramble() {
 // ============================================
 // GSAP SCROLL ANIMATIONS
 // ============================================
+// Stats band — count-up (funciona con o sin reduced-motion)
+gsap.utils.toArray('.stat-number').forEach(el => {
+  const target = parseFloat(el.dataset.count) || 0;
+  const suffix = el.dataset.suffix || '';
+  const render = v => { el.textContent = Math.round(v).toLocaleString('es-CO') + suffix; };
+  if (prefersReducedMotion) { render(target); return; }
+  const obj = { v: 0 };
+  gsap.to(obj, {
+    v: target,
+    duration: 1.6,
+    ease: 'power2.out',
+    scrollTrigger: { trigger: el, start: 'top 90%', once: true },
+    onUpdate: () => render(obj.v)
+  });
+});
+
 if (!prefersReducedMotion) {
   // Hero entrance timeline
   const heroTl = gsap.timeline({ defaults: { ease: 'power2.out' } });

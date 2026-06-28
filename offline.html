@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0a0a0a" />
+  <title>Sin conexión — CityStream</title>
+  <link rel="icon" href="/image/favicon-32x32.png" type="image/png" />
+  <style>
+    *,*::before,*::after { box-sizing: border-box; }
+    html, body { height: 100%; margin: 0; }
+    body {
+      font-family: 'Geist', system-ui, -apple-system, sans-serif;
+      background: #0a0a0a;
+      color: #e5e5e5;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      text-align: center;
+      line-height: 1.5;
+    }
+    .offline-icon {
+      font-size: 4.5rem;
+      margin-bottom: 1rem;
+      filter: drop-shadow(0 0 20px rgba(175, 64, 255, 0.35));
+    }
+    h1 {
+      margin: 0 0 0.75rem;
+      font-size: clamp(1.75rem, 5vw, 2.5rem);
+      letter-spacing: -0.02em;
+      background: linear-gradient(135deg, #af40ff, #5b42f3 45%, #00ddeb);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    p { color: rgba(255, 255, 255, 0.7); margin: 0 0 1.5rem; max-width: 32rem; }
+    button {
+      padding: 0.75rem 1.5rem;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      background: rgba(255, 255, 255, 0.05);
+      color: #fff;
+      font-size: 0.92rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 200ms ease, border-color 200ms ease, transform 100ms ease;
+    }
+    button:hover { background: rgba(249, 115, 22, 0.12); border-color: rgba(249, 115, 22, 0.4); }
+    button:active { transform: scale(0.96); }
+    a {
+      display: inline-block;
+      margin-top: 1rem;
+      color: #f97316;
+      text-decoration: none;
+      font-size: 0.85rem;
+    }
+    a:hover { color: #00ddeb; }
+  </style>
+</head>
+<body>
+  <div class="offline-icon" aria-hidden="true">🌐</div>
+  <h1>Sin conexión</h1>
+  <p>Parece que perdiste la conexión a internet. Verifica tu Wi-Fi o datos móviles e intenta de nuevo.</p>
+  <button type="button" onclick="location.reload()">Reintentar</button>
+  <a href="/">Volver al inicio</a>
+</body>
+</html>

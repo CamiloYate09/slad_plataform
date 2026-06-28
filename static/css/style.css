@@ -1349,6 +1349,141 @@ body.no-transitions *::after {
 }
 
 /* ============================================
+   STATS BAND (proof-points) — inspirado en robot.com
+   ============================================ */
+.stats-band {
+  padding: var(--section-gap) var(--px-desktop);
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+  text-align: center;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1.5rem 1rem;
+  border-left: 1px solid var(--border-base);
+}
+
+.stat:first-child {
+  border-left: none;
+}
+
+.stat-number {
+  font-size: clamp(2.5rem, 5vw, 3.5rem);
+  font-weight: 800;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.stat-label {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+
+.stat-tag-placeholder {
+  display: inline-block;
+  font-size: 0.625rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--accent-orange-hover);
+  border: 1px dashed var(--accent-orange-hover);
+  border-radius: 4px;
+  padding: 0 0.3rem;
+  margin-left: 0.25rem;
+  vertical-align: middle;
+  opacity: 0.7;
+}
+
+/* ============================================
+   FOUNDER QUOTE (testimonial) — inspirado en robot.com
+   ============================================ */
+.founder-quote-section {
+  padding: var(--section-gap) var(--px-desktop);
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.founder-quote {
+  margin: 0;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+  padding: 3rem;
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  text-align: center;
+}
+
+.founder-quote blockquote {
+  margin: 0 0 1.5rem;
+}
+
+.founder-quote blockquote p {
+  font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+  font-weight: 600;
+  line-height: 1.5;
+  color: var(--white);
+}
+
+.founder-quote figcaption {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.founder-name {
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.founder-role {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+/* Footer badge — acento animado (personalidad) inspirado en robot.com */
+.footer-badge-dot {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent-orange-hover);
+  margin-right: 0.4rem;
+  vertical-align: middle;
+  animation: footer-dot-pulse 1.8s ease-in-out infinite;
+}
+
+@keyframes footer-dot-pulse {
+  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(249, 115, 22, 0.5); }
+  50% { opacity: 0.6; box-shadow: 0 0 0 6px rgba(249, 115, 22, 0); }
+}
+
+@media (max-width: 768px) {
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+  .stat:nth-child(odd) { border-left: none; }
+  .founder-quote { padding: 2rem; }
+}
+
+@media (max-width: 480px) {
+  .stats-grid { grid-template-columns: 1fr; }
+  .stat { border-left: none; border-top: 1px solid var(--border-base); }
+  .stat:first-child { border-top: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .footer-badge-dot { animation: none; }
+}
+
+/* ============================================
    VIDEO SHOWCASE
    ============================================ */
 .video-showcase {

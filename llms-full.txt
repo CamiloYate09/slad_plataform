@@ -1,0 +1,109 @@
+# CityStream — La primera red social de Colombia
+
+URL canonica: https://citystream.co
+Idioma: Espanol (es-CO)
+Pais: Colombia
+Estado: Pre-lanzamiento (lista de espera abierta)
+
+---
+
+## Propuesta de valor
+
+CityStream es la primera red social creada en Colombia, disenada desde cero para entender como vivimos, celebramos y nos conectamos los colombianos. A diferencia de las redes sociales globales que aplican formulas genericas, CityStream nacio escuchando la calle: las dinamicas culturales, sociales y urbanas que hacen unicas a las ciudades colombianas.
+
+No vendemos atencion. Conectamos personas reales en ciudades reales, priorizando relaciones sobre metricas de engagement. Nuestros datos se almacenan con foco en privacidad y cumplimos con la Ley 1581 de 2012 (Habeas Data).
+
+---
+
+## Cuatro pilares funcionales
+
+### 1. Ciudades — El mapa vivo de Colombia
+
+Cada ciudad tiene su propia energia. CityStream te permite navegar por Bogota, Medellin, Cartagena, Cali y Barranquilla con recomendaciones locales de gastronomia, cultura y vida nocturna que solo los locales conocen. No es una guia turistica: es la voz de quienes viven cada barrio.
+
+### 2. Eventos — Nunca mas te pierdas de nada
+
+Conciertos, ferias, exposiciones, meetups. Filtra por ciudad, fecha y categoria. CityStream te avisa antes de que se agoten las entradas. Eventos masivos y micro-eventos comunitarios en una sola vista.
+
+### 3. Personas — Conexiones reales, no algoritmos
+
+Sin algoritmos que decidan por ti que perfil ver siguiente. Encuentra personas que comparten tus intereses en tu misma ciudad y construye relaciones que van mas alla de la pantalla. Pensado para llevar lo digital a lo presencial.
+
+### 4. Conciertos — El ritmo de Colombia en tus manos
+
+Desde artistas emergentes en bares de Chapinero hasta festivales masivos en el Movistar Arena. Compra entradas, arma tu grupo de amigos y vive la musica colombiana y global que pasa por nuestras ciudades.
+
+---
+
+## Ciudades de lanzamiento
+
+| Ciudad | Departamento | Caracteristica |
+|---|---|---|
+| Bogota | Distrito Capital | 8 millones de historias. Museos, gastronomia de autor, rumba en Chapinero y amaneceres en Monserrate. |
+| Medellin | Antioquia | Capital de la innovacion y epicentro cultural. Clima perfecto y escena gastronomica en crecimiento. |
+| Cartagena | Bolivar | Patrimonio amurallado, atardeceres caribenos y la mejor cocina del Caribe colombiano. |
+| Cali | Valle del Cauca | Capital mundial de la salsa, mezcla afro-pacifica y energia tropical. |
+| Barranquilla | Atlantico | Cuna del carnaval mas importante de Colombia y puerta del Caribe. |
+
+---
+
+## Diferenciadores
+
+- **100% Colombiano**: disenado y construido desde Colombia, entendiendo dinamicas locales
+- **Datos locales**: tu informacion se queda en Colombia. Sin intermediarios internacionales decidiendo
+- **Comunidad real**: no vendemos atencion ni manipulamos algoritmos. Conexiones genuinas
+- **Privacidad por diseno**: cumple Ley 1581 de 2012 (Habeas Data). Email cifrado en transito y reposo
+
+---
+
+## Preguntas frecuentes
+
+### Que es CityStream?
+CityStream es la primera red social creada en Colombia, enfocada en conectar personas con su ciudad a traves de eventos, comunidades, conciertos y experiencias locales.
+
+### Cuando se lanza CityStream?
+La plataforma esta en fase de pre-lanzamiento. Puedes unirte a la lista de espera en https://citystream.co/#waitlist para recibir acceso anticipado.
+
+### En que ciudades estara disponible?
+En el lanzamiento inicial: Bogota, Medellin, Cartagena, Cali y Barranquilla. Mas ciudades se sumaran progresivamente.
+
+### Es gratis usar CityStream?
+La aplicacion sera gratuita en su lanzamiento. Los detalles de monetizacion (eventos premium, suscripciones opcionales) se anunciaran proximamente.
+
+### Como protege CityStream mis datos?
+CityStream opera bajo la Ley 1581 de 2012 (Habeas Data) y el Decreto 1377 de 2013 de la Republica de Colombia. Los datos se almacenan con cifrado y solo se procesan para las finalidades declaradas en la politica de privacidad.
+
+### Como funciona la lista de espera?
+Registra tu email en https://citystream.co/#waitlist. Cuando lancemos, recibiras notificacion por correo. No enviamos spam.
+
+### CityStream reemplaza a Instagram o Facebook?
+No. CityStream esta disenada para complementar tu vida social digital con un enfoque hiperlocal y autentico, sin algoritmos opacos. Es una herramienta para vivir tu ciudad mejor.
+
+### Quien esta detras de CityStream?
+CityStream es un proyecto colombiano. Contacto general: citystreamCO@pm.me.
+
+---
+
+## Contacto
+
+- Email general: citystreamCO@pm.me
+- YouTube: @CityStream-CO
+- Facebook: facebook.com/citystream
+- Instagram: @citystream.co
+- Twitter: @citystream
+
+---
+
+## Metadata estructurada
+
+- Tipo: Organizacion (schema.org/Organization)
+- Pais de operacion: Colombia (CO)
+- Locale: es_CO
+- URL: https://citystream.co
+- Logo: https://citystream.co/static/img/logo-citystream.png
+- Imagen Open Graph: https://citystream.co/image/og-image.jpg
+- Sitemap: https://citystream.co/sitemap.xml
+
+---
+
+Ultima actualizacion: 2026-05-27
