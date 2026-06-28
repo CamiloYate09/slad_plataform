@@ -1389,67 +1389,6 @@ body.no-transitions *::after {
   line-height: 1.4;
 }
 
-.stat-tag-placeholder {
-  display: inline-block;
-  font-size: 0.625rem;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: var(--accent-orange-hover);
-  border: 1px dashed var(--accent-orange-hover);
-  border-radius: 4px;
-  padding: 0 0.3rem;
-  margin-left: 0.25rem;
-  vertical-align: middle;
-  opacity: 0.7;
-}
-
-/* ============================================
-   FOUNDER QUOTE (testimonial) — inspirado en robot.com
-   ============================================ */
-.founder-quote-section {
-  padding: var(--section-gap) var(--px-desktop);
-  max-width: 1000px;
-  margin: 0 auto;
-}
-
-.founder-quote {
-  margin: 0;
-  background: var(--glass-bg);
-  border: 1px solid var(--glass-border);
-  border-radius: 16px;
-  padding: 3rem;
-  backdrop-filter: var(--glass-blur);
-  -webkit-backdrop-filter: var(--glass-blur);
-  text-align: center;
-}
-
-.founder-quote blockquote {
-  margin: 0 0 1.5rem;
-}
-
-.founder-quote blockquote p {
-  font-size: clamp(1.25rem, 2.5vw, 1.75rem);
-  font-weight: 600;
-  line-height: 1.5;
-  color: var(--white);
-}
-
-.founder-quote figcaption {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-}
-
-.founder-name {
-  font-weight: 700;
-  color: var(--text-primary);
-}
-
-.founder-role {
-  font-size: 0.9rem;
-  color: var(--text-secondary);
-}
-
 /* Footer badge — acento animado (personalidad) inspirado en robot.com */
 .footer-badge-dot {
   display: inline-block;
@@ -1470,7 +1409,6 @@ body.no-transitions *::after {
 @media (max-width: 768px) {
   .stats-grid { grid-template-columns: repeat(2, 1fr); }
   .stat:nth-child(odd) { border-left: none; }
-  .founder-quote { padding: 2rem; }
 }
 
 @media (max-width: 480px) {
