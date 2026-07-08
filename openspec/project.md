@@ -11,7 +11,7 @@ Landing page para CityStream, la primera red social de Colombia. El sitio presen
 - RemixIcon v4.2.0 (CDN)
 - GSAP v3.12.5 + ScrollTrigger (CDN: cdnjs.cloudflare.com)
 - Lenis v1.1.18 (CDN: unpkg.com) — smooth scroll
-- GitHub Pages (hosting en citystream.co)
+- GitHub Pages (hosting en citystream.tech)
 
 ## Project Conventions
 
@@ -35,7 +35,7 @@ Landing page para CityStream, la primera red social de Colombia. El sitio presen
 
 ## Domain Context
 - Audiencia: Colombia (locale es_CO)
-- Dominio: citystream.co
+- Dominio: citystream.tech
 - Redes sociales: YouTube, Facebook, Instagram, Twitter
 
 ## Important Constraints

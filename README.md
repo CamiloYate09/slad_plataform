@@ -6,7 +6,7 @@
 
 CityStream es la primera red social creada en Colombia con enfoque en conexiones locales. Esta es la página de aterrizaje oficial que presenta las características principales: Ciudades, Eventos, Personas y Conciertos.
 
-**URL:** [citystream.co](https://citystream.co)
+**URL:** [citystream.co](https://citystream.tech)
 **GitHub Pages:** Habilitado
 
 ---
@@ -329,8 +329,8 @@ Para mejorar este proyecto:
 
 ## 📞 Contacto
 
-- **Email:** contacto@citystream.co
-- **Instagram:** [@citystream.co](https://www.instagram.com/citystream.co/)
+- **Email:** contacto@citystream.tech
+- **Instagram:** [@citystream.co](https://www.instagram.com/citystream.tech/)
 - **YouTube:** [CityStream-CO](https://www.youtube.com/@CityStream-CO)
 
 ---

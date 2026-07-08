@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://citystream.co/sitemap.xml
+Sitemap: https://citystream.tech/sitemap.xml

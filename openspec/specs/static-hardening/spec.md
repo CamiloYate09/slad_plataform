@@ -37,5 +37,5 @@ El `<head>` SHALL contener `<meta name="referrer" content="strict-origin-when-cr
 
 #### Scenario: Usuario hace clic en enlace externo
 - **WHEN** un usuario hace clic en un enlace a YouTube, Facebook, o cualquier sitio externo
-- **THEN** solo se envía el origen (`https://citystream.co`) como Referer, no la URL completa ni parámetros
+- **THEN** solo se envía el origen (`https://citystream.tech`) como Referer, no la URL completa ni parámetros
 
