@@ -896,7 +896,18 @@ if (phoneCardEl && !prefersReducedMotion) {
     }, 500);
   }
 
-  setInterval(rotatePhoneCard, 3500);
+  let phoneRotateInterval = null;
+  const phoneObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        if (!phoneRotateInterval) phoneRotateInterval = setInterval(rotatePhoneCard, 3500);
+      } else {
+        clearInterval(phoneRotateInterval);
+        phoneRotateInterval = null;
+      }
+    });
+  }, { threshold: 0.1 });
+  phoneObserver.observe(phoneCardEl);
 }
 
 /* ============================================
@@ -906,6 +917,7 @@ if (phoneCardEl && !prefersReducedMotion) {
 if (!prefersReducedMotion && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
   const MAG_MAX = 8; // desplazamiento máximo en px
   document.querySelectorAll('.btn-primary, .cta-btn').forEach((btn) => {
+    if (btn.closest('.hero-actions')) return; // ya gestionado por el bloque magnético GSAP (línea 617)
     btn.addEventListener('pointermove', (e) => {
       const r = btn.getBoundingClientRect();
       const x = ((e.clientX - r.left) / r.width - 0.5) * 2 * MAG_MAX;

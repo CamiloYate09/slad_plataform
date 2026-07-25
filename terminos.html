@@ -11,16 +11,7 @@
   <link rel="icon" href="image/favicon-32x32.png" type="image/png" />
   <link rel="apple-touch-icon" href="image/apple-touch-icon.png" />
 
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap" rel="stylesheet" />
-
-  <link
-    href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css"
-    rel="stylesheet"
-    integrity="sha384-6FSSi597BTd6QcnsBNoLclRKxTOyyYqkaucRjFgCNr8wHVCp0COLClSPY4Vy/bjh"
-    crossorigin="anonymous"
-  />
+  <link rel="preload" href="static/fonts/Geist-latin.woff2" as="font" type="font/woff2" crossorigin />
 
   <link rel="stylesheet" href="static/css/style.css" />
 
@@ -29,9 +20,9 @@
   <meta name="referrer" content="strict-origin-when-cross-origin" />
   <meta http-equiv="Content-Security-Policy" content="
     default-src 'none';
-    script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net;
-    style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net;
-    font-src 'self' https://fonts.gstatic.com https://cdn.jsdelivr.net;
+    script-src 'self';
+    style-src 'self';
+    font-src 'self';
     img-src 'self' data:;
     connect-src 'self';
     frame-ancestors 'none';
@@ -94,7 +85,7 @@
       <ul>
         <li>Vulnerar derechos de terceros (propiedad intelectual, intimidad, honra).</li>
         <li>Realizar ataques de denegación de servicio, scraping abusivo, ni explotar vulnerabilidades.</li>
-        <li>Usar bots o scripts automatizados para registrar correos en la lista de espera (se monitorea con Cloudflare Turnstile).</li>
+        <li>Usar bots o scripts automatizados para registrar correos en la lista de espera.</li>
         <li>Suplantar la identidad de otra persona registrando correos que no le pertenecen.</li>
       </ul>
     </section>

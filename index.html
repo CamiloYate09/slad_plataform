@@ -31,11 +31,9 @@
   <link rel="icon" href="image/favicon-32x32.png" type="image/png" />
   <link rel="apple-touch-icon" href="image/apple-touch-icon.png" />
 
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Geist:wght@100..900&display=swap" as="style" />
-  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Geist:wght@100..900&display=swap" rel="stylesheet" />
+  <!-- Fonts — self-hosted, subset latin (ver static/fonts/) -->
+  <link rel="preload" href="static/fonts/Geist-latin.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="static/fonts/Bricolage-latin.woff2" as="font" type="font/woff2" crossorigin />
 
   <!-- Icons — SRI protege contra CDN comprometido -->
   <link
@@ -89,16 +87,14 @@
   <!-- Content Security Policy: restringe orígenes permitidos de scripts, estilos y conexiones -->
   <meta http-equiv="Content-Security-Policy" content="
     default-src 'none';
-    script-src 'self' 'unsafe-inline'
+    script-src 'self'
       https://cdn.jsdelivr.net
       https://unpkg.com
       https://cdnjs.cloudflare.com
       https://static.cloudflareinsights.com;
     style-src 'self' 'unsafe-inline'
-      https://fonts.googleapis.com
       https://cdn.jsdelivr.net;
     font-src 'self'
-      https://fonts.gstatic.com
       https://cdn.jsdelivr.net;
     img-src 'self' data:;
     connect-src 'self'
@@ -236,29 +232,29 @@
   <!-- Trusted By / Cities Carousel -->
   <section class="trusted-by" aria-label="Ciudades disponibles">
     <div class="carousel-track">
-      <div class="carousel-item"><picture><source srcset="static/img/img-09.webp" type="image/webp" /><img src="static/img/img-09.jpg" alt="" width="48" height="48" /></picture><span>Bogota</span></div>
-      <div class="carousel-item"><picture><source srcset="static/img/img-10.webp" type="image/webp" /><img src="static/img/img-10.jpg" alt="" width="48" height="48" /></picture><span>Medellin</span></div>
-      <div class="carousel-item"><picture><source srcset="static/img/img-11.webp" type="image/webp" /><img src="static/img/img-11.jpg" alt="" width="48" height="48" /></picture><span>Cartagena</span></div>
-      <div class="carousel-item"><picture><source srcset="static/img/img-12.webp" type="image/webp" /><img src="static/img/img-12.jpg" alt="" width="48" height="48" /></picture><span>Cali</span></div>
-      <div class="carousel-item"><picture><source srcset="static/img/img-13.webp" type="image/webp" /><img src="static/img/img-13.jpg" alt="" width="48" height="48" /></picture><span>Barranquilla</span></div>
+      <div class="carousel-item"><picture><source srcset="static/img/img-09.avif" type="image/avif" /><source srcset="static/img/img-09.webp" type="image/webp" /><img src="static/img/img-09.jpg" alt="" width="48" height="48" /></picture><span>Bogota</span></div>
+      <div class="carousel-item"><picture><source srcset="static/img/img-10.avif" type="image/avif" /><source srcset="static/img/img-10.webp" type="image/webp" /><img src="static/img/img-10.jpg" alt="" width="48" height="48" /></picture><span>Medellin</span></div>
+      <div class="carousel-item"><picture><source srcset="static/img/img-11.avif" type="image/avif" /><source srcset="static/img/img-11.webp" type="image/webp" /><img src="static/img/img-11.jpg" alt="" width="48" height="48" /></picture><span>Cartagena</span></div>
+      <div class="carousel-item"><picture><source srcset="static/img/img-12.avif" type="image/avif" /><source srcset="static/img/img-12.webp" type="image/webp" /><img src="static/img/img-12.jpg" alt="" width="48" height="48" /></picture><span>Cali</span></div>
+      <div class="carousel-item"><picture><source srcset="static/img/img-13.avif" type="image/avif" /><source srcset="static/img/img-13.webp" type="image/webp" /><img src="static/img/img-13.jpg" alt="" width="48" height="48" /></picture><span>Barranquilla</span></div>
       <!-- Duplicate 2 -->
-      <div class="carousel-item" aria-hidden="true"><picture><source srcset="static/img/img-09.webp" type="image/webp" /><img src="static/img/img-09.jpg" alt="" width="48" height="48" /></picture><span>Bogota</span></div>
-      <div class="carousel-item" aria-hidden="true"><picture><source srcset="static/img/img-10.webp" type="image/webp" /><img src="static/img/img-10.jpg" alt="" width="48" height="48" /></picture><span>Medellin</span></div>
-      <div class="carousel-item" aria-hidden="true"><picture><source srcset="static/img/img-11.webp" type="image/webp" /><img src="static/img/img-11.jpg" alt="" width="48" height="48" /></picture><span>Cartagena</span></div>
-      <div class="carousel-item" aria-hidden="true"><picture><source srcset="static/img/img-12.webp" type="image/webp" /><img src="static/img/img-12.jpg" alt="" width="48" height="48" /></picture><span>Cali</span></div>
-      <div class="carousel-item" aria-hidden="true"><picture><source srcset="static/img/img-13.webp" type="image/webp" /><img src="static/img/img-13.jpg" alt="" width="48" height="48" /></picture><span>Barranquilla</span></div>
+      <div class="carousel-item" aria-hidden="true"><picture><source srcset="static/img/img-09.avif" type="image/avif" /><source srcset="static/img/img-09.webp" type="image/webp" /><img src="static/img/img-09.jpg" alt="" width="48" height="48" /></picture><span>Bogota</span></div>
+      <div class="carousel-item" aria-hidden="true"><picture><source srcset="static/img/img-10.avif" type="image/avif" /><source srcset="static/img/img-10.webp" type="image/webp" /><img src="static/img/img-10.jpg" alt="" width="48" height="48" /></picture><span>Medellin</span></div>
+      <div class="carousel-item" aria-hidden="true"><picture><source srcset="static/img/img-11.avif" type="image/avif" /><source srcset="static/img/img-11.webp" type="image/webp" /><img src="static/img/img-11.jpg" alt="" width="48" height="48" /></picture><span>Cartagena</span></div>
+      <div class="carousel-item" aria-hidden="true"><picture><source srcset="static/img/img-12.avif" type="image/avif" /><source srcset="static/img/img-12.webp" type="image/webp" /><img src="static/img/img-12.jpg" alt="" width="48" height="48" /></picture><span>Cali</span></div>
+      <div class="carousel-item" aria-hidden="true"><picture><source srcset="static/img/img-13.avif" type="image/avif" /><source srcset="static/img/img-13.webp" type="image/webp" /><img src="static/img/img-13.jpg" alt="" width="48" height="48" /></picture><span>Barranquilla</span></div>
       <!-- Duplicate 3 -->
-      <div class="carousel-item" aria-hidden="true"><picture><source srcset="static/img/img-09.webp" type="image/webp" /><img src="static/img/img-09.jpg" alt="" width="48" height="48" /></picture><span>Bogota</span></div>
-      <div class="carousel-item" aria-hidden="true"><picture><source srcset="static/img/img-10.webp" type="image/webp" /><img src="static/img/img-10.jpg" alt="" width="48" height="48" /></picture><span>Medellin</span></div>
-      <div class="carousel-item" aria-hidden="true"><picture><source srcset="static/img/img-11.webp" type="image/webp" /><img src="static/img/img-11.jpg" alt="" width="48" height="48" /></picture><span>Cartagena</span></div>
-      <div class="carousel-item" aria-hidden="true"><picture><source srcset="static/img/img-12.webp" type="image/webp" /><img src="static/img/img-12.jpg" alt="" width="48" height="48" /></picture><span>Cali</span></div>
-      <div class="carousel-item" aria-hidden="true"><picture><source srcset="static/img/img-13.webp" type="image/webp" /><img src="static/img/img-13.jpg" alt="" width="48" height="48" /></picture><span>Barranquilla</span></div>
+      <div class="carousel-item" aria-hidden="true"><picture><source srcset="static/img/img-09.avif" type="image/avif" /><source srcset="static/img/img-09.webp" type="image/webp" /><img src="static/img/img-09.jpg" alt="" width="48" height="48" /></picture><span>Bogota</span></div>
+      <div class="carousel-item" aria-hidden="true"><picture><source srcset="static/img/img-10.avif" type="image/avif" /><source srcset="static/img/img-10.webp" type="image/webp" /><img src="static/img/img-10.jpg" alt="" width="48" height="48" /></picture><span>Medellin</span></div>
+      <div class="carousel-item" aria-hidden="true"><picture><source srcset="static/img/img-11.avif" type="image/avif" /><source srcset="static/img/img-11.webp" type="image/webp" /><img src="static/img/img-11.jpg" alt="" width="48" height="48" /></picture><span>Cartagena</span></div>
+      <div class="carousel-item" aria-hidden="true"><picture><source srcset="static/img/img-12.avif" type="image/avif" /><source srcset="static/img/img-12.webp" type="image/webp" /><img src="static/img/img-12.jpg" alt="" width="48" height="48" /></picture><span>Cali</span></div>
+      <div class="carousel-item" aria-hidden="true"><picture><source srcset="static/img/img-13.avif" type="image/avif" /><source srcset="static/img/img-13.webp" type="image/webp" /><img src="static/img/img-13.jpg" alt="" width="48" height="48" /></picture><span>Barranquilla</span></div>
       <!-- Duplicate 4 -->
-      <div class="carousel-item" aria-hidden="true"><picture><source srcset="static/img/img-09.webp" type="image/webp" /><img src="static/img/img-09.jpg" alt="" width="48" height="48" /></picture><span>Bogota</span></div>
-      <div class="carousel-item" aria-hidden="true"><picture><source srcset="static/img/img-10.webp" type="image/webp" /><img src="static/img/img-10.jpg" alt="" width="48" height="48" /></picture><span>Medellin</span></div>
-      <div class="carousel-item" aria-hidden="true"><picture><source srcset="static/img/img-11.webp" type="image/webp" /><img src="static/img/img-11.jpg" alt="" width="48" height="48" /></picture><span>Cartagena</span></div>
-      <div class="carousel-item" aria-hidden="true"><picture><source srcset="static/img/img-12.webp" type="image/webp" /><img src="static/img/img-12.jpg" alt="" width="48" height="48" /></picture><span>Cali</span></div>
-      <div class="carousel-item" aria-hidden="true"><picture><source srcset="static/img/img-13.webp" type="image/webp" /><img src="static/img/img-13.jpg" alt="" width="48" height="48" /></picture><span>Barranquilla</span></div>
+      <div class="carousel-item" aria-hidden="true"><picture><source srcset="static/img/img-09.avif" type="image/avif" /><source srcset="static/img/img-09.webp" type="image/webp" /><img src="static/img/img-09.jpg" alt="" width="48" height="48" /></picture><span>Bogota</span></div>
+      <div class="carousel-item" aria-hidden="true"><picture><source srcset="static/img/img-10.avif" type="image/avif" /><source srcset="static/img/img-10.webp" type="image/webp" /><img src="static/img/img-10.jpg" alt="" width="48" height="48" /></picture><span>Medellin</span></div>
+      <div class="carousel-item" aria-hidden="true"><picture><source srcset="static/img/img-11.avif" type="image/avif" /><source srcset="static/img/img-11.webp" type="image/webp" /><img src="static/img/img-11.jpg" alt="" width="48" height="48" /></picture><span>Cartagena</span></div>
+      <div class="carousel-item" aria-hidden="true"><picture><source srcset="static/img/img-12.avif" type="image/avif" /><source srcset="static/img/img-12.webp" type="image/webp" /><img src="static/img/img-12.jpg" alt="" width="48" height="48" /></picture><span>Cali</span></div>
+      <div class="carousel-item" aria-hidden="true"><picture><source srcset="static/img/img-13.avif" type="image/avif" /><source srcset="static/img/img-13.webp" type="image/webp" /><img src="static/img/img-13.jpg" alt="" width="48" height="48" /></picture><span>Barranquilla</span></div>
     </div>
   </section>
 
@@ -315,6 +311,7 @@
           <a href="#experiencias" class="link-arrow">Más información <i class="ri-arrow-right-line" aria-hidden="true"></i></a>
           <div class="features-item-image">
             <picture>
+              <source srcset="static/img/img-03.avif" type="image/avif" />
               <source srcset="static/img/img-03.webp" type="image/webp" />
               <img src="static/img/img-03.jpg" alt="Vista de Bogotá" loading="lazy" width="1280" height="720" />
             </picture>
@@ -327,6 +324,7 @@
           <a href="#experiencias" class="link-arrow">Más información <i class="ri-arrow-right-line" aria-hidden="true"></i></a>
           <div class="features-item-image">
             <picture>
+              <source srcset="static/img/img-04.avif" type="image/avif" />
               <source srcset="static/img/img-04.webp" type="image/webp" />
               <img src="static/img/img-04.jpg" alt="Eventos en Colombia" loading="lazy" width="1280" height="720" />
             </picture>
@@ -339,6 +337,7 @@
           <a href="#experiencias" class="link-arrow">Más información <i class="ri-arrow-right-line" aria-hidden="true"></i></a>
           <div class="features-item-image">
             <picture>
+              <source srcset="static/img/img-05.avif" type="image/avif" />
               <source srcset="static/img/img-05.webp" type="image/webp" />
               <img src="static/img/img-05.jpg" alt="Personas conectando en Medellín" loading="lazy" width="1280" height="720" />
             </picture>
@@ -351,6 +350,7 @@
           <a href="#experiencias" class="link-arrow">Más información <i class="ri-arrow-right-line" aria-hidden="true"></i></a>
           <div class="features-item-image">
             <picture>
+              <source srcset="static/img/img-06.avif" type="image/avif" />
               <source srcset="static/img/img-06.webp" type="image/webp" />
               <img src="static/img/img-06.jpg" alt="Conciertos en Cartagena" loading="lazy" width="1280" height="720" />
             </picture>
@@ -420,6 +420,7 @@
       </div>
       <div class="value-prop-image">
         <picture>
+          <source srcset="static/img/img-07.avif" type="image/avif" />
           <source srcset="static/img/img-07.webp" type="image/webp" />
           <img src="static/img/img-07.jpg" alt="CityStream conectando Colombia" loading="lazy" width="1280" height="720" />
         </picture>
@@ -439,6 +440,7 @@
       <article class="exp-card">
         <div class="exp-image">
           <picture>
+            <source srcset="static/img/img-01.avif" type="image/avif" />
             <source srcset="static/img/img-01.webp" type="image/webp" />
             <img src="static/img/img-01.jpg" alt="Bogotá - Capital de Colombia" loading="lazy" width="1280" height="960" />
           </picture>
@@ -454,6 +456,7 @@
       <article class="exp-card">
         <div class="exp-image">
           <picture>
+            <source srcset="static/img/img-02.avif" type="image/avif" />
             <source srcset="static/img/img-02.webp" type="image/webp" />
             <img src="static/img/img-02.jpg" alt="Medellín - Ciudad de la eterna primavera" loading="lazy" width="1280" height="960" />
           </picture>
@@ -469,7 +472,8 @@
       <article class="exp-card">
         <div class="exp-image">
           <picture>
-            <source srcset="static/img/img-08.webp" type="image/webp" />
+            <source srcset="static/img/img-08.avif" type="image/avif" />
+          <source srcset="static/img/img-08.webp" type="image/webp" />
             <img src="static/img/img-08.jpg" alt="Cartagena - Ciudad amurallada" loading="lazy" width="1280" height="720" />
           </picture>
         </div>
@@ -588,34 +592,39 @@
 
 <!-- Splitting.js — character-level text split -->
 <script
+  defer
   src="https://unpkg.com/splitting/dist/splitting.min.js"
   integrity="sha384-QgxPWXpRukl1Nd0WP/PR30fzuu+zxlhdjS9roCVo3887QzWmGyhFMfC+CKM3KcZT"
   crossorigin="anonymous"
 ></script>
 <!-- Lenis Smooth Scroll -->
 <script
+  defer
   src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"
   integrity="sha384-tKsJDT6PlUI0pSBt9/sBKJluKgA19/a6mBrDsZaXotLB4ZYfMGM6xt6/WgGpYhTm"
   crossorigin="anonymous"
 ></script>
 <!-- GSAP + ScrollTrigger -->
 <script
+  defer
   src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"
   integrity="sha384-g4NTh/Iv5PPU4xPyhEWqPcwtNXOvdaDI8LLnyYfyNZOjKJeYQyjzQ9X5275eBjpt"
   crossorigin="anonymous"
 ></script>
 <script
+  defer
   src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"
   integrity="sha384-Z3REaz79l2IaAZqJsSABtTbhjgOUYyV3p90XNnAPCSHg3EMTz1fouunq9WZRtj3d"
   crossorigin="anonymous"
 ></script>
 <!-- tsParticles — hero node grid animation -->
 <script
+  defer
   src="https://cdn.jsdelivr.net/npm/tsparticles@2.12.0/tsparticles.bundle.min.js"
   integrity="sha384-gZSNMuUgSbqcltOBBRNXCH+szg+2C69ISFyCk2w+xsZc0iFU+bIVPfYPmLwLtNzz"
   crossorigin="anonymous"
 ></script>
-<script src="static/js/main.js"></script>
+<script defer src="static/js/main.js"></script>
 <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "387eafbec0ae4fa2a28276906b729ce9"}'></script><!-- End Cloudflare Web Analytics -->
 </body>
 </html>

@@ -1,7 +1,38 @@
 /* ============================================
    FOUNDATION: Font, Reset, Custom Properties
    ============================================ */
-@import url("https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Geist:wght@100..900&display=swap");
+@font-face {
+  font-family: 'Geist';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('../fonts/Geist-latin.woff2') format('woff2-variations');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Geist';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('../fonts/Geist-latin-ext.woff2') format('woff2-variations');
+  unicode-range: U+0100-02AF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Bricolage Grotesque';
+  font-style: normal;
+  font-weight: 200 800;
+  font-display: swap;
+  src: url('../fonts/Bricolage-latin.woff2') format('woff2-variations');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Bricolage Grotesque';
+  font-style: normal;
+  font-weight: 200 800;
+  font-display: swap;
+  src: url('../fonts/Bricolage-latin-ext.woff2') format('woff2-variations');
+  unicode-range: U+0100-02AF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
 
 :root {
   /* CityStream brand colors — preserved */
@@ -696,188 +727,6 @@ body.no-transitions *::after {
   color: var(--text-secondary);
 }
 
-/* ============================================
-   WAITLIST COUNTER BAR (reemplaza Stats)
-   ============================================ */
-.stats {
-  padding: 2.5rem var(--px-desktop);
-  border-top: 1px solid var(--border-base);
-  border-bottom: 1px solid var(--border-base);
-  max-width: 1440px;
-  margin: 0 auto;
-}
-
-.waitlist-bar {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 2.5rem;
-  flex-wrap: wrap;
-}
-
-.waitlist-count-wrap {
-  display: flex;
-  align-items: baseline;
-  gap: 0.75rem;
-}
-
-.waitlist-count-number {
-  font-size: clamp(2rem, 5vw, 3rem);
-  font-weight: 700;
-  line-height: 1;
-  background: linear-gradient(144deg, #af40ff, #5b42f3 50%, #00ddeb);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-
-.waitlist-count-label {
-  font-size: var(--fs-sm);
-  color: var(--text-secondary);
-  font-weight: 500;
-  white-space: nowrap;
-}
-
-.waitlist-bar-divider {
-  width: 1px;
-  height: 2.5rem;
-  background: var(--border-base);
-  flex-shrink: 0;
-}
-
-.waitlist-scroll-cta {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  font-size: var(--fs-sm);
-  font-weight: 600;
-  color: var(--text-primary);
-  text-decoration: none;
-  transition: color var(--duration-base);
-  white-space: nowrap;
-}
-
-.waitlist-scroll-cta:hover {
-  color: var(--accent-orange-hover);
-}
-
-.waitlist-scroll-cta i {
-  animation: wl-bounce 1.6s ease-in-out infinite;
-}
-
-@keyframes wl-bounce {
-  0%, 100% { transform: translateY(0); }
-  50%       { transform: translateY(4px); }
-}
-
-@media (max-width: 768px) {
-  .waitlist-bar {
-    flex-direction: column;
-    gap: 1.25rem;
-    text-align: center;
-  }
-
-  .waitlist-bar-divider {
-    width: 2.5rem;
-    height: 1px;
-  }
-}
-
-/* ============================================
-   WAITLIST FORM — dentro del CTA card
-   ============================================ */
-.wl-form {
-  margin-top: 0;
-}
-
-.wl-input-group {
-  display: flex;
-  gap: 0.75rem;
-  max-width: 520px;
-  margin: 0 auto 1rem;
-}
-
-.wl-input {
-  flex: 1;
-  height: 48px;
-  padding: 0 1.125rem;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  border-radius: 8px;
-  color: var(--text-primary);
-  font-family: var(--font-sans);
-  font-size: var(--fs-sm);
-  transition: border-color var(--duration-base), background var(--duration-base);
-  min-width: 0;
-}
-
-.wl-input::placeholder {
-  color: rgba(255, 255, 255, 0.3);
-}
-
-.wl-input:focus {
-  outline: none;
-  border-color: var(--accent-cyan);
-  background: rgba(255, 255, 255, 0.09);
-}
-
-.wl-input:focus-visible {
-  outline: 2px solid var(--accent-cyan);
-  outline-offset: 2px;
-}
-
-.wl-submit-btn {
-  flex-shrink: 0;
-  min-width: 130px;
-  justify-content: center;
-}
-
-/* Loading dots animation */
-.wl-btn-loading {
-  display: inline-flex;
-  gap: 4px;
-  align-items: center;
-}
-
-.wl-dot {
-  display: inline-block;
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: currentColor;
-  animation: wl-dot-pulse 1.2s ease-in-out infinite;
-}
-.wl-dot:nth-child(2) { animation-delay: 0.2s; }
-.wl-dot:nth-child(3) { animation-delay: 0.4s; }
-
-@keyframes wl-dot-pulse {
-  0%, 80%, 100% { opacity: 0.25; transform: scale(0.8); }
-  40%           { opacity: 1;    transform: scale(1); }
-}
-
-/* Status messages */
-.wl-status {
-  font-size: var(--fs-sm);
-  min-height: 1.4em;
-  margin-top: 0.5rem;
-  transition: color var(--duration-base);
-}
-
-.wl-status--success { color: #4ade80; }
-.wl-status--error   { color: #f87171; }
-.wl-status--info    { color: var(--accent-cyan); }
-
-/* Privacy note */
-.wl-privacy {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.4rem;
-  margin-top: 1.5rem;
-  font-size: 0.75rem;
-  color: rgba(255, 255, 255, 0.3);
-}
-
 /* Screen-reader only label */
 .sr-only {
   position: absolute;
@@ -891,16 +740,6 @@ body.no-transitions *::after {
   border: 0;
 }
 
-@media (max-width: 600px) {
-  .wl-input-group {
-    flex-direction: column;
-  }
-
-  .wl-submit-btn {
-    width: 100%;
-    min-width: unset;
-  }
-}
 
 /* ============================================
    FEATURES — Sticky Scroll Narrative
@@ -2257,28 +2096,6 @@ body.light-theme .waitlist-count-number {
   background-clip: text;
   color: transparent;
 }
-
-body.light-theme .wl-input {
-  background: rgba(0, 0, 0, 0.04);
-  border-color: rgba(0, 0, 0, 0.14);
-  color: var(--text-primary);
-}
-
-body.light-theme .wl-input::placeholder {
-  color: rgba(0, 0, 0, 0.35);
-}
-
-body.light-theme .wl-input:focus {
-  background: rgba(0, 0, 0, 0.07);
-  border-color: #0891b2;
-}
-
-body.light-theme .wl-privacy {
-  color: rgba(0, 0, 0, 0.35);
-}
-
-body.light-theme .wl-status--success { color: #16a34a; }
-body.light-theme .wl-status--error   { color: #dc2626; }
 
 /* ============================================
    TOP SCROLL PROGRESS BAR

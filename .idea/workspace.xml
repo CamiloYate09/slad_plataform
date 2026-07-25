@@ -4,13 +4,54 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="62981eb4-61cd-4c42-94fe-99f98c73b136" name="Changes" comment="">
+    <list default="true" id="62981eb4-61cd-4c42-94fe-99f98c73b136" name="Changes" comment="Enhance light theme styling for phone mockup; add dark background adjustments and improve readability for text elements.">
+      <change afterPath="$PROJECT_DIR$/cloudflare/security-headers-worker.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cloudflare/wrangler.toml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/fonts/Bricolage-latin-ext.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/fonts/Bricolage-latin.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/fonts/Geist-latin-ext.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/fonts/Geist-latin.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/img/img-01.avif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/img/img-02.avif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/img/img-03.avif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/img/img-04.avif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/img/img-05.avif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/img/img-06.avif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/img/img-07.avif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/img/img-08.avif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/img/img-09.avif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/img/img-10.avif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/img/img-11.avif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/img/img-12.avif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/img/img-13.avif" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.claude/commands/openspec/CLAUDE.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.claude/commands/openspec/apply.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.claude/commands/openspec/archive.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.claude/commands/openspec/proposal.md" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AGENTS.md" beforeDir="false" afterPath="$PROJECT_DIR$/AGENTS.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CLAUDE.md" beforeDir="false" afterPath="$PROJECT_DIR$/CLAUDE.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/openspec/AGENTS.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/privacidad.html" beforeDir="false" afterPath="$PROJECT_DIR$/privacidad.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/css/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/img/imageConcierto.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/img/img-14.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/img/img-14.webp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/img/img-15.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/img/img-15.webp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/js/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/js/main.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sw.js" beforeDir="false" afterPath="$PROJECT_DIR$/sw.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/terminos.html" beforeDir="false" afterPath="$PROJECT_DIR$/terminos.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="EmbeddingIndexingInfo">
+    <option name="cachedIndexableFilesCount" value="251" />
+    <option name="fileBasedEmbeddingIndicesEnabled" value="true" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -35,7 +76,7 @@
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;https://github.com/CamiloYate09/slad_plataform.git&quot;,
-    &quot;accountId&quot;: &quot;b8ac6a00-493b-4546-ab30-815f7ac3ad05&quot;
+    &quot;accountId&quot;: &quot;e792dd4d-c26c-4482-bfda-eafd5aedaf28&quot;
   }
 }</component>
   <component name="KubernetesApiPersistence">{}</component>
@@ -44,6 +85,10 @@
 }</component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
+  </component>
+  <component name="McpProjectServerCommands">
+    <commands />
+    <urls />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 4
@@ -60,12 +105,17 @@
   &quot;keyToString&quot;: {
     &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
     &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.MCP Project settings loaded&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
     &quot;com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;javascript.preferred.runtime.type.id&quot;: &quot;node&quot;,
     &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;/Users/camiloyate/Documents/CityStream-PaginaWeb/slad_plataform/mejoras&quot;,
     &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
@@ -98,7 +148,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-3aa1da707db6-JavaScript-WS-252.26830.93" />
+        <option value="bundled-js-predefined-d6986cc7102b-4abd2a77f808-JavaScript-WS-262.8665.341" />
       </set>
     </attachedChunks>
   </component>
@@ -136,6 +186,8 @@
       <workItem from="1765244003164" duration="6264000" />
       <workItem from="1765283811213" duration="1885000" />
       <workItem from="1765302460545" duration="303000" />
+      <workItem from="1785001727250" duration="876000" />
+      <workItem from="1785002685408" duration="1238000" />
     </task>
     <task id="LOCAL-00001" summary="Index base">
       <created>1688274935956</created>

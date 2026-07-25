@@ -1,0 +1,9 @@
+name = "citystream-security-headers"
+main = "security-headers-worker.js"
+compatibility_date = "2026-07-01"
+
+# Ajusta el zone_name si tu dominio en Cloudflare no es exactamente este.
+# El patrón cubre citystream.tech y cualquier ruta bajo él (index, legales, assets).
+[[routes]]
+pattern = "citystream.tech/*"
+zone_name = "citystream.tech"
