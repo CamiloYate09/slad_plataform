@@ -52,3 +52,7 @@ Temporary Items
 .idea/
 /.idea/
 /.idea/
+
+# Wrangler local cache/build state (puede incluir datos de cuenta)
+.wrangler/
+/cloudflare/.wrangler/cache/wrangler-account.json
