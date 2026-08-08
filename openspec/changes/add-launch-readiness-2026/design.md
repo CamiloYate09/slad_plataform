@@ -31,7 +31,7 @@ Constraints duras:
 ## Decisions
 
 ### D1 — Referral code: slug nanoid de 6 chars en columna PostgreSQL `text`, default vía `gen_random_uuid` truncado
-- **Por qué:** colision rate aceptable hasta ~36⁶ ≈ 2B combinaciones; codigo memorable y URL-friendly (`citystream.co/?ref=ab12cd`)
+- **Por qué:** colision rate aceptable hasta ~36⁶ ≈ 2B combinaciones; codigo memorable y URL-friendly (`citystream.tech/?ref=ab12cd`)
 - **Alternativa descartada:** hash determinista del email — viola privacidad (reversible con diccionario), y no permite revocar/regenerar
 - **Alternativa descartada:** integer secuencial — predecible, permite scraping del orden de inscripciones
 
@@ -74,6 +74,19 @@ Constraints duras:
   - `PerplexityBot` — Politica: `Allow: /`
   - `Google-Extended` — opt-out Gemini training. Politica: `Disallow: /waitlist`
 
+### D10 — Estado del referral en el cliente: `sessionStorage` para el codigo ajeno, `localStorage` para el email propio
+
+El codigo de referido viaja desde un enlace compartido hasta una fila de Postgres, y en el camino cruza al menos un reload. Tres decisiones fijan su ciclo de vida:
+
+- **Donde vive: `sessionStorage['cs_ref']`.** Sobrevive a F5 y a salir a `/terminos.html` y volver — que es cuando el `?ref=` ya no esta en la URL — y muere al cerrar la pestana, que es aproximadamente cuando deja de ser cierto que "vengo invitado por alguien". `localStorage` lo dejaria vivo semanas y atribuiria registros a un enlace que el usuario ya olvido.
+- **Quien gana si llegan dos codigos: el primero (first-touch).** `captureRefCode()` escribe solo si la clave esta vacia. El primer enlace es el que efectivamente trajo a la persona; con last-touch, un retweet posterior o un enlace propio se llevarian el credito de otro.
+- **Cuando se consume: `removeItem` despues de la respuesta OK, nunca antes.** Leer el codigo no lo gasta. Sin borrado, un segundo correo registrado en la misma pestana (la pareja, el companero de escritorio) suma otro −10 al mismo referidor. Y borrar en el `submit` en vez de en la respuesta convertiria cada error de red en un referido perdido.
+
+Aparte, la pantalla post-submit vive solo en memoria: sin persistir nada, un reload devuelve al usuario al formulario vacio y se lleva el codigo propio y los botones de share — justo el motor de la lista viral. Por eso el email se guarda en `localStorage['cs_email']` y el load rehidrata con `get_waitlist_position`.
+
+- **Trade-off:** en un equipo compartido queda un correo legible en `localStorage`. Se mitiga con un control "¿No eres tu?" en la pantalla post-submit que borra la clave, y con el hecho de que el unico dato persistido es el email que el propio usuario acaba de teclear (sin token ni identificador de sesion).
+- **Alternativa descartada:** guardar el email en `sessionStorage` — no deja rastro, pero tampoco rehidrata nada, porque el caso que importa (volver al dia siguiente a compartir el link) ocurre en otra pestana.
+
 ## Risks / Trade-offs
 
 | Riesgo | Mitigacion |
@@ -86,6 +99,8 @@ Constraints duras:
 | Politica de privacidad incompleta vs SIC | Revisar plantilla con abogado antes de publicar; mientras tanto, version v1 conservadora (mas restrictiva de lo necesario) |
 | Migrar a CSS scroll-driven rompe efectos visuales | Migracion incremental: 4 efectos al inicio; visual regression test manual en cada efecto antes de quitar el equivalente GSAP |
 | llms.txt no es estandar W3C aun | Cero costo de crearlo; si la convencion cambia, actualizamos sin dependencias rotas |
+| `localStorage['cs_email']` deja un correo legible en equipo compartido | Control "¿No eres tu?" en la pantalla post-submit que borra la clave; solo se persiste el email tecleado por el usuario, sin token ni identificador |
+| Auto-referido con un segundo correo en el mismo dispositivo | Consumir `cs_ref` tras el registro lo vuelve deliberado en vez de accidental; si el gaming escala, el bloqueo real va en la RPC (ver Open Question 5), no en el cliente |
 
 ## Migration Plan
 
@@ -105,3 +120,4 @@ Fases en orden de menor riesgo a mayor:
 2. ¿VAPID keys nuevas para push se almacenan donde? Repo privado de configs, Cloudflare env vars, o Supabase Vault? Sugerencia: Supabase Vault desde el inicio.
 3. Bonus de posiciones por referido — ¿es lineal (10 posiciones por referido) o exponencial (10, 20, 40...)? Lineal es mas explicable a usuarios; exponencial maximiza viralidad pero introduce gaming.
 4. ¿Mantenemos el cursor custom + magnetic CTA si migramos parte de GSAP a CSS? Estos son los efectos "complejos" que no se pueden migrar, asi que GSAP igual queda cargado en el bundle. La pregunta es si en navegadores que soportan scroll-driven nativo vale la pena cargar TODO GSAP o solo el core (sin ScrollTrigger plugin).
+5. Auto-referido: nada impide registrar un segundo correo con el codigo propio. Consumir `cs_ref` (D10) lo hace deliberado, no imposible. ¿Vale la pena bloquearlo en `register_waitlist` — por ejemplo, ignorar `p_referred_by` si el email nuevo comparte dominio/IP con el referidor — o el bonus de −10 es demasiado pequeno para que alguien se moleste? Sugerencia: dejarlo abierto y medir `referred_by` por codigo antes de anadir reglas.
