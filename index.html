@@ -31,6 +31,10 @@
   <link rel="icon" href="image/favicon-32x32.png" type="image/png" />
   <link rel="apple-touch-icon" href="image/apple-touch-icon.png" />
 
+  <!-- PWA -->
+  <link rel="manifest" href="/manifest.webmanifest" />
+  <script type="speculationrules" src="/speculation-rules.json"></script>
+
   <!-- Fonts — self-hosted, subset latin (ver static/fonts/) -->
   <link rel="preload" href="static/fonts/Geist-latin.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="preload" href="static/fonts/Bricolage-latin.woff2" as="font" type="font/woff2" crossorigin />
@@ -52,20 +56,42 @@
     "@context": "https://schema.org",
     "@type": "Organization",
     "name": "CityStream",
+    "legalName": "CityStream",
     "url": "https://citystream.tech",
     "logo": "https://citystream.tech/static/img/logo-citystream.png",
     "description": "La primera red social de Colombia. Conecta con tu ciudad, descubre eventos, personas y conciertos.",
+    "foundingLocation": {
+      "@type": "Country",
+      "name": "Colombia"
+    },
+    "areaServed": {
+      "@type": "Country",
+      "name": "CO"
+    },
+    "address": {
+      "@type": "PostalAddress",
+      "addressCountry": "CO"
+    },
     "sameAs": [
       "https://www.youtube.com/@CityStream-CO",
       "https://www.facebook.com/citystream",
       "https://www.instagram.com/citystream.tech/",
       "https://twitter.com/citystream"
     ],
-    "contactPoint": {
-      "@type": "ContactPoint",
-      "email": "citystreamCO@pm.me",
-      "contactType": "customer service"
-    }
+    "contactPoint": [
+      {
+        "@type": "ContactPoint",
+        "email": "citystreamCO@pm.me",
+        "contactType": "customer service",
+        "availableLanguage": "es-CO"
+      },
+      {
+        "@type": "ContactPoint",
+        "email": "habeas-data@citystream.co",
+        "contactType": "privacy",
+        "availableLanguage": "es-CO"
+      }
+    ]
   }
   </script>
   <script type="application/ld+json">
@@ -73,7 +99,24 @@
     "@context": "https://schema.org",
     "@type": "WebSite",
     "name": "CityStream",
-    "url": "https://citystream.tech"
+    "url": "https://citystream.tech",
+    "inLanguage": "es-CO"
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "name": "Ciudades de CityStream",
+    "itemListOrder": "https://schema.org/ItemListUnordered",
+    "numberOfItems": 5,
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "item": { "@type": "Place", "name": "Bogotá", "address": { "@type": "PostalAddress", "addressLocality": "Bogotá", "addressCountry": "CO" } } },
+      { "@type": "ListItem", "position": 2, "item": { "@type": "Place", "name": "Medellín", "address": { "@type": "PostalAddress", "addressLocality": "Medellín", "addressRegion": "Antioquia", "addressCountry": "CO" } } },
+      { "@type": "ListItem", "position": 3, "item": { "@type": "Place", "name": "Cartagena", "address": { "@type": "PostalAddress", "addressLocality": "Cartagena", "addressRegion": "Bolívar", "addressCountry": "CO" } } },
+      { "@type": "ListItem", "position": 4, "item": { "@type": "Place", "name": "Cali", "address": { "@type": "PostalAddress", "addressLocality": "Cali", "addressRegion": "Valle del Cauca", "addressCountry": "CO" } } },
+      { "@type": "ListItem", "position": 5, "item": { "@type": "Place", "name": "Barranquilla", "address": { "@type": "PostalAddress", "addressLocality": "Barranquilla", "addressRegion": "Atlántico", "addressCountry": "CO" } } }
+    ]
   }
   </script>
 
@@ -84,6 +127,8 @@
        ============================================================ -->
   <!-- Referrer Policy: solo envía el origen al navegar a sitios externos -->
   <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <!-- Permissions-Policy: best-effort via meta; los headers reales van por Cloudflare -->
+  <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()" />
   <!-- Content Security Policy: restringe orígenes permitidos de scripts, estilos y conexiones -->
   <meta http-equiv="Content-Security-Policy" content="
     default-src 'none';
@@ -100,6 +145,8 @@
     connect-src 'self'
       https://cloudflareinsights.com;
     media-src 'self';
+    manifest-src 'self';
+    worker-src 'self';
     frame-src 'none';
     frame-ancestors 'none';
     base-uri 'self';
@@ -159,7 +206,7 @@
     <div class="hero-content">
       <!-- Texto principal -->
       <div class="hero-left">
-        <img src="static/img/logo-citystream.png" alt="Logo de CityStream" class="hero-logo" width="667" height="374" />
+        <img src="static/img/logo-citystream.png" alt="Logo de CityStream" class="hero-logo" width="667" height="374" fetchpriority="high" />
         <h1 class="hero-title gradient-text" data-splitting>Tu ciudad, tus reglas</h1>
         <p class="hero-subtitle">Hecha en Colombia para vivir tu ciudad hoy, no algún día. Eventos, personas y cultura — todo en un solo lugar.</p>
         <div class="hero-actions">

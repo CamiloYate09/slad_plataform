@@ -1,4 +1,35 @@
+# CityStream — https://citystream.tech
+# Politica: los crawlers que citan (busqueda y respuestas con fuente) entran;
+# los que entrenan modelos no leen las paginas legales, que describen el
+# tratamiento de datos personales.
+
 User-agent: *
 Allow: /
+
+# --- Crawlers de busqueda/respuesta: adelante ---
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+# --- Crawlers de entrenamiento: sin paginas legales ---
+User-agent: GPTBot
+Allow: /
+Disallow: /privacidad.html
+Disallow: /terminos.html
+
+User-agent: Google-Extended
+Allow: /
+Disallow: /privacidad.html
+Disallow: /terminos.html
+
+User-agent: Applebot-Extended
+Allow: /
+Disallow: /privacidad.html
+Disallow: /terminos.html
 
 Sitemap: https://citystream.tech/sitemap.xml

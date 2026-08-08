@@ -2902,3 +2902,215 @@ body.light-theme .phone-ui-bar {
     transform: scale(1);
   }
 }
+
+/* ============================================
+   PAGINAS LEGALES — privacidad.html / terminos.html
+   Documento de lectura larga: medida corta, jerarquia
+   suave, contraste alto. Estas paginas no cargan
+   main.js (su CSP es script-src 'self' y no incluyen
+   ningun <script>), asi que no hay toggle de tema:
+   se sirven en el default oscuro. Las reglas
+   .light-theme quedan listas por si se cablea.
+   ============================================ */
+.legal-page {
+  --legal-measure: 44rem;
+  --legal-body: rgba(255, 255, 255, 0.74);
+  --legal-rule: rgba(255, 255, 255, 0.10);
+  --legal-link: var(--accent-cyan);
+  --legal-surface: rgba(255, 255, 255, 0.03);
+
+  padding: clamp(2.5rem, 6vw, 4.5rem) var(--px-mobile) 5rem;
+}
+
+.legal-doc {
+  max-width: var(--legal-measure);
+  margin: 0 auto;
+  color: var(--legal-body);
+  font-size: 1rem;
+  line-height: 1.75;
+}
+
+/* --- Cabecera del documento --- */
+.legal-header {
+  padding-bottom: 2rem;
+  margin-bottom: 2.75rem;
+  border-bottom: 1px solid var(--legal-rule);
+}
+
+.legal-header h1 {
+  font-family: var(--font-display);
+  font-size: clamp(1.9rem, 5vw, 2.9rem);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+  text-wrap: balance;
+  margin-bottom: 1rem;
+}
+
+.legal-meta {
+  font-size: var(--fs-sm);
+  line-height: 1.65;
+  color: var(--text-secondary);
+}
+
+.legal-meta strong {
+  color: var(--legal-body);
+  font-weight: 600;
+}
+
+.legal-meta span {
+  display: inline-block;
+  margin-top: 0.5rem;
+}
+
+/* --- Cuerpo --- */
+.legal-doc section + section {
+  margin-top: 2.75rem;
+}
+
+.legal-doc h2 {
+  font-size: 1.15rem;
+  font-weight: 600;
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+  color: var(--text-primary);
+  margin-bottom: 0.85rem;
+}
+
+.legal-doc p + p,
+.legal-doc p + ul,
+.legal-doc ul + p {
+  margin-top: 1rem;
+}
+
+.legal-doc strong {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+/* El reset global pone list-style: none; aqui las vinetas
+   si aportan (enumeran derechos y obligaciones) */
+.legal-doc ul {
+  list-style: disc;
+  padding-left: 1.35rem;
+}
+
+.legal-doc li + li {
+  margin-top: 0.5rem;
+}
+
+.legal-doc li::marker {
+  color: var(--legal-link);
+}
+
+/* El reset global deja los enlaces sin subrayado y del color
+   del texto; en prosa legal tienen que distinguirse */
+.legal-doc a {
+  color: var(--legal-link);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+  text-decoration-color: color-mix(in srgb, var(--legal-link) 45%, transparent);
+}
+
+.legal-doc a:hover {
+  text-decoration-color: currentColor;
+}
+
+.legal-doc a:focus-visible {
+  outline: 2px solid var(--legal-link);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+/* --- Nota de cierre --- */
+.legal-footer-note {
+  margin-top: 3.5rem;
+  padding: 1.25rem 1.5rem;
+  background: var(--legal-surface);
+  border: 1px solid var(--legal-rule);
+  border-radius: var(--radius-md);
+  font-size: var(--fs-sm);
+  line-height: 1.7;
+}
+
+@media (min-width: 768px) {
+  .legal-page {
+    padding-inline: var(--px-desktop);
+  }
+}
+
+/* El footer del landing reserva 430px para su grid de 4 columnas;
+   en las paginas legales solo lleva la linea de copyright, asi que
+   se colapsa a la altura de su contenido */
+.legal-page + .footer {
+  min-height: 0;
+  margin-top: 2rem;
+  padding-block: 1.75rem;
+}
+
+.legal-page + .footer .footer-bottom {
+  padding-top: 0;
+  border-top: none;
+}
+
+.legal-page + .footer .footer-bottom p a {
+  color: var(--text-secondary);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.16em;
+}
+
+.legal-page + .footer .footer-bottom p a:hover {
+  color: var(--text-primary);
+}
+
+body.light-theme .legal-page {
+  --legal-body: rgba(0, 0, 0, 0.74);
+  --legal-rule: rgba(0, 0, 0, 0.12);
+  --legal-link: #0e7490;
+  --legal-surface: rgba(0, 0, 0, 0.03);
+}
+
+/* Una politica de datos se imprime y se archiva: que salga
+   legible en papel, sin cromo de navegacion */
+@media print {
+  body {
+    padding: 0;
+    color: #000;
+    background: #fff;
+    background-image: none;
+  }
+
+  body::before,
+  #navbar,
+  .footer {
+    display: none;
+  }
+
+  .legal-page {
+    padding: 0;
+  }
+
+  .legal-doc {
+    max-width: none;
+    color: #000;
+  }
+
+  .legal-header h1,
+  .legal-doc h2,
+  .legal-doc strong,
+  .legal-doc a {
+    color: #000;
+  }
+
+  .legal-header {
+    border-bottom-color: #000;
+  }
+
+  .legal-footer-note {
+    background: none;
+    border-color: #000;
+  }
+}

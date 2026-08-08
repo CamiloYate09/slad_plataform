@@ -1,0 +1,8 @@
+{
+  "prerender": [
+    {
+      "where": { "href_matches": "/*.html" },
+      "eagerness": "moderate"
+    }
+  ]
+}

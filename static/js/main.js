@@ -932,3 +932,16 @@ if (!prefersReducedMotion && window.matchMedia('(hover: hover) and (pointer: fin
   });
 }
 
+
+/* ============================================
+   SERVICE WORKER
+   Solo en https: en dev local (file:// o http) el
+   registro falla y no aporta nada.
+   ============================================ */
+if ('serviceWorker' in navigator && location.protocol === 'https:') {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker
+      .register('/sw.js')
+      .catch((err) => console.info('[sw] registro omitido:', err.message));
+  });
+}
