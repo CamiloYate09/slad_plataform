@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Inicia sesión en CityStream." />
+  <meta name="robots" content="noindex, follow" />
+  <meta name="theme-color" content="#0a0a0a" />
+
+  <link rel="icon" href="/image/favicon-32x32.png" type="image/png" />
+  <link rel="apple-touch-icon" href="/image/apple-touch-icon.png" />
+  <link rel="preload" href="/static/fonts/Geist-latin.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/static/fonts/Bricolage-latin.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="stylesheet" href="/static/css/style.css" />
+
+  <title>Iniciar sesión — CityStream</title>
+
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <meta http-equiv="Content-Security-Policy" content="
+    default-src 'none';
+    script-src 'self' https://accounts.google.com;
+    style-src 'self' 'unsafe-inline' https://accounts.google.com;
+    font-src 'self';
+    img-src 'self' data: https://lh3.googleusercontent.com;
+    connect-src 'self' https://api.citystream.tech http://localhost:8080 https://accounts.google.com;
+    frame-src https://accounts.google.com;
+    frame-ancestors 'none';
+    base-uri 'self';
+    form-action 'none';
+  " />
+  <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()" />
+</head>
+<body>
+
+<nav id="navbar" aria-label="Navegacion principal">
+  <a href="/" class="nav-logo" title="CityStream - Ir al inicio">CityStream 🇨🇴</a>
+  <div class="nav-cta">
+    <a href="/registro.html" class="btn-outline-sm">Crear cuenta</a>
+  </div>
+</nav>
+
+<main class="auth-page">
+  <div class="auth-card">
+    <header class="auth-header">
+      <span class="section-label">Tu cuenta</span>
+      <h1>Inicia sesión</h1>
+      <p class="auth-sub">Bienvenido de vuelta a tu ciudad.</p>
+    </header>
+
+    <p class="auth-aviso" data-auth-aviso role="status" hidden></p>
+
+    <form class="auth-form" data-auth="login" novalidate>
+      <div class="auth-field">
+        <label for="email">Correo electrónico</label>
+        <input
+          type="email" id="email" name="email" required
+          autocomplete="email" autocapitalize="off" spellcheck="false"
+          placeholder="tu@correo.com" />
+      </div>
+
+      <div class="auth-field">
+        <label for="password">Contraseña</label>
+        <div class="auth-password">
+          <input
+            type="password" id="password" name="password" required
+            autocomplete="current-password" minlength="8" />
+          <button type="button" class="auth-toggle" data-toggle-password="password" aria-pressed="false">Mostrar</button>
+        </div>
+        <a class="auth-link-sm" href="/olvide-password.html">¿Olvidaste tu contraseña?</a>
+      </div>
+
+      <button type="submit" class="auth-submit">Entrar</button>
+      <p class="auth-status" data-auth-status role="status" aria-live="polite"></p>
+    </form>
+
+    <div class="auth-oauth" data-auth-oauth hidden>
+      <span class="auth-sep">o continúa con</span>
+      <div data-oauth-google></div>
+    </div>
+
+    <p class="auth-alt">¿Todavía no tienes cuenta? <a href="/registro.html">Crear una</a></p>
+  </div>
+</main>
+
+<script src="/static/js/auth-config.js"></script>
+<script src="/static/js/auth.js"></script>
+</body>
+</html>

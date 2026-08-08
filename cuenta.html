@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Tu cuenta en CityStream." />
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="theme-color" content="#0a0a0a" />
+
+  <link rel="icon" href="/image/favicon-32x32.png" type="image/png" />
+  <link rel="apple-touch-icon" href="/image/apple-touch-icon.png" />
+  <link rel="preload" href="/static/fonts/Geist-latin.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/static/fonts/Bricolage-latin.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="stylesheet" href="/static/css/style.css" />
+
+  <title>Tu cuenta — CityStream</title>
+
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <meta http-equiv="Content-Security-Policy" content="
+    default-src 'none';
+    script-src 'self';
+    style-src 'self' 'unsafe-inline';
+    font-src 'self';
+    img-src 'self' data:;
+    connect-src 'self' https://api.citystream.tech http://localhost:8080;
+    frame-ancestors 'none';
+    base-uri 'self';
+    form-action 'none';
+  " />
+  <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()" />
+</head>
+<body>
+
+<nav id="navbar" aria-label="Navegacion principal">
+  <a href="/" class="nav-logo" title="CityStream - Ir al inicio">CityStream 🇨🇴</a>
+  <div class="nav-cta">
+    <button type="button" class="btn-outline-sm" data-auth-logout>Cerrar sesión</button>
+  </div>
+</nav>
+
+<main class="auth-page">
+  <div class="auth-card">
+    <p class="auth-aviso" data-auth-aviso role="status" hidden></p>
+    <p class="auth-status" data-auth-status role="status" aria-live="polite">Cargando tu cuenta…</p>
+
+    <!-- Oculto hasta que /auth/me confirme la sesión: así no parpadea
+         contenido de cuenta antes de saber si hay sesión -->
+    <div class="auth-cuenta" data-auth-cuenta hidden>
+      <header class="auth-header">
+        <span class="section-label">Tu cuenta</span>
+        <h1>Hola, <span data-campo="username">…</span></h1>
+      </header>
+
+      <dl class="auth-datos">
+        <div>
+          <dt>Nombre de usuario</dt>
+          <dd data-campo="username">—</dd>
+        </div>
+        <div>
+          <dt>Correo electrónico</dt>
+          <dd data-campo="email">—</dd>
+        </div>
+      </dl>
+
+      <p class="auth-ayuda">Tu sesión se cierra sola a las 24 horas. La cookie que la sostiene es <code>HttpOnly</code>: ningún script de esta página puede leerla.</p>
+    </div>
+  </div>
+</main>
+
+<script src="/static/js/auth.js"></script>
+</body>
+</html>

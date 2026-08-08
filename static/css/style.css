@@ -66,8 +66,16 @@
   --fs-xs: 0.75rem;
 
   /* Radius scale */
+  --radius-xs: 6px;
+  --radius-sm: 10px;
   --radius-md: 16px;
   --radius-lg: 24px;
+
+  /* Acento legible sobre el fondo del tema activo.
+     --accent-cyan (#00ddeb) brilla sobre el fondo oscuro pero no alcanza
+     contraste sobre #fafafa, asi que en light-theme se sustituye. Lo usan
+     los enlaces y los anillos de foco de las paginas legales y de auth. */
+  --accent-ink: var(--accent-cyan);
 
   /* Spacing */
   --section-gap: 5rem;
@@ -2019,6 +2027,7 @@ body.light-theme .video-showcase-container {
    LIGHT THEME
    ============================================ */
 body.light-theme {
+  --accent-ink: #0e7490;
   --bg-dark: #fafafa;
   --bg-card: rgba(0, 0, 0, 0.03);
   --bg-card-hover: rgba(0, 0, 0, 0.06);
@@ -2914,10 +2923,12 @@ body.light-theme .phone-ui-bar {
    ============================================ */
 .legal-page {
   --legal-measure: 44rem;
+  /* Mas contraste que --text-secondary (0.5): esto es texto de lectura
+     larga, no metadatos */
   --legal-body: rgba(255, 255, 255, 0.74);
-  --legal-rule: rgba(255, 255, 255, 0.10);
-  --legal-link: var(--accent-cyan);
-  --legal-surface: rgba(255, 255, 255, 0.03);
+  --legal-rule: var(--border-base);
+  --legal-link: var(--accent-ink);
+  --legal-surface: var(--bg-card);
 
   padding: clamp(2.5rem, 6vw, 4.5rem) var(--px-mobile) 5rem;
 }
@@ -3066,11 +3077,11 @@ body.light-theme .phone-ui-bar {
   color: var(--text-primary);
 }
 
+/* --legal-rule, --legal-link y --legal-surface ya se adaptan solos: los
+   tokens que consumen cambian con el tema. Solo el cuerpo necesita su
+   propio valor. */
 body.light-theme .legal-page {
   --legal-body: rgba(0, 0, 0, 0.74);
-  --legal-rule: rgba(0, 0, 0, 0.12);
-  --legal-link: #0e7490;
-  --legal-surface: rgba(0, 0, 0, 0.03);
 }
 
 /* Una politica de datos se imprime y se archiva: que salga
@@ -3113,4 +3124,329 @@ body.light-theme .legal-page {
     background: none;
     border-color: #000;
   }
+}
+
+/* ============================================
+   PAGINAS DE AUTENTICACION
+   login / registro / olvide-password / reset-password / cuenta
+   Formulario centrado en tarjeta, medida corta y foco muy
+   visible: aqui el usuario escribe credenciales y necesita
+   saber en todo momento donde esta parado.
+   ============================================ */
+.auth-page {
+  --auth-rule: var(--glass-border);
+  --auth-field-bg: var(--bg-card);
+  --auth-error: #f87171;
+
+  display: flex;
+  justify-content: center;
+  padding: clamp(2.5rem, 6vw, 4.5rem) var(--px-mobile) 5rem;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 27rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+}
+
+.auth-header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.auth-header h1 {
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 4.5vw, 2.25rem);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+}
+
+.auth-sub {
+  color: var(--text-secondary);
+  font-size: var(--fs-sm);
+}
+
+/* --- Formulario --- */
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.auth-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.auth-field label {
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.auth-field input[type="email"],
+.auth-field input[type="text"],
+.auth-field input[type="password"] {
+  width: 100%;
+  padding: 0.75rem 0.875rem;
+  font-family: inherit;
+  font-size: 1rem; /* <16px provoca zoom automatico en iOS al enfocar */
+  color: var(--text-primary);
+  background: var(--auth-field-bg);
+  border: 1px solid var(--auth-rule);
+  border-radius: var(--radius-sm);
+  transition: border-color var(--duration-fast) ease-in-out;
+}
+
+.auth-field input::placeholder {
+  color: var(--text-secondary);
+}
+
+.auth-field input:focus-visible,
+.auth-toggle:focus-visible,
+.auth-submit:focus-visible,
+.auth-check input:focus-visible {
+  outline: 2px solid var(--accent-ink);
+  outline-offset: 2px;
+}
+
+.auth-field input[aria-invalid="true"] {
+  border-color: var(--auth-error);
+}
+
+.auth-ayuda {
+  font-size: var(--fs-xs);
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+/* Contrasena con boton mostrar/ocultar dentro del campo */
+.auth-password {
+  position: relative;
+  display: flex;
+}
+
+.auth-password input {
+  padding-right: 5rem;
+}
+
+.auth-toggle {
+  position: absolute;
+  top: 50%;
+  right: 0.5rem;
+  transform: translateY(-50%);
+  padding: 0.35rem 0.6rem;
+  font-family: inherit;
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  color: var(--text-secondary);
+  background: none;
+  border: 1px solid var(--auth-rule);
+  border-radius: var(--radius-xs);
+  cursor: pointer;
+}
+
+.auth-toggle:hover {
+  color: var(--text-primary);
+}
+
+.auth-link-sm {
+  align-self: flex-start;
+  font-size: var(--fs-xs);
+  color: var(--text-secondary);
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+}
+
+.auth-link-sm:hover {
+  color: var(--text-primary);
+}
+
+/* Consentimiento Ley 1581 */
+.auth-check {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.65rem;
+  align-items: start;
+  font-size: var(--fs-xs);
+  line-height: 1.6;
+  color: var(--text-secondary);
+}
+
+.auth-check input {
+  margin-top: 0.15rem;
+  width: 1rem;
+  height: 1rem;
+  accent-color: var(--accent-ink);
+}
+
+.auth-check a {
+  color: var(--text-primary);
+  text-decoration: underline;
+  text-underline-offset: 0.16em;
+}
+
+/* --- Boton principal --- */
+.auth-submit {
+  padding: 0.8rem 1rem;
+  font-family: inherit;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  /* --white y --bg-dark se intercambian en light-theme, asi que el boton
+     se invierte solo sin necesidad de override */
+  color: var(--bg-dark);
+  background: var(--white);
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: opacity var(--duration-fast) ease-in-out;
+}
+
+.auth-submit:hover:not(:disabled) {
+  opacity: 0.88;
+}
+
+.auth-submit:disabled {
+  opacity: 0.55;
+  cursor: progress;
+}
+
+/* --- Mensajes --- */
+.auth-status:empty {
+  display: none;
+}
+
+.auth-status {
+  font-size: var(--fs-sm);
+  line-height: 1.55;
+  color: var(--text-secondary);
+}
+
+.auth-status[data-tipo="error"] {
+  color: var(--auth-error);
+}
+
+.auth-aviso {
+  padding: 0.75rem 1rem;
+  font-size: var(--fs-sm);
+  color: var(--text-primary);
+  background: var(--auth-field-bg);
+  border: 1px solid var(--auth-rule);
+  border-left: 3px solid var(--accent-ink);
+  border-radius: var(--radius-sm);
+}
+
+.auth-listo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  font-size: var(--fs-sm);
+  line-height: 1.7;
+  color: var(--text-secondary);
+}
+
+.auth-listo strong {
+  color: var(--text-primary);
+}
+
+.auth-listo:focus-visible {
+  outline: 2px solid var(--accent-ink);
+  outline-offset: 6px;
+  border-radius: var(--radius-sm);
+}
+
+/* --- OAuth --- */
+.auth-oauth {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  align-items: center;
+}
+
+.auth-sep {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  font-size: var(--fs-xs);
+  color: var(--text-secondary);
+}
+
+.auth-sep::before,
+.auth-sep::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--auth-rule);
+}
+
+/* --- Enlaces de pie de tarjeta --- */
+.auth-alt {
+  font-size: var(--fs-sm);
+  color: var(--text-secondary);
+  text-align: center;
+}
+
+.auth-alt a {
+  color: var(--text-primary);
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+}
+
+/* --- Pantalla de cuenta --- */
+.auth-cuenta {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.auth-datos {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1.25rem;
+  background: var(--auth-field-bg);
+  border: 1px solid var(--auth-rule);
+  border-radius: var(--radius-md);
+}
+
+.auth-datos dt {
+  font-size: var(--fs-xs);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  margin-bottom: 0.2rem;
+}
+
+.auth-datos dd {
+  font-size: 0.9375rem;
+  color: var(--text-primary);
+  word-break: break-word;
+}
+
+.auth-cuenta code {
+  font-size: 0.9em;
+  padding: 0.1em 0.35em;
+  background: var(--auth-field-bg);
+  border: 1px solid var(--auth-rule);
+  border-radius: var(--radius-xs);
+}
+
+@media (min-width: 768px) {
+  .auth-page {
+    padding-inline: var(--px-desktop);
+  }
+}
+
+/* --auth-rule y --auth-field-bg se adaptan solos con sus tokens. Solo el
+   rojo de error necesita su propia version: #f87171 no contrasta sobre
+   fondo claro. */
+body.light-theme .auth-page {
+  --auth-error: #b91c1c;
 }
