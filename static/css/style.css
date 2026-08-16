@@ -1255,12 +1255,29 @@ body.light-theme .value-prop-image::before {
   box-shadow: var(--shadow-premium);
 }
 
-.audience-card i {
-  display: block;
-  font-size: 1.75rem;
-  color: var(--accent-ink);
+.audience-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 12px;
   margin-bottom: 0.9rem;
 }
+
+.audience-icon i {
+  font-size: 1.25rem;
+  color: #fff;
+}
+
+/* Colores de marca ya definidos en :root — sin inventar ninguno nuevo,
+   solo distinguiendo cada tarjeta con uno distinto (antes solo se usaba
+   --accent-green en el resto del sitio). Fijos, no cambian con el tema:
+   el chip de color de fondo tampoco cambia. */
+.audience-icon--cyan { background: var(--accent-cyan); }
+.audience-icon--orange { background: var(--accent-orange); }
+.audience-icon--blue { background: var(--accent-blue); }
+.audience-icon--green { background: var(--accent-green); }
 
 .audience-card h3 {
   font-size: var(--fs-h3);
