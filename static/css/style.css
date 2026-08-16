@@ -1225,6 +1225,64 @@ body.light-theme .value-prop-image::before {
 }
 
 /* ============================================
+   AUDIENCE PERSONAS — inspirado en circle.so/ai
+   ============================================ */
+.audience {
+  padding: var(--section-gap) var(--px-desktop);
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+.audience-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+}
+
+.audience-card {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+  padding: 2rem 1.5rem;
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  transition: border-color var(--duration-base), background var(--duration-base), box-shadow var(--duration-base);
+}
+
+.audience-card:hover {
+  border-color: var(--border-hover);
+  background: var(--bg-card-hover);
+  box-shadow: var(--shadow-premium);
+}
+
+.audience-card i {
+  display: block;
+  font-size: 1.75rem;
+  color: var(--accent-ink);
+  margin-bottom: 0.9rem;
+}
+
+.audience-card h3 {
+  font-size: var(--fs-h3);
+  font-weight: 700;
+  margin-bottom: 0.6rem;
+  color: var(--text-primary);
+}
+
+.audience-card p {
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+@media (max-width: 768px) {
+  .audience-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 480px) {
+  .audience-grid { grid-template-columns: 1fr; }
+}
+
+/* ============================================
    STATS BAND (proof-points) — inspirado en robot.com
    ============================================ */
 .stats-band {
@@ -1639,6 +1697,19 @@ body.light-theme .video-showcase-container {
 
 .footer-col a:hover::after {
   width: 100%;
+}
+
+.footer-compliance {
+  margin-top: 0.75rem;
+  font-size: var(--fs-xs);
+  line-height: 1.6;
+  color: var(--text-secondary);
+}
+
+.footer-compliance i {
+  color: var(--accent-ink);
+  margin-right: 0.3rem;
+  vertical-align: -1px;
 }
 
 .footer-bottom {

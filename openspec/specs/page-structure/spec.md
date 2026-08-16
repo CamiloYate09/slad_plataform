@@ -15,16 +15,18 @@ La página MUST seguir el orden de secciones idéntico a factory.ai, adaptado al
   4. **Stats section (4 métricas: usuarios, ciudades, conexiones, eventos)**
   5. Product features with tabs (4 tabs: Ciudades, Eventos, Personas, Conciertos)
   6. Numbered features ("Por qué CityStream" — 3 cards)
-  7. Value proposition section (two-column, enterprise-style messaging)
-  8. Experience cards grid (Bogotá, Medellín, Cartagena con tags)
-  9. News / Novedades section (4 cards)
-  10. CTA section
-  11. Card-style rounded footer
+  7. **Audience personas ("¿Para quién es CityStream?" — 4 tarjetas, sin equivalente en factory.ai — ver `audience-personas`)**
+  8. Value proposition section (two-column, enterprise-style messaging)
+  9. Experience cards grid (Bogotá, Medellín, Cartagena con tags)
+  10. News / Novedades section (4 cards)
+  11. CTA section
+  12. Card-style rounded footer
 
 #### Scenario: No existen secciones fuera del orden definido
 - **WHEN** se inspecciona el HTML
-- **THEN** no hay secciones adicionales entre las 11 definidas
+- **THEN** no hay secciones adicionales entre las 12 definidas
 - **AND** la sección `.stats` está posicionada entre `.trusted-by` y `.features`
+- **AND** la sección `.audience` está posicionada entre `.numbered-features` y `.value-prop`
 
 ### Requirement: Trusted-By Logo Carousel
 La página MUST incluir una sección de logos de aliados/ciudades que se desplazan horizontalmente en loop infinito, posicionada inmediatamente después del hero.
