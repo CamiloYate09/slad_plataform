@@ -217,6 +217,40 @@ updateNavbar();
 window.addEventListener('scroll', updateNavbar, { passive: true });
 
 // ============================================
+// FLOATING CTA (mobile) — reveal-on-scroll, mecanismo inspirado en circle.so/ai
+// Aparece al pasar el hero (donde .nav-cta ya no es visible en mobile), y se
+// oculta de nuevo cerca de .cta-section para no duplicar el CTA en pantalla.
+// ============================================
+const floatingCta = document.getElementById('floating-cta');
+
+if (floatingCta) {
+  const heroEl = document.querySelector('.hero');
+  const revealThreshold = heroEl ? heroEl.offsetHeight * 0.8 : 500;
+  let pastCtaSection = false;
+
+  function updateFloatingCta() {
+    const shouldShow = window.pageYOffset > revealThreshold && !pastCtaSection;
+    floatingCta.classList.toggle('is-visible', shouldShow);
+    floatingCta.setAttribute('aria-hidden', String(!shouldShow));
+  }
+
+  window.addEventListener('scroll', updateFloatingCta, { passive: true });
+
+  const ctaSectionEl = document.querySelector('.cta-section');
+  if (ctaSectionEl && 'IntersectionObserver' in window) {
+    const ctaObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        pastCtaSection = entry.isIntersecting;
+        updateFloatingCta();
+      });
+    }, { threshold: 0.1 });
+    ctaObserver.observe(ctaSectionEl);
+  }
+
+  updateFloatingCta();
+}
+
+// ============================================
 // MOBILE HAMBURGER MENU
 // ============================================
 const navToggle = document.querySelector('.nav-toggle');

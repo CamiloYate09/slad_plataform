@@ -1283,6 +1283,48 @@ body.light-theme .value-prop-image::before {
 }
 
 /* ============================================
+   FLOATING CTA (mobile) — mecanismo inspirado en circle.so/ai
+   (barra flotante reveal-on-scroll); contenido propio de CityStream.
+   Solo mobile: en desktop .nav-cta ya está siempre visible en el navbar.
+   ============================================ */
+.floating-cta {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .floating-cta {
+    display: flex;
+    gap: 0.5rem;
+    position: fixed;
+    bottom: 1.25rem;
+    left: 50%;
+    z-index: 150;
+    padding: 0.4rem;
+    border-radius: 999px;
+    border: 1px solid var(--glass-border);
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    box-shadow: var(--shadow-premium);
+    transform: translate(-50%, calc(100% + 1.5rem));
+    opacity: 0;
+    pointer-events: none;
+    transition: transform 400ms ease-out, opacity 400ms ease-out;
+  }
+
+  .floating-cta.is-visible {
+    transform: translate(-50%, 0);
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .floating-cta .btn-outline-sm,
+  .floating-cta .btn-primary-sm {
+    white-space: nowrap;
+  }
+}
+
+/* ============================================
    STATS BAND (proof-points) — inspirado en robot.com
    ============================================ */
 .stats-band {
