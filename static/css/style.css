@@ -1177,7 +1177,7 @@ body.light-theme .value-prop-image::before {
 }
 
 .numbered-features h2 {
-  color: rgba(255, 255, 255, 0.92);
+  color: var(--text-primary);
 }
 
 .numbered-grid {
@@ -1197,8 +1197,8 @@ body.light-theme .value-prop-image::before {
 }
 
 .num-card:hover {
-  border-color: rgba(255, 255, 255, 0.2);
-  background: rgba(255, 255, 255, 0.08);
+  border-color: var(--border-hover);
+  background: var(--bg-card-hover);
   box-shadow: var(--shadow-premium);
 }
 
@@ -1216,11 +1216,11 @@ body.light-theme .value-prop-image::before {
   font-size: var(--fs-h3);
   font-weight: 700;
   margin-bottom: 0.75rem;
-  color: rgba(255, 255, 255, 0.9);
+  color: var(--text-primary);
 }
 
 .num-card p {
-  color: rgba(255, 255, 255, 0.55);
+  color: var(--text-secondary);
   line-height: 1.7;
 }
 
@@ -2254,9 +2254,7 @@ body.light-theme .news-tag.tag-cyan {
   color: #0891b2;
 }
 
-/* num-card-number: dark band is always dark regardless of theme */
-/* intentionally not overriding num-card-number color in light-theme
-   because dark band stays dark */
+/* num-card-number usa --accent-orange-hover, ya es legible en ambos temas */
 
 body.light-theme .section-label {
   color: rgba(0, 0, 0, 0.5);
