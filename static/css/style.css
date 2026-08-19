@@ -288,9 +288,11 @@ body.no-transitions *::after {
 /* ============================================
    BUTTONS
    ============================================ */
-.btn-primary {
+.btn-primary,
+.auth-submit {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 0.5rem;
   padding: 0.875rem 2rem;
   background: linear-gradient(135deg, #af40ff 0%, #5b42f3 50%, #00ddeb 100%);
@@ -306,7 +308,8 @@ body.no-transitions *::after {
   min-height: 44px;
 }
 
-.btn-primary:hover {
+.btn-primary:hover,
+.auth-submit:hover:not(:disabled) {
   background-position: 100% 0;
   transform: translateY(-2px) scale(1.02);
   box-shadow: 0 8px 30px rgba(91, 66, 243, 0.35), 0 0 24px rgba(249, 115, 22, 0.35);
@@ -3422,29 +3425,17 @@ body.light-theme .legal-page {
   text-underline-offset: 0.16em;
 }
 
-/* --- Boton principal --- */
+/* --- Boton principal — mismo gradiente que .btn-primary (index.html) --- */
 .auth-submit {
-  padding: 0.8rem 1rem;
+  width: 100%;
   font-family: inherit;
-  font-size: 0.9375rem;
-  font-weight: 600;
-  /* --white y --bg-dark se intercambian en light-theme, asi que el boton
-     se invierte solo sin necesidad de override */
-  color: var(--bg-dark);
-  background: var(--white);
-  border: none;
-  border-radius: var(--radius-sm);
-  cursor: pointer;
-  transition: opacity var(--duration-fast) ease-in-out;
-}
-
-.auth-submit:hover:not(:disabled) {
-  opacity: 0.88;
 }
 
 .auth-submit:disabled {
   opacity: 0.55;
   cursor: progress;
+  transform: none;
+  box-shadow: none;
 }
 
 /* --- Mensajes --- */
