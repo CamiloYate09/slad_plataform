@@ -2129,7 +2129,8 @@ body.light-theme .video-showcase-container {
 /* ============================================
    THEME TOGGLE
    ============================================ */
-.theme-toggle {
+.theme-toggle,
+.tour-replay-btn {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -2144,7 +2145,8 @@ body.light-theme .video-showcase-container {
   position: relative;
 }
 
-.theme-toggle:hover {
+.theme-toggle:hover,
+.tour-replay-btn:hover {
   border-color: var(--accent-orange-hover);
   color: var(--accent-orange-hover);
 }
@@ -3579,4 +3581,115 @@ body.light-theme .legal-page {
    fondo claro. */
 body.light-theme .auth-page {
   --auth-error: #b91c1c;
+}
+
+/* ============================================================
+   Tour guiado — spotlight + tarjeta de descripción por botón
+   ============================================================ */
+.tour-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+}
+
+.tour-spot {
+  position: fixed;
+  border-radius: var(--radius-sm);
+  box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.65);
+  transition: top 0.25s var(--ease-out), left 0.25s var(--ease-out),
+    width 0.25s var(--ease-out), height 0.25s var(--ease-out);
+  pointer-events: none;
+}
+
+.tour-card {
+  position: fixed;
+  width: min(300px, calc(100vw - 32px));
+  background: var(--bg-card-hover);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--border-hover);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-premium);
+  padding: 1.25rem;
+  transition: top 0.25s var(--ease-out), left 0.25s var(--ease-out);
+}
+
+.tour-close {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-size: 1.1rem;
+}
+
+.tour-close:hover {
+  color: var(--text-primary);
+}
+
+.tour-count {
+  margin: 0 0 0.35rem;
+  font-size: 0.75rem;
+  color: var(--accent-ink);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.tour-title {
+  margin: 0 0 0.4rem;
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  color: var(--text-primary);
+  padding-right: 1.5rem;
+}
+
+.tour-body {
+  margin: 0 0 1rem;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: var(--text-secondary);
+}
+
+.tour-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
+.tour-btn {
+  padding: 0.45rem 0.9rem;
+  border-radius: var(--radius-xs);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--duration-fast) ease;
+}
+
+.tour-btn--ghost {
+  background: none;
+  border: 1px solid var(--border-base);
+  color: var(--text-secondary);
+}
+
+.tour-btn--ghost:hover {
+  border-color: var(--border-hover);
+  color: var(--text-primary);
+}
+
+.tour-btn--primary {
+  background: var(--accent-ink);
+  border: 1px solid var(--accent-ink);
+  color: var(--bg-dark);
+}
+
+.tour-btn--primary:hover {
+  opacity: 0.9;
 }
