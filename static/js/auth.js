@@ -17,6 +17,25 @@
 
 'use strict';
 
+/* ------------------------------------------------------------
+ *  Tema oscuro/claro — mismo criterio y storage que la landing
+ *  (static/js/main.js): sin main.js aquí, así que se cablea aparte.
+ * ---------------------------------------------------------- */
+(function () {
+  const toggle = document.querySelector('.theme-toggle');
+  if (!toggle) return;
+
+  const saved = localStorage.getItem('citystream-theme');
+  if (saved === 'light' || (!saved && window.matchMedia('(prefers-color-scheme: light)').matches)) {
+    document.body.classList.add('light-theme');
+  }
+
+  toggle.addEventListener('click', () => {
+    const isLight = document.body.classList.toggle('light-theme');
+    localStorage.setItem('citystream-theme', isLight ? 'light' : 'dark');
+  });
+})();
+
 const API_BASE =
   location.hostname === 'localhost' || location.hostname === '127.0.0.1'
     ? 'http://localhost:8080'
