@@ -150,50 +150,13 @@ if (cursor && cursorFollower && window.matchMedia('(pointer: fine)').matches) {
 
 // ============================================
 // THEME TOGGLE — Dark/Light
+// La clase y el localStorage los maneja theme.js (se carga en todas las
+// paginas, sin defer, para evitar el flash). Aqui solo repintamos el canvas
+// de particulas: se dibuja con colores leidos en JS, no con CSS.
 // ============================================
-const themeToggle = document.querySelector('.theme-toggle');
-
-if (themeToggle) {
-  const savedTheme = localStorage.getItem('citystream-theme');
-  if (savedTheme === 'light') {
-    document.body.classList.add('light-theme');
-  } else if (!savedTheme && window.matchMedia('(prefers-color-scheme: light)').matches) {
-    document.body.classList.add('light-theme');
-  }
-
-  // T4 — Extraemos la lógica de toggle a función reutilizable
-  function applyTheme() {
-    document.body.classList.toggle('light-theme');
-    const isLight = document.body.classList.contains('light-theme');
-    localStorage.setItem('citystream-theme', isLight ? 'light' : 'dark');
-    // Reapply gradient inline on hero chars (CSS can't override compositing-layer inline style)
-    const grad = isLight
-      ? 'linear-gradient(144deg, #7c2dbd, #4338ca 50%, #0891b2)'
-      : 'linear-gradient(144deg, #af40ff, #5b42f3 50%, #00ddeb)';
-    document.querySelectorAll('.hero-title .char').forEach(c => {
-      c.style.background = grad;
-      c.style.webkitBackgroundClip = 'text';
-      c.style.backgroundClip = 'text';
-    });
-    // Re-init particles with updated theme colors
-    initHeroParticles();
-  }
-
-  // T4 — View Transitions API: circle reveal desde el botón del tema
-  themeToggle.addEventListener('click', (e) => {
-    if (!prefersReducedMotion && document.startViewTransition) {
-      // Calcula el origen del círculo desde la posición del botón
-      const rect = themeToggle.getBoundingClientRect();
-      const originX = `${Math.round(rect.left + rect.width / 2)}px`;
-      const originY = `${Math.round(rect.top + rect.height / 2)}px`;
-      document.documentElement.style.setProperty('--vt-origin-x', originX);
-      document.documentElement.style.setProperty('--vt-origin-y', originY);
-      document.startViewTransition(applyTheme);
-    } else {
-      applyTheme();
-    }
-  });
-}
+document.addEventListener('themechange', () => {
+  initHeroParticles();
+});
 
 // ============================================
 // SPLIT TEXT — hero title handled by Splitting.js
@@ -416,12 +379,11 @@ if (!prefersReducedMotion) {
   if (heroChars.length > 0) {
     // Workaround: GSAP creates a compositing stacking context on chars (translate/rotate/scale: none)
     // which prevents CSS background-clip:text + background-image from rendering. Apply inline.
-    const isDark = !document.body.classList.contains('light-theme');
-    const heroGrad = isDark
-      ? 'linear-gradient(144deg, #af40ff, #5b42f3 50%, #00ddeb)'
-      : 'linear-gradient(144deg, #7c2dbd, #4338ca 50%, #0891b2)';
+    // El valor es var(--grad-brand): sigue siendo inline (que es lo que pide
+    // el workaround) pero se resuelve contra el tema activo, asi que cambia
+    // solo al alternar dark/light sin repintar nada desde JS.
     heroChars.forEach(c => {
-      c.style.background = heroGrad;
+      c.style.background = 'var(--grad-brand)';
       c.style.webkitBackgroundClip = 'text';
       c.style.backgroundClip = 'text';
       c.style.color = 'transparent';

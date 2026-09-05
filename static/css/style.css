@@ -41,6 +41,17 @@
   --accent-orange: #d97706;
   --accent-cyan: #00ddeb;
 
+  /* Gradiente de marca. Vive en un token porque lo consumen .gradient-text,
+     sus .char y el JS del hero: antes cada uno lo repetia a mano y en tema
+     claro solo se corregian algunos. */
+  --grad-brand: linear-gradient(144deg, #af40ff, #5b42f3 50%, #00ddeb);
+
+  /* Texto sobre un fondo de marca (gradiente/acento) que NO cambia con el
+     tema. Ojo con --white: pese al nombre se invierte a #0a0a0a en claro,
+     asi que sirve para texto sobre la superficie de la pagina, no sobre
+     estos fondos fijos. */
+  --on-brand: #ffffff;
+
   /* factory.ai interactive color */
   --accent-orange-hover: #f97316;
 
@@ -191,7 +202,7 @@ ul {
 /* Gradient text */
 .gradient-text {
   color: transparent;
-  background: linear-gradient(144deg, #af40ff, #5b42f3 50%, #00ddeb);
+  background: var(--grad-brand);
   -webkit-background-clip: text;
   background-clip: text;
 }
@@ -206,7 +217,7 @@ ul {
 .gradient-text .char {
   display: inline-block;
   color: transparent;
-  background: linear-gradient(144deg, #af40ff, #5b42f3 50%, #00ddeb);
+  background: var(--grad-brand);
   -webkit-background-clip: text;
   background-clip: text;
 }
@@ -214,7 +225,7 @@ ul {
 /* @legacy: replaced by splitting-char-reveal */
 .gradient-text .split-word {
   color: transparent;
-  background: linear-gradient(144deg, #af40ff, #5b42f3 50%, #00ddeb);
+  background: var(--grad-brand);
   -webkit-background-clip: text;
   background-clip: text;
 }
@@ -297,7 +308,7 @@ body.no-transitions *::after {
   padding: 0.875rem 2rem;
   background: linear-gradient(135deg, #af40ff 0%, #5b42f3 50%, #00ddeb 100%);
   background-size: 200% 200%;
-  color: var(--white);
+  color: var(--on-brand);
   font-family: var(--font-sans);
   font-weight: 600;
   font-size: var(--fs-body);
@@ -333,7 +344,7 @@ body.no-transitions *::after {
 
 .btn-primary-sm {
   background: linear-gradient(135deg, #af40ff, #5b42f3);
-  color: var(--white);
+  color: var(--on-brand);
   border: none;
 }
 
@@ -1831,8 +1842,10 @@ body.light-theme .video-showcase-container {
   left: 50%;
   transform: translateX(-50%);
   padding: 0.75rem 1.5rem;
-  background: var(--accent-blue);
-  color: var(--white);
+  /* --accent-blue (#3b82f6) con blanco da 3.68:1 y esto es el enlace de
+     salto de teclado: tiene que pasar AA (4.5:1) en los dos temas. */
+  background: #2563eb;
+  color: var(--on-brand);
   border-radius: 0 0 8px 8px;
   z-index: 9999;
   font-weight: 600;
@@ -2163,6 +2176,7 @@ body.light-theme .video-showcase-container {
    ============================================ */
 body.light-theme {
   --accent-ink: #0e7490;
+  --grad-brand: linear-gradient(144deg, #7c2dbd, #4338ca 50%, #0891b2);
   --bg-dark: #fafafa;
   --bg-card: rgba(0, 0, 0, 0.03);
   --bg-card-hover: rgba(0, 0, 0, 0.06);
@@ -2228,15 +2242,6 @@ body.light-theme .gradient-text:not([data-splitting]) {
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
-}
-
-body.light-theme .btn-primary,
-body.light-theme .btn-primary-sm {
-  color: #ffffff;
-}
-
-body.light-theme .btn-primary:hover {
-  color: #ffffff;
 }
 
 body.light-theme .exp-tag {
@@ -2307,6 +2312,28 @@ body.light-theme .waitlist-count-number {
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+}
+
+/* Estos tres usaban blanco fijo, no un token: sobre #fafafa el hover de
+   .news-card aclaraba la tarjeta hasta desaparecer, y ni los puntos de
+   .stat-card--quote ni el barrido de brillo se veian. */
+body.light-theme .news-card:hover {
+  border-color: rgba(0, 0, 0, 0.2);
+  background: rgba(0, 0, 0, 0.05);
+}
+
+body.light-theme .stat-card--quote {
+  background-image: radial-gradient(rgba(0, 0, 0, 0.14) 1.5px, transparent 1.5px);
+}
+
+body.light-theme .news-card::after,
+body.light-theme .num-card::after {
+  background: linear-gradient(
+    105deg,
+    transparent 30%,
+    rgba(0, 0, 0, 0.05) 50%,
+    transparent 70%
+  );
 }
 
 /* ============================================
@@ -2961,9 +2988,11 @@ body.light-theme .phone-card-title {
   color: rgba(255, 255, 255, 0.95);
 }
 
+/* El mockup del telefono es oscuro en los dos temas, asi que su texto
+   secundario se queda blanco; 0.45 no llegaba a 4.5:1 sobre la tarjeta. */
 body.light-theme .phone-card-sub,
 body.light-theme .map-dot-label {
-  color: rgba(255, 255, 255, 0.45);
+  color: rgba(255, 255, 255, 0.6);
 }
 
 body.light-theme .phone-ui-bar {
@@ -3590,10 +3619,14 @@ body.light-theme .auth-page {
   pointer-events: none;
 }
 
+/* La tarjeta flota sobre el scrim oscuro de .tour-spot en los dos temas.
+   Con --bg-card-hover (rgba negra al 6% en claro) quedaba texto #0a0a0a
+   sobre casi negro: ilegible. --glass-bg si es una superficie propia del
+   tema (blanca al 70% en claro, blanca al 5% en oscuro). */
 .tour-card {
   position: fixed;
   width: min(300px, calc(100vw - 32px));
-  background: var(--bg-card-hover);
+  background: var(--glass-bg);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border: 1px solid var(--border-hover);
