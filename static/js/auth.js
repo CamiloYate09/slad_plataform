@@ -68,6 +68,20 @@ async function api(path, { method = 'POST', body } = {}) {
  *  cae en el fallback por status de más abajo, igual que antes.
  * ---------------------------------------------------------- */
 
+const MSG_PASSWORD_RANGO = 'La contraseña debe tener entre 8 y 72 caracteres.';
+const MSG_RESET_USADO =
+  'El enlace ya se usó o expiró. Pide uno nuevo desde "Olvidé mi contraseña".';
+
+/**
+ * bcrypt corta a 72 BYTES, no caracteres: "ñ" son 2 y un emoji 4. El
+ * maxlength del HTML es la primera barrera; esta es la que coincide con el
+ * servidor (rc VALIDATION_PASSWORD_TOO_LONG).
+ */
+function passwordFueraDeRango(password) {
+  const bytes = new TextEncoder().encode(password).length;
+  return password.length < 8 || bytes > 72;
+}
+
 function mensajeDeError(err) {
   if (err.status === 0) {
     return 'No pudimos conectar con el servidor. Revisa tu conexión e inténtalo de nuevo.';
@@ -80,6 +94,11 @@ function mensajeDeError(err) {
   const rc = (err.body && err.body.rc) || '';
 
   switch (rc) {
+    case 'VALIDATION_PASSWORD_TOO_SHORT':
+    case 'VALIDATION_PASSWORD_TOO_LONG':
+      return MSG_PASSWORD_RANGO;
+    case 'AUTH_RESET_TOKEN_INVALID':
+      return MSG_RESET_USADO;
     case 'AUTH_EMAIL_TAKEN':
       return 'Ese correo ya tiene una cuenta. ¿Quieres iniciar sesión?';
     case 'AUTH_USERNAME_TAKEN':
@@ -151,26 +170,54 @@ function limpiarInvalidos(form) {
  * y deja el estado visual consistente pase lo que pase.
  */
 function conectar(form, enviar) {
+  let enVuelo = false;
+
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
+    // Un Enter repetido puede llegar antes de que el DOM aplique `disabled`
+    // al botón: dos registros simultáneos son una carrera que el servidor
+    // resuelve con 409, pero no hay por qué provocarla.
+    if (enVuelo) return;
     limpiarInvalidos(form);
 
     // La validación nativa cubre required, type=email, minlength y pattern:
     // no hay que reimplementarla en JS.
     if (!form.reportValidity()) return;
 
+    enVuelo = true;
     estado(form, 'loading', 'Enviando…');
     try {
       await enviar(new FormData(form));
     } catch (err) {
       const msg = mensajeDeError(err);
-      estado(form, 'error', msg || 'No pudimos completar la operación.');
-      if (err.status === 401 || err.status === 409) {
-        const primero = form.querySelector('input:not([type=hidden])');
-        if (primero) primero.focus();
+      const campo = campoDelError(err);
+      if (campo && form.elements[campo]) {
+        campoInvalido(form, campo, msg || 'No pudimos completar la operación.');
+      } else {
+        estado(form, 'error', msg || 'No pudimos completar la operación.');
+        if (err.status === 401 || err.status === 409) {
+          const primero = form.querySelector('input:not([type=hidden])');
+          if (primero) primero.focus();
+        }
       }
+    } finally {
+      enVuelo = false;
     }
   });
+}
+
+/** Campo al que apunta el `rc`, para marcarlo inválido en vez de un aviso genérico. */
+function campoDelError(err) {
+  switch ((err.body && err.body.rc) || '') {
+    case 'AUTH_EMAIL_TAKEN':
+      return 'email';
+    case 'AUTH_USERNAME_TAKEN':
+      return 'username';
+    case 'VALIDATION_PASSWORD_TOO_SHORT':
+    case 'VALIDATION_PASSWORD_TOO_LONG':
+      return 'password';
+  }
+  return null;
 }
 
 /* ------------------------------------------------------------
@@ -202,6 +249,10 @@ function pantallaLogin(form) {
 function pantallaRegistro(form) {
   conectar(form, async (datos) => {
     const password = datos.get('password');
+    if (passwordFueraDeRango(password)) {
+      campoInvalido(form, 'password', MSG_PASSWORD_RANGO);
+      return;
+    }
     if (password !== datos.get('password2')) {
       campoInvalido(form, 'password2', 'Las dos contraseñas no coinciden.');
       return;
@@ -245,6 +296,10 @@ function pantallaReset(form) {
 
   conectar(form, async (datos) => {
     const password = datos.get('password');
+    if (passwordFueraDeRango(password)) {
+      campoInvalido(form, 'password', MSG_PASSWORD_RANGO);
+      return;
+    }
     if (password !== datos.get('password2')) {
       campoInvalido(form, 'password2', 'Las dos contraseñas no coinciden.');
       return;
@@ -253,8 +308,10 @@ function pantallaReset(form) {
     try {
       await api('/auth/reset-password', { body: { token, password } });
     } catch (err) {
+      // 401 = token consumido (es de un solo uso), expirado o reemplazado
+      // por un "olvidé mi contraseña" posterior.
       if (err.status === 401) {
-        estado(form, 'error', 'El enlace ya se usó o expiró. Pide uno nuevo desde "Olvidé mi contraseña".');
+        estado(form, 'error', MSG_RESET_USADO);
         return;
       }
       throw err;

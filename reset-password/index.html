@@ -58,18 +58,18 @@
         <div class="auth-password">
           <input
             type="password" id="password" name="password" required
-            minlength="8" autocomplete="new-password"
+            minlength="8" maxlength="72" autocomplete="new-password"
             aria-describedby="password-ayuda" />
           <button type="button" class="auth-toggle" data-toggle-password="password" aria-pressed="false">Mostrar</button>
         </div>
-        <p class="auth-ayuda" id="password-ayuda">Mínimo 8 caracteres.</p>
+        <p class="auth-ayuda" id="password-ayuda">Entre 8 y 72 caracteres.</p>
       </div>
 
       <div class="auth-field">
         <label for="password2">Repite la contraseña</label>
         <input
           type="password" id="password2" name="password2" required
-          minlength="8" autocomplete="new-password" />
+          minlength="8" maxlength="72" autocomplete="new-password" />
       </div>
 
       <button type="submit" class="auth-submit">Guardar contraseña</button>
