@@ -62,3 +62,9 @@ Temporary Items
 /.agents/
 /skills-lock.json
 /.idea/
+
+# Herramientas locales de gcloud: 700+ MB que no son del sitio
+/google-cloud-sdk/
+/google-cloud-cli-*.tar.gz
+/cloud-sql-proxy
+/.codex/
