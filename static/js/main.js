@@ -301,8 +301,9 @@ if (!prefersReducedMotion) {
   // Hero entrance timeline
   const heroTl = gsap.timeline({ defaults: { ease: 'power2.out' } });
 
+  // Sin opacity: el logo es el LCP; si arranca invisible, el LCP espera a GSAP.
   heroTl
-    .from('.hero-logo', { opacity: 0, y: 30, duration: 0.6 });
+    .from('.hero-logo', { y: 30, duration: 0.6 });
 
   // Char-level animation (Splitting.js) or word fallback
   const heroChars = document.querySelectorAll('.hero-title .char');

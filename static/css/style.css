@@ -34,6 +34,39 @@
   unicode-range: U+0100-02AF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 
+/* Remix Icon v4.2.0 (Apache-2.0) — subset con solo los iconos que usa el
+   sitio. Si agregas un icono ri-*, regenera static/fonts/remixicon-subset.woff2
+   con pyftsubset y añade su regla :before aquí. */
+@font-face {
+  font-family: 'remixicon';
+  font-display: block;
+  src: url('../fonts/remixicon-subset.woff2') format('woff2');
+}
+[class^="ri-"], [class*=" ri-"] {
+  font-family: 'remixicon' !important;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.ri-arrow-down-s-line:before { content: "\ea4e"; }
+.ri-arrow-right-line:before { content: "\ea6c"; }
+.ri-battery-2-fill:before { content: "\eaab"; }
+.ri-building-line:before { content: "\eb0f"; }
+.ri-calendar-event-line:before { content: "\eb25"; }
+.ri-close-line:before { content: "\eb99"; }
+.ri-community-line:before { content: "\ebba"; }
+.ri-compass-3-line:before { content: "\ebbe"; }
+.ri-group-line:before { content: "\ede3"; }
+.ri-map-pin-user-line:before { content: "\ef1a"; }
+.ri-megaphone-line:before { content: "\f385"; }
+.ri-menu-line:before { content: "\ef3e"; }
+.ri-moon-line:before { content: "\ef75"; }
+.ri-music-2-line:before { content: "\ef83"; }
+.ri-question-line:before { content: "\f045"; }
+.ri-shield-check-line:before { content: "\f100"; }
+.ri-signal-wifi-fill:before { content: "\f133"; }
+.ri-sun-line:before { content: "\f1bf"; }
+
 :root {
   /* CityStream brand colors — preserved */
   --accent-blue: #3b82f6;
