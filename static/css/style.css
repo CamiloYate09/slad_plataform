@@ -516,17 +516,6 @@ body.no-transitions *::after {
   gap: 4rem;
 }
 
-/* Hero particle grid (tsParticles) */
-#hero-particles {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-}
-#hero-particles canvas {
-  pointer-events: auto;
-}
-
 .hero-logo {
   width: 180px;
   height: auto;
