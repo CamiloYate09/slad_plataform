@@ -63,3 +63,17 @@ El `<meta http-equiv="Permissions-Policy">` agregado en `index.html` es best-eff
 | Value | `camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()` |
 
 Equivalente para `X-Content-Type-Options: nosniff`, `X-Frame-Options: DENY` (ya cubiertos por CSP `frame-ancestors`), `Strict-Transport-Security: max-age=63072000; includeSubDomains; preload`.
+
+## CSS critico del hero (`critical-css.sh`)
+
+`index.html` lleva inline el CSS de lo visible sin scroll (entre
+`<!-- critical:start -->` y `<!-- critical:end -->`) y carga `static/css/style.css`
+al final del `<body>`, para que la hoja completa no bloquee el primer paint.
+
+**Regenerar cada vez que cambie `style.css` o el hero/nav de `index.html`**; si no,
+el primer paint usa reglas viejas hasta que llega `style.css`:
+
+```bash
+# Pre-requisitos: node 18+ y Google Chrome (CHROME_PATH si no esta en /usr/bin/google-chrome)
+./scripts/critical-css.sh
+```
