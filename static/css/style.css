@@ -3632,11 +3632,17 @@ body.light-theme .auth-page {
   z-index: 9999;
 }
 
+/* Foco y tarjeta se mueven con transform, no con top/left: Chrome mide los
+   layout shifts sobre el area visual, sombra incluida, y la sombra de 9999px
+   del foco cubre toda la pantalla. Animar top/left contaba como si la pagina
+   entera se moviera (CLS 0,75 en Lighthouse); transform no es un layout shift. */
 .tour-spot {
   position: fixed;
+  top: 0;
+  left: 0;
   border-radius: var(--radius-sm);
   box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.65);
-  transition: top 0.25s var(--ease-out), left 0.25s var(--ease-out),
+  transition: transform 0.25s var(--ease-out),
     width 0.25s var(--ease-out), height 0.25s var(--ease-out);
   pointer-events: none;
 }
@@ -3647,6 +3653,8 @@ body.light-theme .auth-page {
    tema (blanca al 70% en claro, blanca al 5% en oscuro). */
 .tour-card {
   position: fixed;
+  top: 0;
+  left: 0;
   width: min(300px, calc(100vw - 32px));
   background: var(--glass-bg);
   backdrop-filter: blur(20px);
@@ -3655,7 +3663,7 @@ body.light-theme .auth-page {
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-premium);
   padding: 1.25rem;
-  transition: top 0.25s var(--ease-out), left 0.25s var(--ease-out);
+  transition: transform 0.25s var(--ease-out);
 }
 
 .tour-close {

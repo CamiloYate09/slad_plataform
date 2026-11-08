@@ -8,7 +8,7 @@
  *  evento `activate` limpia caches obsoletas automaticamente.
  * ============================================================ */
 
-const CACHE_VERSION = 'v6'; // v6: purga respuestas de la API que cacheaban v2-v5
+const CACHE_VERSION = 'v7'; // v7: tour.js y style.css (CLS del tutorial)
 const CACHE_NAME = `citystream-${CACHE_VERSION}`;
 
 // Shell estatico: archivos cacheados en install para offline-first

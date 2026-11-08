@@ -101,8 +101,8 @@
     const target = active[index].el;
     const r = target.getBoundingClientRect();
     const pad = 6;
-    spot.style.top = `${r.top - pad}px`;
-    spot.style.left = `${r.left - pad}px`;
+    // transform y no top/left: ver el comentario de .tour-spot en style.css (CLS)
+    spot.style.transform = `translate(${r.left - pad}px, ${r.top - pad}px)`;
     spot.style.width = `${r.width + pad * 2}px`;
     spot.style.height = `${r.height + pad * 2}px`;
 
@@ -115,8 +115,7 @@
       Math.max(16, r.left),
       window.innerWidth - cardRect.width - 16
     );
-    card.style.top = `${top}px`;
-    card.style.left = `${left}px`;
+    card.style.transform = `translate(${left}px, ${top}px)`;
   }
 
   function end() {
