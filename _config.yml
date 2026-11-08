@@ -16,4 +16,5 @@ exclude:
   - cloudflare/
   - scripts/
   - factory/
+  - hero-demo/
   - static/vendor/README.md

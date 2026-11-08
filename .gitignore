@@ -53,6 +53,9 @@ Temporary Items
 /.idea/
 /.idea/
 
+# Dependencias del hero animado (se compila a static/js/hero-demo/)
+/hero-demo/node_modules/
+
 # Wrangler local cache/build state (puede incluir datos de cuenta)
 .wrangler/
 /cloudflare/.wrangler/cache/wrangler-account.json

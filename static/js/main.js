@@ -784,59 +784,6 @@ if (showcaseVideo) {
   }
 }
 
-// ============================================
-// PHONE CARD ROTATION — Hero mockup
-// ============================================
-const phoneCardEl = document.getElementById('phone-card');
-
-if (phoneCardEl && !prefersReducedMotion) {
-  const phoneEvents = [
-    {
-      badge: '🔥 En vivo',
-      title: 'Feria de las Flores',
-      sub: 'Medellín · Ago 2026'
-    },
-    {
-      badge: '🎵 Concierto',
-      title: 'Latin Grammy Tour',
-      sub: 'Bogotá · Movistar Arena'
-    },
-    {
-      badge: '🌊 Festival',
-      title: 'Festival del Mar',
-      sub: 'Cartagena · Nov 2026'
-    }
-  ];
-
-  let phoneEventIndex = 0;
-
-  function rotatePhoneCard() {
-    phoneEventIndex = (phoneEventIndex + 1) % phoneEvents.length;
-    const ev = phoneEvents[phoneEventIndex];
-
-    phoneCardEl.style.opacity = '0';
-    setTimeout(() => {
-      phoneCardEl.querySelector('.phone-card-badge').textContent = ev.badge;
-      phoneCardEl.querySelector('.phone-card-title').textContent = ev.title;
-      phoneCardEl.querySelector('.phone-card-sub').textContent   = ev.sub;
-      phoneCardEl.style.opacity = '1';
-    }, 500);
-  }
-
-  let phoneRotateInterval = null;
-  const phoneObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        if (!phoneRotateInterval) phoneRotateInterval = setInterval(rotatePhoneCard, 3500);
-      } else {
-        clearInterval(phoneRotateInterval);
-        phoneRotateInterval = null;
-      }
-    });
-  }, { threshold: 0.1 });
-  phoneObserver.observe(phoneCardEl);
-}
-
 /* ============================================
    Botones magnéticos — los CTAs primarios siguen sutilmente el cursor
    (solo desktop con puntero fino; respeta prefers-reduced-motion)

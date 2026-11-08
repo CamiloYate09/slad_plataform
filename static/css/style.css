@@ -50,7 +50,6 @@
 }
 .ri-arrow-down-s-line:before { content: "\ea4e"; }
 .ri-arrow-right-line:before { content: "\ea6c"; }
-.ri-battery-2-fill:before { content: "\eaab"; }
 .ri-building-line:before { content: "\eb0f"; }
 .ri-calendar-event-line:before { content: "\eb25"; }
 .ri-close-line:before { content: "\eb99"; }
@@ -64,7 +63,6 @@
 .ri-music-2-line:before { content: "\ef83"; }
 .ri-question-line:before { content: "\f045"; }
 .ri-shield-check-line:before { content: "\f100"; }
-.ri-signal-wifi-fill:before { content: "\f133"; }
 .ri-sun-line:before { content: "\f1bf"; }
 
 :root {
@@ -2793,246 +2791,17 @@ body.light-theme .cta-btn:hover {
     opacity: 1 !important;
   }
 
-  /* Disable phone mockup animations */
-  .phone-frame {
-    animation: none;
-    transform: rotate(-1.5deg);
-  }
-  .map-dot-pulse {
-    animation: none;
-  }
 }
 
 /* ============================================================
-   PHONE MOCKUP — Hero visual inspirado en Pomelo
+   HERO DEMO — app animada (hero-demo/, montada en #hero-demo)
+   El tamaño de diseño es 400 × 520: el hueco se reserva antes de que
+   cargue el JS, así el montaje no mueve el layout.
    ============================================================ */
 
-.phone-frame {
-  width: 220px;
-  height: 440px;
-  border: 2px solid var(--glass-border);
-  border-radius: 36px;
-  background: #0d0d14;
-  box-shadow:
-    var(--shadow-premium),
-    inset 0 1px 0 rgba(255, 255, 255, 0.08),
-    0 0 0 1px rgba(255, 255, 255, 0.04);
-  position: relative;
-  overflow: hidden;
-  animation: phoneFloat 4.5s ease-in-out infinite;
-  transform-origin: center center;
-}
-
-.phone-notch {
-  position: absolute;
-  top: 10px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 60px;
-  height: 12px;
-  background: rgba(0, 0, 0, 0.85);
-  border-radius: 6px;
-  z-index: 10;
-}
-
-.phone-screen {
-  position: absolute;
-  inset: 4px;
-  border-radius: 32px;
-  overflow: hidden;
-  background: #0a0a12;
-  display: flex;
-  flex-direction: column;
-}
-
-/* Status bar */
-.phone-ui-bar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px 16px 6px;
-  font-size: 9px;
-  font-weight: 600;
-  color: rgba(255, 255, 255, 0.5);
-  flex-shrink: 0;
-  letter-spacing: 0.02em;
-}
-
-.phone-ui-icons {
-  display: flex;
-  gap: 4px;
-  font-size: 10px;
-}
-
-/* Mapa abstracto */
-.phone-map {
-  flex: 1;
-  position: relative;
-  overflow: hidden;
-  background: radial-gradient(
-    ellipse 80% 60% at 40% 50%,
-    rgba(91, 66, 243, 0.1),
-    transparent
-  );
-}
-
-/* Líneas SVG conectoras */
-.map-lines {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  color: var(--accent-cyan);
-  opacity: 0.35;
-  pointer-events: none;
-}
-
-/* City dots */
-.map-dot {
-  position: absolute;
-  transform: translate(-50%, -50%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.map-dot--cartagena { left: 30%; top: 20%; }
-.map-dot--medellin  { left: 35%; top: 45%; }
-.map-dot--bogota    { left: 55%; top: 60%; }
-.map-dot--cali      { left: 30%; top: 70%; }
-
-.map-dot-core {
-  display: block;
-  width: 6px;
-  height: 6px;
-  background: var(--accent-cyan);
-  border-radius: 50%;
-  position: relative;
-  z-index: 2;
-  box-shadow: 0 0 6px var(--accent-cyan), 0 0 12px rgba(0, 221, 235, 0.4);
-  flex-shrink: 0;
-}
-
-.map-dot-pulse {
-  display: block;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) scale(1);
-  width: 6px;
-  height: 6px;
-  border: 1px solid var(--accent-cyan);
-  border-radius: 50%;
-  animation: dotPulse 2.4s ease-out infinite;
-  opacity: 0;
-  pointer-events: none;
-}
-
-.map-dot--cartagena .map-dot-pulse { animation-delay: 0s; }
-.map-dot--medellin  .map-dot-pulse { animation-delay: 0.6s; }
-.map-dot--bogota    .map-dot-pulse { animation-delay: 1.2s; }
-.map-dot--cali      .map-dot-pulse { animation-delay: 1.8s; }
-
-.map-dot-label {
-  position: absolute;
-  top: 50%;
-  left: calc(100% + 7px);
-  transform: translateY(-50%);
-  font-size: 8px;
-  font-weight: 500;
-  color: var(--text-secondary);
-  white-space: nowrap;
-  pointer-events: none;
-  letter-spacing: 0.01em;
-}
-
-/* Bogotá: label a la izquierda para evitar overflow */
-.map-dot--bogota .map-dot-label {
-  left: auto;
-  right: calc(100% + 7px);
-}
-
-/* Tarjeta de evento */
-.phone-card {
-  flex-shrink: 0;
-  background: rgba(255, 255, 255, 0.06);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-top: 1px solid var(--glass-border);
-  padding: 10px 14px 12px;
-  transition: opacity 0.5s ease;
-}
-
-.phone-card-badge {
-  display: inline-block;
-  font-size: 9px;
-  font-weight: 700;
-  color: var(--accent-orange-hover);
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  margin-bottom: 3px;
-}
-
-.phone-card-title {
-  font-size: 11px;
-  font-weight: 700;
-  color: var(--text-primary);
-  margin-bottom: 2px;
-  line-height: 1.3;
-}
-
-.phone-card-sub {
-  font-size: 9px;
-  color: var(--text-secondary);
-  font-weight: 400;
-}
-
-/* Light theme overrides — phone se mantiene oscuro intencionalmente */
-body.light-theme .phone-frame {
-  background: #1a1a2e;
-  border-color: rgba(255, 255, 255, 0.18);
-  box-shadow:
-    0 20px 50px -10px rgba(124, 45, 189, 0.2),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
-}
-
-body.light-theme .phone-screen {
-  background: #12121f;
-}
-
-body.light-theme .phone-card {
-  background: rgba(255, 255, 255, 0.1);
-  border-top-color: rgba(255, 255, 255, 0.12);
-}
-
-/* Textos dentro del phone: forzar colores claros ya que el phone se mantiene oscuro */
-body.light-theme .phone-card-title {
-  color: rgba(255, 255, 255, 0.95);
-}
-
-/* El mockup del telefono es oscuro en los dos temas, asi que su texto
-   secundario se queda blanco; 0.45 no llegaba a 4.5:1 sobre la tarjeta. */
-body.light-theme .phone-card-sub,
-body.light-theme .map-dot-label {
-  color: rgba(255, 255, 255, 0.6);
-}
-
-body.light-theme .phone-ui-bar {
-  color: rgba(255, 255, 255, 0.45);
-}
-
-/* ============================================
-   KEYFRAMES — phone + dots
-   ============================================ */
-
-@keyframes phoneFloat {
-  0%, 100% { transform: translateY(0px)   rotate(-1.5deg); }
-  50%       { transform: translateY(-14px) rotate(-1.5deg); }
-}
-
-@keyframes dotPulse {
-  0%   { transform: translate(-50%, -50%) scale(1);   opacity: 0.7; }
-  100% { transform: translate(-50%, -50%) scale(3.8); opacity: 0;   }
+.hero-demo {
+  width: 400px;
+  aspect-ratio: 400 / 520;
 }
 
 /* ============================================================

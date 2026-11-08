@@ -53,6 +53,11 @@ El service worker solo se registra en `https`. En local no interviene.
 
 ## Herramientas
 
+- `hero-demo/`: el teléfono animado del hero, en React con el kit de
+  [stageshow](https://github.com/benjitaylor/skills) (MIT, ver `hero-demo/LICENSE-stageshow`). El sitio
+  no tiene build: se compila y se versiona el resultado en `static/js/hero-demo/`
+  (`cd hero-demo && npm ci && npm run build`). Después de compilar, sube `CACHE_VERSION` en `sw.js`.
+  Solo se descarga en pantallas de más de 768px, donde el hero muestra el teléfono.
 - `scripts/`: conversión a AVIF, subset de fuentes, auditoría de contraste y comprobación del
   cableado del tema (ver `scripts/README.md`).
 - `.github/workflows/lighthouse.yml`: Lighthouse CI en cada PR a `main`.
