@@ -1,0 +1,19 @@
+# GitHub Pages construye este sitio con Jekyll. Este archivo solo existe para
+# decidir QUE se publica: lo de abajo vive en el repositorio pero no en
+# https://citystream.tech (esquema de la base de datos, diseño de las defensas,
+# scripts y notas internas no deben ser descargables).
+#
+# Las carpetas y archivos que empiezan por "." (.github, .claude, .idea...)
+# Jekyll ya las omite por su cuenta.
+#
+# Al añadir una carpeta de herramientas o documentación interna, agrégala aquí.
+# Comprobar tras publicar: curl -sI https://citystream.tech/openspec/project.md -> 404
+exclude:
+  - README.md
+  - qodana.yaml
+  - openspec/
+  - supabase/
+  - cloudflare/
+  - scripts/
+  - factory/
+  - static/vendor/README.md
