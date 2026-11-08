@@ -22,11 +22,18 @@
 
 const APP_CSP = [
   "default-src 'none'",
-  "script-src 'self' https://cdn.jsdelivr.net https://unpkg.com https://cdnjs.cloudflare.com https://static.cloudflareinsights.com",
-  "style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net",
-  "font-src 'self' https://cdn.jsdelivr.net",
+  // Las librerias viven en static/vendor: ningun CDN completo en la lista, porque
+  // cualquier script alojado en el se podria cargar y saltarse la CSP.
+  "script-src 'self' https://static.cloudflareinsights.com",
+  // 'unsafe-inline' en estilos: index.html lleva el CSS critico en un <style>
+  // generado por scripts/critical-css.sh. Un hash se romperia en cada
+  // regeneracion; inyectar estilos es mucho menos grave que inyectar scripts.
+  "style-src 'self' 'unsafe-inline'",
+  "font-src 'self'",
   "img-src 'self' data:",
   "media-src 'self'",
+  "manifest-src 'self'",
+  "worker-src 'self'",
   "connect-src 'self' https://cloudflareinsights.com",
   "frame-src 'none'",
   "frame-ancestors 'none'",
@@ -46,6 +53,25 @@ const LEGAL_CSP = [
   "form-action 'self'",
 ].join('; ');
 
+// Login, registro, cuenta, olvide y reset: hablan con el API y con Google
+// Sign-In. Header y <meta> se aplican A LA VEZ (gana la interseccion), asi que
+// si estas paginas recibieran APP_CSP el navegador bloquearia sus fetch al API.
+// Espejo del <meta> de login.html sin http://localhost:8080 (esto es produccion).
+const AUTH_CSP = [
+  "default-src 'none'",
+  "script-src 'self' https://accounts.google.com",
+  "style-src 'self' 'unsafe-inline' https://accounts.google.com",
+  "font-src 'self'",
+  "img-src 'self' data: https://lh3.googleusercontent.com",
+  "connect-src 'self' https://api.citystream.tech https://accounts.google.com",
+  "frame-src https://accounts.google.com",
+  "frame-ancestors 'none'",
+  "base-uri 'self'",
+  "form-action 'none'",
+].join('; ');
+
+const AUTH_PAGES = ['/login', '/registro', '/cuenta', '/olvide-password', '/reset-password'];
+
 const OFFLINE_CSP = [
   "default-src 'none'",
   "style-src 'unsafe-inline'",
@@ -58,9 +84,20 @@ const OFFLINE_CSP = [
 const PERMISSIONS_POLICY =
   'camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()';
 
+/** '/login.html', '/login' y '/reset-password/index.html' -> '/login', '/reset-password'. */
+function pagePath(pathname) {
+  return pathname.replace(/(\/index)?\.html$/, '').replace(/\/$/, '');
+}
+
+function isAuthPage(pathname) {
+  return AUTH_PAGES.includes(pagePath(pathname));
+}
+
 function cspFor(pathname) {
-  if (pathname === '/privacidad.html' || pathname === '/terminos.html') return LEGAL_CSP;
-  if (pathname === '/offline.html') return OFFLINE_CSP;
+  const page = pagePath(pathname);
+  if (page === '/privacidad' || page === '/terminos') return LEGAL_CSP;
+  if (page === '/offline') return OFFLINE_CSP;
+  if (isAuthPage(pathname)) return AUTH_CSP;
   return APP_CSP; // '/', '/index.html', y cualquier ruta no reconocida (incluida la 404 de GitHub Pages)
 }
 
@@ -82,10 +119,19 @@ export default {
     // subdominio de citystream.tech servirá siempre HTTPS.
     headers.set('Strict-Transport-Security', 'max-age=15552000; includeSubDomains');
 
+    // Ningun otro sitio necesita leer nuestros recursos desde el navegador.
+    headers.set('Cross-Origin-Resource-Policy', 'same-origin');
+
     const contentType = response.headers.get('Content-Type') || '';
     if (contentType.includes('text/html')) {
       const url = new URL(request.url);
       headers.set('Content-Security-Policy', cspFor(url.pathname));
+      // Aisla la ventana de quien la abrio. En las paginas de sesion se permiten
+      // los popups porque Google Sign-In abre uno y necesita comunicarse de vuelta.
+      headers.set(
+        'Cross-Origin-Opener-Policy',
+        isAuthPage(url.pathname) ? 'same-origin-allow-popups' : 'same-origin'
+      );
     }
 
     return new Response(response.body, {

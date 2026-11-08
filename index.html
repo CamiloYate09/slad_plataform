@@ -130,14 +130,9 @@
   <meta http-equiv="Content-Security-Policy" content="
     default-src 'none';
     script-src 'self'
-      https://cdn.jsdelivr.net
-      https://unpkg.com
-      https://cdnjs.cloudflare.com
       https://static.cloudflareinsights.com;
-    style-src 'self' 'unsafe-inline'
-      https://cdn.jsdelivr.net;
-    font-src 'self'
-      https://cdn.jsdelivr.net;
+    style-src 'self' 'unsafe-inline';
+    font-src 'self';
     img-src 'self' data:;
     connect-src 'self'
       https://cloudflareinsights.com;
@@ -697,29 +692,25 @@
 <!-- Splitting.js — character-level text split -->
 <script
   defer
-  src="https://unpkg.com/splitting@1.1.0/dist/splitting.min.js"
+  src="static/vendor/splitting.min.js"
   integrity="sha384-4xKCEoe7sOCJeUwo9HheqN+yYVNglF+fjekGEZx4DcdgbJWToC2k5MgQ+6T9sfUT"
-  crossorigin="anonymous"
 ></script>
 <!-- Lenis Smooth Scroll -->
 <script
   defer
-  src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"
+  src="static/vendor/lenis.min.js"
   integrity="sha384-tKsJDT6PlUI0pSBt9/sBKJluKgA19/a6mBrDsZaXotLB4ZYfMGM6xt6/WgGpYhTm"
-  crossorigin="anonymous"
 ></script>
 <!-- GSAP + ScrollTrigger -->
 <script
   defer
-  src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"
+  src="static/vendor/gsap.min.js"
   integrity="sha384-g4NTh/Iv5PPU4xPyhEWqPcwtNXOvdaDI8LLnyYfyNZOjKJeYQyjzQ9X5275eBjpt"
-  crossorigin="anonymous"
 ></script>
 <script
   defer
-  src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"
+  src="static/vendor/ScrollTrigger.min.js"
   integrity="sha384-Z3REaz79l2IaAZqJsSABtTbhjgOUYyV3p90XNnAPCSHg3EMTz1fouunq9WZRtj3d"
-  crossorigin="anonymous"
 ></script>
 <script defer src="static/js/main.js"></script>
 <script defer src="static/js/tour.js"></script>

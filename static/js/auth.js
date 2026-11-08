@@ -285,8 +285,27 @@ function pantallaOlvide(form) {
   });
 }
 
+/**
+ * Token del enlace de restablecimiento. Se prefiere el fragmento (`#token=`):
+ * el navegador nunca lo envía al servidor, ni en peticiones ni en el Referer.
+ * La query (`?token=`) se acepta mientras el backend siga mandando así los
+ * correos. En los dos casos se borra de la URL en cuanto se lee, para que no
+ * quede en el historial ni en marcadores.
+ */
+function tokenDeReset() {
+  const hash = new URLSearchParams(location.hash.slice(1));
+  const query = new URLSearchParams(location.search);
+  const token = hash.get('token') || query.get('token');
+  if (token) {
+    query.delete('token');
+    const resto = query.toString();
+    history.replaceState(null, '', location.pathname + (resto ? '?' + resto : ''));
+  }
+  return token;
+}
+
 function pantallaReset(form) {
-  const token = new URLSearchParams(location.search).get('token');
+  const token = tokenDeReset();
 
   if (!token) {
     estado(form, 'error', 'Este enlace está incompleto. Pide uno nuevo desde "Olvidé mi contraseña".');
@@ -373,9 +392,20 @@ async function pantallaCuenta(raiz) {
 /** Vuelve a donde el usuario quería ir, si es una ruta de este sitio. */
 function destinoTrasLogin() {
   const volver = new URLSearchParams(location.search).get('volver');
-  // Solo rutas relativas propias: un `volver` con host abierto sería un
-  // open redirect servido desde nuestro dominio.
-  if (volver && volver.startsWith('/') && !volver.startsWith('//')) return volver;
+  // Solo rutas propias: un `volver` con host ajeno sería un open redirect
+  // servido desde nuestro dominio. Se resuelve con el parser del navegador en
+  // vez de mirar el prefijo, porque "/\evil.com" y "/<tab>/evil.com" empiezan
+  // por una sola "/" y aun así el navegador los lleva a evil.com.
+  if (volver) {
+    try {
+      const destino = new URL(volver, location.origin);
+      if (destino.origin === location.origin) {
+        return destino.pathname + destino.search + destino.hash;
+      }
+    } catch {
+      // URL imposible de interpretar: se ignora
+    }
+  }
   return '/cuenta.html';
 }
 

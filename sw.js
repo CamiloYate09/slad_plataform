@@ -1,13 +1,14 @@
 /* ============================================================
  *  CityStream Service Worker
- *  Fase 5 — PWA con cache-first para shell, network-first para
- *  Supabase, y offline fallback.
+ *  Fase 5 — PWA con cache-first para el shell del mismo origen y
+ *  offline fallback. Nada de otros origenes ni de las paginas de
+ *  sesion pasa por la cache (ver el handler de fetch).
  *
  *  Versionado: incrementar CACHE_VERSION en cada release. El
  *  evento `activate` limpia caches obsoletas automaticamente.
  * ============================================================ */
 
-const CACHE_VERSION = 'v5';
+const CACHE_VERSION = 'v6'; // v6: purga respuestas de la API que cacheaban v2-v5
 const CACHE_NAME = `citystream-${CACHE_VERSION}`;
 
 // Shell estatico: archivos cacheados en install para offline-first
@@ -26,13 +27,9 @@ const PRECACHE_URLS = [
   '/terminos.html'
 ];
 
-// Dominios que se sirven siempre desde la red (no cachear)
-const NETWORK_ONLY_HOSTS = [
-  'supabase.co',
-  'challenges.cloudflare.com',
-  'static.cloudflareinsights.com',
-  'cloudflareinsights.com'
-];
+// Paginas de autenticacion: siempre de la red. Muestran el estado de sesion
+// actual y /reset-password/ lleva el token en la URL (no debe guardarse).
+const AUTH_PAGES = ['/login', '/registro', '/cuenta', '/olvide-password', '/reset-password'];
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
@@ -62,8 +59,10 @@ self.addEventListener('activate', (event) => {
   );
 });
 
-function isNetworkOnly(url) {
-  return NETWORK_ONLY_HOSTS.some((h) => url.hostname.endsWith(h));
+function isAuthPage(url) {
+  // GitHub Pages sirve /login, /login.html, /reset-password/ y /reset-password/index.html
+  const path = url.pathname.replace(/(\/index)?\.html$/, '').replace(/\/$/, '');
+  return AUTH_PAGES.includes(path);
 }
 
 self.addEventListener('fetch', (event) => {
@@ -72,41 +71,27 @@ self.addEventListener('fetch', (event) => {
 
   const url = new URL(req.url);
 
-  // 1. Supabase y analytics: SIEMPRE red, sin cache
-  if (isNetworkOnly(url)) {
+  // 1. Otros origenes (api.citystream.tech, Google, analytics) y paginas de
+  //    sesion: SIEMPRE red. Las librerias se sirven desde static/vendor, asi que
+  //    nada externo necesita cache; cachearlo guardaba respuestas con datos de
+  //    usuario, como la de /auth/me.
+  if (url.origin !== self.location.origin || isAuthPage(url)) {
     return; // dejar que el navegador maneje
   }
 
   // 2. Mismo origen: cache-first con network update en background
-  if (url.origin === self.location.origin) {
-    event.respondWith(
-      caches.match(req).then((cached) => {
-        const fetchPromise = fetch(req)
-          .then((response) => {
-            if (response && response.status === 200 && response.type === 'basic') {
-              const clone = response.clone();
-              caches.open(CACHE_NAME).then((c) => c.put(req, clone));
-            }
-            return response;
-          })
-          .catch(() => null);
-        return cached || fetchPromise || caches.match('/offline.html');
-      })
-    );
-    return;
-  }
-
-  // 3. CDNs externos (fonts, JS libraries): stale-while-revalidate
   event.respondWith(
     caches.match(req).then((cached) => {
-      const fetchPromise = fetch(req).then((response) => {
-        if (response && response.status === 200) {
-          const clone = response.clone();
-          caches.open(CACHE_NAME).then((c) => c.put(req, clone));
-        }
-        return response;
-      }).catch(() => cached);
-      return cached || fetchPromise;
+      const fetchPromise = fetch(req)
+        .then((response) => {
+          if (response && response.status === 200 && response.type === 'basic') {
+            const clone = response.clone();
+            caches.open(CACHE_NAME).then((c) => c.put(req, clone));
+          }
+          return response;
+        })
+        .catch(() => null);
+      return cached || fetchPromise || caches.match('/offline.html');
     })
   );
 });
@@ -136,9 +121,21 @@ self.addEventListener('push', (event) => {
   event.waitUntil(self.registration.showNotification(title, options));
 });
 
+// El payload del push decide a donde navegar: solo se aceptan rutas de este
+// sitio, para que un push no pueda abrir una pagina ajena con nuestra marca.
+function sameOriginUrl(raw) {
+  try {
+    const u = new URL(raw || '/', self.location.origin);
+    if (u.origin === self.location.origin) return u.href;
+  } catch {
+    // URL invalida: se usa la portada
+  }
+  return self.location.origin + '/';
+}
+
 self.addEventListener('notificationclick', (event) => {
   event.notification.close();
-  const url = (event.notification.data && event.notification.data.url) || '/';
+  const url = sameOriginUrl(event.notification.data && event.notification.data.url);
   event.waitUntil(
     self.clients.matchAll({ type: 'window' }).then((wins) => {
       const existing = wins.find((w) => w.url.startsWith(self.location.origin));

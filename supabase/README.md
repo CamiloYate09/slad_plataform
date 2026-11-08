@@ -27,6 +27,7 @@ supabase db push
 |---|---|---|
 | `20260527_add_waitlist_referral.sql` | 4 | Sistema de referral: columnas + RPCs `register_waitlist` y `get_waitlist_position` |
 | `20260527_add_push_subs.sql`         | 5 | Tabla `push_subs` + RPC `subscribe_push` para Web Push notifications |
+| `20261107_lock_waitlist_rpcs.sql`    | Seguridad | Revoca a `anon`/`authenticated` las RPC `register_waitlist`, `get_waitlist_position`, `subscribe_push` y `gen_ref_code` (enumeracion de correos y fraude de referidos); `gen_ref_code` pasa a `gen_random_bytes` |
 
 ## Configurar VAPID keys para Web Push (Fase 5)
 
