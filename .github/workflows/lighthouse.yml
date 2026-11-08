@@ -6,28 +6,42 @@ on:
   push:
     branches: [main]
 
+# El job solo lee el repositorio: sin esto, GITHUB_TOKEN recibe los permisos
+# por defecto del repo (que pueden incluir escritura).
+permissions:
+  contents: read
+
 jobs:
   lighthouse:
     name: Audit (mobile + desktop)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      # Actions fijadas por SHA de commit: una etiqueta como v4 se puede mover
+      # a otro commit (o la puede mover quien comprometa la cuenta del autor).
+      # El comentario dice a qué versión corresponde el SHA.
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          persist-credentials: false
 
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           node-version: '20'
 
+      # Versiones exactas: `npx --yes paquete` instala la última publicada en
+      # cada ejecución, sin revisar qué código entra al runner.
       - name: Serve static site
         run: |
-          npx --yes http-server . -p 8080 -s &
-          npx --yes wait-on http://localhost:8080 -t 30000
+          npx --yes http-server@14.1.1 . -p 8080 -s &
+          npx --yes wait-on@9.5.1 http://localhost:8080 -t 30000
 
       - name: Run Lighthouse CI
-        uses: treosh/lighthouse-ci-action@v12
+        uses: treosh/lighthouse-ci-action@3e7e23fb74242897f95c0ba9cabad3d0227b9b18 # v12
         with:
           urls: |
             http://localhost:8080/
           configPath: ./.github/lighthouse/lighthouserc.json
           uploadArtifacts: true
-          temporaryPublicStorage: true
+          # Los informes quedan como artefactos del run; no se suben al
+          # almacenamiento público temporal de Google.
+          temporaryPublicStorage: false
