@@ -447,9 +447,27 @@ body.no-transitions *::after {
 }
 
 .nav-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
   font-size: 1.25rem;
   font-weight: 800;
   white-space: nowrap;
+}
+
+/* The iguana from the logo, at the height of the name */
+.nav-logo img {
+  display: block;
+  width: auto;
+  height: 28px;
+}
+
+/* "Iniciar sesión" in the links is for the mobile menu; on a desktop the
+   button beside "Crear cuenta" already says it */
+@media (min-width: 769px) {
+  .nav-links__mobile {
+    display: none;
+  }
 }
 
 .nav-logo:hover {
@@ -545,19 +563,6 @@ body.no-transitions *::after {
   display: flex;
   align-items: center;
   gap: 4rem;
-}
-
-.hero-logo {
-  width: 180px;
-  height: auto;
-  margin: 0 auto 2rem;
-  filter: drop-shadow(0 0 40px rgba(91, 66, 243, 0.4));
-}
-
-/* Split layout: logo alineado a la izquierda */
-.hero-left .hero-logo {
-  margin-left: 0;
-  margin-right: 0;
 }
 
 .hero-title {
@@ -1984,10 +1989,6 @@ body.light-theme .video-showcase-container {
     padding: 4rem var(--px-mobile) 3rem;
   }
 
-  .hero-logo {
-    width: 140px;
-  }
-
   .tab-buttons {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
@@ -2748,7 +2749,6 @@ body.light-theme .cta-btn:hover {
     align-items: center;
   }
 
-  .hero-left .hero-logo    { margin-left: auto; margin-right: auto; }
   .hero-left .hero-subtitle { margin-left: auto; margin-right: auto; }
   .hero-left .hero-actions  { align-items: center; }
 
@@ -3464,13 +3464,8 @@ body.light-theme .auth-page {
    propiedad translate, para no pisar los transform de entrada ni de hover.
    ============================================================ */
 @media (prefers-reduced-motion: no-preference) {
-  /* Hero: el logo sube (solo transform: es el LCP, nunca invisible), las
-     letras del título entran una a una mientras el peso pasa de 100 a 700,
-     y al final el botón */
-  .hero-logo {
-    animation: hero-rise 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
-  }
-
+  /* Hero: las letras del título entran una a una mientras el peso pasa de
+     100 a 700, y al final el campo de correo */
   .hero-title[data-splitting] {
     animation: hero-weight 0.75s cubic-bezier(0.455, 0.03, 0.515, 0.955) 0.35s both;
   }
@@ -3515,17 +3510,7 @@ body.light-theme .auth-page {
   }
 
   @supports (animation-timeline: scroll()) {
-    /* El logo se queda un poco atrás mientras el hero sale de pantalla */
     /* Propiedades sueltas, no el atajo: ver SCROLL-LINKED MEDIA REVEAL */
-    .hero-logo {
-      animation-name: hero-rise, logo-drift;
-      animation-duration: 0.6s, auto;
-      animation-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94), linear;
-      animation-fill-mode: both, both;
-      animation-timeline: auto, scroll(root);
-      animation-range: normal, 0 85vh;
-    }
-
     /* Las fotos de ciudad se desplazan un poco dentro de su tarjeta */
     .exp-card .exp-image img {
       animation-name: exp-drift;
@@ -3534,10 +3519,6 @@ body.light-theme .auth-page {
       animation-timeline: view();
     }
   }
-}
-
-@keyframes hero-rise {
-  from { transform: translateY(30px); }
 }
 
 @keyframes hero-weight {
@@ -3551,10 +3532,6 @@ body.light-theme .auth-page {
 
 @keyframes hero-fade {
   from { opacity: 0; transform: translateY(20px); }
-}
-
-@keyframes logo-drift {
-  to { translate: 0 -40px; }
 }
 
 @keyframes exp-drift {
