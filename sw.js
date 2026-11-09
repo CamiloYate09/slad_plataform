@@ -8,7 +8,7 @@
  *  evento `activate` limpia caches obsoletas automaticamente.
  * ============================================================ */
 
-const CACHE_VERSION = 'v17'; // v17: marca en el menú, fotos de ciudad a su tamaño, scripts de cuenta en defer
+const CACHE_VERSION = 'v18'; // v18: preguntas frecuentes, panel de marca, sin vídeo
 const CACHE_NAME = `citystream-${CACHE_VERSION}`;
 
 // Shell estatico: archivos cacheados en install para offline-first

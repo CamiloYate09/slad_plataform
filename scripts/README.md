@@ -82,11 +82,11 @@ las paginas siguen con la hoja vieja. El mismo script escribe el CSS critico y
 
 ## Video del showcase (`encode-video.swift`)
 
-`static/video/citystream-960.mp4` es el video de "CityStream en accion" recodificado para la
-web: H.264 a 960px de ancho (el maximo al que se muestra), sin pista de audio (se reproduce
-silenciado) y con fast start. Pesa 2,6 MB; el original de 1920px pesaba 11,6 MB.
+Recodifica un video para la web: H.264 al ancho al que se muestra, sin pista de audio (para
+videos que se reproducen silenciados) y con fast start. Con el video de la seccion que hubo
+en index.html, 1920px y 11,6 MB pasaron a 960px y 2,6 MB sin diferencia visible.
 
-Para un video nuevo (sin instalar nada: usa AVFoundation de macOS):
+Sin instalar nada (usa AVFoundation de macOS):
 
 ```bash
 swift scripts/encode-video.swift original.mp4 static/video/nombre-960.mp4 960 1400000

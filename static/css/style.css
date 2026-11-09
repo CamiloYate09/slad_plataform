@@ -1513,53 +1513,6 @@ body.light-theme .value-prop-image::before {
 }
 
 /* ============================================
-   VIDEO SHOWCASE
-   ============================================ */
-.video-showcase {
-  padding: var(--section-gap) var(--px-desktop);
-  text-align: center;
-  max-width: 1440px;
-  margin: 0 auto;
-}
-
-.video-showcase-caption {
-  color: var(--text-secondary);
-  line-height: 1.7;
-  font-size: var(--fs-body);
-  margin-top: 0.5rem;
-}
-
-.video-showcase-container {
-  max-width: 960px;
-  margin: 2.5rem auto 0;
-  aspect-ratio: 1920 / 1608;
-  border-radius: 16px;
-  overflow: hidden;
-  border: 1px solid var(--border-base);
-  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.4);
-}
-
-.showcase-video {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-@media (max-width: 768px) {
-  .video-showcase-container {
-    max-width: 100%;
-    border-radius: 10px;
-  }
-}
-
-/* Light theme overrides */
-body.light-theme .video-showcase-container {
-  border-color: rgba(0, 0, 0, 0.08);
-  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.12);
-}
-
-/* ============================================
    NEWS / UPDATES GRID
    ============================================ */
 .news {
@@ -3636,4 +3589,120 @@ body.light-theme .auth-page {
   color: var(--text-primary);
   text-decoration: underline;
   text-underline-offset: 3px;
+}
+
+/* ============================================================
+   PROPUESTA DE VALOR — panel de marca (el logo, no una foto)
+   ============================================================ */
+.value-prop-image--brand {
+  display: grid;
+  place-items: center;
+  height: 350px;
+  background:
+    radial-gradient(60% 60% at 50% 45%, rgba(0, 221, 235, 0.16), transparent 70%),
+    radial-gradient(80% 80% at 20% 100%, rgba(175, 64, 255, 0.18), transparent 70%),
+    var(--bg-card);
+}
+
+/* The duotone wash is for photos; the logo keeps its own colors */
+.value-prop-image--brand::before {
+  display: none;
+}
+
+/* The width goes on the <picture> (the grid item): a percentage on the img
+   alone resolved against the picture, which wrapped the logo's full width */
+.value-prop-image--brand picture {
+  display: block;
+  width: min(70%, 360px);
+}
+
+.value-prop-image--brand img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 0 40px rgba(91, 66, 243, 0.35));
+}
+
+/* ============================================================
+   PREGUNTAS FRECUENTES — <details> nativo, sin JS
+   ============================================================ */
+.faq {
+  padding: var(--section-gap) var(--px-desktop);
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+.faq-list {
+  max-width: 760px;
+  margin: 2.5rem auto 0;
+  border-top: 1px solid var(--border-base);
+}
+
+.faq-item {
+  border-bottom: 1px solid var(--border-base);
+}
+
+.faq-item summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  min-height: 44px;
+  padding: 1.125rem 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  cursor: pointer;
+  list-style: none;
+}
+
+.faq-item summary::-webkit-details-marker {
+  display: none;
+}
+
+/* A plus that turns into a minus when the answer is open */
+.faq-item summary::after {
+  content: '+';
+  flex: none;
+  font-size: 1.375rem;
+  font-weight: 400;
+  line-height: 1;
+  color: var(--text-secondary);
+  transition: transform var(--duration-base) var(--ease-out);
+}
+
+.faq-item[open] summary::after {
+  transform: rotate(45deg);
+}
+
+.faq-item summary:focus-visible {
+  outline: 2px solid var(--accent-ink);
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
+.faq-item p {
+  padding: 0 2rem 1.25rem 0;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+.faq-more {
+  max-width: 760px;
+  margin: 1.5rem auto 0;
+  color: var(--text-secondary);
+  font-size: var(--fs-sm);
+}
+
+.faq-more a {
+  color: var(--text-primary);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+@media (max-width: 768px) {
+  .faq {
+    padding-left: var(--px-mobile);
+    padding-right: var(--px-mobile);
+  }
 }

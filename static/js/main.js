@@ -350,28 +350,6 @@ if (!prefersReducedMotion && window.matchMedia('(pointer: fine)').matches) {
   }
 }
 
-// ============================================
-// VIDEO SHOWCASE — lazy autoplay
-// ============================================
-const showcaseVideo = document.querySelector('.showcase-video');
-if (showcaseVideo) {
-  if (prefersReducedMotion) {
-    // Show poster only — no autoplay for reduced-motion users
-    showcaseVideo.removeAttribute('autoplay');
-  } else {
-    const videoObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          showcaseVideo.play().catch(() => {});
-        } else {
-          showcaseVideo.pause();
-        }
-      });
-    }, { threshold: 0.3 });
-    videoObserver.observe(showcaseVideo);
-  }
-}
-
 /* ============================================
    SERVICE WORKER
    Solo en https: en dev local (file:// o http) el
