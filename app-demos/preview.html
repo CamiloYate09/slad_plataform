@@ -5,11 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>app-demos preview</title>
   <!-- Dev only (npm run dev): one scene per ?scene=, at the width of its slot
-       on the page. Not part of the build. -->
+       on the page; dark like the site unless ?theme=light. Not part of the build. -->
   <style>
     @font-face { font-family: 'Geist'; font-weight: 100 900; src: url('/static/fonts/Geist-latin.woff2') format('woff2-variations'); }
     @font-face { font-family: 'Bricolage Grotesque'; font-weight: 200 800; src: url('/static/fonts/Bricolage-latin.woff2') format('woff2-variations'); }
     body { margin: 0; padding: 16px; background: #0a0a0a; }
+    body.light-theme { background: #fafafa; }
     #example { max-width: 595px; margin: 0 auto; border-radius: 24px; overflow: hidden; }
   </style>
 </head>

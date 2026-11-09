@@ -8,7 +8,7 @@
  *  evento `activate` limpia caches obsoletas automaticamente.
  * ============================================================ */
 
-const CACHE_VERSION = 'v10'; // v10: escenas de la app en los pilares (static/js/app-demos/)
+const CACHE_VERSION = 'v11'; // v11: hero en móvil y escenas en tema oscuro
 const CACHE_NAME = `citystream-${CACHE_VERSION}`;
 
 // Shell estatico: archivos cacheados en install para offline-first

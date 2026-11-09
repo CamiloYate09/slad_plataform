@@ -18,24 +18,19 @@ async function start(host: HTMLElement) {
   mount(host, Scene)
 }
 
-// The hero column is hidden at 768px and below (style.css): its demo waits
-// until the column shows
-const hero = document.querySelector<HTMLElement>('[data-demo="hero"]')
-if (hero) {
-  const wide = window.matchMedia('(min-width: 769px)')
-  let started = false
-  const go = () => {
-    if (started || !wide.matches) return
-    started = true
-    start(hero)
-  }
-  go()
-  wide.addEventListener('change', go)
+// The page's own first paint comes first: no scene is fetched until the page
+// has loaded and the browser is idle, so React never competes with the
+// hero's text and logo (on a phone the hero's phone is in the first screen)
+function afterLoad(run: () => void) {
+  const idle = () => (window.requestIdleCallback ? window.requestIdleCallback(run, { timeout: 2000 }) : setTimeout(run, 200))
+  if (document.readyState === 'complete') idle()
+  else window.addEventListener('load', idle, { once: true })
 }
 
-// The feature scenes sit further down: each loads as it nears the viewport
-const below = document.querySelectorAll<HTMLElement>('[data-demo]:not([data-demo="hero"])')
-if (below.length) {
+// Then each scene loads as it nears the viewport: the hero at once, the
+// feature scenes as they are scrolled to
+const demos = document.querySelectorAll<HTMLElement>('[data-demo]')
+if (demos.length) afterLoad(() => {
   const near = new IntersectionObserver((entries) => {
     for (const entry of entries) {
       if (!entry.isIntersecting) continue
@@ -43,5 +38,5 @@ if (below.length) {
       start(entry.target as HTMLElement)
     }
   }, { rootMargin: '400px 0px' })
-  below.forEach((el) => near.observe(el))
-}
+  demos.forEach((el) => near.observe(el))
+})

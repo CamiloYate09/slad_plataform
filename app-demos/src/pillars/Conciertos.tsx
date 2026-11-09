@@ -8,6 +8,7 @@ import { Row } from '../../kit/parts/Row'
 import { Button } from '../../kit/controls/Button'
 import { Collapse } from '../../kit/motion/Collapse'
 import { Roll } from '../../kit/motion/Roll'
+import { useSiteTheme } from '../site-theme'
 import { TILE, GROUND, REST, TilePhone } from './frame'
 
 // "El ritmo de Colombia en tus manos". Beats: the festival's page (context),
@@ -38,12 +39,14 @@ async function script(a: Act<S>) {
 }
 
 export default function Conciertos() {
+  const theme = useSiteTheme()
   return (
     <Stage<S>
       width={TILE.width}
       height={TILE.height}
       compact={TILE.compact}
       ground={GROUND}
+      theme={theme}
       initial={{ bought: false, group: false, joined: 0 }}
       poster={{ bought: true, group: true, joined: FRIENDS.length }}
       script={script}
@@ -58,8 +61,8 @@ export default function Conciertos() {
         const face = layout === 'compact' ? 24 : 28
         return (
         <>
-          <TilePhone layout={layout} className="cc-phone">
-            <div className="pl-screen" style={{ background: '#fff' }}>
+          <TilePhone layout={layout} dark={theme === 'dark'} className="cc-phone">
+            <div className="pl-screen" style={{ background: 'var(--app-sheet)' }}>
               <div className="cc-art">
                 <span className="cc-art__text">
                   <span className="cc-art__title">Rock al Parque</span>

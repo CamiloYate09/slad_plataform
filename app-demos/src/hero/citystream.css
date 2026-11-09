@@ -8,6 +8,15 @@
     --ss-accent-soft: rgba(91, 66, 243, 0.12);
     /* The site's own faces, already loaded by static/css/style.css */
     font-family: 'Geist', ui-sans-serif, system-ui, -apple-system, sans-serif;
+    /* The app's own surfaces, iOS light; the dark set follows the site's theme */
+    --cs-screen: #f2f2f7;
+    --cs-sheet: #fff;
+    --cs-bar: rgba(249, 249, 249, 0.94);
+    --cs-hair: rgba(0, 0, 0, 0.1);
+    --cs-tab: #c4c4c7;
+    --cs-tab-label: #d6d6d9;
+    --cs-track: #ececf0;
+    --cs-dot: #d1d1d6;
     /* The card opening: quick off the tap, long soft settle, as iOS does */
     --cs-open: cubic-bezier(0.3, 0.75, 0.1, 1);
     overflow: hidden;
@@ -16,6 +25,18 @@
     background: transparent;
     -webkit-mask-image: linear-gradient(#000 78%, transparent);
     mask-image: linear-gradient(#000 78%, transparent);
+  }
+
+  & .ss-stage[data-theme='dark'] {
+    --ss-accent-soft: rgba(91, 66, 243, 0.26);
+    --cs-screen: #000;
+    --cs-sheet: #1c1c1e;
+    --cs-bar: rgba(22, 22, 24, 0.94);
+    --cs-hair: rgba(255, 255, 255, 0.12);
+    --cs-tab: #48484a;
+    --cs-tab-label: #3a3a3c;
+    --cs-track: #2c2c2e;
+    --cs-dot: #48484a;
   }
 
 
@@ -39,7 +60,7 @@
   .cs-list {
     position: absolute;
     inset: 0;
-    background: #f2f2f7;
+    background: var(--cs-screen);
     /* Recedes by dimming only: a scale would land its text with a hop */
     transition: opacity 0.6s ease;
   }
@@ -68,7 +89,7 @@
     font-size: 13px;
     font-weight: 600;
     line-height: 17px;
-    color: var(--ss-accent);
+    color: var(--ss-accent-text);
   }
 
   .cs-title {
@@ -77,7 +98,7 @@
     font-weight: 700;
     letter-spacing: -0.02em;
     line-height: 41px;
-    color: #000;
+    color: var(--ss-text-strong);
   }
 
   .cs-card,
@@ -144,8 +165,8 @@
     justify-content: space-around;
     height: 83px;
     padding: 10px 24px 0;
-    border-top: 0.5px solid rgba(0, 0, 0, 0.1);
-    background: rgba(249, 249, 249, 0.94);
+    border-top: 0.5px solid var(--cs-hair);
+    background: var(--cs-bar);
   }
 
   .cs-tab {
@@ -158,14 +179,14 @@
     width: 26px;
     height: 22px;
     border-radius: 7px;
-    background: #c4c4c7;
+    background: var(--cs-tab);
   }
 
   .cs-tab__label {
     width: 36px;
     height: 6px;
     border-radius: 3px;
-    background: #d6d6d9;
+    background: var(--cs-tab-label);
   }
 
   .cs-tab[data-on] .cs-tab__icon {
@@ -202,7 +223,7 @@
   .cs-detail__inner {
     /* Expand carries the card; this kept layer reveals the header from its foot. */
     position: relative;
-    background: #fff;
+    background: var(--cs-sheet);
     min-height: 100%;
     will-change: transform;
     transition: transform 0.62s var(--cs-open), background-color 0.18s ease-out;
@@ -322,7 +343,7 @@
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     padding-bottom: 20px;
-    border-bottom: 0.5px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 0.5px solid var(--cs-hair);
   }
 
   .cs-stat {
@@ -360,7 +381,7 @@
     font-size: 15px;
     font-weight: 600;
     line-height: 20px;
-    color: var(--ss-accent);
+    color: var(--ss-accent-text);
   }
 
   .cs-going__count {
@@ -370,14 +391,14 @@
     line-height: 86px;
     letter-spacing: -0.03em;
     font-variant-numeric: tabular-nums;
-    color: #000;
+    color: var(--ss-text-strong);
   }
 
   .cs-meter {
     height: 8px;
     margin-top: 10px;
     border-radius: 4px;
-    background: #ececf0;
+    background: var(--cs-track);
   }
 
   .cs-rsvp {
@@ -408,7 +429,7 @@
 
   .cs-rsvp[data-going] {
     --cs-rsvp-fill: var(--ss-accent-soft);
-    color: var(--ss-accent);
+    color: var(--ss-accent-text);
   }
 
   .cs-rsvp[data-pressed]::before {
@@ -432,7 +453,7 @@
     width: 10px;
     height: 10px;
     border-radius: 50%;
-    background: #d1d1d6;
+    background: var(--cs-dot);
   }
 
   .cs-interval__dot[data-i='0'] {

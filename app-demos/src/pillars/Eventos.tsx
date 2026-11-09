@@ -5,6 +5,7 @@ import { Bar } from '../../kit/window'
 import { Button } from '../../kit/controls/Button'
 import { Collapse } from '../../kit/motion/Collapse'
 import { Row } from '../../kit/parts/Row'
+import { useSiteTheme } from '../site-theme'
 import { TILE, GROUND, REST, APP_ICON, TilePhone, Head } from './frame'
 
 // "Nunca más te pierdas de nada". Beats: this week's events in Bogotá
@@ -40,12 +41,14 @@ async function script(a: Act<S>) {
 }
 
 export default function Eventos() {
+  const theme = useSiteTheme()
   return (
     <Stage<S>
       width={TILE.width}
       height={TILE.height}
       compact={TILE.compact}
       ground={GROUND}
+      theme={theme}
       initial={{ filter: false, alert: false }}
       poster={{ filter: true, alert: true }}
       script={script}
@@ -54,7 +57,7 @@ export default function Eventos() {
       className="pl pl--eventos"
     >
       {(s, _rect, layout) => (
-        <TilePhone layout={layout} className="pl-phone--center">
+        <TilePhone layout={layout} dark={theme === 'dark'} className="pl-phone--center">
           <div className="pl-screen">
             <Head eyebrow="Bogotá" title="Eventos" />
             <div className="ev-chips">

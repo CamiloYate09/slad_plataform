@@ -6,6 +6,7 @@ import { Card } from '../../kit/parts/Card'
 import { Icon } from '../../kit/parts/Icon'
 import { Badge } from '../../kit/controls/Badge'
 import { Button } from '../../kit/controls/Button'
+import { useSiteTheme } from '../site-theme'
 import { TILE, GROUND, REST, TilePhone, Head } from './frame'
 
 // "Personas reales, conexiones reales". Beats: someone nearby with their
@@ -37,12 +38,14 @@ async function script(a: Act<S>) {
 }
 
 export default function Personas() {
+  const theme = useSiteTheme()
   return (
     <Stage<S>
       width={TILE.width}
       height={TILE.height}
       compact={TILE.compact}
       ground={GROUND}
+      theme={theme}
       initial={{ shared: false, connected: false }}
       poster={{ shared: true, connected: true }}
       script={script}
@@ -51,7 +54,7 @@ export default function Personas() {
       className="pl pl--personas"
     >
       {(s, _rect, layout) => (
-        <TilePhone layout={layout} className="pl-phone--center">
+        <TilePhone layout={layout} dark={theme === 'dark'} className="pl-phone--center">
           <div className="pl-screen">
             <Head eyebrow="Chapinero" title="Personas" />
             <div className="ps-stack">

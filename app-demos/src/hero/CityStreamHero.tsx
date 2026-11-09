@@ -10,6 +10,7 @@ import { Meter } from '../../kit/parts/Meter'
 import { Expand } from '../../kit/motion/Expand'
 import { Roll } from '../../kit/motion/Roll'
 import { States } from '../../kit/motion/States'
+import { useSiteTheme } from '../site-theme'
 import './citystream.css'
 
 // Hero demo for citystream.tech, built from stageshow's phone-touch example. Story in
@@ -67,6 +68,7 @@ const script = async (a: Act<S>) => {
 }
 
 export default function CityStreamHero() {
+  const theme = useSiteTheme()
   return (
     <Stage<S>
       width={400}
@@ -75,6 +77,7 @@ export default function CityStreamHero() {
       initial={START}
       poster={{ open: true, going: true, n: GOING + 1 }}
       script={script}
+      theme={theme}
       cursor={{ at: REST, style: 'touch' }}
       className="cs"
     >
@@ -82,7 +85,7 @@ export default function CityStreamHero() {
         const top = TOPS[PICK]
         return (
           <>
-            <Phone width={layout === 'compact' ? 326 : 300} className="cs-phone" data-open={s.open || undefined}>
+            <Phone width={layout === 'compact' ? 326 : 300} dark={theme === 'dark'} className="cs-phone" data-open={s.open || undefined}>
               <div className="cs-list" data-back={s.open || undefined}>
                 <header className="cs-head">
                   <span className="cs-city">Medellín</span>

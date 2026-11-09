@@ -22,9 +22,9 @@ export const REST = { wide: { x: 470, y: 350 }, compact: { x: 300, y: 430 } }
 // The site's own app icon, served at the same URL in dev (publicDir) and on the page
 export const APP_ICON = '/image/apple-touch-icon.png'
 
-export function TilePhone({ layout, className, children }: { layout: Layout; className?: string; children: ReactNode }) {
+export function TilePhone({ layout, dark, className, children }: { layout: Layout; dark: boolean; className?: string; children: ReactNode }) {
   return (
-    <Phone width={layout === 'compact' ? 326 : 340} className={`pl-phone${className ? ` ${className}` : ''}`}>
+    <Phone width={layout === 'compact' ? 326 : 340} dark={dark} className={`pl-phone${className ? ` ${className}` : ''}`}>
       {children}
     </Phone>
   )

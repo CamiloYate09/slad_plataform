@@ -2,6 +2,7 @@ import { Stage } from '../../kit/stage'
 import type { Act } from '../../kit/act'
 import { Card } from '../../kit/parts/Card'
 import { Row } from '../../kit/parts/Row'
+import { useSiteTheme } from '../site-theme'
 import { TILE, GROUND, REST, TilePhone, Head } from './frame'
 
 // "El mapa vivo de Colombia". Beats: Medellín's map with three pins (context),
@@ -35,11 +36,11 @@ async function script(a: Act<S>) {
 function MapArt() {
   return (
     <svg viewBox="0 0 340 600" preserveAspectRatio="xMidYMin slice" aria-hidden>
-      <path d="M-20 40 C 60 70, 120 30, 190 90 S 300 170, 360 150" fill="none" stroke="#c9def0" strokeWidth="16" strokeLinecap="round" />
-      <path d="M 30 150 q 40 -30 80 0 t 50 50 q -20 40 -70 30 t -60 -80 z" fill="#d3e7c8" />
-      <path d="M 220 10 q 50 0 70 30 t -10 60 q -40 10 -60 -20 t 0 -70 z" fill="#d3e7c8" />
-      <path d="M 250 250 q 40 -10 60 20 t -20 60 q -40 0 -50 -30 z" fill="#d3e7c8" />
-      <g stroke="#fff" strokeLinecap="round" fill="none">
+      <path d="M-20 40 C 60 70, 120 30, 190 90 S 300 170, 360 150" className="cd-river" fill="none" strokeWidth="16" strokeLinecap="round" />
+      <path d="M 30 150 q 40 -30 80 0 t 50 50 q -20 40 -70 30 t -60 -80 z" className="cd-park" />
+      <path d="M 220 10 q 50 0 70 30 t -10 60 q -40 10 -60 -20 t 0 -70 z" className="cd-park" />
+      <path d="M 250 250 q 40 -10 60 20 t -20 60 q -40 0 -50 -30 z" className="cd-park" />
+      <g className="cd-roads" strokeLinecap="round" fill="none">
         <path d="M -10 120 L 360 60" strokeWidth="7" />
         <path d="M 120 -10 L 170 610" strokeWidth="7" />
         <path d="M -10 260 L 360 230" strokeWidth="5" />
@@ -53,12 +54,14 @@ function MapArt() {
 }
 
 export default function Ciudades() {
+  const theme = useSiteTheme()
   return (
     <Stage<S>
       width={TILE.width}
       height={TILE.height}
       compact={TILE.compact}
       ground={GROUND}
+      theme={theme}
       initial={{ pin: false, card: false }}
       poster={{ pin: true, card: true }}
       script={script}
@@ -68,7 +71,7 @@ export default function Ciudades() {
     >
       {(s, _rect, layout) => (
         <>
-          <TilePhone layout={layout}>
+          <TilePhone layout={layout} dark={theme === 'dark'}>
             <div className="pl-screen">
               <Head eyebrow="Explorar" title="Medellín" />
               <div className="cd-map">

@@ -2395,9 +2395,11 @@ body.light-theme .num-card::after {
   50%       { transform: translateY(6px); }
 }
 
+/* En móvil el teléfono del hero queda debajo del texto y ya invita a bajar:
+   el indicador caería encima de él */
 @media (max-width: 768px) {
   .scroll-indicator {
-    bottom: 3.5rem;
+    display: none;
   }
 }
 
@@ -2743,15 +2745,22 @@ body.light-theme .cta-btn:hover {
   .hero-left .hero-subtitle { margin-left: auto; margin-right: auto; }
   .hero-left .hero-actions  { justify-content: center; }
 
+  /* In one column the demo takes the column's width up to its design width;
+     under 400px the scene switches to its phone design (358 × 520) */
   .hero-right {
-    transform: scale(0.82);
-    margin-top: -1rem;
+    width: 100%;
+    container-type: inline-size;
+  }
+
+  .hero-demo {
+    width: 100%;
+    max-width: 400px;
   }
 }
 
-@media (max-width: 768px) {
-  .hero-right {
-    display: none;
+@container (width < 400px) {
+  .hero-demo {
+    aspect-ratio: 358 / 520;
   }
 }
 

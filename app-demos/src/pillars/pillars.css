@@ -8,6 +8,24 @@
     --ss-accent-soft: rgba(91, 66, 243, 0.12);
     font-family: 'Geist', ui-sans-serif, system-ui, -apple-system, sans-serif;
     overflow: hidden;
+    /* The app's own surfaces and the map, iOS light; the dark set follows the
+       site's theme */
+    --app-screen: #f2f2f7;
+    --app-sheet: #fff;
+    --map-ground: #ebeee6;
+    --map-park: #d3e7c8;
+    --map-river: #c9def0;
+    --map-road: #fff;
+  }
+
+  & .ss-stage[data-theme='dark'] {
+    --ss-accent-soft: rgba(91, 66, 243, 0.26);
+    --app-screen: #000;
+    --app-sheet: #1c1c1e;
+    --map-ground: #1b1e21;
+    --map-park: #1f3527;
+    --map-river: #1c3650;
+    --map-road: #2f3338;
   }
 
   /* Pinned top-left, running off the bottom of the tile */
@@ -31,7 +49,7 @@
   .pl-screen {
     position: absolute;
     inset: 0;
-    background: #f2f2f7;
+    background: var(--app-screen);
   }
 
   .pl-head {
@@ -46,7 +64,7 @@
     font-size: 13px;
     font-weight: 600;
     line-height: 17px;
-    color: var(--ss-accent);
+    color: var(--ss-accent-text);
   }
 
   .pl-title {
@@ -55,7 +73,7 @@
     font-weight: 700;
     line-height: 36px;
     letter-spacing: -0.02em;
-    color: #000;
+    color: var(--ss-text-strong);
   }
 
   /* The satellite: the payoff, straddling the phone's right edge; on a
@@ -136,7 +154,7 @@
     bottom: 0;
     left: 0;
     overflow: hidden;
-    background: #ebeee6;
+    background: var(--map-ground);
   }
 
   .cd-map svg {
@@ -145,6 +163,10 @@
     width: 100%;
     height: 100%;
   }
+
+  .cd-river { stroke: var(--map-river); }
+  .cd-park { fill: var(--map-park); }
+  .cd-roads { stroke: var(--map-road); }
 
   .cd-pin {
     position: absolute;
@@ -162,7 +184,7 @@
     width: 30px;
     height: 30px;
     margin: -15px 0 0 -15px;
-    background: #fff;
+    background: var(--app-sheet);
     box-shadow: 0 2px 10px rgba(20, 10, 60, 0.25);
     transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), background-color 0.25s ease;
   }
@@ -182,7 +204,7 @@
   }
 
   .cd-pin--main[data-on]::after {
-    background: #fff;
+    background: var(--app-sheet);
   }
 
   .cd-label {
@@ -191,9 +213,9 @@
     left: 50%;
     padding: 4px 9px;
     border-radius: 999px;
-    background: #fff;
+    background: var(--app-sheet);
     box-shadow: 0 1px 4px rgba(20, 10, 60, 0.18);
-    color: #000;
+    color: var(--ss-text-strong);
     font-size: 13px;
     font-weight: 600;
     line-height: 17px;
@@ -241,23 +263,26 @@
     border-radius: 11px;
   }
 
-  /* The banner drops in under the island and goes back up the same way;
-     the kit's own entrance runs once at mount, hidden, so ours owns it */
+  /* The banner drops a short way into place under the island as it fades
+     in, so it never leaves the tile on the way; the kit's own entrance runs
+     once at mount, hidden, so ours owns it */
   .ev-banner {
     position: absolute;
     inset: 0;
     z-index: 2;
     pointer-events: none;
     visibility: hidden;
-    transform: translateY(-130px);
+    opacity: 0;
+    transform: translateY(-18px);
     will-change: transform;
-    transition: transform 0.55s cubic-bezier(0.2, 0.9, 0.25, 1), visibility 0s 0.55s;
+    transition: opacity 0.3s ease, transform 0.55s cubic-bezier(0.2, 0.9, 0.25, 1), visibility 0s 0.55s;
   }
 
   .ev-banner[data-on] {
     visibility: visible;
+    opacity: 1;
     transform: none;
-    transition: transform 0.55s cubic-bezier(0.2, 0.9, 0.25, 1);
+    transition: opacity 0.3s ease, transform 0.55s cubic-bezier(0.2, 0.9, 0.25, 1);
   }
 
   .ev-banner .ss-notification {
@@ -298,7 +323,7 @@
     font-size: 17px;
     font-weight: 700;
     line-height: 22px;
-    color: #000;
+    color: var(--ss-text-strong);
   }
 
   /* Placeholder lines keep the pitch of the text they stand for */
