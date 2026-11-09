@@ -1,0 +1,22 @@
+{
+  "name": "citystream-app-demos",
+  "private": true,
+  "type": "module",
+  "description": "Animated app scenes for index.html (hero and feature pillars), built with the stageshow kit. Builds into static/js/app-demos/.",
+  "scripts": {
+    "build": "tsc --noEmit && vite build",
+    "dev": "vite"
+  },
+  "dependencies": {
+    "lucide-react": "0.468.0",
+    "react": "18.3.1",
+    "react-dom": "18.3.1"
+  },
+  "devDependencies": {
+    "@types/react": "18.3.31",
+    "@types/react-dom": "18.3.7",
+    "@vitejs/plugin-react": "4.7.0",
+    "typescript": "5.9.3",
+    "vite": "6.4.5"
+  }
+}

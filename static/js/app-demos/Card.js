@@ -1,0 +1,1 @@
+import{j as p}from"./index.js";function f({pad:t="medium",gap:d=12,tone:s="surface",lift:r,flush:i,className:a,style:o,...e}){return p.jsx("div",{...e,className:`ss-card${a?` ${a}`:""}`,"data-pad":t,"data-tone":s,"data-lift":r||void 0,"data-flush":i||void 0,style:{...o,"--ss-card-gap":`${d}px`}})}export{f as C};

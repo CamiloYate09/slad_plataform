@@ -922,16 +922,29 @@ body.no-transitions *::after {
   margin-bottom: 1.25rem;
 }
 
-.features-item-image {
+/* La escena de la app de cada pilar (app-demos/pillars/). El hueco tiene la
+   proporción del diseño (600 × 380, y 358 × 480 por debajo de 480px de ancho,
+   donde la escena cambia a su versión móvil): montarla no mueve el layout. */
+.features-item {
+  container-type: inline-size;
+}
+
+.features-item-demo {
+  max-width: 600px;
+  aspect-ratio: 600 / 380;
+  margin-top: 1.5rem;
+  border: 1px solid var(--border-base);
   border-radius: var(--radius-lg);
   overflow: hidden;
-  border: 1px solid var(--border-base);
-  margin-top: 1.5rem;
-  position: relative;
+}
+
+@container (width < 480px) {
+  .features-item-demo {
+    aspect-ratio: 358 / 480;
+  }
 }
 
 /* Duotone brand overlay — integra fotos a la paleta morado→cyan */
-.features-item-image::before,
 .exp-image::before,
 .value-prop-image::before {
   content: '';
@@ -944,37 +957,11 @@ body.no-transitions *::after {
   z-index: 1;
 }
 
-body.light-theme .features-item-image::before,
 body.light-theme .exp-image::before,
 body.light-theme .value-prop-image::before {
   opacity: 0.28;
 }
 
-.features-item-image::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, rgba(175, 64, 255, 0.1) 0%, transparent 60%);
-  pointer-events: none;
-  z-index: 1;
-  transition: opacity 0.3s;
-}
-
-.features-item-image:hover::after {
-  opacity: 0;
-}
-
-.features-item-image img {
-  width: 100%;
-  height: 300px;
-  object-fit: cover;
-  object-position: center top;
-  transition: transform 0.5s ease;
-}
-
-.features-item-image:hover img {
-  transform: scale(1.03);
-}
 
 /* ============================================
    VALUE PROPOSITION
@@ -2724,7 +2711,7 @@ body.light-theme .cta-btn:hover {
 }
 
 /* ============================================================
-   HERO DEMO — app animada (hero-demo/, montada en #hero-demo)
+   HERO DEMO — app animada (app-demos/hero/, montada en [data-demo="hero"])
    El tamaño de diseño es 400 × 520: el hueco se reserva antes de que
    cargue el JS, así el montaje no mueve el layout.
    ============================================================ */
@@ -2775,7 +2762,7 @@ body.light-theme .cta-btn:hover {
    ============================================ */
 @supports (animation-timeline: view()) {
   @media (prefers-reduced-motion: no-preference) {
-    .features-item-image,
+    .features-item-demo,
     .value-prop-image {
       animation: media-reveal linear both;
       animation-timeline: view();

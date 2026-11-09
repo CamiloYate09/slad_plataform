@@ -8,7 +8,7 @@
  *  evento `activate` limpia caches obsoletas automaticamente.
  * ============================================================ */
 
-const CACHE_VERSION = 'v9'; // v9: sin scramble, cursor propio, Lenis ni tour automático
+const CACHE_VERSION = 'v10'; // v10: escenas de la app en los pilares (static/js/app-demos/)
 const CACHE_NAME = `citystream-${CACHE_VERSION}`;
 
 // Shell estatico: archivos cacheados en install para offline-first
