@@ -8,7 +8,7 @@
  *  evento `activate` limpia caches obsoletas automaticamente.
  * ============================================================ */
 
-const CACHE_VERSION = 'v12'; // v12: logo e img-07 a su tamaño, cifras en el HTML, pie con h2
+const CACHE_VERSION = 'v13'; // v13: style.min.css y vídeo a 960px
 const CACHE_NAME = `citystream-${CACHE_VERSION}`;
 
 // Shell estatico: archivos cacheados en install para offline-first
@@ -16,7 +16,7 @@ const PRECACHE_URLS = [
   '/',
   '/index.html',
   '/offline.html',
-  '/static/css/style.css',
+  '/static/css/style.min.css',
   '/static/js/main.js',
   '/static/img/logo-citystream.png',
   '/image/favicon-32x32.png',

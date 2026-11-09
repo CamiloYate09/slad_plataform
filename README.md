@@ -60,7 +60,9 @@ El service worker solo se registra en `https`. En local no interviene.
   compilar, sube `CACHE_VERSION` en `sw.js`. Cada `[data-demo]` de `index.html` carga su escena
   al acercarse a la pantalla; el hero, solo en pantallas de más de 768px.
   Para revisar una escena: `npm run dev` y `/preview.html?scene=Ciudades`.
-- `scripts/`: conversión a AVIF, subset de fuentes, auditoría de contraste y comprobación del
-  cableado del tema (ver `scripts/README.md`).
+- `scripts/`: conversión a AVIF, subset de fuentes, auditoría de contraste, comprobación del
+  cableado del tema, CSS crítico + `style.min.css` y recodificación de vídeo (ver
+  `scripts/README.md`). Las páginas cargan `static/css/style.min.css`: después de editar
+  `style.css`, ejecuta `./scripts/critical-css.sh`.
 - `.github/workflows/lighthouse.yml`: Lighthouse CI en cada PR a `main`.
 - `openspec/`: propuestas y especificaciones de cambios (flujo OpenSpec).

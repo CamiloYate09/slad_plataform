@@ -7,6 +7,9 @@
 #  style.css se carga al final del <body> para no bloquear el
 #  primer paint.
 #
+#  Además genera static/css/style.min.css, la hoja que cargan las páginas
+#  (style.css es la fuente que se edita).
+#
 #  Ejecutar cada vez que cambie style.css o el hero de index.html:
 #    ./scripts/critical-css.sh
 #
@@ -19,7 +22,10 @@ ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 TMP="$(mktemp -d)"
 trap 'rm -rf "$TMP"' EXIT
 
-PUPPETEER_SKIP_DOWNLOAD=1 npm i --prefix "$TMP" --silent --no-audit --no-fund critical@7.2.1 >/dev/null
+PUPPETEER_SKIP_DOWNLOAD=1 npm i --prefix "$TMP" --silent --no-audit --no-fund critical@7.2.1 lightningcss-cli@1.30.2 >/dev/null
+
+"$TMP/node_modules/.bin/lightningcss" --minify "$ROOT/static/css/style.css" -o "$ROOT/static/css/style.min.css"
+echo "style.min.css: $(( $(wc -c < "$ROOT/static/css/style.min.css") / 1024 )) KB (style.css: $(( $(wc -c < "$ROOT/static/css/style.css") / 1024 )) KB)"
 
 PUPPETEER_EXECUTABLE_PATH="${CHROME_PATH:-/usr/bin/google-chrome}" \
 node --input-type=module - "$ROOT" "$TMP/node_modules/critical/index.js" <<'EOF'
