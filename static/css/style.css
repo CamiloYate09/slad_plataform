@@ -3621,6 +3621,35 @@ body.light-theme .auth-page {
   margin: 0 auto;
 }
 
+/* The final CTA's button is the uppercase .cta-btn: a little less padding
+   inside the pill, so the field keeps its room */
+.signup-capture .cta-btn {
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+/* On a phone, field and button are stacked: side by side the field was down
+   to 75px (24px at 320) next to the button */
+@media (max-width: 480px) {
+  .signup-capture {
+    flex-direction: column;
+    align-items: stretch;
+    border-radius: var(--radius-lg);
+  }
+
+  .signup-capture input {
+    flex: none;
+    width: 100%;
+    padding: 0 1rem;
+  }
+
+  .signup-capture .btn-primary,
+  .signup-capture .cta-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
 .signup-note {
   font-size: var(--fs-sm);
   color: var(--text-secondary);
