@@ -56,7 +56,8 @@ if (floatingCta) {
   function updateFloatingCta() {
     const shouldShow = window.pageYOffset > revealThreshold && !pastCtaSection;
     floatingCta.classList.toggle('is-visible', shouldShow);
-    floatingCta.setAttribute('aria-hidden', String(!shouldShow));
+    // inert, not aria-hidden: hidden links must leave the tab order too
+    floatingCta.inert = !shouldShow;
   }
 
   window.addEventListener('scroll', updateFloatingCta, { passive: true });
@@ -174,7 +175,10 @@ gsap.utils.toArray('.stat-number').forEach(el => {
   const target = parseFloat(el.dataset.count) || 0;
   const suffix = el.dataset.suffix || '';
   const render = v => { el.textContent = Math.round(v).toLocaleString('es-CO') + suffix; };
+  // The HTML already holds the final figure (crawlers, no JS); the count-up
+  // starts from 0 only where it will be seen moving
   if (prefersReducedMotion) { render(target); return; }
+  render(0);
   const obj = { v: 0 };
   gsap.to(obj, {
     v: target,

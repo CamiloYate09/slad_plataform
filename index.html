@@ -187,7 +187,7 @@
 <div class="nav-overlay" aria-hidden="true"></div>
 
 <!-- Floating CTA (mobile only) — aparece al hacer scroll, .nav-cta está oculta en mobile -->
-<div class="floating-cta" id="floating-cta" aria-hidden="true">
+<div class="floating-cta" id="floating-cta" inert>
   <a href="/login.html" class="btn-outline-sm">Iniciar sesión</a>
   <a href="/registro.html" class="btn-primary-sm">Crear cuenta</a>
 </div>
@@ -203,7 +203,11 @@
     <div class="hero-content">
       <!-- Texto principal -->
       <div class="hero-left">
-        <img src="static/img/logo-citystream.png" alt="Logo de CityStream" class="hero-logo" width="667" height="374" fetchpriority="high" />
+        <picture>
+          <source srcset="static/img/logo-citystream-360.avif" type="image/avif" />
+          <source srcset="static/img/logo-citystream-360.webp" type="image/webp" />
+          <img src="static/img/logo-citystream.png" alt="Logo de CityStream" class="hero-logo" width="667" height="374" fetchpriority="high" />
+        </picture>
         <h1 class="hero-title gradient-text" data-splitting>Tu ciudad, tus reglas</h1>
         <p class="hero-subtitle">Hecha en Colombia para vivir tu ciudad hoy, no algún día. Eventos, personas y cultura — todo en un solo lugar.</p>
         <div class="hero-actions">
@@ -261,11 +265,11 @@
   <section class="stats-band" aria-label="CityStream en cifras">
     <div class="stats-grid">
       <div class="stat-card stat-card--dark">
-        <span class="stat-number gradient-text" data-count="5" data-suffix="">0</span>
+        <span class="stat-number gradient-text" data-count="5" data-suffix="">5</span>
         <span class="stat-label">Ciudades para arrancar</span>
       </div>
       <div class="stat-card stat-card--accent">
-        <span class="stat-number stat-number--solid" data-count="100" data-suffix="%">0</span>
+        <span class="stat-number stat-number--solid" data-count="100" data-suffix="%">100%</span>
         <span class="stat-label">Hecho en Colombia</span>
       </div>
       <div class="stat-card stat-card--pillars">
@@ -434,9 +438,9 @@
       </div>
       <div class="value-prop-image">
         <picture>
-          <source srcset="static/img/img-07.avif" type="image/avif" />
-          <source srcset="static/img/img-07.webp" type="image/webp" />
-          <img src="static/img/img-07.jpg" alt="CityStream conectando Colombia" loading="lazy" width="1280" height="720" />
+          <source srcset="static/img/img-07-640.avif 640w, static/img/img-07.avif 1280w" sizes="(max-width: 1024px) 100vw, 540px" type="image/avif" />
+          <source srcset="static/img/img-07-640.webp 640w, static/img/img-07.webp 1280w" sizes="(max-width: 1024px) 100vw, 540px" type="image/webp" />
+          <img src="static/img/img-07-640.jpg" srcset="static/img/img-07-640.jpg 640w, static/img/img-07.jpg 1280w" sizes="(max-width: 1024px) 100vw, 540px" alt="CityStream conectando Colombia" loading="lazy" width="1280" height="720" />
         </picture>
       </div>
     </div>
@@ -510,7 +514,7 @@
     </div>
     <div class="news-grid">
       <article class="news-card">
-        <span class="news-tag">Medellín · Ago 2026</span>
+        <span class="news-tag">Medellín · Ago 2027</span>
         <h3>Feria de las Flores</h3>
         <p>El evento más emblemático de Medellín. Silleteros, desfiles, conciertos y la ciudad entera celebrando su identidad floricultura.</p>
         <a href="https://www.ferialasflores.com.co" target="_blank" rel="noopener noreferrer" class="link-arrow">Ver más <i class="ri-arrow-right-line" aria-hidden="true"></i></a>
@@ -522,7 +526,7 @@
         <a href="https://www.festivalvallenato.com" target="_blank" rel="noopener noreferrer" class="link-arrow">Ver más <i class="ri-arrow-right-line" aria-hidden="true"></i></a>
       </article>
       <article class="news-card">
-        <span class="news-tag tag-green">Bogotá · Jun 2026</span>
+        <span class="news-tag tag-green">Bogotá · 2027, por anunciar</span>
         <h3>Rock al Parque</h3>
         <p>El festival de rock gratuito más grande de Latinoamérica. Tres días, múltiples escenarios y miles de bogotanos bajo el mismo cielo.</p>
         <a href="https://rockalparque.gov.co" target="_blank" rel="noopener noreferrer" class="link-arrow">Ver más <i class="ri-arrow-right-line" aria-hidden="true"></i></a>
@@ -560,7 +564,7 @@
 
   <div class="footer-grid">
     <div class="footer-col">
-      <h4>CityStream</h4>
+      <h2 class="footer-title">CityStream</h2>
       <ul>
         <li><a href="#inicio">Inicio</a></li>
         <li><a href="#features">Características</a></li>
@@ -571,7 +575,7 @@
       </ul>
     </div>
     <div class="footer-col">
-      <h4>Ciudades</h4>
+      <h2 class="footer-title">Ciudades</h2>
       <ul>
         <li><a href="#experiencias">Bogotá</a></li>
         <li><a href="#experiencias">Medellín</a></li>
@@ -580,7 +584,7 @@
       </ul>
     </div>
     <div class="footer-col">
-      <h4>Legal</h4>
+      <h2 class="footer-title">Legal</h2>
       <ul>
         <li><a href="/terminos.html">Términos de Uso</a></li>
         <li><a href="/privacidad.html">Privacidad</a></li>
@@ -592,7 +596,7 @@
       </p>
     </div>
     <div class="footer-col">
-      <h4>Contacto</h4>
+      <h2 class="footer-title">Contacto</h2>
       <ul>
         <li><a href="mailto:citystreamCO@pm.me">citystreamCO@pm.me</a></li>
         <li><a href="mailto:citystreamCO@pm.me">Soporte</a></li>

@@ -2,7 +2,7 @@
 
 > La primera red social creada en Colombia. CityStream conecta a las personas con su ciudad: eventos, comunidades, conciertos y experiencias locales — todo en una sola app pensada para colombianos.
 
-CityStream esta actualmente en fase de pre-lanzamiento con lista de espera abierta en https://citystream.co. La plataforma sera lanzada inicialmente en Bogota, Medellin, Cartagena, Cali y Barranquilla.
+CityStream esta actualmente en fase de pre-lanzamiento; ya puedes crear tu cuenta en https://citystream.tech/registro.html. La plataforma sera lanzada inicialmente en Bogota, Medellin, Cartagena, Cali y Barranquilla.
 
 ## Que es CityStream
 
@@ -13,11 +13,11 @@ CityStream esta actualmente en fase de pre-lanzamiento con lista de espera abier
 
 ## Recursos principales
 
-- [Pagina principal](https://citystream.co/)
-- [Funcionalidades](https://citystream.co/#features)
-- [Experiencias por ciudad](https://citystream.co/#experiencias)
-- [Lista de espera](https://citystream.co/#waitlist)
-- [Contacto](https://citystream.co/#contacto)
+- [Pagina principal](https://citystream.tech/)
+- [Funcionalidades](https://citystream.tech/#features)
+- [Experiencias por ciudad](https://citystream.tech/#experiencias)
+- [Crear cuenta](https://citystream.tech/registro.html)
+- [Contacto](https://citystream.tech/#contacto)
 
 ## Ciudades cubiertas en el lanzamiento
 
@@ -36,7 +36,7 @@ CityStream esta actualmente en fase de pre-lanzamiento con lista de espera abier
 
 ## Mas informacion
 
-- [Contenido completo para LLMs](https://citystream.co/llms-full.txt)
-- [Sitemap XML](https://citystream.co/sitemap.xml)
+- [Contenido completo para LLMs](https://citystream.tech/llms-full.txt)
+- [Sitemap XML](https://citystream.tech/sitemap.xml)
 - Email general: citystreamCO@pm.me
 - Redes: YouTube @CityStream-CO, Instagram @citystream.co

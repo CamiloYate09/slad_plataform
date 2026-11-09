@@ -8,7 +8,7 @@
  *  evento `activate` limpia caches obsoletas automaticamente.
  * ============================================================ */
 
-const CACHE_VERSION = 'v11'; // v11: hero en móvil y escenas en tema oscuro
+const CACHE_VERSION = 'v12'; // v12: logo e img-07 a su tamaño, cifras en el HTML, pie con h2
 const CACHE_NAME = `citystream-${CACHE_VERSION}`;
 
 // Shell estatico: archivos cacheados en install para offline-first

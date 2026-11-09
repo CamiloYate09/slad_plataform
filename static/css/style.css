@@ -1746,7 +1746,7 @@ body.light-theme .video-showcase-container {
   padding-bottom: 2rem;
 }
 
-.footer-col h4 {
+.footer-col .footer-title {
   font-size: var(--fs-body);
   font-weight: 600;
   color: var(--white);
