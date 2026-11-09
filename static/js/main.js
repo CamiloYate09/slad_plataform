@@ -72,6 +72,29 @@ if (floatingCta) {
 }
 
 // ============================================
+// CAPTURA DE CORREO (hero y CTA final) -> /registro.html
+// Desde aquí no se envía nada: la cuenta se crea en registro.html, contra el
+// API y con sus propias comprobaciones. El correo viaja en sessionStorage y
+// no en la URL, para que no quede en el historial ni en los logs. Vacío,
+// lleva igual al registro.
+// ============================================
+document.querySelectorAll('form[data-signup]').forEach((form) => {
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const input = form.querySelector('input[type="email"]');
+    if (input && !input.checkValidity()) {
+      input.reportValidity();
+      return;
+    }
+    const email = input ? input.value.trim().toLowerCase() : '';
+    if (email) {
+      try { sessionStorage.setItem('cs.registro.email', email); } catch { /* sin almacenamiento: se escribe allá */ }
+    }
+    location.assign('/registro.html');
+  });
+});
+
+// ============================================
 // MOBILE HAMBURGER MENU
 // ============================================
 const navToggle = document.querySelector('.nav-toggle');

@@ -247,6 +247,19 @@ function pantallaLogin(form) {
 }
 
 function pantallaRegistro(form) {
+  // El campo de correo de index.html lo deja aquí (una sola vez, ver main.js)
+  // para no escribirlo dos veces; con el correo puesto, sigue el usuario.
+  let correo = null;
+  try {
+    correo = sessionStorage.getItem('cs.registro.email');
+    sessionStorage.removeItem('cs.registro.email');
+  } catch { /* sin almacenamiento: el campo queda vacío */ }
+  const campo = form.querySelector('[name="email"]');
+  if (correo && campo && !campo.value) {
+    campo.value = correo;
+    form.querySelector('[name="username"]')?.focus();
+  }
+
   conectar(form, async (datos) => {
     const password = datos.get('password');
     if (passwordFueraDeRango(password)) {

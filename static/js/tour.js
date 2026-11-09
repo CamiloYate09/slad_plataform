@@ -15,14 +15,9 @@
       body: 'Cambia entre Ciudades, Eventos, Personas y Conciertos para ver el detalle de cada pilar.',
     },
     {
-      selector: '.hero-actions .btn-primary',
-      title: 'Empieza a explorar',
-      body: 'Te lleva directo a la sección de funcionalidades de CityStream.',
-    },
-    {
-      selector: '.cta-btn',
+      selector: '.hero-actions .signup-capture',
       title: 'Crea tu cuenta',
-      body: 'Regístrate gratis y empieza a descubrir eventos, personas y experiencias en tu ciudad.',
+      body: 'Escribe tu correo y sigue con el registro: el correo ya va puesto. Es gratis.',
     },
   ];
 

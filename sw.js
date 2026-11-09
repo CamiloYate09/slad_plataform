@@ -8,7 +8,7 @@
  *  evento `activate` limpia caches obsoletas automaticamente.
  * ============================================================ */
 
-const CACHE_VERSION = 'v14'; // v14: movimiento sin GSAP ni ScrollTrigger
+const CACHE_VERSION = 'v15'; // v15: captura de correo en el hero y el CTA final
 const CACHE_NAME = `citystream-${CACHE_VERSION}`;
 
 // Shell estatico: archivos cacheados en install para offline-first
