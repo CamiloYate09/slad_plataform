@@ -8,7 +8,7 @@
  *  evento `activate` limpia caches obsoletas automaticamente.
  * ============================================================ */
 
-const CACHE_VERSION = 'v13'; // v13: style.min.css y vídeo a 960px
+const CACHE_VERSION = 'v14'; // v14: movimiento sin GSAP ni ScrollTrigger
 const CACHE_NAME = `citystream-${CACHE_VERSION}`;
 
 // Shell estatico: archivos cacheados en install para offline-first

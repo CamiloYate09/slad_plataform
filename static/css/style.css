@@ -1064,14 +1064,7 @@ body.light-theme .value-prop-image::before {
   overflow: hidden;
   backdrop-filter: var(--glass-blur);
   -webkit-backdrop-filter: var(--glass-blur);
-  /* transform handled by GSAP tilt on desktop; CSS transition for non-pointer:fine devices */
-  transition: border-color var(--duration-base), box-shadow var(--duration-base);
-}
-
-@media (hover: hover) and (pointer: coarse) {
-  .exp-card {
-    transition: transform var(--duration-base), border-color var(--duration-base), box-shadow var(--duration-base);
-  }
+  transition: transform var(--duration-base), border-color var(--duration-base), box-shadow var(--duration-base);
 }
 
 .exp-card:hover {
@@ -1079,8 +1072,8 @@ body.light-theme .value-prop-image::before {
   box-shadow: var(--shadow-premium), 0 8px 32px rgba(0, 0, 0, 0.4);
 }
 
-/* translateY lift only on touch devices (no GSAP tilt on touch) */
-@media (hover: hover) and (pointer: coarse) {
+/* A small lift on hover, wherever there is hover */
+@media (hover: hover) {
   .exp-card:hover {
     transform: translateY(-4px);
   }
@@ -2289,15 +2282,17 @@ body.light-theme .num-card::after {
 /* ============================================
    TOP SCROLL PROGRESS BAR
    ============================================ */
+/* main.js la escala con el scroll (scaleX, sin reflow); vacía hasta entonces */
 #top-progress {
   position: fixed;
   top: 0;
   left: 0;
-  width: 0%;
+  width: 100%;
   height: 3px;
   background: linear-gradient(90deg, #af40ff, #5b42f3 50%, #00ddeb);
   z-index: 9999;
   pointer-events: none;
+  transform: scaleX(0);
   transform-origin: left center;
 }
 
@@ -2515,7 +2510,7 @@ body.light-theme .num-card::after {
 }
 
 /* T6 — CSS Containment en secciones pesadas (style+paint, no layout para
-   evitar romper sticky interno en .features y parallax de GSAP) */
+   evitar romper sticky interno en .features) */
 .numbered-features,
 .cta-section,
 .news,
@@ -2588,11 +2583,19 @@ body.light-theme .num-card::after {
   box-shadow: var(--shadow-premium), 0 16px 48px rgba(0, 0, 0, 0.35);
 }
 
-/* 1.5 — Section label reveal: initial state set by JS (see main.js).
-   This class is applied by JS to avoid FOUC on non-JS or reduced-motion. */
+/* 1.5 — Section label reveal: main.js adds the class (never without JS or
+   with reduced motion) and .is-revealed when the label comes into view. */
 .section-label--reveal-pending {
   clip-path: inset(0 100% 0 0);
   opacity: 0;
+  transition:
+    clip-path 0.65s cubic-bezier(0.215, 0.61, 0.355, 1) 0.15s,
+    opacity 0.65s cubic-bezier(0.215, 0.61, 0.355, 1) 0.15s;
+}
+
+.section-label--reveal-pending.is-revealed {
+  clip-path: inset(0 0 0 0);
+  opacity: 1;
 }
 
 /* Value-prop h2 word wrap for Splitting.js */
@@ -2768,12 +2771,18 @@ body.light-theme .cta-btn:hover {
    SCROLL-LINKED MEDIA REVEAL — CSS nativo (scroll-driven)
    Anima opacity/scale del contenedor según su posición en viewport.
    Fallback: navegadores sin animation-timeline muestran el estado final.
+   Las animaciones con animation-timeline van siempre en propiedades sueltas
+   (animation-name, -timing-function...), nunca con el atajo `animation`:
+   el minificador (critical-css.sh) junta atajo + timeline en un solo
+   `animation` que Chrome no acepta y descarta la regla entera.
    ============================================ */
 @supports (animation-timeline: view()) {
   @media (prefers-reduced-motion: no-preference) {
     .features-item-demo,
     .value-prop-image {
-      animation: media-reveal linear both;
+      animation-name: media-reveal;
+      animation-timing-function: linear;
+      animation-fill-mode: both;
       animation-timeline: view();
       animation-range: entry 5% cover 30%;
     }
@@ -3439,4 +3448,112 @@ body.light-theme .auth-page {
 
 .tour-btn--primary:hover {
   opacity: 0.9;
+}
+
+/* ============================================================
+   MOVIMIENTO — sin librerías (antes GSAP + ScrollTrigger)
+   La entrada del hero es CSS puro. Lo que aparece al hacer scroll lleva
+   [data-scroll-reveal] (no data-reveal: ese lo usa el Collapse del kit de
+   app-demos) o .char-reveal, que solo pone main.js (sin JS o con
+   movimiento reducido todo se ve quieto y completo), y .is-revealed cuando
+   entra en pantalla. El parallax usa scroll-driven animations sobre la
+   propiedad translate, para no pisar los transform de entrada ni de hover.
+   ============================================================ */
+@media (prefers-reduced-motion: no-preference) {
+  /* Hero: el logo sube (solo transform: es el LCP, nunca invisible), las
+     letras del título entran una a una mientras el peso pasa de 100 a 700,
+     y al final el botón */
+  .hero-logo {
+    animation: hero-rise 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+  }
+
+  .hero-title[data-splitting] {
+    animation: hero-weight 0.75s cubic-bezier(0.455, 0.03, 0.515, 0.955) 0.35s both;
+  }
+
+  .hero-title .char {
+    animation: hero-char 0.5s cubic-bezier(0.215, 0.61, 0.355, 1) both;
+    animation-delay: calc(0.3s + var(--char-index, 0) * 30ms);
+  }
+
+  .hero-actions {
+    animation: hero-fade 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1.3s both;
+  }
+
+  [data-scroll-reveal] {
+    opacity: 0;
+    translate: var(--reveal-x, 0) var(--reveal-y, 40px);
+    transition:
+      opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+      translate 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transition-delay: var(--reveal-delay, 0s);
+  }
+
+  [data-scroll-reveal].is-revealed {
+    opacity: 1;
+    translate: none;
+  }
+
+  /* Títulos de sección: cada letra sube desde debajo de su palabra (.word
+     recorta con overflow hidden en .section-header) */
+  .char-reveal .char {
+    opacity: 0;
+    transform: translateY(110%);
+    transition:
+      transform 0.6s cubic-bezier(0.215, 0.61, 0.355, 1),
+      opacity 0.6s cubic-bezier(0.215, 0.61, 0.355, 1);
+    transition-delay: calc(var(--char-index, 0) * 25ms);
+  }
+
+  .char-reveal.is-revealed .char {
+    opacity: 1;
+    transform: none;
+  }
+
+  @supports (animation-timeline: scroll()) {
+    /* El logo se queda un poco atrás mientras el hero sale de pantalla */
+    /* Propiedades sueltas, no el atajo: ver SCROLL-LINKED MEDIA REVEAL */
+    .hero-logo {
+      animation-name: hero-rise, logo-drift;
+      animation-duration: 0.6s, auto;
+      animation-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94), linear;
+      animation-fill-mode: both, both;
+      animation-timeline: auto, scroll(root);
+      animation-range: normal, 0 85vh;
+    }
+
+    /* Las fotos de ciudad se desplazan un poco dentro de su tarjeta */
+    .exp-card .exp-image img {
+      animation-name: exp-drift;
+      animation-timing-function: linear;
+      animation-fill-mode: both;
+      animation-timeline: view();
+    }
+  }
+}
+
+@keyframes hero-rise {
+  from { transform: translateY(30px); }
+}
+
+@keyframes hero-weight {
+  from { font-variation-settings: "wght" 100; }
+  to { font-variation-settings: "wght" 700; }
+}
+
+@keyframes hero-char {
+  from { opacity: 0; transform: translateY(30px); }
+}
+
+@keyframes hero-fade {
+  from { opacity: 0; transform: translateY(20px); }
+}
+
+@keyframes logo-drift {
+  to { translate: 0 -40px; }
+}
+
+@keyframes exp-drift {
+  from { translate: 0 12px; }
+  to { translate: 0 -12px; }
 }

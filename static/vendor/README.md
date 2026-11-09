@@ -10,8 +10,6 @@ Cada archivo se descargó de la URL indicada y se verificó contra el hash SRI q
 | Archivo | Origen |
 |---|---|
 | `splitting.min.js` | https://unpkg.com/splitting@1.1.0/dist/splitting.min.js |
-| `gsap.min.js` | https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js |
-| `ScrollTrigger.min.js` | https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js |
 
 Los iconos (Remix Icon) no están aquí: se usa un subset propio en
 `static/fonts/remixicon-subset.woff2`, declarado en el CSS crítico de `index.html`.

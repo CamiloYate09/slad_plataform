@@ -1,8 +1,3 @@
-// ============================================
-// GSAP + ScrollTrigger Initialization
-// ============================================
-gsap.registerPlugin(ScrollTrigger);
-
 // Respect reduced motion preference
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -168,390 +163,134 @@ if (featuresItems.length > 0) {
 }
 
 // ============================================
-// GSAP SCROLL ANIMATIONS
+// MOVIMIENTO AL HACER SCROLL — sin librerías
+// Las animaciones viven en style.css (bloque MOVIMIENTO); aquí solo se marca
+// qué aparece y cuándo. La entrada del hero es CSS puro.
 // ============================================
-// Stats band — count-up (funciona con o sin reduced-motion)
-gsap.utils.toArray('.stat-number').forEach(el => {
+
+// Runs fn once, when el's top reaches `at` of the viewport height (0.85: its
+// top at 85% from the top). An element already scrolled past (a page opened
+// at an anchor) runs it straight away instead of staying hidden.
+const pendingReveals = new Set();
+function whenInView(el, fn, at = 0.85) {
+  const pending = { el, run: () => { pendingReveals.delete(pending); io.disconnect(); fn(); } };
+  const io = new IntersectionObserver((entries) => {
+    if (entries.some((e) => e.isIntersecting || e.boundingClientRect.bottom < 0)) pending.run();
+  }, { rootMargin: `0px 0px -${Math.round((1 - at) * 100)}% 0px` });
+  pendingReveals.add(pending);
+  io.observe(el);
+}
+
+// A jump straight past an element (a page opened at an anchor, the browser
+// restoring the scroll) never makes it intersect, so no observer fires:
+// on scroll, whatever is already above the viewport is shown too
+function revealPassed() {
+  pendingReveals.forEach((p) => { if (p.el.getBoundingClientRect().bottom < 0) p.run(); });
+}
+
+// Elements fade and slide in when they (or their `trigger`) come into view;
+// `stagger` delays each one after the first, in seconds
+function reveal(selector, { trigger, x = 0, y = 40, stagger = 0, at = 0.85 } = {}) {
+  const els = [...document.querySelectorAll(selector)];
+  if (!els.length) return;
+  els.forEach((el, i) => {
+    el.dataset.scrollReveal = '';
+    el.style.setProperty('--reveal-x', `${x}px`);
+    el.style.setProperty('--reveal-y', `${y}px`);
+    el.style.setProperty('--reveal-delay', `${i * stagger}s`);
+  });
+  const show = (members) => () => members.forEach((m) => m.classList.add('is-revealed'));
+  const t = trigger && document.querySelector(trigger);
+  if (t) whenInView(t, show(els), at);
+  else els.forEach((el) => whenInView(el, show([el]), at));
+}
+
+// Stats band — count-up. The HTML holds the final figure (crawlers, no JS):
+// it only counts from 0 where it will be seen moving
+document.querySelectorAll('.stat-number').forEach((el) => {
   const target = parseFloat(el.dataset.count) || 0;
   const suffix = el.dataset.suffix || '';
-  const render = v => { el.textContent = Math.round(v).toLocaleString('es-CO') + suffix; };
-  // The HTML already holds the final figure (crawlers, no JS); the count-up
-  // starts from 0 only where it will be seen moving
-  if (prefersReducedMotion) { render(target); return; }
+  const render = (v) => { el.textContent = Math.round(v).toLocaleString('es-CO') + suffix; };
+  if (prefersReducedMotion) return;
   render(0);
-  const obj = { v: 0 };
-  gsap.to(obj, {
-    v: target,
-    duration: 1.6,
-    ease: 'power2.out',
-    scrollTrigger: { trigger: el, start: 'top 90%', once: true },
-    onUpdate: () => render(obj.v)
-  });
+  whenInView(el, () => {
+    const start = performance.now();
+    const tick = (now) => {
+      const p = Math.min(1, (now - start) / 1600);
+      render(target * (1 - (1 - p) ** 3));
+      if (p < 1) requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  }, 0.9);
 });
 
 if (!prefersReducedMotion) {
-  // Hero entrance timeline
-  const heroTl = gsap.timeline({ defaults: { ease: 'power2.out' } });
+  reveal('.section-header');
+  reveal('.features-sticky-wrap');
+  reveal('.cta-card', { trigger: '.cta-section' });
+  reveal('.value-prop-content', { trigger: '.value-prop', x: -30, y: 0, at: 0.8 });
+  reveal('.num-card', { trigger: '.numbered-grid', stagger: 0.15 });
+  reveal('.exp-card', { trigger: '.experiences-grid', stagger: 0.15 });
+  reveal('.news-card', { trigger: '.news-grid', stagger: 0.1 });
+  reveal('.footer', { y: 30, at: 0.9 });
+  reveal('.footer-col', { trigger: '.footer-grid', y: 20, stagger: 0.1, at: 0.9 });
 
-  // Sin opacity: el logo es el LCP; si arranca invisible, el LCP espera a GSAP.
-  heroTl
-    .from('.hero-logo', { y: 30, duration: 0.6 });
-
-  // Char-level animation (Splitting.js) or word fallback
-  const heroChars = document.querySelectorAll('.hero-title .char');
-  if (heroChars.length > 0) {
-    // Workaround: GSAP creates a compositing stacking context on chars (translate/rotate/scale: none)
-    // which prevents CSS background-clip:text + background-image from rendering. Apply inline.
-    // El valor es var(--grad-brand): sigue siendo inline (que es lo que pide
-    // el workaround) pero se resuelve contra el tema activo, asi que cambia
-    // solo al alternar dark/light sin repintar nada desde JS.
-    heroChars.forEach(c => {
-      c.style.background = 'var(--grad-brand)';
-      c.style.webkitBackgroundClip = 'text';
-      c.style.backgroundClip = 'text';
-      c.style.color = 'transparent';
-    });
-    heroTl.fromTo(heroChars,
-      { opacity: 0, y: 30 },
-      { opacity: 1, y: 0, duration: 0.5, stagger: 0.03, ease: 'power3.out' },
-      '-=0.3'
-    );
-
-    // T1 — Variable font weight bloom: wght 100 → 700 sincronizado con la entrada
-    const heroTitleEl = document.querySelector('.hero-title');
-    if (heroTitleEl) {
-      const wghtProxy = { wght: 100 };
-      heroTitleEl.style.fontVariationSettings = '"wght" 100';
-      heroTl.to(wghtProxy, {
-        wght: 700,
-        duration: 0.75,
-        ease: 'power2.inOut',
-        onUpdate() {
-          heroTitleEl.style.fontVariationSettings = `"wght" ${Math.round(wghtProxy.wght)}`;
-        }
-      }, '<+0.05'); // empieza casi al mismo tiempo que el char reveal
-    }
-  } else {
-    heroTl.from('.hero-title', { opacity: 0, y: 30, duration: 0.6 }, '-=0.3');
-  }
-
-  heroTl.from('.hero-actions', { opacity: 0, y: 20, duration: 0.4 }, '+=0.2');
-
-  // Section headers — scroll reveal
-  gsap.utils.toArray('.section-header').forEach(header => {
-    gsap.from(header, {
-      scrollTrigger: {
-        trigger: header,
-        start: 'top 85%',
-        once: true
-      },
-      opacity: 0,
-      y: 40,
-      duration: 0.8,
-      ease: 'power2.out'
-    });
+  // Section titles split by Splitting.js: letter by letter
+  document.querySelectorAll('.section-header h2[data-splitting], .value-prop-content h2[data-splitting]').forEach((h2) => {
+    if (!h2.querySelector('.char')) return;
+    h2.classList.add('char-reveal');
+    whenInView(h2, () => h2.classList.add('is-revealed'), 0.88);
   });
 
-  // Features sticky wrap entrance
-  gsap.from('.features-sticky-wrap', {
-    scrollTrigger: {
-      trigger: '.features-sticky-wrap',
-      start: 'top 85%',
-      once: true
-    },
-    opacity: 0,
-    y: 40,
-    duration: 0.8,
-    ease: 'power2.out'
-  });
-
-  // CTA card entrance
-  gsap.from('.cta-card', {
-    scrollTrigger: {
-      trigger: '.cta-section',
-      start: 'top 85%',
-      once: true
-    },
-    opacity: 0,
-    y: 40,
-    duration: 0.8,
-    ease: 'power2.out'
-  });
-
-  // Value proposition — staggered columns
-  gsap.from('.value-prop-content', {
-    scrollTrigger: {
-      trigger: '.value-prop',
-      start: 'top 80%',
-      once: true
-    },
-    opacity: 0,
-    x: -30,
-    duration: 0.8,
-    ease: 'power2.out'
-  });
-
-  gsap.from('.value-prop-image', {
-    scrollTrigger: {
-      trigger: '.value-prop',
-      start: 'top 80%',
-      once: true
-    },
-    opacity: 0,
-    x: 30,
-    duration: 0.8,
-    delay: 0.2,
-    ease: 'power2.out'
-  });
-
-  // Numbered feature cards — staggered reveal
-  gsap.from('.num-card', {
-    scrollTrigger: {
-      trigger: '.numbered-grid',
-      start: 'top 85%',
-      once: true
-    },
-    opacity: 0,
-    y: 40,
-    duration: 0.8,
-    stagger: 0.15,
-    ease: 'power2.out'
-  });
-
-  // Experience cards — staggered reveal
-  gsap.from('.exp-card', {
-    scrollTrigger: {
-      trigger: '.experiences-grid',
-      start: 'top 85%',
-      once: true
-    },
-    opacity: 0,
-    y: 40,
-    duration: 0.8,
-    stagger: 0.15,
-    ease: 'power2.out'
-  });
-
-  // News cards — staggered reveal
-  gsap.from('.news-card', {
-    scrollTrigger: {
-      trigger: '.news-grid',
-      start: 'top 85%',
-      once: true
-    },
-    opacity: 0,
-    y: 40,
-    duration: 0.8,
-    stagger: 0.1,
-    ease: 'power2.out'
-  });
-
-  // Footer — fade in
-  gsap.from('.footer', {
-    scrollTrigger: {
-      trigger: '.footer',
-      start: 'top 90%',
-      once: true
-    },
-    opacity: 0,
-    y: 30,
-    duration: 0.8,
-    ease: 'power2.out'
-  });
-
-  // Footer columns — stagger
-  gsap.from('.footer-col', {
-    scrollTrigger: {
-      trigger: '.footer-grid',
-      start: 'top 90%',
-      once: true
-    },
-    opacity: 0,
-    y: 20,
-    duration: 0.6,
-    stagger: 0.1,
-    ease: 'power2.out'
-  });
-
-  // Parallax — hero logo moves slower
-  gsap.to('.hero-logo', {
-    scrollTrigger: {
-      trigger: '.hero',
-      start: 'top top',
-      end: 'bottom top',
-      scrub: true
-    },
-    y: -40,
-    ease: 'none'
-  });
-
-  // Parallax — value-prop image moves slightly faster
-  gsap.to('.value-prop-image', {
-    scrollTrigger: {
-      trigger: '.value-prop',
-      start: 'top bottom',
-      end: 'bottom top',
-      scrub: true
-    },
-    y: -30,
-    ease: 'none'
+  // Section labels: a clip that opens left to right, a beat after the header
+  document.querySelectorAll('.section-label').forEach((label) => {
+    label.classList.add('section-label--reveal-pending');
+    whenInView(label, () => label.classList.add('is-revealed'), 0.92);
   });
 }
 
-// ============================================
-// TOP SCROLL PROGRESS BAR
-// ============================================
-if (!prefersReducedMotion) {
-  gsap.to('#top-progress', {
-    width: '100%',
-    ease: 'none',
-    scrollTrigger: {
-      trigger: document.documentElement,
-      start: 'top top',
-      end: 'bottom bottom',
-      scrub: 0.3
-    }
-  });
-}
-
-// ============================================
-// SCROLL INDICATOR — Hide on scroll
-// ============================================
+// Scroll progress bar and the hero's "Scroll" hint, on one passive listener
+const topProgress = document.getElementById('top-progress');
 const scrollIndicator = document.querySelector('.scroll-indicator');
-if (scrollIndicator) {
-  ScrollTrigger.create({
-    trigger: '.hero',
-    start: 'top top',
-    end: '20% top',
-    onLeave: () => scrollIndicator.classList.add('hidden'),
-    onEnterBack: () => scrollIndicator.classList.remove('hidden')
-  });
+const heroSectionEl = document.querySelector('.hero');
+let scrollFrame = 0;
+function onScrollFrame() {
+  scrollFrame = 0;
+  revealPassed();
+  if (topProgress && !prefersReducedMotion) {
+    const max = document.documentElement.scrollHeight - window.innerHeight;
+    topProgress.style.transform = `scaleX(${max > 0 ? Math.min(1, window.scrollY / max) : 0})`;
+  }
+  if (scrollIndicator && heroSectionEl) {
+    scrollIndicator.classList.toggle('hidden', window.scrollY > heroSectionEl.offsetHeight * 0.2);
+  }
 }
+window.addEventListener('scroll', () => { if (!scrollFrame) scrollFrame = requestAnimationFrame(onScrollFrame); }, { passive: true });
+onScrollFrame();
 
-// ============================================
-// ACTIVE NAV SECTION INDICATOR
-// ============================================
+// Active nav link: the section crossing the middle band of the viewport
 const navSections = [
-  { id: 'inicio',      href: '#inicio' },
-  { id: 'features',   href: '#features' },
+  { id: 'inicio', href: '#inicio' },
+  { id: 'features', href: '#features' },
   { id: 'experiencias', href: '#experiencias' },
-  { id: 'contacto',   href: '#contacto' }
+  { id: 'contacto', href: '#contacto' }
 ];
-
+const navActive = new IntersectionObserver((entries) => {
+  entries.forEach((entry) => {
+    const link = document.querySelector(`.nav-links a[href="#${entry.target.id}"]`);
+    if (!link) return;
+    if (entry.isIntersecting) {
+      document.querySelectorAll('.nav-links a').forEach((a) => a.classList.remove('nav-active'));
+      link.classList.add('nav-active');
+    } else {
+      link.classList.remove('nav-active');
+    }
+  });
+}, { rootMargin: '-40% 0px -40% 0px' });
 navSections.forEach(({ id, href }) => {
   const section = document.getElementById(id);
-  const link = document.querySelector(`.nav-links a[href="${href}"]`);
-  if (!section || !link) return;
-
-  ScrollTrigger.create({
-    trigger: section,
-    start: 'top 60%',
-    end: 'bottom 40%',
-    onEnter: () => {
-      document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('nav-active'));
-      link.classList.add('nav-active');
-    },
-    onEnterBack: () => {
-      document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('nav-active'));
-      link.classList.add('nav-active');
-    },
-    onLeave: () => link.classList.remove('nav-active'),
-    onLeaveBack: () => link.classList.remove('nav-active')
-  });
+  if (section && document.querySelector(`.nav-links a[href="${href}"]`)) navActive.observe(section);
 });
-
-// ============================================
-// CHAR-LEVEL HEADING REVEAL (Splitting.js)
-// ============================================
-if (!prefersReducedMotion) {
-  document.querySelectorAll('.section-header h2[data-splitting]').forEach(h2 => {
-    const chars = h2.querySelectorAll('.char');
-    if (chars.length === 0) return;
-    gsap.from(chars, {
-      scrollTrigger: {
-        trigger: h2,
-        start: 'top 88%',
-        once: true
-      },
-      yPercent: 110,
-      opacity: 0,
-      duration: 0.6,
-      stagger: 0.025,
-      ease: 'power3.out'
-    });
-  });
-}
-
-// ============================================
-// EXPERIENCE CARDS PARALLAX
-// ============================================
-if (!prefersReducedMotion) {
-  gsap.utils.toArray('.exp-card .exp-image img').forEach(img => {
-    gsap.fromTo(img,
-      { y: 12 },
-      {
-        y: -12,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: img.closest('.exp-card'),
-          start: 'top bottom',
-          end: 'bottom top',
-          scrub: true
-        }
-      }
-    );
-  });
-}
-
-// ============================================
-// ============================================
-// SECTION LABEL CLIP-PATH REVEAL (Task 3.4)
-// Runs AFTER section-header GSAP (which uses opacity+y on the parent).
-// The label reveal is triggered independently at a slightly later scroll position
-// to create a secondary reveal effect inside the already-visible header.
-// ============================================
-if (!prefersReducedMotion) {
-  gsap.utils.toArray('.section-label').forEach(label => {
-    // Set initial hidden state via JS (not CSS) to avoid FOUC
-    label.classList.add('section-label--reveal-pending');
-    gsap.to(label, {
-      scrollTrigger: {
-        trigger: label,
-        start: 'top 92%',
-        once: true
-      },
-      clipPath: 'inset(0 0% 0 0)',
-      opacity: 1,
-      duration: 0.65,
-      ease: 'power3.out',
-      delay: 0.15 // slight delay so parent section-header reveal plays first
-    });
-  });
-}
-
-// ============================================
-// VALUE-PROP H2 CHAR REVEAL (Task 3.5)
-// ============================================
-if (!prefersReducedMotion) {
-  const valuePropH2 = document.querySelector('.value-prop-content h2[data-splitting]');
-  if (valuePropH2) {
-    const vpChars = valuePropH2.querySelectorAll('.char');
-    if (vpChars.length > 0) {
-      gsap.from(vpChars, {
-        scrollTrigger: {
-          trigger: valuePropH2,
-          start: 'top 85%',
-          once: true
-        },
-        yPercent: 110,
-        opacity: 0,
-        duration: 0.55,
-        stagger: 0.02,
-        ease: 'power3.out'
-      });
-    }
-  }
-}
 
 // ============================================
 // HERO ORBS MOUSE PARALLAX (Task 3.2)
@@ -609,29 +348,6 @@ if (showcaseVideo) {
     videoObserver.observe(showcaseVideo);
   }
 }
-
-/* ============================================
-   Botones magnéticos — los CTAs primarios siguen sutilmente el cursor
-   (solo desktop con puntero fino; respeta prefers-reduced-motion)
-   ============================================ */
-if (!prefersReducedMotion && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
-  const MAG_MAX = 8; // desplazamiento máximo en px
-  document.querySelectorAll('.btn-primary, .cta-btn').forEach((btn) => {
-    if (btn.closest('.hero-actions')) return; // ya gestionado por el bloque magnético GSAP (línea 617)
-    btn.addEventListener('pointermove', (e) => {
-      const r = btn.getBoundingClientRect();
-      const x = ((e.clientX - r.left) / r.width - 0.5) * 2 * MAG_MAX;
-      const y = ((e.clientY - r.top) / r.height - 0.5) * 2 * MAG_MAX;
-      btn.style.transition = 'transform 0.12s linear'; // seguimiento rápido durante el hover
-      btn.style.transform = `translate(${x}px, ${y}px)`;
-    });
-    btn.addEventListener('pointerleave', () => {
-      btn.style.transition = ''; // restaura la transición CSS (retorno suave)
-      btn.style.transform = '';
-    });
-  });
-}
-
 
 /* ============================================
    SERVICE WORKER
