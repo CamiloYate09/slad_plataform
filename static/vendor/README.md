@@ -10,7 +10,6 @@ Cada archivo se descargó de la URL indicada y se verificó contra el hash SRI q
 | Archivo | Origen |
 |---|---|
 | `splitting.min.js` | https://unpkg.com/splitting@1.1.0/dist/splitting.min.js |
-| `lenis.min.js` | https://unpkg.com/lenis@1.1.18/dist/lenis.min.js |
 | `gsap.min.js` | https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js |
 | `ScrollTrigger.min.js` | https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js |
 

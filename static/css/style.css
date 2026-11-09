@@ -1176,6 +1176,11 @@ body.light-theme .value-prop-image::before {
   text-align: center;
 }
 
+.experiences-more-note {
+  color: var(--text-secondary);
+  font-size: var(--fs-sm);
+}
+
 /* ============================================
    NUMBERED FEATURE CARDS — Dark contrast band
    ============================================ */
@@ -2109,60 +2114,6 @@ body.light-theme .video-showcase-container {
 }
 
 /* ============================================
-   CUSTOM CURSOR — Desktop only
-   ============================================ */
-.cursor {
-  position: fixed;
-  width: 8px;
-  height: 8px;
-  background: var(--white);
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 9998;
-  transform: translate(-50%, -50%);
-  transition: width 0.2s, height 0.2s, background 0.2s;
-  mix-blend-mode: difference;
-}
-
-.cursor-follower {
-  position: fixed;
-  width: 32px;
-  height: 32px;
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 9997;
-  transform: translate(-50%, -50%);
-  transition: width 0.3s ease, height 0.3s ease, border-color 0.3s;
-}
-
-.cursor.active {
-  width: 16px;
-  height: 16px;
-  background: var(--accent-orange-hover);
-}
-
-.cursor-follower.active {
-  width: 48px;
-  height: 48px;
-  border-color: var(--accent-orange-hover);
-}
-
-@media (max-width: 768px) {
-  .cursor,
-  .cursor-follower {
-    display: none;
-  }
-}
-
-@media (pointer: coarse) {
-  .cursor,
-  .cursor-follower {
-    display: none;
-  }
-}
-
-/* ============================================
    THEME TOGGLE
    ============================================ */
 .theme-toggle,
@@ -2236,14 +2187,6 @@ body.light-theme .footer-badge:hover {
 
 body.light-theme .footer-badge {
   background: var(--bg-footer);
-}
-
-body.light-theme .cursor {
-  background: #0a0a0a;
-}
-
-body.light-theme .cursor-follower {
-  border-color: rgba(0, 0, 0, 0.3);
 }
 
 /* T2 — light-theme glassmorphism navbar */
@@ -2649,19 +2592,6 @@ body.light-theme .num-card::after {
 .news-card:hover::after,
 .num-card:hover::after {
   transform: translateX(100%);
-}
-
-/* 1.4 — 3D tilt CSS setup for exp-card and num-card (2.5D — no preserve-3d
-   needed; avoids conflict with overflow:hidden on exp-card) */
-.experiences-grid,
-.numbered-grid {
-  perspective: 1100px;
-}
-
-/* GSAP handles transform; will-change enables GPU compositing */
-.exp-card,
-.num-card {
-  will-change: transform;
 }
 
 .exp-card:hover,

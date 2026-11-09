@@ -8,7 +8,7 @@
  *  evento `activate` limpia caches obsoletas automaticamente.
  * ============================================================ */
 
-const CACHE_VERSION = 'v8'; // v8: hero animado (static/js/hero-demo/), style.css y main.js
+const CACHE_VERSION = 'v9'; // v9: sin scramble, cursor propio, Lenis ni tour automático
 const CACHE_NAME = `citystream-${CACHE_VERSION}`;
 
 // Shell estatico: archivos cacheados en install para offline-first

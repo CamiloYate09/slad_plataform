@@ -13,80 +13,12 @@ if (typeof Splitting !== 'undefined') {
   Splitting({ target: '[data-splitting]' });
 }
 
-// Hide hero subtitle early so scramble can reveal it
-const heroSubtitleEl = document.querySelector('.hero-subtitle');
-if (heroSubtitleEl && !prefersReducedMotion) {
-  heroSubtitleEl.style.opacity = '0';
-}
-
 // ============================================
 // DISABLE TRANSITIONS ON MOUNT
 // ============================================
 requestAnimationFrame(() => {
   document.body.classList.remove('no-transitions');
 });
-
-// ============================================
-// LENIS SMOOTH SCROLL
-// ============================================
-if (!prefersReducedMotion && typeof Lenis !== 'undefined') {
-  const lenis = new Lenis({
-    lerp: 0.1,
-    duration: 1.2,
-    smoothWheel: true
-  });
-
-  lenis.on('scroll', ScrollTrigger.update);
-
-  gsap.ticker.add((time) => {
-    lenis.raf(time * 1000);
-  });
-  gsap.ticker.lagSmoothing(0);
-}
-
-// ============================================
-// CUSTOM CURSOR — Desktop only
-// ============================================
-const cursor = document.querySelector('.cursor');
-const cursorFollower = document.querySelector('.cursor-follower');
-
-if (cursor && cursorFollower && window.matchMedia('(pointer: fine)').matches) {
-  let mouseX = 0, mouseY = 0;
-  let followerX = 0, followerY = 0;
-
-  document.addEventListener('mousemove', (e) => {
-    mouseX = e.clientX;
-    mouseY = e.clientY;
-    cursor.style.left = mouseX + 'px';
-    cursor.style.top = mouseY + 'px';
-  });
-
-  function animateFollower() {
-    followerX += (mouseX - followerX) * 0.15;
-    followerY += (mouseY - followerY) * 0.15;
-    cursorFollower.style.left = followerX + 'px';
-    cursorFollower.style.top = followerY + 'px';
-    requestAnimationFrame(animateFollower);
-  }
-  animateFollower();
-
-  const interactiveElements = document.querySelectorAll('a, button, .fnav-item, .exp-card, .cta-btn');
-  interactiveElements.forEach(el => {
-    el.addEventListener('mouseenter', () => {
-      cursor.classList.add('active');
-      cursorFollower.classList.add('active');
-    });
-    el.addEventListener('mouseleave', () => {
-      cursor.classList.remove('active');
-      cursorFollower.classList.remove('active');
-    });
-  });
-
-  document.body.style.cursor = 'none';
-  document.querySelectorAll('a, button').forEach(el => {
-    el.style.cursor = 'none';
-  });
-}
 
 // ============================================
 // SPLIT TEXT — hero title handled by Splitting.js
@@ -235,50 +167,6 @@ if (featuresItems.length > 0) {
 }
 
 // ============================================
-// TEXT SCRAMBLE — Hero subtitle
-// ============================================
-const SCRAMBLE_CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%&*()';
-
-function scrambleText(el, finalText, durationMs) {
-  const totalChars = finalText.length;
-  const framesPerChar = Math.round((durationMs / 1000 * 60) / totalChars);
-  let frame = 0;
-  let resolved = 0;
-
-  el.style.opacity = '1';
-
-  function tick() {
-    resolved = Math.floor(frame / framesPerChar);
-    if (resolved >= totalChars) {
-      el.textContent = finalText;
-      return;
-    }
-    let output = finalText.slice(0, resolved);
-    for (let i = resolved; i < totalChars; i++) {
-      const ch = finalText[i] === ' ' ? ' ' : SCRAMBLE_CHARS[Math.floor(Math.random() * SCRAMBLE_CHARS.length)];
-      output += ch;
-    }
-    el.textContent = output;
-    frame++;
-    requestAnimationFrame(tick);
-  }
-
-  requestAnimationFrame(tick);
-}
-
-function startSubtitleScramble() {
-  const subtitle = document.querySelector('.hero-subtitle');
-  if (!subtitle) return;
-  const finalText = subtitle.textContent.trim();
-  subtitle.style.opacity = '0';
-  if (prefersReducedMotion) {
-    subtitle.style.opacity = '1';
-    return;
-  }
-  scrambleText(subtitle, finalText, 1200);
-}
-
-// ============================================
 // GSAP SCROLL ANIMATIONS
 // ============================================
 // Stats band — count-up (funciona con o sin reduced-motion)
@@ -343,9 +231,7 @@ if (!prefersReducedMotion) {
     heroTl.from('.hero-title', { opacity: 0, y: 30, duration: 0.6 }, '-=0.3');
   }
 
-  heroTl
-    .call(() => { startSubtitleScramble(); }, null, '+=0.1')
-    .from('.hero-actions', { opacity: 0, y: 20, duration: 0.4 }, '+=0.35');
+  heroTl.from('.hero-actions', { opacity: 0, y: 20, duration: 0.4 }, '+=0.2');
 
   // Section headers — scroll reveal
   gsap.utils.toArray('.section-header').forEach(header => {
@@ -539,26 +425,6 @@ if (scrollIndicator) {
 }
 
 // ============================================
-// MAGNETIC CTA BUTTON — Desktop only
-// ============================================
-if (!prefersReducedMotion && window.matchMedia('(pointer: fine)').matches) {
-  const magnetBtn = document.querySelector('.hero-actions .btn-primary');
-  if (magnetBtn) {
-    magnetBtn.addEventListener('mousemove', (e) => {
-      const rect = magnetBtn.getBoundingClientRect();
-      const cx = rect.left + rect.width / 2;
-      const cy = rect.top + rect.height / 2;
-      const dx = (e.clientX - cx) * 0.35;
-      const dy = (e.clientY - cy) * 0.35;
-      gsap.to(magnetBtn, { x: dx, y: dy, duration: 0.3, ease: 'power2.out' });
-    });
-    magnetBtn.addEventListener('mouseleave', () => {
-      gsap.to(magnetBtn, { x: 0, y: 0, duration: 0.6, ease: 'elastic.out(1, 0.4)' });
-    });
-  }
-}
-
-// ============================================
 // ACTIVE NAV SECTION INDICATOR
 // ============================================
 const navSections = [
@@ -681,50 +547,6 @@ if (!prefersReducedMotion) {
       });
     }
   }
-}
-
-// ============================================
-// 3D TILT EFFECT — exp-cards & num-cards (Task 3.1)
-// ============================================
-if (!prefersReducedMotion && window.matchMedia('(pointer: fine)').matches) {
-  function applyTilt(cards, maxDeg) {
-    cards.forEach(card => {
-      card.addEventListener('mouseenter', () => {
-        gsap.to(card, { y: -6, duration: 0.3, ease: 'power2.out', overwrite: 'auto' });
-      });
-
-      card.addEventListener('mousemove', (e) => {
-        const rect = card.getBoundingClientRect();
-        const cx = rect.left + rect.width / 2;
-        const cy = rect.top + rect.height / 2;
-        const dx = (e.clientX - cx) / (rect.width / 2);
-        const dy = (e.clientY - cy) / (rect.height / 2);
-        const rotX = -dy * maxDeg;
-        const rotY = dx * maxDeg;
-        gsap.to(card, {
-          rotateX: rotX,
-          rotateY: rotY,
-          duration: 0.25,
-          ease: 'power2.out',
-          overwrite: 'auto'
-        });
-      });
-
-      card.addEventListener('mouseleave', () => {
-        gsap.to(card, {
-          rotateX: 0,
-          rotateY: 0,
-          y: 0,
-          duration: 0.8,
-          ease: 'elastic.out(1, 0.5)',
-          overwrite: 'auto'
-        });
-      });
-    });
-  }
-
-  applyTilt(document.querySelectorAll('.exp-card'), 6);
-  applyTilt(document.querySelectorAll('.num-card'), 7);
 }
 
 // ============================================

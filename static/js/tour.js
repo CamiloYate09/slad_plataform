@@ -1,9 +1,8 @@
 /* Tour guiado — resalta botones clave con una tarjeta de descripción.
-   Inspirado en el "tour" casero de openalert.site (localStorage + spotlight,
-   sin dependencias externas). */
+   Inspirado en el "tour" casero de openalert.site (spotlight, sin
+   dependencias externas). Solo arranca desde el botón "?" de la barra: si se
+   abriera solo, taparía el hero a todo visitante nuevo. */
 (() => {
-  const STORAGE_KEY = 'cs.tour.v1';
-
   const steps = [
     {
       selector: '.theme-toggle',
@@ -119,7 +118,6 @@
   }
 
   function end() {
-    localStorage.setItem(STORAGE_KEY, '1');
     if (overlay) overlay.remove();
     document.removeEventListener('keydown', onKeydown);
     window.removeEventListener('resize', reposition);
@@ -141,8 +139,4 @@
 
   const replayBtn = document.getElementById('tour-replay');
   if (replayBtn) replayBtn.addEventListener('click', start);
-
-  if (!localStorage.getItem(STORAGE_KEY)) {
-    window.addEventListener('load', () => setTimeout(start, 900));
-  }
 })();
