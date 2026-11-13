@@ -17,7 +17,7 @@ La página MUST seguir el orden de secciones definido abajo, partiendo del de fa
   4. Cifras (`.stats-band`)
   5. Funcionalidades en bento (`.features`, ver `features-bento`)
   6. Numbered features (`.numbered-features`, "Por qué CityStream" — 3 cards)
-  7. Audience personas (`.audience`, "¿Para quién es CityStream?" — 4 tarjetas, ver `audience-personas`)
+  7. Audience personas (`.audience`, "¿Para quién es CityStream?" — 4 tarjetas)
   8. Propuesta de valor (`.value-prop`, dos columnas)
   9. Experiencias (`.experiences`, tarjetas de ciudad con tags)
   10. Próximos eventos (`.news`)

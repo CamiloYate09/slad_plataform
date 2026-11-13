@@ -1,41 +1,38 @@
 # cta-dark-card Specification
 
 ## Purpose
-TBD - created by archiving change add-ux-parity-v2. Update Purpose after archive.
+Tarjeta oscura de cierre antes del footer, con la captura de correo que lleva al registro.
+
 ## Requirements
+
 ### Requirement: CTA Section — Tarjeta Oscura Pre-Footer
-
-La sección `.cta-section` SHALL reemplazar su implementación actual por una tarjeta oscura prominente estilo factory.ai, centrada en la página con un ancho máximo de 760px. La tarjeta SHALL contener:
-- Un label superior en monospace con punto naranja decorativo y texto en mayúsculas (ej. `• ÚNETE A LA RED`)
-- Un heading principal grande (h2) en texto claro
-- Un subtexto secundario en monospace con tono atenuado
-- Un botón/enlace CTA de acción principal con flecha (ej. `DESCARGAR APP →`) en estilo prominente
-- Fondo negro (`#0a0a0a`) con borde sutil `1px solid rgba(255,255,255,0.1)` y `border-radius: 12px`
-
-La tarjeta SHALL:
-- Tener padding interno generoso (`64px 48px` en desktop, `40px 24px` en mobile)
-- Mostrar hover state en el botón CTA (cambio de opacidad o background)
-- Ser funcional en ambos temas (siempre oscura, como factory.ai)
-
-La implementación anterior de `.cta-section` (texto simple centrado con botón básico) SHALL ser reemplazada completamente.
+La sección `.cta-section`, justo antes del footer, SHALL mostrar una tarjeta oscura `.cta-card` centrada, de 760px de ancho máximo, con fondo `#0a0a0a`, borde `1px solid rgba(255, 255, 255, 0.1)` y `border-radius: 16px`, oscura en los dos temas.
 
 #### Scenario: Tarjeta visible antes del footer
-
 - **WHEN** el usuario hace scroll hasta el final de la página antes del footer
-- **THEN** aparece una tarjeta oscura prominente con label, heading grande, subtexto y botón CTA
+- **THEN** aparece la tarjeta con label, heading, subtexto y captura de correo
+- **AND** su borde brilla en un ciclo de 5 s entre morado, azul y cian
 
 #### Scenario: Hover en botón CTA
-
 - **WHEN** el usuario hace hover sobre el botón de la tarjeta CTA
-- **THEN** el botón muestra un estado de hover con cambio visual (ej. fondo naranja, cambio de opacidad)
+- **THEN** el botón pasa a fondo naranja (`--accent-orange-hover`) con texto blanco y sube 2px
 
 #### Scenario: CTA en mobile
-
-- **WHEN** el viewport es ≤480px
-- **THEN** la tarjeta usa ancho completo con padding reducido y el texto es legible y el botón fácil de tocar
+- **WHEN** el viewport mide 768px o menos
+- **THEN** el padding de la tarjeta baja de `4rem 3rem` a `2.5rem 1.5rem`
+- **AND** en 480px o menos el campo y el botón se apilan y el botón ocupa todo el ancho, con al menos 44px de alto
 
 #### Scenario: CTA siempre oscura
-
 - **WHEN** el usuario activa el tema claro del sitio
-- **THEN** la tarjeta CTA se mantiene oscura (fondo negro), creando contraste intencional antes del footer
+- **THEN** la tarjeta CTA se mantiene oscura (fondo `#0a0a0a`), creando contraste intencional antes del footer
 
+### Requirement: Contenido de la Tarjeta CTA
+La tarjeta CTA SHALL contener, centrados: un label naranja en monospace y mayúsculas ("• Únete a la red"), un h2 blanco con el estilo de "Tipografía Editorial" (`visual-theme`), un subtexto en monospace atenuado y una captura de correo (`form[data-signup]`) con el botón `.cta-btn` "Crear cuenta →".
+
+#### Scenario: Captura de correo
+- **WHEN** el usuario escribe su correo y pulsa "Crear cuenta"
+- **THEN** el navegador abre `/registro.html` con el correo ya escrito, sin enviar nada desde la página
+
+#### Scenario: Botón en píldora blanca
+- **WHEN** la tarjeta se renderiza
+- **THEN** el botón es una píldora blanca con texto oscuro en mayúsculas
