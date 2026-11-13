@@ -1,8 +1,10 @@
 # animations Specification
 
 ## Purpose
-TBD - created by archiving change enhance-animation-impact. Update Purpose after archive.
+Animaciones y microinteracciones de la landing: tarjetas, CTA, navbar, cambio de tema, revelados ligados al scroll y su respeto a prefers-reduced-motion.
+
 ## Requirements
+
 ### Requirement: 3D Tilt Card Effect
 Las tarjetas .exp-card y .num-card SHALL responder al movimiento del mouse con una rotación 3D sutil (max 8deg) que crea sensación de profundidad y premium UI. Al salir el cursor, el card vuelve a neutral con ease elástico.
 
@@ -35,13 +37,6 @@ Los badges .section-label SHALL aparecer con una animación clip-path slide-in (
 - **WHEN** un .section-label entra al viewport durante el scroll
 - **THEN** el badge se revela con clip-path desde izquierda (0% width → 100% width)
 
-### Requirement: Value-Prop Heading Character Reveal
-El h2 de .value-prop-content SHALL tener animación de caracteres individuales igual que los demás headings con data-splitting.
-
-#### Scenario: Value-prop h2 entra al viewport
-- **WHEN** el h2 de value-prop entra al viewport
-- **THEN** los caracteres aparecen en stagger desde abajo (yPercent 110 → 0)
-
 ### Requirement: CTA Card Gradient Border Animation
 El .cta-card SHALL tener un borde animado de gradiente rotativo (conic-gradient CSS @keyframes) que da sensación de energía y movimiento, reforzando el call-to-action.
 
@@ -62,13 +57,6 @@ Las .news-card y .num-card SHALL mostrar un efecto de brillo (shine sweep) al ha
 #### Scenario: Hover sobre news-card o num-card
 - **WHEN** el cursor entra en una .news-card o .num-card
 - **THEN** aparece un destello luminoso que recorre la tarjeta de izquierda a derecha
-
-### Requirement: Variable Font Weight Bloom
-El hero title SHALL animar el font-weight de los caracteres individuales desde 100 (ultralight) hasta 700 (bold) sincronizado con la entrada stagger de chars, creando un efecto "bloom" tipográfico.
-
-#### Scenario: Carga inicial de hero
-- **WHEN** la página carga y la hero timeline inicia
-- **THEN** los chars del hero title revelan con font-weight progresivo de 100 a 700
 
 ### Requirement: Glassmorphism Navbar on Scroll
 El navbar en estado `.scrolled` SHALL usar `backdrop-filter: blur(20px) saturate(180%)` con fondo semitransparente y noise texture para un efecto glassmorphism premium.
@@ -107,11 +95,11 @@ Todos los botones primarios SHALL responder al `:active` con `scale(0.96)` en 10
 - **THEN** el botón escala a 0.96 en 100ms y regresa en 250ms al soltar
 
 ### Requirement: CSS Containment on Heavy Sections
-Las secciones con animaciones complejas SHALL usar `contain: layout style paint` para aislar su renderizado y mejorar el scroll performance.
+Las secciones con animaciones complejas SHALL usar `contain: style paint` para aislar su renderizado y mejorar el scroll performance, sin `layout` para no alterar el posicionamiento de su contenido.
 
 #### Scenario: Render de secciones animadas
-- **WHEN** el navegador renderiza `.features`, `.experiences`, `.numbered-features`, `.cta-section`, `.news`
-- **THEN** los cambios internos no provocan recalculations en el resto del DOM
+- **WHEN** el navegador renderiza `.numbered-features`, `.cta-section` o `.news`
+- **THEN** los cambios internos de estilo y pintado no provocan recálculos en el resto del DOM
 
 ### Requirement: Botones Magnéticos
 Los CTAs primarios (`.btn-primary`, `.cta-btn`) SHALL responder al puntero en desktop
@@ -129,15 +117,12 @@ directo sin librerías. El efecto MUST respetar capacidades de entrada y
 - **THEN** el efecto magnético está desactivado y el botón permanece estático
 
 ### Requirement: Reveal de Media Ligado a Scroll
-Las imágenes clave (`.features-item-image`, `.value-prop-image`) SHALL revelar con una
-animación de `opacity`/`scale` ligada a su posición en el viewport usando scroll-driven
-animations nativas de CSS, sin sumar trabajo al main thread.
+La imagen de la propuesta de valor (`.value-prop-image`) SHALL revelar con una animación de `opacity`/`scale` ligada a su posición en el viewport usando scroll-driven animations nativas de CSS, sin sumar trabajo al main thread.
 
 #### Scenario: Imagen entra al viewport
-- **WHEN** una imagen clave entra al viewport durante el scroll en un navegador con soporte de `animation-timeline: view()`
+- **WHEN** la imagen entra al viewport durante el scroll en un navegador con soporte de `animation-timeline: view()`
 - **THEN** la imagen anima `opacity` y `scale` en función de `animation-range` (de entrada a posición de reposo)
 
 #### Scenario: Sin soporte o movimiento reducido
 - **WHEN** el navegador no soporta `animation-timeline` o el usuario tiene `prefers-reduced-motion: reduce`
 - **THEN** la imagen se muestra en su estado final estático sin animación
-

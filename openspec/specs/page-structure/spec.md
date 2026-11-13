@@ -1,32 +1,36 @@
 # page-structure Specification
 
 ## Purpose
-TBD - created by archiving change rebuild-factory-identical. Update Purpose after archive.
+Qué secciones tiene la landing, en qué orden y qué contiene cada una que no tenga spec propia.
+
 ## Requirements
+
 ### Requirement: Factory.ai Section Ordering
-La página MUST seguir el orden de secciones idéntico a factory.ai, adaptado al contenido de CityStream.
+La página MUST seguir el orden de secciones definido abajo, partiendo del de factory.ai y adaptado al contenido de CityStream.
 
 #### Scenario: Secciones en orden factory.ai
 - **WHEN** la página renderiza completa
 - **THEN** las secciones aparecen en este orden exacto:
   1. Sticky navbar (logo, nav items, CTAs)
-  2. Hero section (headline, subtitle, CTA, progress animation)
-  3. Trusted-by / partners carousel (logos scrolling)
-  4. **Stats section (4 métricas: usuarios, ciudades, conexiones, eventos)**
-  5. Product features with tabs (4 tabs: Ciudades, Eventos, Personas, Conciertos)
-  6. Numbered features ("Por qué CityStream" — 3 cards)
-  7. **Audience personas ("¿Para quién es CityStream?" — 4 tarjetas, sin equivalente en factory.ai — ver `audience-personas`)**
-  8. Value proposition section (two-column, enterprise-style messaging)
-  9. Experience cards grid (Bogotá, Medellín, Cartagena con tags)
-  10. News / Novedades section (4 cards)
-  11. CTA section
-  12. Card-style rounded footer
+  2. Hero (`.hero`: headline, subtitle, captura de correo, escena de la app)
+  3. Carrusel de ciudades (`.trusted-by`)
+  4. Cifras (`.stats-band`)
+  5. Funcionalidades en bento (`.features`, ver `features-bento`)
+  6. Numbered features (`.numbered-features`, "Por qué CityStream" — 3 cards)
+  7. Audience personas (`.audience`, "¿Para quién es CityStream?" — 4 tarjetas, ver `audience-personas`)
+  8. Propuesta de valor (`.value-prop`, dos columnas)
+  9. Experiencias (`.experiences`, tarjetas de ciudad con tags)
+  10. Próximos eventos (`.news`)
+  11. Preguntas frecuentes (`.faq`)
+  12. CTA (`.cta-section`)
+  13. Footer (`.footer`)
 
 #### Scenario: No existen secciones fuera del orden definido
 - **WHEN** se inspecciona el HTML
-- **THEN** no hay secciones adicionales entre las 12 definidas
-- **AND** la sección `.stats` está posicionada entre `.trusted-by` y `.features`
-- **AND** la sección `.audience` está posicionada entre `.numbered-features` y `.value-prop`
+- **THEN** no hay secciones adicionales entre las 13 definidas
+- **AND** `.stats-band` está entre `.trusted-by` y `.features`
+- **AND** `.audience` está entre `.numbered-features` y `.value-prop`
+- **AND** `.faq` está entre `.news` y `.cta-section`
 
 ### Requirement: Trusted-By Logo Carousel
 La página MUST incluir una sección de logos de aliados/ciudades que se desplazan horizontalmente en loop infinito, posicionada inmediatamente después del hero.
@@ -44,26 +48,6 @@ La página MUST incluir una sección de logos de aliados/ciudades que se desplaz
 - **AND** cada imagen usa `<picture><source srcset="*.webp" type="image/webp"><img src="*.jpg"></picture>`
 - **AND** los elementos están duplicados en el HTML con `aria-hidden="true"` para crear el efecto de loop infinito
 - **AND** las imágenes se renderizan como círculos de 48×48px con `object-fit: cover` y `border-radius: 50%`
-
-### Requirement: Tabbed Feature Showcase
-La sección de features MUST usar un sistema de tabs interactivo (no grid de cards estático) para presentar las 4 funcionalidades principales de CityStream.
-
-#### Scenario: Tabs de features con contenido dinámico
-- **WHEN** la sección features renderiza
-- **THEN** se muestran 4 tab buttons: Ciudades, Eventos, Personas, Conciertos
-- **AND** el primer tab está activo por defecto
-- **AND** cada tab tiene un indicador visual de estado activo (borde, color, o fondo)
-
-#### Scenario: Cambio de tab con animación
-- **WHEN** el usuario hace clic en un tab
-- **THEN** el contenido del panel anterior se desvanece con GSAP (opacity 1→0, 200ms)
-- **AND** el nuevo contenido se revela con GSAP (opacity 0→1, y: 20→0, 400ms)
-- **AND** el indicador de tab activo se mueve al tab seleccionado
-
-#### Scenario: Contenido de cada tab
-- **WHEN** un tab está activo
-- **THEN** el panel muestra: headline, descripción de 2-3 líneas, y un link "Más información" con flecha
-- **AND** opcionalmente muestra una imagen o ilustración representativa
 
 ### Requirement: Value Proposition Section
 La página MUST incluir una sección de propuesta de valor con layout de dos columnas, reemplazando la sección newsletter actual, posicionada entre features y experiencias.
@@ -125,4 +109,3 @@ La página MUST incluir una sección de métricas clave posicionada entre el car
 - **WHEN** la sección es visible
 - **THEN** los valores mostrados corresponden a datos actualizados del equipo CityStream
 - **AND** los valores usan sufijos de escala ("K+" para miles, "+" para exactos)
-

@@ -1,8 +1,10 @@
 # static-hardening Specification
 
 ## Purpose
-TBD - created by archiving change harden-security. Update Purpose after archive.
+Endurecimiento del sitio estático desde el propio HTML: CSP, integridad de recursos externos y política de Referer.
+
 ## Requirements
+
 ### Requirement: Subresource Integrity en todos los recursos CDN externos
 Todos los `<script>` y `<link>` que cargan desde CDN externos SHALL incluir los atributos `integrity="sha384-..."` y `crossorigin="anonymous"`, de modo que el navegador rechace cualquier archivo cuyo contenido no coincida con el hash declarado.
 
@@ -27,10 +29,9 @@ El `<head>` del documento SHALL contener una meta tag `Content-Security-Policy` 
 - **AND** el script malicioso no se ejecuta
 
 #### Scenario: Recursos legítimos cargando
-- **WHEN** el sitio carga sus scripts y estilos normales (GSAP, Lenis, Splitting, Supabase, Cloudflare)
-- **THEN** todos los recursos cargan correctamente porque sus dominios están en la allowlist
-
----
+- **WHEN** el sitio carga sus recursos: scripts, estilos, fuentes e imágenes propios (`'self'`) y Cloudflare Web Analytics
+- **THEN** todos cargan correctamente porque están en la allowlist
+- **AND** `script-src` no incluye ningún CDN de librerías: las de terceros se sirven desde `static/vendor/`
 
 ### Requirement: Referrer Policy meta tag
 El `<head>` SHALL contener `<meta name="referrer" content="strict-origin-when-cross-origin">` para evitar que la URL completa de la página sea enviada como Referer a terceros.
@@ -38,4 +39,3 @@ El `<head>` SHALL contener `<meta name="referrer" content="strict-origin-when-cr
 #### Scenario: Usuario hace clic en enlace externo
 - **WHEN** un usuario hace clic en un enlace a YouTube, Facebook, o cualquier sitio externo
 - **THEN** solo se envía el origen (`https://citystream.tech`) como Referer, no la URL completa ni parámetros
-
