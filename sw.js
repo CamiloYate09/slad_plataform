@@ -8,7 +8,7 @@
  *  evento `activate` limpia caches obsoletas automaticamente.
  * ============================================================ */
 
-const CACHE_VERSION = 'v19'; // v19: títulos editoriales, bento de funcionalidades, sin Splitting.js
+const CACHE_VERSION = 'v20'; // v20: sin el evento themechange ni reglas muertas de .cta-card::before
 const CACHE_NAME = `citystream-${CACHE_VERSION}`;
 
 // Shell estatico: archivos cacheados en install para offline-first

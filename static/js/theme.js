@@ -19,9 +19,6 @@
   function applyTheme() {
     var isLight = document.body.classList.toggle('light-theme');
     try { localStorage.setItem(KEY, isLight ? 'light' : 'dark'); } catch (e) {}
-    // main.js escucha esto para repintar lo que no puede hacer solo con CSS
-    // (chars del hero con background inline, canvas de particulas).
-    document.dispatchEvent(new CustomEvent('themechange', { detail: { isLight: isLight } }));
   }
 
   document.addEventListener('click', function (e) {

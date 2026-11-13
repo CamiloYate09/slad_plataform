@@ -2716,10 +2716,6 @@ body.light-theme .num-card::after {
 }
 
 /* Light theme adaptations */
-body.light-theme .cta-card::before {
-  opacity: 0.6;
-}
-
 body.light-theme .cta-btn {
   animation: cta-glow-pulse-light 2.8s ease-in-out infinite;
 }
@@ -2762,7 +2758,6 @@ body.light-theme .cta-btn:hover {
   }
 
   /* Disable new animations for reduced-motion */
-  .cta-card::before,
   .cta-card {
     animation: none;
   }

@@ -43,11 +43,15 @@ Los badges .section-label SHALL aparecer con una animación clip-path slide-in (
 - **THEN** el badge se revela con clip-path desde izquierda (0% width → 100% width)
 
 ### Requirement: CTA Card Gradient Border Animation
-El .cta-card SHALL tener un borde animado de gradiente rotativo (conic-gradient CSS @keyframes) que da sensación de energía y movimiento, reforzando el call-to-action.
+El `.cta-card` SHALL tener un brillo de borde animado con `box-shadow` (`@keyframes cta-border-glow`) que alterna morado, azul y cian en un ciclo de 5 s, reforzando el call-to-action.
 
 #### Scenario: Usuario llega al CTA
-- **WHEN** el .cta-card está en viewport
-- **THEN** el borde muestra un gradiente animado en rotación continua
+- **WHEN** el `.cta-card` está en viewport
+- **THEN** el borde brilla y pasa de morado a azul y a cian en un ciclo continuo de 5 s
+
+#### Scenario: Movimiento reducido
+- **WHEN** el usuario tiene `prefers-reduced-motion: reduce` activo
+- **THEN** el borde no se anima
 
 ### Requirement: CTA Button Glow Pulse
 El .cta-btn SHALL tener una animación CSS de pulsación de glow (box-shadow) continua que llama la atención hacia el botón de acción principal.
