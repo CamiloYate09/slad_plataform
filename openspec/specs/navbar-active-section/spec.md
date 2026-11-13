@@ -6,7 +6,7 @@ Cómo marca la barra de navegación la sección que el usuario tiene en pantalla
 ## Requirements
 
 ### Requirement: Enlace de la Sección Visible
-El navbar SHALL marcar con `.nav-active` el enlace de la sección que cruza la banda central del viewport. `main.js` SHALL observar con un único `IntersectionObserver` (`rootMargin: -40% 0px -40% 0px`) las secciones `#inicio`, `#features`, `#experiencias` y `#contacto` que tengan un enlace en `.nav-links`. `.nav-active` SHALL pintar el enlace en `--accent-orange-hover` con el subrayado completo.
+El navbar SHALL marcar con `.nav-active` el enlace de la sección que cruza la banda central del viewport. `main.js` SHALL observar con un único `IntersectionObserver` (`rootMargin: -40% 0px -40% 0px`) las secciones `#inicio`, `#features`, `#ciudades` y `#contacto` que tengan un enlace en `.nav-links`. `.nav-active` SHALL pintar el enlace en `--accent-orange-hover` con el subrayado completo.
 
 #### Scenario: Arriba de la página
 - **WHEN** la página carga y el usuario está en el hero

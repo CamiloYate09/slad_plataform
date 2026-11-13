@@ -6,7 +6,7 @@ Barra de navegación y pie de página de la landing: estructura, estados al hace
 ## Requirements
 
 ### Requirement: Transparent-to-Solid Navbar
-El navbar MUST ser sticky y contener el logo a la izquierda, los enlaces de sección (Características, Experiencias, Contacto) en el centro y, a la derecha, el botón del tutorial, el cambio de tema, "Iniciar sesión" y "Crear cuenta". Es transparente arriba del todo y se vuelve sólido al hacer scroll, controlado por un listener de scroll en `main.js`.
+El navbar MUST ser sticky y contener el logo a la izquierda, los enlaces de sección (Características, Ciudades, Contacto) en el centro y, a la derecha, el botón del tutorial, el cambio de tema, "Iniciar sesión" y "Crear cuenta". Es transparente arriba del todo y se vuelve sólido al hacer scroll, controlado por un listener de scroll en `main.js`.
 
 #### Scenario: Navbar con estructura factory.ai
 - **WHEN** la página renderiza

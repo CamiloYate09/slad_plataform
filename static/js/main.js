@@ -169,6 +169,14 @@ if (cityTabs) {
     selectCity((target + tabs.length) % tabs.length, true);
   });
 
+  // Los enlaces con data-city (hero, pie) eligen su ciudad; el ancla hace el scroll
+  document.querySelectorAll('a[data-city]').forEach((link) => {
+    link.addEventListener('click', () => {
+      const index = tabs.findIndex((tab) => tab.id === `tab-${link.dataset.city}`);
+      if (index !== -1) selectCity(index, false);
+    });
+  });
+
   cityPicker.classList.add('is-enhanced');
   cityTabs.hidden = false;
   selectCity(0, false);
@@ -217,31 +225,11 @@ function reveal(selector, { trigger, x = 0, y = 40, stagger = 0, at = 0.85 } = {
   else els.forEach((el) => whenInView(el, show([el]), at));
 }
 
-// Stats band — count-up. The HTML holds the final figure (crawlers, no JS):
-// it only counts from 0 where it will be seen moving
-document.querySelectorAll('.stat-number').forEach((el) => {
-  const target = parseFloat(el.dataset.count) || 0;
-  const suffix = el.dataset.suffix || '';
-  const render = (v) => { el.textContent = Math.round(v).toLocaleString('es-CO') + suffix; };
-  if (prefersReducedMotion) return;
-  render(0);
-  whenInView(el, () => {
-    const start = performance.now();
-    const tick = (now) => {
-      const p = Math.min(1, (now - start) / 1600);
-      render(target * (1 - (1 - p) ** 3));
-      if (p < 1) requestAnimationFrame(tick);
-    };
-    requestAnimationFrame(tick);
-  }, 0.9);
-});
-
 if (!prefersReducedMotion) {
   reveal('.section-header');
   reveal('.bento-card', { trigger: '.bento', stagger: 0.08 });
   reveal('.cta-card', { trigger: '.cta-section' });
   reveal('.how-step', { trigger: '.how-steps', stagger: 0.1 });
-  reveal('.exp-card', { trigger: '.experiences-grid', stagger: 0.15 });
   reveal('.news-card', { trigger: '.news-grid', stagger: 0.1 });
   reveal('.footer', { y: 30, at: 0.9 });
   reveal('.footer-col', { trigger: '.footer-grid', y: 20, stagger: 0.1, at: 0.9 });
@@ -271,7 +259,7 @@ onScrollFrame();
 const navSections = [
   { id: 'inicio', href: '#inicio' },
   { id: 'features', href: '#features' },
-  { id: 'experiencias', href: '#experiencias' },
+  { id: 'ciudades', href: '#ciudades' },
   { id: 'contacto', href: '#contacto' }
 ];
 const navActive = new IntersectionObserver((entries) => {

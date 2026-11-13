@@ -1,7 +1,7 @@
 # layout-animations Specification
 
 ## Purpose
-Espaciado, retícula y comportamiento al hacer scroll de la landing: revelados de secciones, hovers de enlaces y tarjetas, y parallax.
+Espaciado de la landing, revelados al hacer scroll y hovers de enlaces y botones primarios.
 
 ## Requirements
 
@@ -14,22 +14,6 @@ Los links de navegación y footer SHALL tener un efecto de subrayado que se reve
 - **AND** un pseudo-elemento `::after` crece de `width: 0` a `width: 100%` debajo del texto
 - **AND** la transición es `all 300ms ease-in-out`
 - **AND** al salir del hover, el underline se retrae
-
-### Requirement: Card Hover Effects
-Las cards MUST tener un hover refinado que eleva, agrega sombra con glow de color accent, y el borde se aclara al hover. Los botones primarios MUST tener scale sutil y gradient shift al hover.
-
-#### Scenario: Feature card hover con glow
-- **WHEN** el usuario hace hover sobre una exp-card
-- **THEN** la card se eleva `translateY(-4px)`
-- **AND** aparece un `box-shadow` con glow sutil del color accent (`0 8px 32px rgba(91, 66, 243, 0.15)`)
-- **AND** el borde cambia a `rgba(255, 255, 255, 0.15)` (se aclara sutilmente)
-- **AND** la imagen interna hace zoom sutil `scale(1.05)` con transicion 0.5s
-
-#### Scenario: Boton primario hover mejorado
-- **WHEN** el usuario hace hover sobre btn-primary
-- **THEN** el boton se eleva `translateY(-2px)` y escala `scale(1.02)`
-- **AND** el background-position del gradiente se desplaza a `100% 0`
-- **AND** aparece box-shadow con glow de brand color
 
 ### Requirement: Espaciado y Ancho de la Página
 El `html` MUST tener `max-width: 1920px` centrado. Las secciones MUST usar `padding: var(--section-gap) var(--px-desktop)`, con `--section-gap: 5rem` y `--px-desktop: 2.25rem` (36px).
@@ -52,7 +36,7 @@ Los bloques que aparecen al hacer scroll SHALL marcarse desde `main.js` con `[da
 #### Scenario: Bloque entra en pantalla
 - **WHEN** el borde superior de un bloque marcado alcanza el 85% de la altura del viewport
 - **THEN** recibe `.is-revealed` y pasa de `opacity: 0` y 40px más abajo a su posición, en 0,8 s con `cubic-bezier(0.25, 0.46, 0.45, 0.94)`
-- **AND** en los grupos de tarjetas cada una se retrasa respecto a la anterior (0,15 s en experiencias, 0,1 s en cómo funciona y en eventos, 0,08 s en el bento)
+- **AND** en los grupos de tarjetas cada una se retrasa respecto a la anterior (0,1 s en cómo funciona y en eventos, 0,08 s en el bento)
 
 #### Scenario: Bloque ya superado
 - **WHEN** la página se abre en un ancla o el navegador restaura el scroll más abajo
@@ -66,13 +50,11 @@ Los bloques que aparecen al hacer scroll SHALL marcarse desde `main.js` con `[da
 - **WHEN** JavaScript no se ejecuta o el usuario tiene `prefers-reduced-motion: reduce`
 - **THEN** ningún bloque se marca y todo el contenido se ve completo y quieto
 
-### Requirement: Parallax de Fotos de Ciudad
-Las fotos de las tarjetas de experiencias (`.exp-card .exp-image img`) SHALL desplazarse levemente dentro de su tarjeta según su posición en el viewport, con scroll-driven animations de CSS (`animation-timeline: view()`) sobre la propiedad `translate`.
+### Requirement: Botón Primario al Pasar
+Los botones primarios (`.btn-primary`) MUST elevarse, escalar un poco y desplazar su degradado al pasar el cursor.
 
-#### Scenario: Foto atraviesa el viewport
-- **WHEN** una tarjeta de experiencia cruza el viewport en un navegador con soporte de `animation-timeline`
-- **THEN** su foto pasa de `translate: 0 12px` a `translate: 0 -12px`
-
-#### Scenario: Sin soporte o movimiento reducido
-- **WHEN** el navegador no soporta `animation-timeline` o el usuario tiene `prefers-reduced-motion: reduce`
-- **THEN** la foto queda quieta
+#### Scenario: Hover sobre un botón primario
+- **WHEN** el usuario hace hover sobre un `.btn-primary`
+- **THEN** el botón se eleva `translateY(-2px)` y escala `scale(1.02)`
+- **AND** el background-position del gradiente se desplaza a `100% 0`
+- **AND** aparece un box-shadow con glow de los colores de marca

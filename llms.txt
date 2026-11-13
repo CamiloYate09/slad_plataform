@@ -15,7 +15,7 @@ CityStream esta actualmente en fase de pre-lanzamiento; ya puedes crear tu cuent
 
 - [Pagina principal](https://citystream.tech/)
 - [Funcionalidades](https://citystream.tech/#features)
-- [Experiencias por ciudad](https://citystream.tech/#experiencias)
+- [Ciudades y planes](https://citystream.tech/#ciudades)
 - [Crear cuenta](https://citystream.tech/registro.html)
 - [Contacto](https://citystream.tech/#contacto)
 

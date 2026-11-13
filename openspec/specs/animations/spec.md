@@ -12,18 +12,6 @@ Los ambient orbs del hero SHALL responder al movimiento del mouse desplazándose
 - **WHEN** el usuario mueve el mouse sobre la sección hero en desktop
 - **THEN** los orbs se desplazan con un parallax sutil (max ±20px) en dirección opuesta al cursor
 
-### Requirement: Stats Section Entrance Animation
-Las cifras de `.stats-band` (`.stat-number` con `data-count`) SHALL contar desde 0 hasta su valor final cuando entran en pantalla. Las tarjetas (`.stat-card`) no tienen animación de entrada propia. El HTML SHALL contener ya la cifra final, para que se lea sin JavaScript.
-
-#### Scenario: Stats entran al viewport
-- **WHEN** el borde superior de una `.stat-number` alcanza el 90% de la altura del viewport
-- **THEN** cuenta de 0 a `data-count` en 1,6 s con easing de salida y añade `data-suffix` (por ejemplo "%")
-- **AND** el número usa el formato `es-CO`
-
-#### Scenario: Movimiento reducido
-- **WHEN** el usuario tiene `prefers-reduced-motion: reduce` activo
-- **THEN** la cifra se muestra con su valor final, sin contar
-
 ### Requirement: Section Label Clip-Path Reveal
 Los badges .section-label SHALL aparecer con una animación clip-path slide-in (de izquierda a derecha) al entrar al viewport, más cinematográfica que un simple fade+y.
 
@@ -59,13 +47,6 @@ El navbar en estado `.scrolled` SHALL usar `backdrop-filter: blur(20px) saturate
 #### Scenario: Usuario vuelve al top
 - **WHEN** el scroll vuelve a 0
 - **THEN** el navbar vuelve a transparente sin backdrop-filter
-
-### Requirement: Animated Gradient Text via @property
-Los elementos `.gradient-text` SHALL tener el ángulo del gradiente animándose continuamente mediante `@property --gradient-angle` para dar la sensación de gradient "fluido".
-
-#### Scenario: Heading gradient-text visible
-- **WHEN** un elemento con clase `.gradient-text` está en el DOM
-- **THEN** el gradiente rota sutilmente en un ciclo continuo de 8s
 
 ### Requirement: View Transition on Theme Toggle
 El cambio de tema dark/light SHALL usar `document.startViewTransition()` para una transición de clip circular que se expande desde el botón del tema, con degradación elegante si el API no está disponible.

@@ -59,7 +59,6 @@
 .ri-megaphone-line:before { content: "\f385"; }
 .ri-menu-line:before { content: "\ef3e"; }
 .ri-moon-line:before { content: "\ef75"; }
-.ri-music-2-line:before { content: "\ef83"; }
 .ri-question-line:before { content: "\f045"; }
 .ri-shield-check-line:before { content: "\f100"; }
 .ri-sun-line:before { content: "\f1bf"; }
@@ -117,7 +116,8 @@
   /* Acento legible sobre el fondo del tema activo.
      --accent-cyan (#00ddeb) brilla sobre el fondo oscuro pero no alcanza
      contraste sobre #fafafa, asi que en light-theme se sustituye. Lo usan
-     los enlaces y los anillos de foco de las paginas legales y de auth. */
+     los enlaces y los anillos de foco de las paginas legales y de auth, y
+     en la landing la etiqueta y los focos del selector de ciudad. */
   --accent-ink: var(--accent-cyan);
 
   /* Spacing */
@@ -133,10 +133,6 @@
   /* Ambient glow colors */
   --glow-purple: rgba(175, 64, 255, 0.18);
   --glow-blue: rgba(91, 66, 243, 0.12);
-  --glow-cyan: rgba(0, 221, 235, 0.08);
-
-  /* Dark contrast band */
-  --bg-dark-band: #111111;
 
   /* Glassmorphism tokens */
   --glass-bg: rgba(255, 255, 255, 0.05);
@@ -229,14 +225,6 @@ img {
 
 ul {
   list-style: none;
-}
-
-/* Gradient text */
-.gradient-text {
-  color: transparent;
-  background: var(--grad-brand);
-  -webkit-background-clip: text;
-  background-clip: text;
 }
 
 /* Section pre-labels */
@@ -704,18 +692,71 @@ body.no-transitions *::after {
   white-space: nowrap;
 }
 
-.city-plans {
+/* Foto de la ciudad a un lado; etiqueta, descripción y planes al otro */
+.city-panel__body {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 0.75rem;
-  margin-bottom: 1.5rem;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: 2rem;
+  align-items: start;
+}
+
+.city-photo {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.city-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Duotone de marca: integra las fotos en la paleta morado→cian */
+.city-photo::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(175, 64, 255, 0.55), rgba(0, 221, 235, 0.55));
+  mix-blend-mode: soft-light;
+  opacity: 0.5;
+  pointer-events: none;
+  z-index: 1;
+}
+
+body.light-theme .city-photo::before {
+  opacity: 0.28;
+}
+
+.city-panel__tag {
+  display: inline-block;
+  margin-bottom: 0.5rem;
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent-ink);
+}
+
+.city-panel__desc {
+  margin-bottom: 1.25rem;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+}
+
+.city-plans {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 
 .city-plan {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
-  padding: 1.5rem;
+  gap: 0.35rem;
+  padding: 1rem 1.25rem;
   border: 1px solid var(--border-base);
   border-radius: var(--radius-md);
   background: var(--bg-card);
@@ -742,8 +783,9 @@ body.no-transitions *::after {
 }
 
 @media (max-width: 860px) {
-  .city-plans {
+  .city-panel__body {
     grid-template-columns: 1fr;
+    gap: 1.25rem;
   }
 }
 
@@ -1146,22 +1188,6 @@ body.light-theme .bento-pill--hot {
   }
 }
 
-/* Duotone brand overlay — integra fotos a la paleta morado→cyan */
-.exp-image::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, rgba(175, 64, 255, 0.55), rgba(0, 221, 235, 0.55));
-  mix-blend-mode: soft-light;
-  opacity: 0.5;
-  pointer-events: none;
-  z-index: 1;
-}
-
-body.light-theme .exp-image::before {
-  opacity: 0.28;
-}
-
 /* ============================================
    CÓMO FUNCIONA — tres pasos, justo después del bento
    ============================================ */
@@ -1207,144 +1233,6 @@ body.light-theme .exp-image::before {
   .how-steps {
     grid-template-columns: 1fr;
   }
-}
-
-/* ============================================
-   EXPERIENCES — Card grid
-   ============================================ */
-.experiences {
-  padding: var(--section-gap) var(--px-desktop);
-  max-width: 1440px;
-  margin: 0 auto;
-  position: relative;
-  overflow: hidden;
-}
-
-.experiences::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(ellipse 70% 50% at 50% 0%, rgba(0, 221, 235, 0.07), transparent 70%),
-    radial-gradient(ellipse at 0% 50%, var(--glow-cyan) 0%, transparent 65%);
-  pointer-events: none;
-  z-index: 0;
-}
-
-.experiences > * {
-  position: relative;
-  z-index: 1;
-}
-
-.experiences-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem;
-  margin-bottom: 2.5rem;
-}
-
-.exp-card {
-  background: var(--glass-bg);
-  border: 1px solid var(--glass-border);
-  border-radius: 16px;
-  overflow: hidden;
-  backdrop-filter: var(--glass-blur);
-  -webkit-backdrop-filter: var(--glass-blur);
-  transition: transform var(--duration-base), border-color var(--duration-base), box-shadow var(--duration-base);
-}
-
-.exp-card:hover {
-  border-color: var(--border-hover);
-  box-shadow: var(--shadow-premium), 0 8px 32px rgba(0, 0, 0, 0.4);
-}
-
-/* A small lift on hover, wherever there is hover */
-@media (hover: hover) {
-  .exp-card:hover {
-    transform: translateY(-4px);
-  }
-}
-
-.exp-image {
-  overflow: hidden;
-  position: relative;
-}
-
-.exp-image::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, transparent 50%, rgba(10, 10, 10, 0.6) 100%);
-  pointer-events: none;
-  z-index: 1;
-}
-
-.exp-image {
-  height: 200px;
-}
-
-.exp-image img {
-  width: 100%;
-  height: 260px;
-  margin-top: -30px;
-  object-fit: cover;
-  object-position: center center;
-  transition: transform 0.5s ease;
-}
-
-.exp-card:hover .exp-image img {
-  transform: scale(1.05);
-}
-
-.exp-content {
-  padding: 1.5rem;
-}
-
-.exp-tag {
-  display: inline-block;
-  padding: 0.2rem 0.75rem;
-  background: rgba(175, 64, 255, 0.12);
-  border: 1px solid rgba(175, 64, 255, 0.2);
-  border-radius: 50px;
-  font-size: var(--fs-xs);
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  color: #c084fc;
-  margin-bottom: 0.75rem;
-}
-
-.exp-tag.tag-green {
-  background: rgba(52, 211, 153, 0.12);
-  border-color: rgba(52, 211, 153, 0.2);
-  color: var(--accent-green);
-}
-
-.exp-tag.tag-cyan {
-  background: rgba(0, 221, 235, 0.12);
-  border-color: rgba(0, 221, 235, 0.2);
-  color: var(--accent-cyan);
-}
-
-.exp-content h3 {
-  font-size: var(--fs-h3);
-  font-weight: 600;
-  margin-bottom: 0.5rem;
-}
-
-.exp-content p {
-  color: var(--text-secondary);
-  line-height: 1.6;
-  margin-bottom: 1rem;
-}
-
-.experiences-more {
-  text-align: center;
-}
-
-.experiences-more-note {
-  color: var(--text-secondary);
-  font-size: var(--fs-sm);
 }
 
 /* ============================================
@@ -1464,90 +1352,6 @@ body.light-theme .exp-image::before {
   }
 }
 
-/* ============================================
-   STATS BAND (proof-points) — inspirado en robot.com
-   ============================================ */
-.stats-band {
-  padding: var(--section-gap) var(--px-desktop);
-  max-width: 1440px;
-  margin: 0 auto;
-}
-
-.stats-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 1rem;
-}
-
-.stat-card {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 0.75rem;
-  padding: 1.75rem 1.5rem;
-  border-radius: 16px;
-  min-height: 180px;
-  text-align: center;
-  align-items: center;
-}
-
-.stat-number {
-  font-size: clamp(2.5rem, 5vw, 3.5rem);
-  font-weight: 800;
-  line-height: 1;
-  font-variant-numeric: tabular-nums;
-}
-
-.stat-number--solid {
-  color: var(--white);
-}
-
-.stat-label {
-  font-size: 0.9rem;
-  color: var(--text-secondary);
-  line-height: 1.4;
-}
-
-.stat-card--dark {
-  background: var(--bg-dark-band);
-  border: 1px solid var(--border-base);
-}
-
-.stat-card--accent {
-  background: linear-gradient(135deg, #af40ff 0%, #5b42f3 50%, #00ddeb 100%);
-}
-
-.stat-card--accent .stat-label {
-  color: rgba(255, 255, 255, 0.85);
-}
-
-.stat-card--pillars {
-  background: var(--bg-card);
-  border: 1px solid var(--border-base);
-}
-
-.stat-icon-row {
-  display: flex;
-  gap: 0.75rem;
-  font-size: 1.5rem;
-  color: var(--accent-cyan);
-}
-
-.stat-card--quote {
-  background: var(--bg-dark-band);
-  border: 1px solid var(--border-base);
-  background-image: radial-gradient(rgba(255, 255, 255, 0.16) 1.5px, transparent 1.5px);
-  background-size: 14px 14px;
-}
-
-.stat-quote {
-  font-family: var(--font-display);
-  font-size: 1.25rem;
-  font-weight: 600;
-  line-height: 1.3;
-  color: var(--text-primary);
-}
-
 /* Footer badge — acento animado (personalidad) inspirado en robot.com */
 .footer-badge-dot {
   display: inline-block;
@@ -1592,14 +1396,6 @@ body.light-theme .exp-image::before {
   0%, 88%, 100% { opacity: 0.35; transform: scaleY(1); }
   92% { opacity: 0.5; transform: scaleY(0.1); }
   96% { opacity: 0.35; transform: scaleY(1); }
-}
-
-@media (max-width: 768px) {
-  .stats-grid { grid-template-columns: repeat(2, 1fr); }
-}
-
-@media (max-width: 480px) {
-  .stats-grid { grid-template-columns: 1fr; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1924,10 +1720,6 @@ body.light-theme .exp-image::before {
    RESPONSIVE: Tablet (1024px)
    ============================================ */
 @media (max-width: 1024px) {
-  .experiences-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
   .news-grid {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -2030,9 +1822,7 @@ body.light-theme .exp-image::before {
   .features,
   .how,
   .city-picker,
-  .stats-band,
   .audience,
-  .experiences,
   .news,
   .cta-section {
     padding-left: var(--px-mobile);
@@ -2041,10 +1831,6 @@ body.light-theme .exp-image::before {
 
   .cta-card {
     padding: 2.5rem 1.5rem;
-  }
-
-  .experiences-grid {
-    grid-template-columns: 1fr;
   }
 
   .news-grid {
@@ -2148,7 +1934,6 @@ body.light-theme {
   --bg-card: rgba(0, 0, 0, 0.03);
   --bg-card-hover: rgba(0, 0, 0, 0.06);
   --bg-footer: #f0f0f0;
-  --bg-dark-band: #efefef;
   --white: #0a0a0a;
   --text-primary: #0a0a0a;
   --text-secondary: rgba(0, 0, 0, 0.6);
@@ -2195,28 +1980,14 @@ body.light-theme .nav-links.active {
   background: rgba(250, 250, 250, 0.98);
 }
 
-/* T3 light-theme — animación de gradient */
-body.light-theme .gradient-text {
-  background: linear-gradient(var(--gradient-angle), #7c2dbd, #4338ca 50%, #0891b2);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-
-body.light-theme .exp-tag {
-  color: #7c3aed;
-}
-
 body.light-theme .news-tag {
   color: #7c3aed;
 }
 
-body.light-theme .exp-tag.tag-green,
 body.light-theme .news-tag.tag-green {
   color: #059669;
 }
 
-body.light-theme .exp-tag.tag-cyan,
 body.light-theme .news-tag.tag-cyan {
   color: #0891b2;
 }
@@ -2225,10 +1996,6 @@ body.light-theme .section-label {
   color: rgba(0, 0, 0, 0.5);
   background: rgba(0, 0, 0, 0.06);
   border-color: rgba(0, 0, 0, 0.15);
-}
-
-body.light-theme .exp-image::after {
-  background: linear-gradient(180deg, transparent 50%, rgba(250, 250, 250, 0.6) 100%);
 }
 
 body.light-theme .progress-fill {
@@ -2240,8 +2007,7 @@ body.light-theme #top-progress {
 }
 
 body.light-theme .hero::before,
-body.light-theme .features::before,
-body.light-theme .experiences::before {
+body.light-theme .features::before {
   opacity: 0.5;
 }
 
@@ -2253,16 +2019,11 @@ body.light-theme .waitlist-count-number {
   color: transparent;
 }
 
-/* Estos tres usaban blanco fijo, no un token: sobre #fafafa el hover de
-   .news-card aclaraba la tarjeta hasta desaparecer, y ni los puntos de
-   .stat-card--quote ni el barrido de brillo se veian. */
+/* Usaban blanco fijo, no un token: sobre #fafafa el hover de .news-card
+   aclaraba la tarjeta hasta desaparecer y el barrido de brillo no se veía. */
 body.light-theme .news-card:hover {
   border-color: rgba(0, 0, 0, 0.2);
   background: rgba(0, 0, 0, 0.05);
-}
-
-body.light-theme .stat-card--quote {
-  background-image: radial-gradient(rgba(0, 0, 0, 0.14) 1.5px, transparent 1.5px);
 }
 
 body.light-theme .news-card::after {
@@ -2360,39 +2121,8 @@ body.light-theme .news-card::after {
 }
 
 /* ============================================
-   EXPERIENCE CARDS — Content lift on hover
-   ============================================ */
-.exp-card:hover .exp-content {
-  transform: translateY(-4px);
-}
-
-.exp-content {
-  transition: transform 0.35s var(--ease-out);
-}
-
-/* ============================================
    ADD-FRONTEND-TRENDS-2026 — New styles
    ============================================ */
-
-/* T3 — @property: gradient angle interpolable por el navegador */
-@property --gradient-angle {
-  syntax: '<angle>';
-  initial-value: 144deg;
-  inherits: false;
-}
-
-/* T3 — Gradient text animado (ciclo 8s) */
-.gradient-text {
-  background: linear-gradient(var(--gradient-angle), #af40ff, #5b42f3 50%, #00ddeb);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  animation: gradient-rotate 8s linear infinite;
-}
-
-@keyframes gradient-rotate {
-  to { --gradient-angle: 504deg; } /* 144 + 360 */
-}
 
 /* T1 — View Transition: circle reveal desde el botón del tema */
 @keyframes vt-circle-reveal {
@@ -2492,10 +2222,6 @@ body.light-theme .news-card::after {
   transform: translateX(100%);
 }
 
-.exp-card:hover {
-  box-shadow: var(--shadow-premium), 0 16px 48px rgba(0, 0, 0, 0.35);
-}
-
 /* 1.5 — Section label reveal: main.js adds the class (never without JS or
    with reduced motion) and .is-revealed when the label comes into view. */
 .section-label--reveal-pending {
@@ -2580,11 +2306,7 @@ body.light-theme .cta-btn:hover {
     animation: none;
   }
 
-  /* Stop gradient rotation and view-transition */
-  .gradient-text {
-    animation: none;
-  }
-
+  /* Stop the view-transition */
   ::view-transition-new(root),
   ::view-transition-old(root) {
     animation: none;
@@ -3275,9 +2997,7 @@ body.light-theme .auth-page {
    La entrada del hero es CSS puro. Lo que aparece al hacer scroll lleva
    [data-scroll-reveal] (no data-reveal: ese lo usa el Collapse del kit de
    app-demos), que solo pone main.js (sin JS o con movimiento reducido
-   todo se ve quieto y completo), y .is-revealed cuando
-   entra en pantalla. El parallax usa scroll-driven animations sobre la
-   propiedad translate, para no pisar los transform de entrada ni de hover.
+   todo se ve quieto y completo), y .is-revealed cuando entra en pantalla.
    ============================================================ */
 @media (prefers-reduced-motion: no-preference) {
   /* Hero: el título sube y aparece, y luego el campo de correo */
@@ -3302,28 +3022,10 @@ body.light-theme .auth-page {
     opacity: 1;
     translate: none;
   }
-
-  @supports (animation-timeline: scroll()) {
-    /* Propiedades sueltas, nunca el atajo `animation`: el minificador
-       (critical-css.sh) junta atajo + timeline en un solo `animation` que
-       Chrome no acepta y descarta la regla entera */
-    /* Las fotos de ciudad se desplazan un poco dentro de su tarjeta */
-    .exp-card .exp-image img {
-      animation-name: exp-drift;
-      animation-timing-function: linear;
-      animation-fill-mode: both;
-      animation-timeline: view();
-    }
-  }
 }
 
 @keyframes hero-fade {
   from { opacity: 0; transform: translateY(20px); }
-}
-
-@keyframes exp-drift {
-  from { translate: 0 12px; }
-  to { translate: 0 -12px; }
 }
 
 /* ============================================================
