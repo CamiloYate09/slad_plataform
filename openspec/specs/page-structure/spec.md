@@ -6,34 +6,32 @@ Qué secciones tiene la landing, en qué orden y qué contiene cada una que no t
 ## Requirements
 
 ### Requirement: Factory.ai Section Ordering
-La página MUST seguir el orden de secciones definido abajo, partiendo del de factory.ai y adaptado al contenido de CityStream.
+La página MUST seguir el orden de secciones definido abajo: primero qué es la app y cómo se usa, después la prueba y el detalle.
 
 #### Scenario: Secciones en orden factory.ai
 - **WHEN** la página renderiza completa
 - **THEN** las secciones aparecen en este orden exacto:
   1. Sticky navbar (logo, nav items, CTAs)
-  2. Hero (`.hero`: headline, subtitle, captura de correo, escena de la app)
-  3. Carrusel de ciudades (`.trusted-by`)
-  4. Cifras (`.stats-band`)
-  5. Funcionalidades en bento (`.features`, ver `features-bento`)
-  6. Numbered features (`.numbered-features`, "Por qué CityStream" — 3 cards)
-  7. Audience personas (`.audience`, "¿Para quién es CityStream?" — 4 tarjetas)
-  8. Propuesta de valor (`.value-prop`, dos columnas)
-  9. Experiencias (`.experiences`, tarjetas de ciudad con tags)
-  10. Próximos eventos (`.news`)
-  11. Preguntas frecuentes (`.faq`)
-  12. CTA (`.cta-section`)
-  13. Footer (`.footer`)
+  2. Hero (`.hero`, ver "Hero que Explica la App")
+  3. Funcionalidades en bento (`.features`, ver `features-bento`)
+  4. Cómo funciona (`.how`, ver "Cómo Funciona")
+  5. Carrusel de ciudades (`.trusted-by`)
+  6. Cifras (`.stats-band`)
+  7. Para quién (`.audience`, "¿Para quién es CityStream?" — 4 tarjetas)
+  8. Experiencias (`.experiences`, tarjetas de ciudad con tags)
+  9. Próximos eventos (`.news`)
+  10. Preguntas frecuentes (`.faq`)
+  11. CTA (`.cta-section`)
+  12. Footer (`.footer`)
 
 #### Scenario: No existen secciones fuera del orden definido
 - **WHEN** se inspecciona el HTML
-- **THEN** no hay secciones adicionales entre las 13 definidas
-- **AND** `.stats-band` está entre `.trusted-by` y `.features`
-- **AND** `.audience` está entre `.numbered-features` y `.value-prop`
-- **AND** `.faq` está entre `.news` y `.cta-section`
+- **THEN** no hay secciones adicionales entre las 12 definidas
+- **AND** `.features` va justo después del hero y `.how` justo después de `.features`
+- **AND** no existen `.numbered-features` ni `.value-prop`
 
 ### Requirement: Trusted-By Logo Carousel
-La página MUST incluir, inmediatamente después del hero, un carrusel de las ciudades de lanzamiento que se desplaza horizontalmente en loop infinito.
+La página MUST incluir, justo después de "Cómo funciona", un carrusel de las ciudades de lanzamiento que se desplaza horizontalmente en loop infinito.
 
 #### Scenario: Carousel de logos infinito
 - **WHEN** la sección `.trusted-by` renderiza
@@ -47,19 +45,6 @@ La página MUST incluir, inmediatamente después del hero, un carrusel de las ci
 - **THEN** cada cápsula usa `static/img/avatar-09` a `avatar-13` en `<picture>` con fuentes AVIF y WebP y `<img>` JPG de fallback
 - **AND** las cinco ciudades aparecen cuatro veces; las tres copias llevan `aria-hidden="true"` para el loop
 - **AND** las imágenes se renderizan como círculos de 48×48px con `object-fit: cover`
-
-### Requirement: Value Proposition Section
-La página MUST incluir una sección de propuesta de valor con layout de dos columnas, reemplazando la sección newsletter actual, posicionada entre features y experiencias.
-
-#### Scenario: Layout two-column value proposition
-- **WHEN** la sección value proposition renderiza en desktop
-- **THEN** se muestra en dos columnas (contenido left, imagen/ilustración right)
-- **AND** la columna izquierda contiene: headline, párrafo descriptivo, 2 links tipo "Learn more" con flecha
-- **AND** el layout usa el grid de 12 columnas (6+6 o 7+5 split)
-
-#### Scenario: Value proposition en mobile
-- **WHEN** la sección renderiza en mobile
-- **THEN** las columnas se apilan verticalmente (contenido arriba, imagen abajo)
 
 ### Requirement: Experience Cards with Tags
 Las cards de experiencias MUST incluir un sistema de tags (badges) y un link "Más experiencias" al final, siguiendo el patrón de news cards de factory.ai.
@@ -76,22 +61,22 @@ Las cards de experiencias MUST incluir un sistema de tags (badges) y un link "M�
 - **AND** el color del badge es acorde al tipo (Ciudad, Innovación, etc.)
 
 ### Requirement: Image Quality Standard
-Todas las imágenes de contenido de la página (excluyendo logo y iconos) MUST usar fotos de alta resolución (mínimo 1280px en el lado mayor) y distribuirse en formato dual WebP+JPG para máxima compatibilidad y rendimiento.
+Las fotos de contenido (experiencias y carrusel de ciudades) MUST servirse en `<picture>` con fuentes AVIF y WebP y un `<img>` JPG de fallback. Las fotos de experiencias MUST tener versiones de 640, 960 y 1280px en `srcset`.
 
 #### Scenario: Formato dual WebP con fallback JPG
 - **WHEN** se inspecciona cualquier `<picture>` de imagen de contenido
-- **THEN** el elemento `<source>` tiene `type="image/webp"` apuntando al archivo `.webp`
+- **THEN** tiene un `<source type="image/avif">` y un `<source type="image/webp">`
 - **AND** el elemento `<img>` de fallback apunta al archivo `.jpg` equivalente
-- **AND** los archivos WebP existen en `static/img/` junto a sus pares JPG
+- **AND** los tres formatos existen en `static/img/`
 
 #### Scenario: Imágenes encajan en cualquier slot de la página
-- **WHEN** una imagen se renderiza en cualquier contenedor (carousel 48×48, tab 300px h, value-prop 350px h, exp-card 200px h)
+- **WHEN** una imagen se renderiza en su contenedor (círculo de 48×48px en el carrusel, 200px de alto en las experiencias)
 - **THEN** la imagen cubre completamente el contenedor con `object-fit: cover`
-- **AND** el encuadre prioriza la zona superior con `object-position: center top`
+- **AND** en las experiencias la foto mide 260px de alto para dejar margen al parallax (ver "Parallax de Fotos de Ciudad" en `layout-animations`)
 - **AND** no hay deformación ni espacio vacío visible en ningún slot
 
 ### Requirement: Banda de Cifras
-La página MUST incluir, entre el carrusel y las funcionalidades, una banda `.stats-band` con cuatro tarjetas de prueba: ciudades para arrancar (cifra con degradado), "Hecho en Colombia" (tarjeta con el degradado de marca), los cuatro pilares con sus iconos y la frase "La primera red social de Colombia." sobre un fondo de puntos. Las cifras cuentan al entrar en pantalla (ver "Stats Section Entrance Animation" en `animations`).
+La página MUST incluir, entre el carrusel y "¿Para quién es CityStream?", una banda `.stats-band` con cuatro tarjetas de prueba: ciudades para arrancar (cifra con degradado), "Hecho en Colombia" (tarjeta con el degradado de marca), los cuatro pilares con sus iconos y la frase "La primera red social de Colombia." sobre un fondo de puntos. Las cifras cuentan al entrar en pantalla (ver "Stats Section Entrance Animation" en `animations`).
 
 #### Scenario: Escritorio
 - **WHEN** el viewport mide más de 768px
@@ -104,3 +89,34 @@ La página MUST incluir, entre el carrusel y las funcionalidades, una banda `.st
 #### Scenario: Móvil
 - **WHEN** el viewport mide 480px o menos
 - **THEN** las tarjetas se apilan en una columna
+
+### Requirement: Hero que Explica la App
+El hero SHALL decir qué es CityStream en su titular y su subtítulo, en una sola columna centrada: titular "Todos los planes de tu ciudad, *en una app*", un subtítulo con lo que se encuentra y dónde, la captura de correo, enlaces a las ciudades y, debajo, la escena animada de la app.
+
+#### Scenario: Primera pantalla
+- **WHEN** la página carga en escritorio
+- **THEN** se ven el titular, el subtítulo, la captura de correo y los enlaces "Mira qué hay en: Bogotá · Medellín · Cartagena", centrados
+- **AND** la escena de la app queda debajo, centrada, con hasta 400px de ancho
+
+#### Scenario: Enlaces de ciudades
+- **WHEN** el usuario pulsa una ciudad bajo la captura de correo
+- **THEN** la página se desplaza a las experiencias (`#experiencias`)
+
+#### Scenario: Sin indicador de scroll
+- **WHEN** se inspecciona el hero
+- **THEN** no hay indicador "Scroll": la escena de la app debajo del texto ya invita a bajar
+
+### Requirement: Cómo Funciona
+Justo después del bento, la sección `.how` (`#como-funciona`) SHALL explicar el uso en tres pasos, cada uno en una tarjeta con icono, `h3` y descripción: "Elige tu ciudad", "Descubre qué hay" y "Conecta y ve".
+
+#### Scenario: Escritorio
+- **WHEN** el viewport mide más de 860px
+- **THEN** los tres pasos se muestran en una fila
+
+#### Scenario: Móvil
+- **WHEN** el viewport mide 860px o menos
+- **THEN** los pasos se apilan en una columna
+
+#### Scenario: Revelado
+- **WHEN** la lista de pasos entra en pantalla
+- **THEN** las tarjetas aparecen escalonadas 0,1 s (ver "Revelado al Hacer Scroll" en `layout-animations`)

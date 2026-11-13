@@ -48,7 +48,6 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-.ri-arrow-down-s-line:before { content: "\ea4e"; }
 .ri-arrow-right-line:before { content: "\ea6c"; }
 .ri-building-line:before { content: "\eb0f"; }
 .ri-calendar-event-line:before { content: "\eb25"; }
@@ -534,14 +533,18 @@ body.no-transitions *::after {
   z-index: 0;
 }
 
+/* Hero en una columna centrada: titular, subtítulo, captura de correo y,
+   debajo, la escena de la app */
 .hero-content {
   max-width: 1100px;
   width: 100%;
   position: relative;
   z-index: 1;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 4rem;
+  gap: 3rem;
+  text-align: center;
 }
 
 .hero-title {
@@ -551,6 +554,7 @@ body.no-transitions *::after {
   line-height: 1;
   letter-spacing: -0.02em;
   margin-bottom: 1.5rem;
+  max-width: 16ch;
 }
 
 .hero-subtitle {
@@ -564,38 +568,29 @@ body.no-transitions *::after {
   margin-right: auto;
 }
 
-/* Split layout: subtitle y actions alineados izquierda */
-.hero-left .hero-subtitle {
-  margin-left: 0;
-  margin-right: 0;
-}
-
 .hero-actions {
   display: flex;
-  gap: 1rem;
-  justify-content: center;
-}
-
-.hero-left .hero-actions {
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   gap: 0.75rem;
   /* The whole column, so the email field has room (the form stops at 440px) */
   width: 100%;
 }
 
-/* Hero split columns */
 .hero-left {
-  flex: 1;
-  min-width: 0;
-  text-align: left;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
 }
 
+/* The demo takes the column's width up to its design width; under 400px
+   the scene switches to its phone design (358 × 520) */
 .hero-right {
-  flex-shrink: 0;
+  width: 100%;
   display: flex;
-  align-items: center;
   justify-content: center;
+  container-type: inline-size;
 }
 
 /* Progress bar — factory.ai style */
@@ -772,7 +767,6 @@ body.no-transitions *::after {
   white-space: nowrap;
   border: 0;
 }
-
 
 /* ============================================
    FEATURES — Bento de producto
@@ -1139,8 +1133,7 @@ body.light-theme .bento-pill--hot {
 }
 
 /* Duotone brand overlay — integra fotos a la paleta morado→cyan */
-.exp-image::before,
-.value-prop-image::before {
+.exp-image::before {
   content: '';
   position: absolute;
   inset: 0;
@@ -1151,72 +1144,55 @@ body.light-theme .bento-pill--hot {
   z-index: 1;
 }
 
-body.light-theme .exp-image::before,
-body.light-theme .value-prop-image::before {
+body.light-theme .exp-image::before {
   opacity: 0.28;
 }
 
-
 /* ============================================
-   VALUE PROPOSITION
+   CÓMO FUNCIONA — tres pasos, justo después del bento
    ============================================ */
-.value-prop {
+.how {
   padding: var(--section-gap) var(--px-desktop);
-  max-width: 1440px;
+  max-width: 1100px;
   margin: 0 auto;
 }
 
-.value-prop-grid {
+.how-steps {
   display: grid;
-  grid-template-columns: 7fr 5fr;
-  gap: 4rem;
-  align-items: center;
-}
-
-.value-prop-label {
-  display: inline-block;
-  font-size: var(--fs-xs);
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--accent-cyan);
-  margin-bottom: 1rem;
-}
-
-.value-prop-content h2 {
-  font-family: var(--font-serif);
-  font-size: var(--fs-h2);
-  font-weight: 400;
-  line-height: 1.05;
-  letter-spacing: -0.02em;
-  margin-bottom: 1.25rem;
-  color: var(--white);
-}
-
-.value-prop-content p {
-  color: var(--text-secondary);
-  line-height: 1.7;
-  margin-bottom: 2rem;
-}
-
-.value-prop-links {
-  display: flex;
-  flex-direction: column;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 0.75rem;
 }
 
-.value-prop-image {
-  border-radius: var(--radius-lg);
-  overflow: hidden;
+.how-step {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1.5rem;
   border: 1px solid var(--border-base);
-  position: relative;
+  border-radius: var(--radius-md);
+  background: var(--bg-card);
 }
 
-.value-prop-image img {
-  width: 100%;
-  height: 350px;
-  object-fit: cover;
-  object-position: center top;
+.how-step i {
+  font-size: 1.5rem;
+  color: var(--accent-ink);
+}
+
+.how-step h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.how-step p {
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: var(--text-secondary);
+}
+
+@media (max-width: 860px) {
+  .how-steps {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* ============================================
@@ -1355,88 +1331,6 @@ body.light-theme .value-prop-image::before {
 .experiences-more-note {
   color: var(--text-secondary);
   font-size: var(--fs-sm);
-}
-
-/* ============================================
-   NUMBERED FEATURE CARDS — Dark contrast band
-   ============================================ */
-.numbered-features {
-  padding: var(--section-gap) var(--px-desktop);
-  position: relative;
-}
-
-/* Full-bleed dark background via pseudo-element */
-.numbered-features::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 100vw;
-  background: var(--bg-dark-band);
-  z-index: 0;
-}
-
-.numbered-features > * {
-  position: relative;
-  z-index: 1;
-  max-width: 1440px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-/* Override section-label and heading colors for dark band */
-.numbered-features .section-label {
-  color: rgba(255, 255, 255, 0.45);
-}
-
-.numbered-features h2 {
-  color: var(--text-primary);
-}
-
-.numbered-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem;
-}
-
-.num-card {
-  background: var(--glass-bg);
-  border: 1px solid var(--glass-border);
-  border-radius: 16px;
-  padding: 2rem;
-  backdrop-filter: var(--glass-blur);
-  -webkit-backdrop-filter: var(--glass-blur);
-  transition: border-color var(--duration-base), background var(--duration-base), box-shadow var(--duration-base);
-}
-
-.num-card:hover {
-  border-color: var(--border-hover);
-  background: var(--bg-card-hover);
-  box-shadow: var(--shadow-premium);
-}
-
-.num-card-number {
-  display: block;
-  font-size: var(--fs-xs);
-  font-weight: 700;
-  color: var(--accent-orange-hover);
-  margin-bottom: 1.25rem;
-  font-variant-numeric: tabular-nums;
-  font-family: monospace;
-}
-
-.num-card h3 {
-  font-size: var(--fs-h3);
-  font-weight: 700;
-  margin-bottom: 0.75rem;
-  color: var(--text-primary);
-}
-
-.num-card p {
-  color: var(--text-secondary);
-  line-height: 1.7;
 }
 
 /* ============================================
@@ -2016,21 +1910,15 @@ body.light-theme .value-prop-image::before {
    RESPONSIVE: Tablet (1024px)
    ============================================ */
 @media (max-width: 1024px) {
-  .value-prop-grid {
-    grid-template-columns: 1fr;
-  }
+  
 
-  .value-prop-image {
-    order: -1;
-  }
+  
 
   .experiences-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 
-  .numbered-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
+  
 
   .news-grid {
     grid-template-columns: repeat(2, 1fr);
@@ -2132,11 +2020,9 @@ body.light-theme .value-prop-image::before {
   }
 
   .features,
-  .value-prop,
-  .experiences,
-  .numbered-features,
-  .news,
-  .cta-section {
+.experiences,
+.news,
+.cta-section {
     padding-left: var(--px-mobile);
     padding-right: var(--px-mobile);
   }
@@ -2149,9 +2035,7 @@ body.light-theme .value-prop-image::before {
     grid-template-columns: 1fr;
   }
 
-  .numbered-grid {
-    grid-template-columns: 1fr;
-  }
+  
 
   .news-grid {
     grid-template-columns: 1fr;
@@ -2331,8 +2215,6 @@ body.light-theme .news-tag.tag-cyan {
   color: #0891b2;
 }
 
-/* num-card-number usa --accent-orange-hover, ya es legible en ambos temas */
-
 body.light-theme .section-label {
   color: rgba(0, 0, 0, 0.5);
   background: rgba(0, 0, 0, 0.06);
@@ -2347,10 +2229,6 @@ body.light-theme .carousel-item {
 body.light-theme .carousel-item:hover {
   background: rgba(0, 0, 0, 0.09);
   border-color: rgba(0, 0, 0, 0.2);
-}
-
-body.light-theme .value-prop-label {
-  color: #0891b2;
 }
 
 body.light-theme .exp-image::after {
@@ -2391,8 +2269,7 @@ body.light-theme .stat-card--quote {
   background-image: radial-gradient(rgba(0, 0, 0, 0.14) 1.5px, transparent 1.5px);
 }
 
-body.light-theme .news-card::after,
-body.light-theme .num-card::after {
+body.light-theme .news-card::after {
   background: linear-gradient(
     105deg,
     transparent 30%,
@@ -2473,51 +2350,6 @@ body.light-theme .num-card::after {
   0%, 100% { transform: translate(0, 0); }
   40%       { transform: translate(-25px, -20px); }
   70%       { transform: translate(15px, 30px); }
-}
-
-/* ============================================
-   HERO — Scroll Indicator
-   ============================================ */
-.scroll-indicator {
-  position: absolute;
-  bottom: 2.5rem;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.25rem;
-  color: var(--text-secondary);
-  font-size: var(--fs-xs);
-  font-weight: 500;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  z-index: 2;
-  transition: opacity 0.4s ease, transform 0.4s ease;
-  pointer-events: none;
-}
-
-.scroll-indicator i {
-  font-size: 1.25rem;
-  animation: bounceScroll 1.6s ease-in-out infinite;
-}
-
-.scroll-indicator.hidden {
-  opacity: 0;
-  transform: translateX(-50%) translateY(10px);
-}
-
-@keyframes bounceScroll {
-  0%, 100% { transform: translateY(0); }
-  50%       { transform: translateY(6px); }
-}
-
-/* En móvil el teléfono del hero queda debajo del texto y ya invita a bajar:
-   el indicador caería encima de él */
-@media (max-width: 768px) {
-  .scroll-indicator {
-    display: none;
-  }
 }
 
 /* ============================================
@@ -2602,10 +2434,8 @@ body.light-theme .num-card::after {
 }
 
 /* T6 — CSS Containment en secciones pesadas (style+paint, sin layout) */
-.numbered-features,
 .cta-section,
-.news,
-.stats {
+.news {
   contain: style paint;
 }
 
@@ -2640,15 +2470,13 @@ body.light-theme .num-card::after {
   box-shadow: 0 4px 22px rgba(249, 115, 22, 0.45);
 }
 
-/* 1.3 — Shine sweep on .news-card and .num-card */
-.news-card,
-.num-card {
+/* 1.3 — Shine sweep on .news-card */
+.news-card {
   position: relative;
   overflow: hidden;
 }
 
-.news-card::after,
-.num-card::after {
+.news-card::after {
   content: '';
   position: absolute;
   inset: 0;
@@ -2664,13 +2492,11 @@ body.light-theme .num-card::after {
   border-radius: inherit;
 }
 
-.news-card:hover::after,
-.num-card:hover::after {
+.news-card:hover::after {
   transform: translateX(100%);
 }
 
-.exp-card:hover,
-.num-card:hover {
+.exp-card:hover {
   box-shadow: var(--shadow-premium), 0 16px 48px rgba(0, 0, 0, 0.35);
 }
 
@@ -2753,10 +2579,6 @@ body.light-theme .cta-btn:hover {
     animation: none;
   }
 
-  .scroll-indicator i {
-    animation: none;
-  }
-
   /* Disable new animations for reduced-motion */
   .cta-card {
     animation: none;
@@ -2776,8 +2598,7 @@ body.light-theme .cta-btn:hover {
     animation: none;
   }
 
-  .news-card::after,
-  .num-card::after {
+  .news-card::after {
     display: none;
   }
 
@@ -2796,79 +2617,14 @@ body.light-theme .cta-btn:hover {
    ============================================================ */
 
 .hero-demo {
-  width: 400px;
+  width: 100%;
+  max-width: 400px;
   aspect-ratio: 400 / 520;
-}
-
-/* ============================================================
-   RESPONSIVE — Hero Split
-   ============================================================ */
-
-@media (max-width: 1024px) {
-  .hero-content {
-    flex-direction: column;
-    gap: 3rem;
-    text-align: center;
-  }
-
-  .hero-left {
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .hero-left .hero-subtitle { margin-left: auto; margin-right: auto; }
-  .hero-left .hero-actions  { align-items: center; }
-
-  /* In one column the demo takes the column's width up to its design width;
-     under 400px the scene switches to its phone design (358 × 520) */
-  .hero-right {
-    width: 100%;
-    container-type: inline-size;
-  }
-
-  .hero-demo {
-    width: 100%;
-    max-width: 400px;
-  }
 }
 
 @container (width < 400px) {
   .hero-demo {
     aspect-ratio: 358 / 520;
-  }
-}
-
-/* ============================================
-   SCROLL-LINKED MEDIA REVEAL — CSS nativo (scroll-driven)
-   Anima opacity/scale del contenedor según su posición en viewport.
-   Fallback: navegadores sin animation-timeline muestran el estado final.
-   Las animaciones con animation-timeline van siempre en propiedades sueltas
-   (animation-name, -timing-function...), nunca con el atajo `animation`:
-   el minificador (critical-css.sh) junta atajo + timeline en un solo
-   `animation` que Chrome no acepta y descarta la regla entera.
-   ============================================ */
-@supports (animation-timeline: view()) {
-  @media (prefers-reduced-motion: no-preference) {
-    .value-prop-image {
-      animation-name: media-reveal;
-      animation-timing-function: linear;
-      animation-fill-mode: both;
-      animation-timeline: view();
-      animation-range: entry 5% cover 30%;
-    }
-  }
-}
-
-@keyframes media-reveal {
-  from {
-    opacity: 0;
-    transform: scale(1.06);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
   }
 }
 
@@ -3556,7 +3312,9 @@ body.light-theme .auth-page {
   }
 
   @supports (animation-timeline: scroll()) {
-    /* Propiedades sueltas, no el atajo: ver SCROLL-LINKED MEDIA REVEAL */
+    /* Propiedades sueltas, nunca el atajo `animation`: el minificador
+       (critical-css.sh) junta atajo + timeline en un solo `animation` que
+       Chrome no acepta y descarta la regla entera */
     /* Las fotos de ciudad se desplazan un poco dentro de su tarjeta */
     .exp-card .exp-image img {
       animation-name: exp-drift;
@@ -3673,38 +3431,6 @@ body.light-theme .auth-page {
   color: var(--text-primary);
   text-decoration: underline;
   text-underline-offset: 3px;
-}
-
-/* ============================================================
-   PROPUESTA DE VALOR — panel de marca (el logo, no una foto)
-   ============================================================ */
-.value-prop-image--brand {
-  display: grid;
-  place-items: center;
-  height: 350px;
-  background:
-    radial-gradient(60% 60% at 50% 45%, rgba(0, 221, 235, 0.16), transparent 70%),
-    radial-gradient(80% 80% at 20% 100%, rgba(175, 64, 255, 0.18), transparent 70%),
-    var(--bg-card);
-}
-
-/* The duotone wash is for photos; the logo keeps its own colors */
-.value-prop-image--brand::before {
-  display: none;
-}
-
-/* The width goes on the <picture> (the grid item): a percentage on the img
-   alone resolved against the picture, which wrapped the logo's full width */
-.value-prop-image--brand picture {
-  display: block;
-  width: min(70%, 360px);
-}
-
-.value-prop-image--brand img {
-  width: 100%;
-  height: auto;
-  object-fit: contain;
-  filter: drop-shadow(0 0 40px rgba(91, 66, 243, 0.35));
 }
 
 /* ============================================================

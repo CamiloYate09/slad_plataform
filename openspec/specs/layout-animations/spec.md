@@ -52,7 +52,7 @@ Los bloques que aparecen al hacer scroll SHALL marcarse desde `main.js` con `[da
 #### Scenario: Bloque entra en pantalla
 - **WHEN** el borde superior de un bloque marcado alcanza el 85% de la altura del viewport
 - **THEN** recibe `.is-revealed` y pasa de `opacity: 0` y 40px más abajo a su posición, en 0,8 s con `cubic-bezier(0.25, 0.46, 0.45, 0.94)`
-- **AND** en los grupos de tarjetas cada una se retrasa respecto a la anterior (0,15 s en números y experiencias, 0,1 s en eventos, 0,08 s en el bento)
+- **AND** en los grupos de tarjetas cada una se retrasa respecto a la anterior (0,15 s en experiencias, 0,1 s en cómo funciona y en eventos, 0,08 s en el bento)
 
 #### Scenario: Bloque ya superado
 - **WHEN** la página se abre en un ancla o el navegador restaura el scroll más abajo

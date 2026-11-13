@@ -198,8 +198,7 @@ if (!prefersReducedMotion) {
   reveal('.section-header');
   reveal('.bento-card', { trigger: '.bento', stagger: 0.08 });
   reveal('.cta-card', { trigger: '.cta-section' });
-  reveal('.value-prop-content', { trigger: '.value-prop', x: -30, y: 0, at: 0.8 });
-  reveal('.num-card', { trigger: '.numbered-grid', stagger: 0.15 });
+  reveal('.how-step', { trigger: '.how-steps', stagger: 0.1 });
   reveal('.exp-card', { trigger: '.experiences-grid', stagger: 0.15 });
   reveal('.news-card', { trigger: '.news-grid', stagger: 0.1 });
   reveal('.footer', { y: 30, at: 0.9 });
@@ -212,10 +211,8 @@ if (!prefersReducedMotion) {
   });
 }
 
-// Scroll progress bar and the hero's "Scroll" hint, on one passive listener
+// Scroll progress bar and pending reveals, on one passive listener
 const topProgress = document.getElementById('top-progress');
-const scrollIndicator = document.querySelector('.scroll-indicator');
-const heroSectionEl = document.querySelector('.hero');
 let scrollFrame = 0;
 function onScrollFrame() {
   scrollFrame = 0;
@@ -223,9 +220,6 @@ function onScrollFrame() {
   if (topProgress && !prefersReducedMotion) {
     const max = document.documentElement.scrollHeight - window.innerHeight;
     topProgress.style.transform = `scaleX(${max > 0 ? Math.min(1, window.scrollY / max) : 0})`;
-  }
-  if (scrollIndicator && heroSectionEl) {
-    scrollIndicator.classList.toggle('hidden', window.scrollY > heroSectionEl.offsetHeight * 0.2);
   }
 }
 window.addEventListener('scroll', () => { if (!scrollFrame) scrollFrame = requestAnimationFrame(onScrollFrame); }, { passive: true });

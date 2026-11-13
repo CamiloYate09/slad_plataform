@@ -71,7 +71,7 @@ El sitio SHALL usar radial-gradient pseudo-elementos en secciones clave para añ
 Las imágenes de contenido SHALL integrarse a la paleta de marca mediante un overlay duotone sutil y SHALL usar una escala de radios consistente basada en tokens, evitando radios ad-hoc dispersos.
 
 #### Scenario: Overlay duotone sobre imágenes de contenido
-- **WHEN** se renderiza una imagen de contenido (`.exp-image`, `.value-prop-image`)
+- **WHEN** se renderiza una imagen de contenido (`.exp-image`)
 - **THEN** una capa pseudo-elemento aplica un gradiente morado→cyan con `mix-blend-mode` y opacidad ~10–15%
 - **AND** la capa tiene `pointer-events: none` y no altera el `<img>` ni su `alt`
 - **AND** en `body.light-theme` el overlay se atenúa para mantener contraste
@@ -82,12 +82,12 @@ Las imágenes de contenido SHALL integrarse a la paleta de marca mediante un ove
 - **AND** no quedan valores de `border-radius` ad-hoc duplicados (ej. 32px/36px sueltos), salvo formas intencionales como el phone-mockup
 
 ### Requirement: Tipografía Editorial
-El sitio SHALL usar la familia Geist Sans para body text, UI, nav, labels, h3 y cifras, con tamaño base 14px. Los titulares principales (h1 del hero y h2 de sección, de la propuesta de valor y del CTA) SHALL usar una serif del sistema (`--font-serif`) en peso 400, con una palabra o frase en `<em>` que se muestra en cursiva. Las cifras de stats/contadores MUST usar cifras tabulares para no causar salto de layout durante la animación de conteo.
+El sitio SHALL usar la familia Geist Sans para body text, UI, nav, labels, h3 y cifras, con tamaño base 14px. Los titulares principales (h1 del hero y h2 de sección y del CTA) SHALL usar una serif del sistema (`--font-serif`) en peso 400, con una palabra o frase en `<em>` que se muestra en cursiva. Las cifras de stats/contadores MUST usar cifras tabulares para no causar salto de layout durante la animación de conteo.
 
 #### Scenario: Titulares editoriales
 - **WHEN** la página renderiza
 - **THEN** `h1.hero-title` usa `--font-serif` en peso 400 con `font-size: var(--fs-display)` y letter-spacing `-0.02em`
-- **AND** los h2 de `.section-header`, `.value-prop-content` y `.cta-card` usan `--font-serif` en peso 400 con `font-size: var(--fs-h2)`
+- **AND** los h2 de `.section-header` y `.cta-card` usan `--font-serif` en peso 400 con `font-size: var(--fs-h2)`
 - **AND** cada uno de esos titulares lleva un `<em>` y no lleva degradado (`.gradient-text`)
 - **AND** body text, nav links, labels y h3 siguen usando Geist Sans
 

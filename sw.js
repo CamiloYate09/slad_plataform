@@ -8,7 +8,7 @@
  *  evento `activate` limpia caches obsoletas automaticamente.
  * ============================================================ */
 
-const CACHE_VERSION = 'v20'; // v20: sin el evento themechange ni reglas muertas de .cta-card::before
+const CACHE_VERSION = 'v21'; // v21: hero que explica la app, Cómo funciona y nuevo orden de secciones
 const CACHE_NAME = `citystream-${CACHE_VERSION}`;
 
 // Shell estatico: archivos cacheados en install para offline-first

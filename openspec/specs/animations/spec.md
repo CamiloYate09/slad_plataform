@@ -5,17 +5,6 @@ Animaciones y microinteracciones de la landing: tarjetas, CTA, navbar, cambio de
 
 ## Requirements
 
-### Requirement: 3D Tilt Card Effect
-Las tarjetas .exp-card y .num-card SHALL responder al movimiento del mouse con una rotación 3D sutil (max 8deg) que crea sensación de profundidad y premium UI. Al salir el cursor, el card vuelve a neutral con ease elástico.
-
-#### Scenario: Hover sobre exp-card
-- **WHEN** el usuario mueve el cursor sobre una .exp-card en desktop
-- **THEN** la tarjeta rota en 3D siguiendo el cursor con máximo 8 grados en X e Y
-
-#### Scenario: Cursor fuera de card
-- **WHEN** el cursor sale de la tarjeta
-- **THEN** la tarjeta vuelve a rotación 0 con animación elástica suave
-
 ### Requirement: Hero Orbs Mouse Parallax
 Los ambient orbs del hero SHALL responder al movimiento del mouse desplazándose suavemente en dirección opuesta al cursor, creando una sensación de profundidad espacial.
 
@@ -60,13 +49,6 @@ El .cta-btn SHALL tener una animación CSS de pulsación de glow (box-shadow) co
 - **WHEN** el .cta-btn está visible
 - **THEN** el botón pulsa con un halo naranja/violeta de forma suave y continua
 
-### Requirement: Card Shine Sweep on Hover
-Las .news-card y .num-card SHALL mostrar un efecto de brillo (shine sweep) al hacer hover, simulando una luz deslizándose sobre la superficie de la tarjeta.
-
-#### Scenario: Hover sobre news-card o num-card
-- **WHEN** el cursor entra en una .news-card o .num-card
-- **THEN** aparece un destello luminoso que recorre la tarjeta de izquierda a derecha
-
 ### Requirement: Glassmorphism Navbar on Scroll
 El navbar en estado `.scrolled` SHALL usar `backdrop-filter: blur(20px) saturate(180%)` con fondo semitransparente y noise texture para un efecto glassmorphism premium.
 
@@ -107,7 +89,7 @@ Todos los botones primarios SHALL responder al `:active` con `scale(0.96)` en 10
 Las secciones con animaciones complejas SHALL usar `contain: style paint` para aislar su renderizado y mejorar el scroll performance, sin `layout` para no alterar el posicionamiento de su contenido.
 
 #### Scenario: Render de secciones animadas
-- **WHEN** el navegador renderiza `.numbered-features`, `.cta-section` o `.news`
+- **WHEN** el navegador renderiza `.cta-section` o `.news`
 - **THEN** los cambios internos de estilo y pintado no provocan recálculos en el resto del DOM
 
 ### Requirement: Botones Magnéticos
@@ -125,13 +107,13 @@ directo sin librerías. El efecto MUST respetar capacidades de entrada y
 - **WHEN** el dispositivo es táctil o el usuario tiene `prefers-reduced-motion: reduce`
 - **THEN** el efecto magnético está desactivado y el botón permanece estático
 
-### Requirement: Reveal de Media Ligado a Scroll
-La imagen de la propuesta de valor (`.value-prop-image`) SHALL revelar con una animación de `opacity`/`scale` ligada a su posición en el viewport usando scroll-driven animations nativas de CSS, sin sumar trabajo al main thread.
+### Requirement: Brillo al Pasar sobre Eventos
+Las tarjetas de próximos eventos (`.news-card`) SHALL mostrar un destello que recorre la tarjeta de izquierda a derecha al pasar el cursor.
 
-#### Scenario: Imagen entra al viewport
-- **WHEN** la imagen entra al viewport durante el scroll en un navegador con soporte de `animation-timeline: view()`
-- **THEN** la imagen anima `opacity` y `scale` en función de `animation-range` (de entrada a posición de reposo)
+#### Scenario: Hover sobre una tarjeta de evento
+- **WHEN** el cursor entra en una `.news-card`
+- **THEN** aparece un destello luminoso que recorre la tarjeta de izquierda a derecha
 
-#### Scenario: Sin soporte o movimiento reducido
-- **WHEN** el navegador no soporta `animation-timeline` o el usuario tiene `prefers-reduced-motion: reduce`
-- **THEN** la imagen se muestra en su estado final estático sin animación
+#### Scenario: Movimiento reducido
+- **WHEN** el usuario tiene `prefers-reduced-motion: reduce` activo
+- **THEN** no aparece el destello
