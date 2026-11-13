@@ -2,23 +2,11 @@
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 // ============================================
-// SPLITTING.JS — Character split init
-// ============================================
-if (typeof Splitting !== 'undefined') {
-  Splitting({ target: '[data-splitting]' });
-}
-
-// ============================================
 // DISABLE TRANSITIONS ON MOUNT
 // ============================================
 requestAnimationFrame(() => {
   document.body.classList.remove('no-transitions');
 });
-
-// ============================================
-// SPLIT TEXT — hero title handled by Splitting.js
-// (data-splitting attribute on .hero-title in HTML)
-// ============================================
 
 // ============================================
 // NAVBAR — Transparent → Solid on scroll
@@ -145,47 +133,6 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 });
 
 // ============================================
-// STICKY SCROLL FEATURES — IntersectionObserver
-// ============================================
-const featuresItems = document.querySelectorAll('.features-item');
-const fnavItems = document.querySelectorAll('.fnav-item');
-
-function activateFeature(idx) {
-  fnavItems.forEach((nav, i) => nav.classList.toggle('active', i === idx));
-  featuresItems.forEach((item, i) => item.classList.toggle('active', i === idx));
-}
-
-if (featuresItems.length > 0) {
-  // Only use observer on desktop — mobile shows all items at full opacity
-  const isDesktop = window.matchMedia('(min-width: 1025px)').matches;
-
-  if (isDesktop) {
-    const featureObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          const idx = Array.from(featuresItems).indexOf(entry.target);
-          activateFeature(idx);
-        }
-      });
-    }, {
-      threshold: 0.4,
-      rootMargin: '-5% 0px -40% 0px'
-    });
-
-    featuresItems.forEach(item => featureObserver.observe(item));
-  }
-
-  // Click nav items to scroll to corresponding item
-  fnavItems.forEach((navBtn, i) => {
-    navBtn.addEventListener('click', () => {
-      if (featuresItems[i]) {
-        featuresItems[i].scrollIntoView({ behavior: 'smooth', block: 'center' });
-      }
-    });
-  });
-}
-
-// ============================================
 // MOVIMIENTO AL HACER SCROLL — sin librerías
 // Las animaciones viven en style.css (bloque MOVIMIENTO); aquí solo se marca
 // qué aparece y cuándo. La entrada del hero es CSS puro.
@@ -249,7 +196,7 @@ document.querySelectorAll('.stat-number').forEach((el) => {
 
 if (!prefersReducedMotion) {
   reveal('.section-header');
-  reveal('.features-sticky-wrap');
+  reveal('.bento-card', { trigger: '.bento', stagger: 0.08 });
   reveal('.cta-card', { trigger: '.cta-section' });
   reveal('.value-prop-content', { trigger: '.value-prop', x: -30, y: 0, at: 0.8 });
   reveal('.num-card', { trigger: '.numbered-grid', stagger: 0.15 });
@@ -257,13 +204,6 @@ if (!prefersReducedMotion) {
   reveal('.news-card', { trigger: '.news-grid', stagger: 0.1 });
   reveal('.footer', { y: 30, at: 0.9 });
   reveal('.footer-col', { trigger: '.footer-grid', y: 20, stagger: 0.1, at: 0.9 });
-
-  // Section titles split by Splitting.js: letter by letter
-  document.querySelectorAll('.section-header h2[data-splitting], .value-prop-content h2[data-splitting]').forEach((h2) => {
-    if (!h2.querySelector('.char')) return;
-    h2.classList.add('char-reveal');
-    whenInView(h2, () => h2.classList.add('is-revealed'), 0.88);
-  });
 
   // Section labels: a clip that opens left to right, a beat after the header
   document.querySelectorAll('.section-label').forEach((label) => {

@@ -72,9 +72,9 @@
   --accent-orange: #d97706;
   --accent-cyan: #00ddeb;
 
-  /* Gradiente de marca. Vive en un token porque lo consumen .gradient-text,
-     sus .char y el JS del hero: antes cada uno lo repetia a mano y en tema
-     claro solo se corregian algunos. */
+  /* Gradiente de marca. Vive en un token porque lo consumen varias piezas:
+     antes cada una lo repetia a mano y en tema claro solo se corregian
+     algunas. */
   --grad-brand: linear-gradient(144deg, #af40ff, #5b42f3 50%, #00ddeb);
 
   /* Texto sobre un fondo de marca (gradiente/acento) que NO cambia con el
@@ -100,6 +100,8 @@
   /* Typography */
   --font-sans: "Geist", ui-sans-serif, system-ui, -apple-system, sans-serif;
   --font-display: "Bricolage Grotesque", var(--font-sans);
+  /* Títulos editoriales: serif del sistema, con una palabra en <em> */
+  --font-serif: ui-serif, "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
   --fs-display: clamp(3rem, 8vw, 5.5rem);
   --fs-h2: clamp(2rem, 5vw, 3.5rem);
   --fs-h3: clamp(1.25rem, 2.5vw, 1.75rem);
@@ -232,29 +234,6 @@ ul {
 
 /* Gradient text */
 .gradient-text {
-  color: transparent;
-  background: var(--grad-brand);
-  -webkit-background-clip: text;
-  background-clip: text;
-}
-
-/* Splitting.js: prevent mid-word line breaks in hero title */
-.hero-title .word {
-  white-space: nowrap;
-  display: inline-block;
-}
-
-/* Splitting.js chars: apply gradient directly (background: inherit doesn't traverse .word span) */
-.gradient-text .char {
-  display: inline-block;
-  color: transparent;
-  background: var(--grad-brand);
-  -webkit-background-clip: text;
-  background-clip: text;
-}
-
-/* @legacy: replaced by splitting-char-reveal */
-.gradient-text .split-word {
   color: transparent;
   background: var(--grad-brand);
   -webkit-background-clip: text;
@@ -566,11 +545,12 @@ body.no-transitions *::after {
 }
 
 .hero-title {
-  font-family: var(--font-display);
+  font-family: var(--font-serif);
   font-size: var(--fs-display);
-  font-weight: 800;
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.02em;
   margin-bottom: 1.5rem;
-  filter: drop-shadow(0 0 20px rgba(175, 64, 255, 0.4));
 }
 
 .hero-subtitle {
@@ -767,9 +747,11 @@ body.no-transitions *::after {
 }
 
 .section-header h2 {
-  font-family: var(--font-display);
+  font-family: var(--font-serif);
   font-size: var(--fs-h2);
-  font-weight: 700;
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
   margin-bottom: 0.5rem;
 }
 
@@ -793,7 +775,7 @@ body.no-transitions *::after {
 
 
 /* ============================================
-   FEATURES — Sticky Scroll Narrative
+   FEATURES — Bento de producto
    ============================================ */
 .features {
   padding: var(--section-gap) var(--px-desktop);
@@ -819,137 +801,340 @@ body.no-transitions *::after {
   z-index: 1;
 }
 
-/* 2-col sticky layout */
-.features-sticky-wrap {
+/* Bento de producto: cada tarjeta lleva una mini-interfaz de la app
+   (.bento-ui, decorativa) y debajo el texto que cuenta lo que muestra */
+.bento {
   display: grid;
-  grid-template-columns: 5fr 7fr;
-  gap: 5rem;
-  align-items: start;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 0.75rem;
   max-width: 1100px;
   margin: 0 auto;
 }
 
-/* Left: sticky nav column */
-.features-sticky-left {
-  position: sticky;
-  top: 100px;
-}
-
-.features-tagline {
-  color: var(--text-secondary);
-  line-height: 1.7;
-  margin-bottom: 2.5rem;
-  font-size: var(--fs-body);
-}
-
-.features-nav {
+.bento-card {
+  grid-column: span 2;
   display: flex;
   flex-direction: column;
-}
-
-.fnav-item {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  padding: 1rem 0;
-  background: none;
-  border: none;
-  border-top: 1px solid var(--border-base);
-  cursor: pointer;
-  width: 100%;
-  text-align: left;
-  color: var(--text-secondary);
-  font-family: var(--font-sans);
-  font-size: var(--fs-body);
-  transition: color var(--duration-base);
-}
-
-.fnav-item:last-child {
-  border-bottom: 1px solid var(--border-base);
-}
-
-.fnav-item:hover {
-  color: var(--text-primary);
-}
-
-.fnav-item.active {
-  color: var(--text-primary);
-}
-
-.fnav-num {
-  font-size: var(--fs-xs);
-  font-weight: 700;
-  color: var(--text-secondary);
-  font-variant-numeric: tabular-nums;
-  min-width: 1.75rem;
-  transition: color var(--duration-base);
-  font-family: monospace;
-}
-
-.fnav-item.active .fnav-num {
-  color: var(--accent-orange-hover);
-}
-
-.fnav-text {
-  font-weight: 500;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.fnav-text i {
-  font-size: 1rem;
-  opacity: 0.7;
-}
-
-/* Right: scroll items column */
-.features-items-col {
-  display: flex;
-  flex-direction: column;
-  gap: 5rem;
-  padding-top: 0.25rem;
-}
-
-.features-item {
-  opacity: 0.3;
-  transition: opacity 0.5s ease;
-}
-
-.features-item.active {
-  opacity: 1;
-}
-
-.features-item h3 {
-  font-size: var(--fs-h3);
-  font-weight: 700;
-  margin-bottom: 1rem;
-}
-
-.features-item > p {
-  color: var(--text-secondary);
-  line-height: 1.7;
-  margin-bottom: 1.25rem;
-}
-
-/* La escena de la app de cada pilar (app-demos/pillars/). El hueco tiene la
-   proporción del diseño (600 × 380, y 358 × 480 por debajo de 480px de ancho,
-   donde la escena cambia a su versión móvil): montarla no mueve el layout. */
-.features-item {
-  container-type: inline-size;
-}
-
-.features-item-demo {
-  max-width: 600px;
-  aspect-ratio: 600 / 380;
-  margin-top: 1.5rem;
+  justify-content: space-between;
+  gap: 1.25rem;
+  padding: 1.5rem;
   border: 1px solid var(--border-base);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-md);
+  background: linear-gradient(180deg, var(--bg-card-hover), var(--bg-card));
   overflow: hidden;
 }
 
-@container (width < 480px) {
-  .features-item-demo {
-    aspect-ratio: 358 / 480;
+.bento-card:hover {
+  border-color: var(--border-hover);
+}
+
+.bento-card--half {
+  grid-column: span 3;
+}
+
+.bento-copy {
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: var(--text-secondary);
+}
+
+.bento-copy h3,
+.bento-copy p {
+  display: inline;
+}
+
+.bento-copy h3 {
+  font: inherit;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.bento-ui {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  min-height: 200px;
+  padding: 1rem;
+  border: 1px solid var(--border-base);
+  border-radius: var(--radius-sm);
+  background: var(--bg-dark);
+  font-size: var(--fs-sm);
+  color: var(--text-primary);
+}
+
+.bento-ui--center {
+  justify-content: center;
+  align-items: center;
+}
+
+.bento-ui__label {
+  font-size: var(--fs-xs);
+  color: var(--text-secondary);
+}
+
+.bento-big {
+  font-size: 1.75rem;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+
+.bento-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.1rem 0.5rem;
+  border: 1px solid var(--border-hover);
+  border-radius: 999px;
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+.bento-pill--hot {
+  border-color: var(--accent-orange);
+  color: var(--accent-orange);
+}
+
+/* El naranja de acento no llega a 4.5:1 sobre fondo claro */
+body.light-theme .bento-pill--hot {
+  border-color: #b45309;
+  color: #b45309;
+}
+
+.bento-row {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.5rem 0.6rem;
+  border: 1px solid transparent;
+  border-radius: var(--radius-xs);
+}
+
+.bento-row.is-active {
+  border-color: var(--border-hover);
+  background: var(--bg-card-hover);
+}
+
+.bento-row.is-muted {
+  color: var(--text-secondary);
+}
+
+.bento-row__end {
+  margin-left: auto;
+}
+
+.bento-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+  background: var(--border-hover);
+}
+
+.bento-dot--purple { background: #af40ff; }
+.bento-dot--cyan { background: var(--accent-cyan); }
+.bento-dot--orange { background: var(--accent-orange); }
+
+.bento-tabs {
+  display: flex;
+  gap: 0.75rem;
+  border-bottom: 1px solid var(--border-base);
+  font-size: var(--fs-xs);
+  color: var(--text-secondary);
+}
+
+.bento-tabs span {
+  padding-bottom: 0.4rem;
+}
+
+.bento-tabs .is-active {
+  color: var(--text-primary);
+  border-bottom: 1px solid var(--text-primary);
+}
+
+.bento-bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 6px;
+  height: 70px;
+}
+
+.bento-bars i {
+  flex: 1;
+  height: 50%;
+  border-radius: 4px 4px 0 0;
+  background: linear-gradient(180deg, #5b42f3, transparent);
+}
+
+.bento-bars i:nth-child(1) { height: 40%; }
+.bento-bars i:nth-child(2) { height: 65%; }
+.bento-bars i:nth-child(3) { height: 30%; }
+.bento-bars i:nth-child(4) { height: 85%; }
+.bento-bars i:nth-child(5) { height: 55%; }
+.bento-bars i:nth-child(6) { height: 95%; }
+.bento-bars i:nth-child(7) { height: 70%; }
+
+.bento-bars__axis {
+  display: flex;
+  justify-content: space-around;
+  font-size: 0.65rem;
+  color: var(--text-secondary);
+}
+
+.bento-ticket {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  width: 100%;
+  max-width: 240px;
+  padding: 1rem;
+  border: 1px dashed var(--border-hover);
+  border-radius: var(--radius-sm);
+}
+
+.bento-meter {
+  height: 4px;
+  border-radius: 4px;
+  background: var(--border-base);
+  overflow: hidden;
+}
+
+.bento-meter i {
+  display: block;
+  width: 82%;
+  height: 100%;
+  background: var(--grad-brand);
+}
+
+.bento-ticket__foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: var(--fs-xs);
+  color: var(--text-secondary);
+}
+
+.bento-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  padding-left: 1rem;
+  border-left: 1px solid var(--border-hover);
+}
+
+.bento-tl {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.bento-tl::before {
+  content: '';
+  position: absolute;
+  left: calc(-1rem - 5px);
+  top: 4px;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--accent-cyan);
+}
+
+.bento-tl.is-muted {
+  color: var(--text-secondary);
+}
+
+.bento-tl.is-muted::before {
+  background: var(--border-hover);
+}
+
+.bento-tl__date {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+}
+
+.bento-person {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.bento-person small {
+  display: block;
+  font-size: 0.72rem;
+  color: var(--text-secondary);
+}
+
+.bento-avatar {
+  display: inline-grid;
+  place-items: center;
+  flex: none;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--grad-brand);
+  color: var(--on-brand);
+  font-weight: 600;
+}
+
+.bento-connect {
+  margin-left: auto;
+  padding: 0.35rem 0.8rem;
+  border-radius: 999px;
+  background: #5b42f3;
+  color: var(--on-brand);
+  font-size: var(--fs-xs);
+}
+
+.bento-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.bento-tags span {
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+  background: var(--bg-card-hover);
+  font-size: 0.7rem;
+}
+
+.bento-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-top: auto;
+  color: var(--text-secondary);
+}
+
+.bento-toggle__track {
+  position: relative;
+  width: 34px;
+  height: 20px;
+  border-radius: 999px;
+  background: var(--accent-green);
+}
+
+.bento-toggle__track::after {
+  content: '';
+  position: absolute;
+  top: 3px;
+  right: 3px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #ffffff;
+}
+
+@media (max-width: 860px) {
+  .bento {
+    grid-template-columns: 1fr;
+  }
+
+  .bento-card,
+  .bento-card--half {
+    grid-column: auto;
   }
 }
 
@@ -999,9 +1184,11 @@ body.light-theme .value-prop-image::before {
 }
 
 .value-prop-content h2 {
-  font-family: var(--font-display);
+  font-family: var(--font-serif);
   font-size: var(--fs-h2);
-  font-weight: 700;
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
   margin-bottom: 1.25rem;
   color: var(--white);
 }
@@ -1615,9 +1802,11 @@ body.light-theme .value-prop-image::before {
 }
 
 .cta-card h2 {
-  font-family: var(--font-display);
+  font-family: var(--font-serif);
   font-size: var(--fs-h2);
-  font-weight: 700;
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
   color: #ffffff;
   margin-bottom: 1rem;
 }
@@ -1827,27 +2016,6 @@ body.light-theme .value-prop-image::before {
    RESPONSIVE: Tablet (1024px)
    ============================================ */
 @media (max-width: 1024px) {
-  .features-sticky-wrap {
-    grid-template-columns: 1fr;
-    gap: 2rem;
-  }
-
-  .features-sticky-left {
-    position: static;
-  }
-
-  .features-nav {
-    display: none;
-  }
-
-  .features-items-col {
-    gap: 3.5rem;
-  }
-
-  .features-item {
-    opacity: 1 !important;
-  }
-
   .value-prop-grid {
     grid-template-columns: 1fr;
   }
@@ -2137,8 +2305,8 @@ body.light-theme .nav-links.active {
   background: rgba(250, 250, 250, 0.98);
 }
 
-/* T3 light-theme — animación de gradient solo en elementos no-split */
-body.light-theme .gradient-text:not([data-splitting]) {
+/* T3 light-theme — animación de gradient */
+body.light-theme .gradient-text {
   background: linear-gradient(var(--gradient-angle), #7c2dbd, #4338ca 50%, #0891b2);
   -webkit-background-clip: text;
   background-clip: text;
@@ -2169,10 +2337,6 @@ body.light-theme .section-label {
   color: rgba(0, 0, 0, 0.5);
   background: rgba(0, 0, 0, 0.06);
   border-color: rgba(0, 0, 0, 0.15);
-}
-
-body.light-theme .hero-title {
-  filter: drop-shadow(0 0 12px rgba(91, 66, 243, 0.2));
 }
 
 body.light-theme .carousel-item {
@@ -2368,33 +2532,6 @@ body.light-theme .num-card::after {
 }
 
 /* ============================================
-   SECTION HEADER — Char reveal wrapper (Splitting.js)
-   ============================================ */
-/* Splitting.js: each .word wraps chars, overflow hidden clips the reveal */
-.section-header h2[data-splitting] .word {
-  display: inline-block;
-  overflow: hidden;
-  vertical-align: bottom;
-  line-height: 1.2;
-}
-
-.section-header h2[data-splitting] .char {
-  display: inline-block;
-}
-
-/* @legacy: replaced by splitting-char-reveal */
-.heading-reveal-word {
-  display: inline-block;
-  overflow: hidden;
-  vertical-align: bottom;
-  line-height: 1.15;
-}
-
-.heading-reveal-word span {
-  display: inline-block;
-}
-
-/* ============================================
    EXPERIENCE CARDS — Content lift on hover
    ============================================ */
 .exp-card:hover .exp-content {
@@ -2416,11 +2553,8 @@ body.light-theme .num-card::after {
   inherits: false;
 }
 
-/* T3 — Gradient text animado (ciclo 8s).
-   Solo se aplica a elementos SIN data-splitting: los no-split usan background-clip:text
-   directamente en el elemento padre. Los elementos CON data-splitting tienen los chars
-   controlados por JS con inline styles — no necesitan este override. */
-.gradient-text:not([data-splitting]) {
+/* T3 — Gradient text animado (ciclo 8s) */
+.gradient-text {
   background: linear-gradient(var(--gradient-angle), #af40ff, #5b42f3 50%, #00ddeb);
   -webkit-background-clip: text;
   background-clip: text;
@@ -2467,8 +2601,7 @@ body.light-theme .num-card::after {
   animation: none;
 }
 
-/* T6 — CSS Containment en secciones pesadas (style+paint, no layout para
-   evitar romper sticky interno en .features) */
+/* T6 — CSS Containment en secciones pesadas (style+paint, sin layout) */
 .numbered-features,
 .cta-section,
 .news,
@@ -2556,18 +2689,6 @@ body.light-theme .num-card::after {
   opacity: 1;
 }
 
-/* Value-prop h2 word wrap for Splitting.js */
-.value-prop-content h2[data-splitting] .word {
-  display: inline-block;
-  overflow: hidden;
-  vertical-align: bottom;
-  line-height: 1.2;
-}
-
-.value-prop-content h2[data-splitting] .char {
-  display: inline-block;
-}
-
 /* Hero orbs CSS vars for mouse parallax — uses top/left offset so
    float @keyframes (which use transform) don't conflict */
 .hero-orb--1 {
@@ -2651,7 +2772,7 @@ body.light-theme .cta-btn:hover {
   }
 
   /* Stop gradient rotation and view-transition */
-  .gradient-text:not([data-splitting]) {
+  .gradient-text {
     animation: none;
   }
 
@@ -2735,7 +2856,6 @@ body.light-theme .cta-btn:hover {
    ============================================ */
 @supports (animation-timeline: view()) {
   @media (prefers-reduced-motion: no-preference) {
-    .features-item-demo,
     .value-prop-image {
       animation-name: media-reveal;
       animation-timing-function: linear;
@@ -3411,25 +3531,19 @@ body.light-theme .auth-page {
    MOVIMIENTO — sin librerías (antes GSAP + ScrollTrigger)
    La entrada del hero es CSS puro. Lo que aparece al hacer scroll lleva
    [data-scroll-reveal] (no data-reveal: ese lo usa el Collapse del kit de
-   app-demos) o .char-reveal, que solo pone main.js (sin JS o con
-   movimiento reducido todo se ve quieto y completo), y .is-revealed cuando
+   app-demos), que solo pone main.js (sin JS o con movimiento reducido
+   todo se ve quieto y completo), y .is-revealed cuando
    entra en pantalla. El parallax usa scroll-driven animations sobre la
    propiedad translate, para no pisar los transform de entrada ni de hover.
    ============================================================ */
 @media (prefers-reduced-motion: no-preference) {
-  /* Hero: las letras del título entran una a una mientras el peso pasa de
-     100 a 700, y al final el campo de correo */
-  .hero-title[data-splitting] {
-    animation: hero-weight 0.75s cubic-bezier(0.455, 0.03, 0.515, 0.955) 0.35s both;
-  }
-
-  .hero-title .char {
-    animation: hero-char 0.5s cubic-bezier(0.215, 0.61, 0.355, 1) both;
-    animation-delay: calc(0.3s + var(--char-index, 0) * 30ms);
+  /* Hero: el título sube y aparece, y luego el campo de correo */
+  .hero-title {
+    animation: hero-fade 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.1s both;
   }
 
   .hero-actions {
-    animation: hero-fade 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1.3s both;
+    animation: hero-fade 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.5s both;
   }
 
   [data-scroll-reveal] {
@@ -3446,22 +3560,6 @@ body.light-theme .auth-page {
     translate: none;
   }
 
-  /* Títulos de sección: cada letra sube desde debajo de su palabra (.word
-     recorta con overflow hidden en .section-header) */
-  .char-reveal .char {
-    opacity: 0;
-    transform: translateY(110%);
-    transition:
-      transform 0.6s cubic-bezier(0.215, 0.61, 0.355, 1),
-      opacity 0.6s cubic-bezier(0.215, 0.61, 0.355, 1);
-    transition-delay: calc(var(--char-index, 0) * 25ms);
-  }
-
-  .char-reveal.is-revealed .char {
-    opacity: 1;
-    transform: none;
-  }
-
   @supports (animation-timeline: scroll()) {
     /* Propiedades sueltas, no el atajo: ver SCROLL-LINKED MEDIA REVEAL */
     /* Las fotos de ciudad se desplazan un poco dentro de su tarjeta */
@@ -3472,15 +3570,6 @@ body.light-theme .auth-page {
       animation-timeline: view();
     }
   }
-}
-
-@keyframes hero-weight {
-  from { font-variation-settings: "wght" 100; }
-  to { font-variation-settings: "wght" 700; }
-}
-
-@keyframes hero-char {
-  from { opacity: 0; transform: translateY(30px); }
 }
 
 @keyframes hero-fade {

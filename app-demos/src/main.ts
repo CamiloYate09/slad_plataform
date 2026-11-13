@@ -5,10 +5,6 @@ import type { ComponentType } from 'react'
 
 const scenes: Record<string, () => Promise<{ default: ComponentType }>> = {
   hero: () => import('./hero/CityStreamHero'),
-  ciudades: () => import('./pillars/Ciudades'),
-  eventos: () => import('./pillars/Eventos'),
-  personas: () => import('./pillars/Personas'),
-  conciertos: () => import('./pillars/Conciertos'),
 }
 
 async function start(host: HTMLElement) {
@@ -27,8 +23,7 @@ function afterLoad(run: () => void) {
   else window.addEventListener('load', idle, { once: true })
 }
 
-// Then each scene loads as it nears the viewport: the hero at once, the
-// feature scenes as they are scrolled to
+// Then each scene loads as it nears the viewport
 const demos = document.querySelectorAll<HTMLElement>('[data-demo]')
 if (demos.length) afterLoad(() => {
   const near = new IntersectionObserver((entries) => {

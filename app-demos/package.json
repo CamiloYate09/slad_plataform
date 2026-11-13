@@ -2,7 +2,7 @@
   "name": "citystream-app-demos",
   "private": true,
   "type": "module",
-  "description": "Animated app scenes for index.html (hero and feature pillars), built with the stageshow kit. Builds into static/js/app-demos/.",
+  "description": "Animated app scene for the index.html hero, built with the stageshow kit. Builds into static/js/app-demos/.",
   "scripts": {
     "build": "tsc --noEmit && vite build",
     "dev": "vite"

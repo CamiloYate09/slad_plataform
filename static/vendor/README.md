@@ -7,9 +7,8 @@ script alojado en él, lo que equivale a saltarse la CSP.
 Cada archivo se descargó de la URL indicada y se verificó contra el hash SRI que ya tenía
 `index.html`. Ese hash se mantiene en el atributo `integrity` del `<script>` o `<link>`.
 
-| Archivo | Origen |
-|---|---|
-| `splitting.min.js` | https://unpkg.com/splitting@1.1.0/dist/splitting.min.js |
+Ahora mismo no hay ninguna (Splitting.js se retiró cuando los títulos dejaron de animarse letra a
+letra). Al añadir una, anótala aquí con su archivo y la URL de origen.
 
 Los iconos (Remix Icon) no están aquí: se usa un subset propio en
 `static/fonts/remixicon-subset.woff2`, declarado en el CSS crítico de `index.html`.

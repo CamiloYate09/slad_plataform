@@ -10,9 +10,9 @@
       body: 'Alterna entre modo oscuro y claro. Tu preferencia se guarda automáticamente.',
     },
     {
-      selector: '.fnav-item[data-scroll-to="fi-0"]',
+      selector: '#features .section-header',
       title: 'Explora las funcionalidades',
-      body: 'Cambia entre Ciudades, Eventos, Personas y Conciertos para ver el detalle de cada pilar.',
+      body: 'Ciudades, eventos, conciertos, avisos y personas: cada tarjeta muestra cómo se ve esa parte de la app.',
     },
     {
       selector: '.hero-actions .signup-capture',
