@@ -43,7 +43,7 @@ Los assets de imagen de contenido del sitio MUST seguir una convención de nombr
 #### Scenario: Compatibilidad de orientaciones mixtas
 - **WHEN** una imagen portrait (960×1280 o 720×1280) se coloca en un slot landscape (ancho fijo, altura fija)
 - **THEN** `object-fit: cover` recorta la imagen para llenar el contenedor sin distorsión
-- **AND** `object-position: center top` asegura que la zona superior (sujeto principal) sea visible
+- **AND** `.exp-image img` usa `object-position: center center`, así que el recorte se reparte por igual arriba y abajo
 - **AND** el resultado visual es aceptable en todos los breakpoints definidos (1024px, 768px, 480px)
 
 ### Requirement: Ambient Section Glow System
@@ -72,9 +72,9 @@ Las imágenes de contenido SHALL integrarse a la paleta de marca mediante un ove
 
 #### Scenario: Overlay duotone sobre imágenes de contenido
 - **WHEN** se renderiza una imagen de contenido (`.exp-image`)
-- **THEN** una capa pseudo-elemento aplica un gradiente morado→cyan con `mix-blend-mode` y opacidad ~10–15%
+- **THEN** un `::before` aplica un gradiente morado→cian (alfa 0.55) con `mix-blend-mode: soft-light` y `opacity: 0.5`
 - **AND** la capa tiene `pointer-events: none` y no altera el `<img>` ni su `alt`
-- **AND** en `body.light-theme` el overlay se atenúa para mantener contraste
+- **AND** en `body.light-theme` el overlay baja a `opacity: 0.28` para mantener contraste
 
 #### Scenario: Escala de radios consistente
 - **WHEN** se inspeccionan los contenedores de imagen y cards

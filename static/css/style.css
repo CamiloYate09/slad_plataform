@@ -1179,7 +1179,7 @@ body.light-theme .exp-image::before {
 }
 
 .how-step h3 {
-  font-size: 1.1rem;
+  font-size: var(--fs-h3);
   font-weight: 600;
 }
 
@@ -1910,15 +1910,9 @@ body.light-theme .exp-image::before {
    RESPONSIVE: Tablet (1024px)
    ============================================ */
 @media (max-width: 1024px) {
-  
-
-  
-
   .experiences-grid {
     grid-template-columns: repeat(2, 1fr);
   }
-
-  
 
   .news-grid {
     grid-template-columns: repeat(2, 1fr);
@@ -2020,9 +2014,12 @@ body.light-theme .exp-image::before {
   }
 
   .features,
-.experiences,
-.news,
-.cta-section {
+  .how,
+  .stats-band,
+  .audience,
+  .experiences,
+  .news,
+  .cta-section {
     padding-left: var(--px-mobile);
     padding-right: var(--px-mobile);
   }
@@ -2034,8 +2031,6 @@ body.light-theme .exp-image::before {
   .experiences-grid {
     grid-template-columns: 1fr;
   }
-
-  
 
   .news-grid {
     grid-template-columns: 1fr;
@@ -2070,10 +2065,6 @@ body.light-theme .exp-image::before {
     --fs-display: clamp(2.25rem, 7vw, 3.5rem);
     --fs-h2: clamp(1.75rem, 4vw, 2.5rem);
     --fs-h3: clamp(1.1rem, 2vw, 1.4rem);
-  }
-
-  .hero-actions {
-    flex-direction: column;
   }
 
   .hero-actions .btn-primary {
