@@ -619,118 +619,132 @@ body.no-transitions *::after {
 }
 
 /* ============================================
-   TRUSTED BY — Scrolling carousel
+   SELECTOR DE CIUDAD — pestañas con tres planes por ciudad
+   Sin JS (.is-enhanced lo pone main.js) los paneles se apilan con su título
    ============================================ */
-.trusted-by {
-  overflow: hidden;
-  padding: 2.5rem 0;
-  border-bottom: 1px solid var(--border-base);
-  background: var(--bg-dark-band);
+.city-picker {
+  padding: var(--section-gap) var(--px-desktop);
+  max-width: 1100px;
+  margin: 0 auto;
 }
 
-.carousel-track {
+.city-tabs {
   display: flex;
-  gap: 3rem;
-  width: max-content;
-  animation: carousel-scroll 25s linear infinite;
-  will-change: transform;
-}
-
-.carousel-item {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  flex-shrink: 0;
-  padding: 0.5rem 1.25rem;
-  border-radius: 9999px;
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  background: rgba(255, 255, 255, 0.07);
-  transition: border-color var(--duration-base), background var(--duration-base);
-}
-
-.carousel-item:hover {
-  border-color: rgba(255, 255, 255, 0.25);
-  background: rgba(255, 255, 255, 0.11);
-}
-
-.carousel-item picture {
-  display: inline-flex;
-  position: relative;
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  flex-shrink: 0;
-  align-items: center;
   justify-content: center;
+  gap: 0.25rem;
+  width: fit-content;
+  margin: 0 auto 2rem;
+  padding: 0.25rem;
+  border: 1px solid var(--border-base);
+  border-radius: 999px;
+  background: var(--bg-card);
 }
 
-/* Apple Intelligence rotating ring */
-@keyframes ai-ring-spin {
-  from { transform: rotate(0deg); }
-  to   { transform: rotate(360deg); }
+.city-tabs[hidden] {
+  display: none;
 }
 
-.carousel-item picture::before,
-.carousel-item picture::after {
-  content: '';
-  position: absolute;
-  border-radius: 50%;
-  pointer-events: none;
-}
-
-/* Rotating conic-gradient — Apple Intelligence colors */
-.carousel-item picture::before {
-  inset: -3px;
-  background: conic-gradient(
-    from 0deg,
-    transparent 0%,
-    #f9a8d4 12%,
-    #c4b5fd 30%,
-    #93c5fd 50%,
-    #6ee7b7 65%,
-    #f9a8d4 80%,
-    transparent 95%
-  );
-  animation: ai-ring-spin 2.8s linear infinite;
-  z-index: 0;
-}
-
-/* Inner mask — matches page background to create ring gap */
-.carousel-item picture::after {
-  inset: 0px;
-  background: var(--bg-primary);
-  z-index: 1;
-}
-
-.carousel-item img {
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  object-fit: cover;
-  flex-shrink: 0;
-  filter: grayscale(100%);
-  opacity: 0.7;
-  transition: filter var(--duration-base), opacity var(--duration-base);
-  position: relative;
-  z-index: 2;
-}
-
-.carousel-item:hover picture,
-.carousel-item:hover img {
-  filter: grayscale(0%);
-  opacity: 1;
-}
-
-.carousel-item span {
-  font-size: var(--fs-body);
-  font-weight: 500;
+.city-tab {
+  min-height: 44px;
+  padding: 0 1.25rem;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
   color: var(--text-secondary);
+  font: 500 var(--fs-body) / 1 var(--font-sans);
+  cursor: pointer;
+  transition: background var(--duration-base), color var(--duration-base);
+}
+
+.city-tab:hover {
+  color: var(--text-primary);
+}
+
+.city-tab[aria-selected="true"] {
+  background: var(--text-primary);
+  color: var(--bg-dark);
+}
+
+/* En alto contraste el navegador sustituye el fondo: la pestaña elegida
+   necesita otra marca */
+@media (forced-colors: active) {
+  .city-tab[aria-selected="true"] {
+    outline: 2px solid CanvasText;
+  }
+}
+
+.city-tab:focus-visible,
+.city-panel:focus-visible {
+  outline: 2px solid var(--accent-ink);
+  outline-offset: 2px;
+}
+
+.city-panel + .city-panel {
+  margin-top: 2.5rem;
+}
+
+.city-picker.is-enhanced .city-panel + .city-panel {
+  margin-top: 0;
+}
+
+.city-panel__title {
+  margin-bottom: 1rem;
+  font-size: var(--fs-h3);
+  font-weight: 600;
+}
+
+/* Con pestañas el título repite la pestaña: queda solo para lectores de pantalla */
+.city-picker.is-enhanced .city-panel__title {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
   white-space: nowrap;
 }
 
-@keyframes carousel-scroll {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-25%); }
+.city-plans {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.city-plan {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1.5rem;
+  border: 1px solid var(--border-base);
+  border-radius: var(--radius-md);
+  background: var(--bg-card);
+}
+
+.city-plan__tag {
+  align-self: flex-start;
+  padding: 0.15rem 0.6rem;
+  border: 1px solid var(--border-hover);
+  border-radius: 999px;
+  font-size: var(--fs-xs);
+  color: var(--text-secondary);
+}
+
+.city-plan h4 {
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+
+.city-plan p {
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: var(--text-secondary);
+}
+
+@media (max-width: 860px) {
+  .city-plans {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* ============================================
@@ -2015,6 +2029,7 @@ body.light-theme .exp-image::before {
 
   .features,
   .how,
+  .city-picker,
   .stats-band,
   .audience,
   .experiences,
@@ -2210,16 +2225,6 @@ body.light-theme .section-label {
   color: rgba(0, 0, 0, 0.5);
   background: rgba(0, 0, 0, 0.06);
   border-color: rgba(0, 0, 0, 0.15);
-}
-
-body.light-theme .carousel-item {
-  background: rgba(0, 0, 0, 0.05);
-  border-color: rgba(0, 0, 0, 0.12);
-}
-
-body.light-theme .carousel-item:hover {
-  background: rgba(0, 0, 0, 0.09);
-  border-color: rgba(0, 0, 0, 0.2);
 }
 
 body.light-theme .exp-image::after {
@@ -2556,10 +2561,6 @@ body.light-theme .cta-btn:hover {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
-  }
-
-  .carousel-track {
-    animation: none;
   }
 
   .progress-fill {

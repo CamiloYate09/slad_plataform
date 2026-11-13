@@ -133,6 +133,48 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 });
 
 // ============================================
+// SELECTOR DE CIUDAD — pestañas (patrón ARIA tabs)
+// Sin JS la barra queda oculta y los tres paneles se ven seguidos, cada uno
+// con su título; aquí se convierten en pestañas con flechas, Inicio y Fin.
+// ============================================
+const cityPicker = document.querySelector('.city-picker');
+const cityTabs = cityPicker && cityPicker.querySelector('.city-tabs');
+if (cityTabs) {
+  const tabs = [...cityTabs.querySelectorAll('[role="tab"]')];
+  const panels = tabs.map((tab) => document.getElementById(tab.getAttribute('aria-controls')));
+  panels.forEach((panel, i) => {
+    panel.setAttribute('role', 'tabpanel');
+    panel.setAttribute('aria-labelledby', tabs[i].id);
+    panel.tabIndex = 0;
+  });
+
+  function selectCity(index, focus) {
+    tabs.forEach((tab, i) => {
+      const selected = i === index;
+      tab.setAttribute('aria-selected', String(selected));
+      tab.tabIndex = selected ? 0 : -1;
+      panels[i].hidden = !selected;
+    });
+    if (focus) tabs[index].focus();
+  }
+
+  tabs.forEach((tab, i) => tab.addEventListener('click', () => selectCity(i, false)));
+  cityTabs.addEventListener('keydown', (e) => {
+    // Alt+← y similares son del navegador (atrás, adelante)
+    if (e.altKey || e.ctrlKey || e.metaKey) return;
+    const current = tabs.indexOf(document.activeElement);
+    const target = { ArrowRight: current + 1, ArrowLeft: current - 1, Home: 0, End: tabs.length - 1 }[e.key];
+    if (current === -1 || target === undefined) return;
+    e.preventDefault();
+    selectCity((target + tabs.length) % tabs.length, true);
+  });
+
+  cityPicker.classList.add('is-enhanced');
+  cityTabs.hidden = false;
+  selectCity(0, false);
+}
+
+// ============================================
 // MOVIMIENTO AL HACER SCROLL — sin librerías
 // Las animaciones viven en style.css (bloque MOVIMIENTO); aquí solo se marca
 // qué aparece y cuándo. La entrada del hero es CSS puro.

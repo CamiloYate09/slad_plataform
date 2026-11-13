@@ -8,7 +8,7 @@
  *  evento `activate` limpia caches obsoletas automaticamente.
  * ============================================================ */
 
-const CACHE_VERSION = 'v22'; // v22: padding móvil en Cómo funciona, cifras y para quién
+const CACHE_VERSION = 'v23'; // v23: selector de ciudad en lugar del carrusel, 3 ciudades
 const CACHE_NAME = `citystream-${CACHE_VERSION}`;
 
 // Shell estatico: archivos cacheados en install para offline-first

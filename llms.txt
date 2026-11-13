@@ -2,7 +2,7 @@
 
 > La primera red social creada en Colombia. CityStream conecta a las personas con su ciudad: eventos, comunidades, conciertos y experiencias locales — todo en una sola app pensada para colombianos.
 
-CityStream esta actualmente en fase de pre-lanzamiento; ya puedes crear tu cuenta en https://citystream.tech/registro.html. La plataforma sera lanzada inicialmente en Bogota, Medellin, Cartagena, Cali y Barranquilla.
+CityStream esta actualmente en fase de pre-lanzamiento; ya puedes crear tu cuenta en https://citystream.tech/registro.html. La plataforma sera lanzada inicialmente en Bogota, Medellin y Cartagena; Cali y Barranquilla llegan despues.
 
 ## Que es CityStream
 
@@ -24,8 +24,8 @@ CityStream esta actualmente en fase de pre-lanzamiento; ya puedes crear tu cuent
 - Bogota (Distrito Capital)
 - Medellin (Antioquia)
 - Cartagena (Bolivar)
-- Cali (Valle del Cauca)
-- Barranquilla (Atlantico)
+
+Proximamente: Cali (Valle del Cauca) y Barranquilla (Atlantico).
 
 ## Funcionalidades clave
 

@@ -19,7 +19,7 @@ No vendemos atencion. Conectamos personas reales en ciudades reales, priorizando
 
 ### 1. Ciudades — El mapa vivo de Colombia
 
-Cada ciudad tiene su propia energia. CityStream te permite navegar por Bogota, Medellin, Cartagena, Cali y Barranquilla con recomendaciones locales de gastronomia, cultura y vida nocturna que solo los locales conocen. No es una guia turistica: es la voz de quienes viven cada barrio.
+Cada ciudad tiene su propia energia. CityStream te permite navegar por Bogota, Medellin y Cartagena con recomendaciones locales de gastronomia, cultura y vida nocturna que solo los locales conocen. No es una guia turistica: es la voz de quienes viven cada barrio.
 
 ### 2. Eventos — Nunca mas te pierdas de nada
 
@@ -42,8 +42,8 @@ Desde artistas emergentes en bares de Chapinero hasta festivales masivos en el M
 | Bogota | Distrito Capital | 8 millones de historias. Museos, gastronomia de autor, rumba en Chapinero y amaneceres en Monserrate. |
 | Medellin | Antioquia | Capital de la innovacion y epicentro cultural. Clima perfecto y escena gastronomica en crecimiento. |
 | Cartagena | Bolivar | Patrimonio amurallado, atardeceres caribenos y la mejor cocina del Caribe colombiano. |
-| Cali | Valle del Cauca | Capital mundial de la salsa, mezcla afro-pacifica y energia tropical. |
-| Barranquilla | Atlantico | Cuna del carnaval mas importante de Colombia y puerta del Caribe. |
+
+Proximamente: Cali (capital mundial de la salsa) y Barranquilla (cuna del carnaval mas importante de Colombia).
 
 ---
 
@@ -65,7 +65,7 @@ CityStream es la primera red social creada en Colombia, enfocada en conectar per
 La plataforma esta en fase de pre-lanzamiento. Ya puedes crear tu cuenta en https://citystream.tech/registro.html para tener acceso anticipado.
 
 ### En que ciudades estara disponible?
-En el lanzamiento inicial: Bogota, Medellin, Cartagena, Cali y Barranquilla. Mas ciudades se sumaran progresivamente.
+En el lanzamiento inicial: Bogota, Medellin y Cartagena. Cali y Barranquilla llegan pronto, y mas ciudades se sumaran progresivamente.
 
 ### Es gratis usar CityStream?
 La aplicacion sera gratuita en su lanzamiento. Los detalles de monetizacion (eventos premium, suscripciones opcionales) se anunciaran proximamente.
