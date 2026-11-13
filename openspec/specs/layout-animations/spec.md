@@ -5,40 +5,6 @@ Espaciado, retícula y comportamiento al hacer scroll de la landing: revelados d
 
 ## Requirements
 
-### Requirement: Generous Spacing and 12-Column Grid
-El layout MUST usar un sistema de grid CSS de 12 columnas, max-width de 1920px en el html, y padding lateral siguiendo el patrón de factory.ai: `px-4` (16px) en mobile, `px-9` (36px) en desktop.
-
-#### Scenario: Contenedor principal con spacing factory.ai
-- **WHEN** la página renderiza en desktop (>1024px)
-- **THEN** el html tiene `max-width: 1920px` con `margin: 0 auto`
-- **AND** las secciones usan `display: grid; grid-template-columns: repeat(12, 1fr)` con `gap: 1.5rem`
-- **AND** el padding lateral es `36px` (`px-9`) en desktop, `16px` (`px-4`) en mobile
-- **AND** las secciones principales tienen `margin-block` de al menos `5rem` (80px) entre ellas
-
-#### Scenario: Grid de features en 12 columnas
-- **WHEN** la sección features renderiza en desktop
-- **THEN** las 4 cards se distribuyen usando `grid-column: span 3` cada una en el grid de 12
-- **AND** el gap entre cards es `1.5rem`
-
-### Requirement: Smooth Scroll Reveal Animations
-Las animaciones de scroll MUST ser controladas por GSAP + ScrollTrigger, reemplazando el IntersectionObserver actual. Cada sección se revela con animaciones profesionales al entrar en el viewport.
-
-#### Scenario: Secciones se revelan con GSAP ScrollTrigger
-- **WHEN** una sección entra en el viewport (trigger: top 80% del viewport)
-- **THEN** GSAP anima los elementos con `opacity: 0 → 1` y `y: 40 → 0`
-- **AND** la duración es `0.8s` con easing `power2.out`
-- **AND** elementos hijos (cards, items) tienen stagger de `0.15s` entre ellos
-
-#### Scenario: Hero entrance animation con timeline
-- **WHEN** la página termina de cargar
-- **THEN** GSAP ejecuta un timeline: headline fade-in (0.6s) → subtitle fade-in (0.4s) → CTA fade-in (0.4s)
-- **AND** cada elemento se anima con `y: 30 → 0` y `opacity: 0 → 1`
-
-#### Scenario: Animaciones respetan prefers-reduced-motion
-- **WHEN** el usuario tiene `prefers-reduced-motion: reduce` activo
-- **THEN** GSAP se inicializa con `gsap.config({ nullTargetWarn: false })` y todas las animaciones se desactivan via `ScrollTrigger.config({ autoRefreshEvents: "visibilitychange,DOMContentLoaded,load" })` y `gsap.globalTimeline.timeScale(0)` o equivalente
-- **AND** los elementos aparecen en su estado final sin animación
-
 ### Requirement: Link Hover Underline Reveal
 Los links de navegación y footer SHALL tener un efecto de subrayado que se revela de izquierda a derecha al hover, usando color naranja (`--accent-orange-hover: #f97316`) matching factory.ai.
 
@@ -65,33 +31,48 @@ Las cards MUST tener un hover refinado que eleva, agrega sombra con glow de colo
 - **AND** el background-position del gradiente se desplaza a `100% 0`
 - **AND** aparece box-shadow con glow de brand color
 
-### Requirement: Lenis Smooth Scroll
-El sitio SHALL integrar la libreria Lenis para smooth scrolling tipo butter, conectada con GSAP ScrollTrigger para mantener sincronizacion de animaciones.
+### Requirement: Espaciado y Ancho de la Página
+El `html` MUST tener `max-width: 1920px` centrado. Las secciones MUST usar `padding: var(--section-gap) var(--px-desktop)`, con `--section-gap: 5rem` y `--px-desktop: 2.25rem` (36px).
 
-#### Scenario: Smooth scroll activo
-- **WHEN** el usuario scrollea la pagina
-- **THEN** el scroll se interpola suavemente con Lenis (lerp: 0.1, duration: 1.2)
-- **AND** ScrollTrigger se actualiza en cada frame via `lenis.on('scroll', ScrollTrigger.update)`
-- **AND** el requestAnimationFrame de GSAP sincroniza Lenis con `gsap.ticker.add()`
+#### Scenario: Escritorio
+- **WHEN** el viewport mide más de 768px
+- **THEN** las secciones tienen 5rem de padding vertical y 36px de padding lateral
 
-#### Scenario: Lenis respeta prefers-reduced-motion
-- **WHEN** el usuario tiene `prefers-reduced-motion: reduce` activo
-- **THEN** Lenis NO se inicializa
-- **AND** el scroll nativo del navegador se mantiene
+#### Scenario: Pantallas muy anchas
+- **WHEN** el viewport mide 1920px o más
+- **THEN** `--px-desktop` pasa a 3rem (48px) y la página no crece más de 1920px
 
-### Requirement: Subtle Parallax Effects
-El sitio SHALL incluir efectos de parallax sutiles en el hero y la seccion value-prop para agregar profundidad visual sin distraer.
+#### Scenario: Móvil
+- **WHEN** el viewport mide 768px o menos
+- **THEN** `--section-gap` pasa a 3.5rem y el padding lateral usa `--px-mobile` (16px)
 
-#### Scenario: Parallax en hero
-- **WHEN** el usuario scrollea pasando el hero
-- **THEN** el hero-logo se mueve a velocidad 0.8x respecto al scroll (ligeramente mas lento)
-- **AND** el efecto es controlado por GSAP ScrollTrigger con scrub: true
+### Requirement: Revelado al Hacer Scroll
+Los bloques que aparecen al hacer scroll SHALL marcarse desde `main.js` con `[data-scroll-reveal]` y un `IntersectionObserver`, sin librerías, y SHALL animarse con transiciones CSS de `opacity` y `translate`. La entrada del hero SHALL ser CSS puro.
 
-#### Scenario: Parallax en value-prop image
-- **WHEN** el usuario scrollea pasando la seccion value-prop
-- **THEN** la imagen se mueve a velocidad 1.1x (ligeramente mas rapido que el contenido)
-- **AND** el efecto es sutil (max 30px de desplazamiento)
+#### Scenario: Bloque entra en pantalla
+- **WHEN** el borde superior de un bloque marcado alcanza el 85% de la altura del viewport
+- **THEN** recibe `.is-revealed` y pasa de `opacity: 0` y 40px más abajo a su posición, en 0,8 s con `cubic-bezier(0.25, 0.46, 0.45, 0.94)`
+- **AND** en los grupos de tarjetas cada una se retrasa respecto a la anterior (0,15 s en números y experiencias, 0,1 s en eventos, 0,08 s en el bento)
 
-#### Scenario: Parallax respeta prefers-reduced-motion
-- **WHEN** el usuario tiene `prefers-reduced-motion: reduce` activo
-- **THEN** no hay efecto parallax — los elementos se posicionan estaticamente
+#### Scenario: Bloque ya superado
+- **WHEN** la página se abre en un ancla o el navegador restaura el scroll más abajo
+- **THEN** los bloques que quedan por encima del viewport se muestran sin esperar a cruzarlo
+
+#### Scenario: Entrada del hero
+- **WHEN** la página carga
+- **THEN** el título sube y aparece en 0,6 s tras 0,1 s, y la captura de correo en 0,4 s tras 0,5 s
+
+#### Scenario: Sin JavaScript o con movimiento reducido
+- **WHEN** JavaScript no se ejecuta o el usuario tiene `prefers-reduced-motion: reduce`
+- **THEN** ningún bloque se marca y todo el contenido se ve completo y quieto
+
+### Requirement: Parallax de Fotos de Ciudad
+Las fotos de las tarjetas de experiencias (`.exp-card .exp-image img`) SHALL desplazarse levemente dentro de su tarjeta según su posición en el viewport, con scroll-driven animations de CSS (`animation-timeline: view()`) sobre la propiedad `translate`.
+
+#### Scenario: Foto atraviesa el viewport
+- **WHEN** una tarjeta de experiencia cruza el viewport en un navegador con soporte de `animation-timeline`
+- **THEN** su foto pasa de `translate: 0 12px` a `translate: 0 -12px`
+
+#### Scenario: Sin soporte o movimiento reducido
+- **WHEN** el navegador no soporta `animation-timeline` o el usuario tiene `prefers-reduced-motion: reduce`
+- **THEN** la foto queda quieta
