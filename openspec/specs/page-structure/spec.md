@@ -33,21 +33,20 @@ La página MUST seguir el orden de secciones definido abajo, partiendo del de fa
 - **AND** `.faq` está entre `.news` y `.cta-section`
 
 ### Requirement: Trusted-By Logo Carousel
-La página MUST incluir una sección de logos de aliados/ciudades que se desplazan horizontalmente en loop infinito, posicionada inmediatamente después del hero.
+La página MUST incluir, inmediatamente después del hero, un carrusel de las ciudades de lanzamiento que se desplaza horizontalmente en loop infinito.
 
 #### Scenario: Carousel de logos infinito
-- **WHEN** la sección trusted-by renderiza
-- **THEN** se muestra una fila horizontal de logos/nombres que se desplaza automáticamente
-- **AND** la animación es CSS `@keyframes` con `translateX` de 0 a -50% (duplicando los logos)
-- **AND** la animación es `linear infinite` sin pausas
-- **AND** el overflow es `hidden` para ocultar logos fuera del viewport
+- **WHEN** la sección `.trusted-by` renderiza
+- **THEN** se muestra una fila de cápsulas con la foto y el nombre de cada ciudad (Bogotá, Medellín, Cartagena, Cali, Barranquilla) que se desplaza sola
+- **AND** la animación es CSS `@keyframes carousel-scroll` con `translateX` de 0 a -25%, `linear infinite`, en 25 s
+- **AND** el overflow es `hidden` para ocultar las cápsulas fuera del viewport
+- **AND** con `prefers-reduced-motion: reduce` el carrusel queda quieto
 
 #### Scenario: Nuevas imágenes de alta resolución en el carousel
 - **WHEN** se inspeccionan los elementos del carousel
-- **THEN** contiene imágenes de la nueva colección de alta resolución (`static/img/img-09` a `img-13` en formato WebP con fallback JPG)
-- **AND** cada imagen usa `<picture><source srcset="*.webp" type="image/webp"><img src="*.jpg"></picture>`
-- **AND** los elementos están duplicados en el HTML con `aria-hidden="true"` para crear el efecto de loop infinito
-- **AND** las imágenes se renderizan como círculos de 48×48px con `object-fit: cover` y `border-radius: 50%`
+- **THEN** cada cápsula usa `static/img/avatar-09` a `avatar-13` en `<picture>` con fuentes AVIF y WebP y `<img>` JPG de fallback
+- **AND** las cinco ciudades aparecen cuatro veces; las tres copias llevan `aria-hidden="true"` para el loop
+- **AND** las imágenes se renderizan como círculos de 48×48px con `object-fit: cover`
 
 ### Requirement: Value Proposition Section
 La página MUST incluir una sección de propuesta de valor con layout de dos columnas, reemplazando la sección newsletter actual, posicionada entre features y experiencias.
@@ -91,21 +90,17 @@ Todas las imágenes de contenido de la página (excluyendo logo y iconos) MUST u
 - **AND** el encuadre prioriza la zona superior con `object-position: center top`
 - **AND** no hay deformación ni espacio vacío visible en ningún slot
 
-### Requirement: Stats Social Proof Section
-La página MUST incluir una sección de métricas clave posicionada entre el carousel y las features, mostrando cifras de crecimiento de CityStream con animación count-up para generar credibilidad inmediata.
+### Requirement: Banda de Cifras
+La página MUST incluir, entre el carrusel y las funcionalidades, una banda `.stats-band` con cuatro tarjetas de prueba: ciudades para arrancar (cifra con degradado), "Hecho en Colombia" (tarjeta con el degradado de marca), los cuatro pilares con sus iconos y la frase "La primera red social de Colombia." sobre un fondo de puntos. Las cifras cuentan al entrar en pantalla (ver "Stats Section Entrance Animation" en `animations`).
 
-#### Scenario: Layout horizontal de métricas
-- **WHEN** la sección `.stats` renderiza en desktop
-- **THEN** muestra 4 métricas en fila horizontal separadas por líneas verticales (`border-right: 1px solid var(--border-base)`)
-- **AND** cada métrica tiene: número grande con gradient-text, etiqueta secundaria en uppercase
-- **AND** la sección tiene `border-top` y `border-bottom` como separadores de sección factory.ai-style
+#### Scenario: Escritorio
+- **WHEN** el viewport mide más de 768px
+- **THEN** las cuatro tarjetas se muestran en una fila
 
-#### Scenario: Layout en mobile
-- **WHEN** la sección renderiza en viewport ≤768px
-- **THEN** las 4 métricas se reorganizan en grid 2×2
-- **AND** los separadores verticales se convierten en separadores horizontales (`border-bottom`)
+#### Scenario: Tablet
+- **WHEN** el viewport mide entre 481px y 768px
+- **THEN** las tarjetas se reorganizan en una cuadrícula de 2×2
 
-#### Scenario: Métricas con datos reales
-- **WHEN** la sección es visible
-- **THEN** los valores mostrados corresponden a datos actualizados del equipo CityStream
-- **AND** los valores usan sufijos de escala ("K+" para miles, "+" para exactos)
+#### Scenario: Móvil
+- **WHEN** el viewport mide 480px o menos
+- **THEN** las tarjetas se apilan en una columna

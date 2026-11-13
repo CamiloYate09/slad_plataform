@@ -1,8 +1,10 @@
 # layout-animations Specification
 
 ## Purpose
-TBD - created by archiving change redesign-factory-style. Update Purpose after archive.
+Espaciado, retícula y comportamiento al hacer scroll de la landing: revelados de secciones, hovers de enlaces y tarjetas, y parallax.
+
 ## Requirements
+
 ### Requirement: Generous Spacing and 12-Column Grid
 El layout MUST usar un sistema de grid CSS de 12 columnas, max-width de 1920px en el html, y padding lateral siguiendo el patrón de factory.ai: `px-4` (16px) en mobile, `px-9` (36px) en desktop.
 
@@ -93,19 +95,3 @@ El sitio SHALL incluir efectos de parallax sutiles en el hero y la seccion value
 #### Scenario: Parallax respeta prefers-reduced-motion
 - **WHEN** el usuario tiene `prefers-reduced-motion: reduce` activo
 - **THEN** no hay efecto parallax — los elementos se posicionan estaticamente
-
-### Requirement: Animated Statistics Counter
-La sección de estadísticas SHALL usar animación count-up (GSAP) para revelar los números métricamente cuando entran al viewport, siguiendo el patrón de factory.ai de mostrar social proof de forma dinámica.
-
-#### Scenario: Count-up al entrar al viewport
-- **WHEN** el usuario hace scroll hasta la sección `.stats`
-- **THEN** cada `.stat-number` anima desde 0 hasta su valor final (`data-target`)
-- **AND** la duración de la animación es de 2 segundos con `ease: power2.out`
-- **AND** el disparo es `once: true` (no se repite al hacer scroll de vuelta)
-- **AND** los números se formatean: ≥1000 usa sufijo "K" (50000 → "50K+")
-
-#### Scenario: Fallback sin animación
-- **WHEN** el usuario tiene `prefers-reduced-motion: reduce` activo
-- **THEN** los números aparecen directamente en su valor final sin transición numérica
-- **AND** no hay ningún GSAP tween iniciado para la sección stats
-

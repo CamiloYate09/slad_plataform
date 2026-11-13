@@ -24,11 +24,16 @@ Los ambient orbs del hero SHALL responder al movimiento del mouse desplazándose
 - **THEN** los orbs se desplazan con un parallax sutil (max ±20px) en dirección opuesta al cursor
 
 ### Requirement: Stats Section Entrance Animation
-Los .stat-item SHALL tener una animación de entrada staggered al hacer scroll (actualmente solo se anima el contador numérico, no el contenedor).
+Las cifras de `.stats-band` (`.stat-number` con `data-count`) SHALL contar desde 0 hasta su valor final cuando entran en pantalla. Las tarjetas (`.stat-card`) no tienen animación de entrada propia. El HTML SHALL contener ya la cifra final, para que se lea sin JavaScript.
 
 #### Scenario: Stats entran al viewport
-- **WHEN** la sección .stats entra al viewport
-- **THEN** los stat-items aparecen con stagger de 0.12s desde abajo con fade-in
+- **WHEN** el borde superior de una `.stat-number` alcanza el 90% de la altura del viewport
+- **THEN** cuenta de 0 a `data-count` en 1,6 s con easing de salida y añade `data-suffix` (por ejemplo "%")
+- **AND** el número usa el formato `es-CO`
+
+#### Scenario: Movimiento reducido
+- **WHEN** el usuario tiene `prefers-reduced-motion: reduce` activo
+- **THEN** la cifra se muestra con su valor final, sin contar
 
 ### Requirement: Section Label Clip-Path Reveal
 Los badges .section-label SHALL aparecer con una animación clip-path slide-in (de izquierda a derecha) al entrar al viewport, más cinematográfica que un simple fade+y.
