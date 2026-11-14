@@ -3009,18 +3009,74 @@ body.light-theme .auth-page {
     animation: hero-fade 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.5s both;
   }
 
+  /* --reveal-tilt (reveal({ tilt })): el bloque entra recostado hacia atrás.
+     transform no se usa aquí: queda libre para la inclinación con el puntero
+     ([data-tilt]), con su propia transición y sin el retraso del escalonado */
   [data-scroll-reveal] {
     opacity: 0;
     translate: var(--reveal-x, 0) var(--reveal-y, 40px);
+    rotate: x var(--reveal-tilt, 0deg);
     transition:
-      opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-      translate 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    transition-delay: var(--reveal-delay, 0s);
+      opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) var(--reveal-delay, 0s),
+      translate 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) var(--reveal-delay, 0s),
+      rotate 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) var(--reveal-delay, 0s),
+      transform 0.3s ease-out;
   }
 
   [data-scroll-reveal].is-revealed {
     opacity: 1;
     translate: none;
+    rotate: none;
+  }
+
+  /* Cómo funciona: los pasos se levantan desde el fondo */
+  .how-steps {
+    perspective: 900px;
+  }
+
+  .how-step {
+    transform-origin: 50% 100%;
+  }
+
+  /* INCLINACIÓN 3D — main.js pone [data-tilt] (solo con puntero fino) y
+     --tilt-x / --tilt-y de -1 a 1; al salir el puntero se quitan y todo
+     vuelve a 0. El lado bajo el cursor se hunde. */
+  [data-tilt] {
+    transform:
+      perspective(900px)
+      rotateX(calc(var(--tilt-y, 0) * var(--tilt-max-x, -5deg)))
+      rotateY(calc(var(--tilt-x, 0) * var(--tilt-max-y, 5deg)));
+  }
+
+  [data-tilt]:not([data-scroll-reveal]) {
+    transition: transform 0.3s ease-out;
+  }
+
+  .hero-demo {
+    --tilt-max-x: -6deg;
+    --tilt-max-y: 8deg;
+  }
+
+  /* Reflejo sobre la pantalla del teléfono: .ss-phone__window (kit de
+     app-demos) ya recorta a las esquinas redondeadas. Se mueve con translate,
+     no repintando el degradado. */
+  .hero-demo[data-tilt] .ss-phone__window::after {
+    content: '';
+    position: absolute;
+    inset: -50%;
+    z-index: 10;
+    pointer-events: none;
+    background: radial-gradient(circle closest-side, rgba(255, 255, 255, 0.24), transparent);
+    opacity: var(--tilt-on, 0);
+    translate: calc(var(--tilt-x, 0) * 25%) calc(var(--tilt-y, 0) * 25%);
+    transition: opacity 0.3s ease-out;
+  }
+
+  /* Bento: .bento-card recorta (overflow: hidden) y eso aplana un translateZ
+     de sus hijos; la mini-interfaz se desliza en contra para dar las capas */
+  .bento-card[data-tilt] .bento-ui {
+    translate: calc(var(--tilt-x, 0) * -6px) calc(var(--tilt-y, 0) * -6px);
+    transition: translate 0.3s ease-out;
   }
 }
 

@@ -209,14 +209,16 @@ function revealPassed() {
 }
 
 // Elements fade and slide in when they (or their `trigger`) come into view;
-// `stagger` delays each one after the first, in seconds
-function reveal(selector, { trigger, x = 0, y = 40, stagger = 0, at = 0.85 } = {}) {
+// `stagger` delays each one after the first, in seconds; `tilt` starts them
+// leaning back that many degrees (their container sets the perspective)
+function reveal(selector, { trigger, x = 0, y = 40, tilt = 0, stagger = 0, at = 0.85 } = {}) {
   const els = [...document.querySelectorAll(selector)];
   if (!els.length) return;
   els.forEach((el, i) => {
     el.dataset.scrollReveal = '';
     el.style.setProperty('--reveal-x', `${x}px`);
     el.style.setProperty('--reveal-y', `${y}px`);
+    if (tilt) el.style.setProperty('--reveal-tilt', `${tilt}deg`);
     el.style.setProperty('--reveal-delay', `${i * stagger}s`);
   });
   const show = (members) => () => members.forEach((m) => m.classList.add('is-revealed'));
@@ -229,7 +231,7 @@ if (!prefersReducedMotion) {
   reveal('.section-header');
   reveal('.bento-card', { trigger: '.bento', stagger: 0.08 });
   reveal('.cta-card', { trigger: '.cta-section' });
-  reveal('.how-step', { trigger: '.how-steps', stagger: 0.1 });
+  reveal('.how-step', { trigger: '.how-steps', tilt: 35, stagger: 0.1 });
   reveal('.news-card', { trigger: '.news-grid', stagger: 0.1 });
   reveal('.footer', { y: 30, at: 0.9 });
   reveal('.footer-col', { trigger: '.footer-grid', y: 20, stagger: 0.1, at: 0.9 });
@@ -312,6 +314,46 @@ if (!prefersReducedMotion && window.matchMedia('(pointer: fine)').matches) {
       orb3.style.setProperty('--orb-dy', '0px');
     });
   }
+}
+
+// ============================================
+// INCLINACIÓN 3D — teléfono del hero y tarjetas del bento
+// Aquí solo se escribe dónde está el puntero (--tilt-x / --tilt-y, de -1 a 1)
+// sobre `area`; los ángulos y el reflejo viven en style.css ([data-tilt]).
+// ============================================
+function tilt(el, area = el) {
+  let frame = 0;
+  let nx = 0;
+  let ny = 0;
+  el.dataset.tilt = '';
+
+  area.addEventListener('pointermove', (e) => {
+    const rect = area.getBoundingClientRect();
+    nx = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+    ny = ((e.clientY - rect.top) / rect.height) * 2 - 1;
+    if (frame) return;
+    frame = requestAnimationFrame(() => {
+      frame = 0;
+      el.style.setProperty('--tilt-x', nx.toFixed(3));
+      el.style.setProperty('--tilt-y', ny.toFixed(3));
+      el.style.setProperty('--tilt-on', '1');
+    });
+  });
+
+  // Back to neutral: without the variables the CSS falls back to 0
+  area.addEventListener('pointerleave', () => {
+    cancelAnimationFrame(frame);
+    frame = 0;
+    el.style.removeProperty('--tilt-x');
+    el.style.removeProperty('--tilt-y');
+    el.style.removeProperty('--tilt-on');
+  });
+}
+
+if (!prefersReducedMotion && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+  const heroDemo = document.querySelector('.hero-demo');
+  if (heroDemo) tilt(heroDemo, heroDemo.closest('.hero'));
+  document.querySelectorAll('.bento-card').forEach((card) => tilt(card));
 }
 
 /* ============================================

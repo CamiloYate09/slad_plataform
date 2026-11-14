@@ -8,7 +8,7 @@
  *  evento `activate` limpia caches obsoletas automaticamente.
  * ============================================================ */
 
-const CACHE_VERSION = 'v25'; // v25: próximos eventos solo de las ciudades de lanzamiento
+const CACHE_VERSION = 'v26'; // v26: inclinación 3D del teléfono y el bento, pasos en perspectiva
 const CACHE_NAME = `citystream-${CACHE_VERSION}`;
 
 // Shell estatico: archivos cacheados en install para offline-first
