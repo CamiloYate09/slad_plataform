@@ -8,7 +8,7 @@
  *  evento `activate` limpia caches obsoletas automaticamente.
  * ============================================================ */
 
-const CACHE_VERSION = 'v24'; // v24: ciudades con foto en el selector, fuera Experiencias y la banda de cifras
+const CACHE_VERSION = 'v25'; // v25: próximos eventos solo de las ciudades de lanzamiento
 const CACHE_NAME = `citystream-${CACHE_VERSION}`;
 
 // Shell estatico: archivos cacheados en install para offline-first
