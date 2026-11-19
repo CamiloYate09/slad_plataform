@@ -172,21 +172,53 @@
 }
 
 .blog-post__img {
+  position: relative;
   aspect-ratio: 16 / 10;
   overflow: hidden;
   border-radius: var(--radius-md);
+  background: var(--grad-brand); /* respaldo si cover.js no corre */
 }
 
-.blog-post__img img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+/* Portada generada por cover.js */
+.blog-cover {
+  position: absolute;
+  inset: 0;
   transition: transform 0.7s var(--ease-out);
 }
 
-.blog-post:hover .blog-post__img img {
-  transform: scale(1.06);
+.blog-cover svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.blog-post:hover .blog-cover {
+  transform: scale(1.05);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* Cada capa es periódica (160 unidades) y se desplaza una vuelta exacta */
+  .blog-cover__wave {
+    animation: blog-cover-drift var(--t, 20s) linear infinite;
+    animation-direction: var(--dir, normal);
+  }
+
+  .blog-cover__sun {
+    animation: blog-cover-float var(--t, 10s) ease-in-out infinite alternate;
+  }
+
+  .blog-cover.is-paused .blog-cover__wave,
+  .blog-cover.is-paused .blog-cover__sun {
+    animation-play-state: paused;
+  }
+
+  @keyframes blog-cover-drift {
+    to { transform: translateX(-160px); }
+  }
+
+  @keyframes blog-cover-float {
+    to { transform: translateY(6px); }
+  }
 }
 
 .blog-post__body {
@@ -505,7 +537,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .blog-post__img img,
+  .blog-cover,
   .blog-post.is-main .blog-cta {
     transition: none;
   }
