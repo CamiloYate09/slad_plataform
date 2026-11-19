@@ -8,7 +8,7 @@
  *  evento `activate` limpia caches obsoletas automaticamente.
  * ============================================================ */
 
-const CACHE_VERSION = 'v26'; // v26: inclinación 3D del teléfono y el bento, pasos en perspectiva
+const CACHE_VERSION = 'v27'; // v27: mapa de Colombia como selector de ciudad
 const CACHE_NAME = `citystream-${CACHE_VERSION}`;
 
 // Shell estatico: archivos cacheados en install para offline-first
@@ -18,6 +18,7 @@ const PRECACHE_URLS = [
   '/offline.html',
   '/static/css/style.min.css',
   '/static/js/main.js',
+  '/static/js/city-map.js',
   '/static/img/logo-citystream.png',
   '/image/favicon-32x32.png',
   '/image/apple-touch-icon.png',

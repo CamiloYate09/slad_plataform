@@ -616,41 +616,192 @@ body.no-transitions *::after {
   margin: 0 auto;
 }
 
-.city-tabs {
-  display: flex;
-  justify-content: center;
-  gap: 0.25rem;
-  width: fit-content;
-  margin: 0 auto 2rem;
-  padding: 0.25rem;
-  border: 1px solid var(--border-base);
-  border-radius: 999px;
-  background: var(--bg-card);
+/* Selector: mapa a un lado y la lista de ciudades al otro (sin JS no se ve) */
+.city-select {
+  display: grid;
+  grid-template-columns: 340px minmax(0, 1fr);
+  gap: 3rem;
+  align-items: center;
+  max-width: 760px;
+  margin: 0 auto 3rem;
 }
 
-.city-tabs[hidden] {
+.city-select[hidden],
+.city-map[hidden] {
   display: none;
 }
 
-.city-tab {
-  min-height: 44px;
-  padding: 0 1.25rem;
-  border: 0;
-  border-radius: 999px;
-  background: transparent;
-  color: var(--text-secondary);
-  font: 500 var(--fs-body) / 1 var(--font-sans);
+.city-map {
+  position: relative;
+  aspect-ratio: 378 / 520;
+  overflow: hidden;
+  border: 1px solid var(--border-base);
+  border-radius: var(--radius-lg);
+  background: var(--bg-card);
+}
+
+.city-map__svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.city-map__dep {
+  fill: var(--bg-card);
+  stroke: var(--border-hover);
+  stroke-width: 0.7;
+  stroke-linejoin: round;
+  transition: fill 0.6s var(--ease-out), stroke 0.6s var(--ease-out);
+}
+
+.city-map__dep.is-on {
+  fill: url(#city-map-grad);
+  fill-opacity: 0.85;
+  stroke: var(--accent-cyan);
+}
+
+.city-map__pin .city-map__core {
+  fill: #fff;
+  stroke: #5b42f3;
+  stroke-width: 1.5;
+}
+
+.city-map__pin .city-map__halo {
+  fill: #af40ff;
+  opacity: 0.55;
+}
+
+.city-map__pin:not(.is-soon) {
   cursor: pointer;
-  transition: background var(--duration-base), color var(--duration-base);
+}
+
+/* Las ondas solo en la ciudad elegida */
+.city-map__ripple {
+  display: none;
+  fill: none;
+  stroke: var(--accent-cyan);
+  stroke-width: 1;
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: city-ripple 3s var(--ease-out) infinite;
+}
+
+.city-map__pin.is-current .city-map__ripple {
+  display: block;
+}
+
+.city-map__ripple--2 {
+  animation-delay: 1.5s;
+}
+
+@keyframes city-ripple {
+  0% { transform: scale(0.6); opacity: 0.9; }
+  100% { transform: scale(4.2); opacity: 0; }
+}
+
+.city-map__soon {
+  fill: none;
+  stroke: var(--text-secondary);
+  stroke-width: 0.8;
+  stroke-dasharray: 2 2.4;
+}
+
+.city-map__pin.is-soon .city-map__core {
+  fill: var(--bg-dark);
+  stroke: var(--text-secondary);
+}
+
+.city-map__label {
+  font: 600 11px var(--font-sans);
+  fill: var(--text-primary);
+  paint-order: stroke;
+  stroke: var(--bg-dark);
+  stroke-width: 3px;
+  stroke-linejoin: round;
+}
+
+.city-map__label-soon {
+  font-size: 9px;
+  font-weight: 500;
+  fill: var(--text-secondary);
+}
+
+/* Tarjeta de cristal, como las del teléfono del hero */
+.city-map__info {
+  position: absolute;
+  left: 0.75rem;
+  right: 0.75rem;
+  bottom: 0.75rem;
+  display: grid;
+  gap: 0.1rem;
+  padding: 0.8rem 1rem;
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  box-shadow: var(--shadow-premium);
+}
+
+.city-map__info.is-in {
+  animation: city-info-in 0.6s var(--ease-out) 0.4s backwards;
+}
+
+@keyframes city-info-in {
+  from { opacity: 0; transform: translateY(12px); }
+}
+
+.city-map__info span:first-child {
+  font-size: var(--fs-xs);
+  color: var(--text-secondary);
+}
+
+.city-map__info strong {
+  font: 400 1.35rem var(--font-serif);
+}
+
+.city-map__info span:last-child {
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent-ink);
+}
+
+.city-tabs {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.city-soon {
+  margin-top: 1rem;
+  font-size: var(--fs-sm);
+  color: var(--text-secondary);
+}
+
+.city-tab {
+  min-height: 56px;
+  padding: 0 1.25rem;
+  border: 1px solid var(--border-base);
+  border-radius: var(--radius-md);
+  background: var(--bg-card);
+  color: var(--text-primary);
+  font: 500 1rem / 1 var(--font-sans);
+  text-align: left;
+  cursor: pointer;
+  transition: background var(--duration-base), border-color var(--duration-base), transform var(--duration-base) var(--ease-out);
 }
 
 .city-tab:hover {
-  color: var(--text-primary);
+  background: var(--bg-card-hover);
+  border-color: var(--border-hover);
 }
 
 .city-tab[aria-selected="true"] {
-  background: var(--text-primary);
-  color: var(--bg-dark);
+  border-color: var(--accent-cyan);
+  background: var(--bg-card-hover);
+  transform: translateX(6px);
 }
 
 /* En alto contraste el navegador sustituye el fondo: la pestaña elegida
@@ -658,6 +809,20 @@ body.no-transitions *::after {
 @media (forced-colors: active) {
   .city-tab[aria-selected="true"] {
     outline: 2px solid CanvasText;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .city-map__ripple {
+    animation: none;
+  }
+
+  .city-map__info.is-in {
+    animation: none;
+  }
+
+  .city-tab[aria-selected="true"] {
+    transform: none;
   }
 }
 
@@ -783,6 +948,12 @@ body.light-theme .city-photo::before {
 }
 
 @media (max-width: 860px) {
+  .city-select {
+    grid-template-columns: minmax(0, 340px);
+    justify-content: center;
+    gap: 1.5rem;
+  }
+
   .city-panel__body {
     grid-template-columns: 1fr;
     gap: 1.25rem;

@@ -140,6 +140,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 const cityPicker = document.querySelector('.city-picker');
 const cityTabs = cityPicker && cityPicker.querySelector('.city-tabs');
 if (cityTabs) {
+  const citySelect = cityTabs.closest('.city-select');
   const tabs = [...cityTabs.querySelectorAll('[role="tab"]')];
   const panels = tabs.map((tab) => document.getElementById(tab.getAttribute('aria-controls')));
   panels.forEach((panel, i) => {
@@ -156,6 +157,8 @@ if (cityTabs) {
       panels[i].hidden = !selected;
     });
     if (focus) tabs[index].focus();
+    // El mapa (city-map.js) sigue a la pestaña elegida
+    cityPicker.dispatchEvent(new CustomEvent('citychange', { detail: { index } }));
   }
 
   tabs.forEach((tab, i) => tab.addEventListener('click', () => selectCity(i, false)));
@@ -163,7 +166,7 @@ if (cityTabs) {
     // Alt+← y similares son del navegador (atrás, adelante)
     if (e.altKey || e.ctrlKey || e.metaKey) return;
     const current = tabs.indexOf(document.activeElement);
-    const target = { ArrowRight: current + 1, ArrowLeft: current - 1, Home: 0, End: tabs.length - 1 }[e.key];
+    const target = { ArrowRight: current + 1, ArrowDown: current + 1, ArrowLeft: current - 1, ArrowUp: current - 1, Home: 0, End: tabs.length - 1 }[e.key];
     if (current === -1 || target === undefined) return;
     e.preventDefault();
     selectCity((target + tabs.length) % tabs.length, true);
@@ -178,7 +181,7 @@ if (cityTabs) {
   });
 
   cityPicker.classList.add('is-enhanced');
-  cityTabs.hidden = false;
+  citySelect.hidden = false;
   selectCity(0, false);
 }
 
