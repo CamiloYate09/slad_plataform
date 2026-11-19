@@ -1,5 +1,5 @@
 // ============================================
-// BLOG — lo más relevante primero, filtro por ciudad y cuenta atrás
+// BLOG — lo más relevante primero, filtro por ciudad y estado de cada fecha
 // El HTML ya trae todo en orden de relevancia (el primer <article> abre la
 // portada); sin JS se ve así. Aquí solo se baja lo que ya terminó, se reparte
 // quién es destacado y se filtra por ciudad.
@@ -54,12 +54,30 @@
   }
   render();
 
-  // Próximas fechas: cuenta atrás de lo que tiene fecha cierta
+  // Estado de una fecha: Hoy, Mañana, Faltan N días, En curso o Terminó
+  function statusOf(date, end) {
+    const days = Math.round((at(date) - today) / DAY);
+    if (days > 1) return `Faltan ${days} días`;
+    if (days === 1) return 'Mañana';
+    if (at(end) < today) return 'Terminó';
+    return date === end ? 'Hoy' : 'En curso';
+  }
+
+  // Un chip de estado junto a la categoría de cada evento con fecha cierta
+  posts.forEach((post) => {
+    if (!post.dataset.date) return;
+    const chip = document.createElement('span');
+    chip.className = 'blog-chip blog-chip--state';
+    chip.textContent = statusOf(post.dataset.date, post.dataset.end);
+    const category = post.querySelector('.blog-meta .blog-chip');
+    if (category) category.after(chip);
+  });
+
+  // Próximas fechas: lo mismo junto a la fecha
   document.querySelectorAll('.blog-rank li[data-date]').forEach((item) => {
     const when = item.querySelector('.blog-rank__when');
-    const days = Math.ceil((at(item.dataset.date) - today) / DAY);
-    if (days > 0) when.textContent = `${when.textContent} · Faltan ${days} ${days === 1 ? 'día' : 'días'}`;
-    else if (at(item.dataset.end) >= today) when.textContent = `${when.textContent} · En curso`;
-    else when.textContent = `${when.textContent} · Terminó`;
+    const status = statusOf(item.dataset.date, item.dataset.end);
+    item.hidden = status === 'Terminó'; // la lista es de lo que viene
+    when.textContent = `${when.textContent} · ${status}`;
   });
 })();
