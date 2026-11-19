@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Blog de CityStream: eventos, conciertos y fechas de Bogotá, Medellín y Cartagena, con lo más relevante primero." />
+  <meta name="robots" content="index, follow" />
+  <meta name="theme-color" content="#0a0a0a" />
+  <link rel="canonical" href="https://citystream.tech/blog.html" />
+
+  <meta property="og:title" content="Blog — Eventos y conciertos en Colombia | CityStream" />
+  <meta property="og:description" content="Eventos, conciertos y fechas de Bogotá, Medellín y Cartagena, con lo más relevante primero." />
+  <meta property="og:url" content="https://citystream.tech/blog.html" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://citystream.tech/image/og-image.jpg" />
+  <meta property="og:locale" content="es_CO" />
+  <meta property="og:site_name" content="CityStream" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <link rel="icon" href="image/favicon-32x32.png" type="image/png" />
+  <link rel="apple-touch-icon" href="image/apple-touch-icon.png" />
+  <link rel="manifest" href="/manifest.webmanifest" />
+
+  <link rel="preload" href="static/fonts/Geist-latin.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="static/fonts/Bricolage-latin.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="stylesheet" href="static/css/style.min.css" />
+  <link rel="stylesheet" href="static/css/blog.css" />
+
+  <title>Blog — Eventos y conciertos en Colombia | CityStream</title>
+
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <meta http-equiv="Content-Security-Policy" content="
+    default-src 'none';
+    script-src 'self'
+      https://static.cloudflareinsights.com;
+    style-src 'self' 'unsafe-inline';
+    font-src 'self';
+    img-src 'self' data:;
+    connect-src 'self'
+      https://cloudflareinsights.com;
+    media-src 'self';
+    manifest-src 'self';
+    worker-src 'self';
+    frame-src 'none';
+    frame-ancestors 'none';
+    base-uri 'self';
+    form-action 'none';
+  " />
+</head>
+<body>
+<script src="static/js/theme.js"></script>
+<div class="bg-texture" aria-hidden="true"></div>
+<div id="top-progress" aria-hidden="true"></div>
+<a href="#blog" class="skip-link">Saltar al contenido principal</a>
+
+<!-- Navbar -->
+<nav id="navbar" aria-label="Navegacion principal">
+  <a href="/" class="nav-logo" title="CityStream - Ir al inicio">
+    <picture>
+      <source srcset="static/img/citystream-mark.avif" type="image/avif" />
+      <source srcset="static/img/citystream-mark.webp" type="image/webp" />
+      <img src="static/img/citystream-mark.png" alt="" width="57" height="28" />
+    </picture>
+    CityStream 🇨🇴
+  </a>
+  <ul class="nav-links">
+    <li><a href="/#features">Características</a></li>
+    <li><a href="/#ciudades">Ciudades</a></li>
+    <li><a href="/blog.html" class="nav-active" aria-current="page">Blog</a></li>
+    <li><a href="/#contacto">Contacto</a></li>
+    <li class="nav-links__mobile"><a href="/login.html">Iniciar sesión</a></li>
+  </ul>
+  <div class="nav-cta">
+    <button class="theme-toggle" aria-label="Cambiar tema" title="Cambiar tema">
+      <i class="ri-moon-line theme-icon-dark" aria-hidden="true"></i>
+      <i class="ri-sun-line theme-icon-light" aria-hidden="true"></i>
+    </button>
+    <a href="/login.html" class="btn-outline-sm">Iniciar sesión</a>
+    <a href="/registro.html" class="btn-primary-sm">Crear cuenta</a>
+  </div>
+  <button class="nav-toggle" aria-label="Abrir menu" aria-expanded="false">
+    <i class="ri-menu-line" aria-hidden="true"></i>
+  </button>
+</nav>
+
+<!-- Mobile menu overlay -->
+<div class="nav-overlay" aria-hidden="true"></div>
+
+
+
+<main class="blog" id="blog">
+  <header class="blog-head">
+    <span class="section-label">Blog</span>
+    <h1>Lo que pasa en <em>tu ciudad</em></h1>
+    <p>Eventos, conciertos y fechas de Bogotá, Medellín y Cartagena, con lo más relevante primero.</p>
+  </header>
+
+  <!-- Lo último: cinta de próximas fechas (la segunda copia es decorativa) -->
+  <div class="blog-ticker">
+    <b>Lo último</b>
+    <div class="blog-ticker__clip">
+      <div class="blog-ticker__track">
+        <div class="blog-ticker__set"><span>Festival de Música de Cartagena · 9–17 ene 2027</span><span>Hay Festival Cartagena · 28–31 ene 2027</span><span>Feria de las Flores · Ago 2027, por confirmar</span><span>Rock al Parque · 2027, por anunciar</span></div>
+        <div class="blog-ticker__set" aria-hidden="true"><span>Festival de Música de Cartagena · 9–17 ene 2027</span><span>Hay Festival Cartagena · 28–31 ene 2027</span><span>Feria de las Flores · Ago 2027, por confirmar</span><span>Rock al Parque · 2027, por anunciar</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="blog-layout">
+    <section aria-labelledby="blog-grid-title">
+      <div class="blog-bar">
+        <h2 id="blog-grid-title">Más para ver</h2>
+        <div class="blog-filter" role="group" aria-label="Filtrar por ciudad" hidden></div>
+      </div>
+      <!-- El orden de los <article> es la relevancia: el primero abre la portada.
+           Para cambiar lo destacado, mueve un <article>; blog.js baja los eventos ya terminados. -->
+      <div class="blog-grid">
+        <article class="blog-post is-hero is-main" data-city="Cartagena" data-kind="evento" data-date="2027-01-09" data-end="2027-01-17">
+          <div class="blog-post__img">
+            <picture>
+              <source srcset="static/img/img-08-640.avif 640w, static/img/img-08-960.avif 960w, static/img/img-08.avif 1280w" sizes="(max-width: 620px) 100vw, 580px" type="image/avif" />
+              <source srcset="static/img/img-08-640.webp 640w, static/img/img-08-960.webp 960w, static/img/img-08.webp 1280w" sizes="(max-width: 620px) 100vw, 580px" type="image/webp" />
+              <img src="static/img/img-08-640.jpg" srcset="static/img/img-08-640.jpg 640w, static/img/img-08-960.jpg 960w, static/img/img-08.jpg 1280w" sizes="(max-width: 620px) 100vw, 580px" alt="Cartagena de Indias" width="1280" height="960" fetchpriority="high" />
+            </picture>
+          </div>
+          <div class="blog-post__body">
+            <div class="blog-meta"><span class="blog-chip">Música</span><span>Cartagena · 9–17 ene 2027</span></div>
+            <h2 class="blog-post__title"><a href="https://cartagenamusicfestival.com" target="_blank" rel="noopener noreferrer">Festival de Música de Cartagena</a></h2>
+            <p class="blog-post__text">Nueve días de música clásica en la ciudad amurallada, con la English Chamber Orchestra como orquesta residente.</p>
+          </div>
+        </article>
+        <article class="blog-post is-hero" data-city="Cartagena" data-kind="evento" data-date="2027-01-28" data-end="2027-01-31">
+          <div class="blog-post__img">
+            <picture>
+              <source srcset="static/img/img-08-640.avif 640w, static/img/img-08-960.avif 960w, static/img/img-08.avif 1280w" sizes="(max-width: 620px) 100vw, 580px" type="image/avif" />
+              <source srcset="static/img/img-08-640.webp 640w, static/img/img-08-960.webp 960w, static/img/img-08.webp 1280w" sizes="(max-width: 620px) 100vw, 580px" type="image/webp" />
+              <img src="static/img/img-08-640.jpg" srcset="static/img/img-08-640.jpg 640w, static/img/img-08-960.jpg 960w, static/img/img-08.jpg 1280w" sizes="(max-width: 620px) 100vw, 580px" alt="Cartagena de Indias" width="1280" height="960" loading="lazy" />
+            </picture>
+          </div>
+          <div class="blog-post__body">
+            <div class="blog-meta"><span class="blog-chip">Cultura</span><span>Cartagena · 28–31 ene 2027</span></div>
+            <h2 class="blog-post__title"><a href="https://www.hayfestival.com/cartagena" target="_blank" rel="noopener noreferrer">Hay Festival Cartagena</a></h2>
+            <p class="blog-post__text">Literatura, ideas y conversación con autores de todo el mundo. En 2026 reunió a más de 180 participantes de 25 países.</p>
+          </div>
+        </article>
+        <article class="blog-post is-hero" data-city="Medellín" data-kind="evento">
+          <div class="blog-post__img">
+            <picture>
+              <source srcset="static/img/img-02-640.avif 640w, static/img/img-02-960.avif 960w, static/img/img-02.avif 1280w" sizes="(max-width: 620px) 100vw, 580px" type="image/avif" />
+              <source srcset="static/img/img-02-640.webp 640w, static/img/img-02-960.webp 960w, static/img/img-02.webp 1280w" sizes="(max-width: 620px) 100vw, 580px" type="image/webp" />
+              <img src="static/img/img-02-640.jpg" srcset="static/img/img-02-640.jpg 640w, static/img/img-02-960.jpg 960w, static/img/img-02.jpg 1280w" sizes="(max-width: 620px) 100vw, 580px" alt="Medellín" width="1280" height="960" loading="lazy" />
+            </picture>
+          </div>
+          <div class="blog-post__body">
+            <div class="blog-meta"><span class="blog-chip">Festival</span><span>Medellín · Ago 2027, por confirmar</span></div>
+            <h2 class="blog-post__title"><a href="https://www.medellin.gov.co/es/feria-de-flores/" target="_blank" rel="noopener noreferrer">Feria de las Flores</a></h2>
+            <p class="blog-post__text">El evento más emblemático de Medellín. Silleteros, desfiles, conciertos y la ciudad entera celebrando su identidad floricultora.</p>
+          </div>
+        </article>
+        <article class="blog-post" data-city="Bogotá" data-kind="evento">
+          <div class="blog-post__img">
+            <picture>
+              <source srcset="static/img/img-01-640.avif 640w, static/img/img-01-960.avif 960w, static/img/img-01.avif 1280w" sizes="(max-width: 620px) 100vw, 580px" type="image/avif" />
+              <source srcset="static/img/img-01-640.webp 640w, static/img/img-01-960.webp 960w, static/img/img-01.webp 1280w" sizes="(max-width: 620px) 100vw, 580px" type="image/webp" />
+              <img src="static/img/img-01-640.jpg" srcset="static/img/img-01-640.jpg 640w, static/img/img-01-960.jpg 960w, static/img/img-01.jpg 1280w" sizes="(max-width: 620px) 100vw, 580px" alt="Bogotá" width="1280" height="960" loading="lazy" />
+            </picture>
+          </div>
+          <div class="blog-post__body">
+            <div class="blog-meta"><span class="blog-chip">Música</span><span>Bogotá · 2027, por anunciar</span></div>
+            <h2 class="blog-post__title"><a href="https://rockalparque.gov.co" target="_blank" rel="noopener noreferrer">Rock al Parque</a></h2>
+            <p class="blog-post__text">El festival de rock gratuito más grande de Latinoamérica. Tres días, múltiples escenarios y miles de bogotanos bajo el mismo cielo.</p>
+          </div>
+        </article>
+        <article class="blog-post" data-city="Bogotá" data-kind="guía">
+          <div class="blog-post__img">
+            <picture>
+              <source srcset="static/img/img-01-640.avif 640w, static/img/img-01-960.avif 960w, static/img/img-01.avif 1280w" sizes="(max-width: 620px) 100vw, 580px" type="image/avif" />
+              <source srcset="static/img/img-01-640.webp 640w, static/img/img-01-960.webp 960w, static/img/img-01.webp 1280w" sizes="(max-width: 620px) 100vw, 580px" type="image/webp" />
+              <img src="static/img/img-01-640.jpg" srcset="static/img/img-01-640.jpg 640w, static/img/img-01-960.jpg 960w, static/img/img-01.jpg 1280w" sizes="(max-width: 620px) 100vw, 580px" alt="Bogotá" width="1280" height="960" loading="lazy" />
+            </picture>
+          </div>
+          <div class="blog-post__body">
+            <div class="blog-meta"><span class="blog-chip">Al aire libre</span><span>Guía · Bogotá</span></div>
+            <h2 class="blog-post__title">Amanecer en Monserrate</h2>
+            <p class="blog-post__text">Sube temprano y mira despertar la ciudad desde arriba.</p>
+          </div>
+        </article>
+        <article class="blog-post" data-city="Cartagena" data-kind="guía">
+          <div class="blog-post__img">
+            <picture>
+              <source srcset="static/img/img-08-640.avif 640w, static/img/img-08-960.avif 960w, static/img/img-08.avif 1280w" sizes="(max-width: 620px) 100vw, 580px" type="image/avif" />
+              <source srcset="static/img/img-08-640.webp 640w, static/img/img-08-960.webp 960w, static/img/img-08.webp 1280w" sizes="(max-width: 620px) 100vw, 580px" type="image/webp" />
+              <img src="static/img/img-08-640.jpg" srcset="static/img/img-08-640.jpg 640w, static/img/img-08-960.jpg 960w, static/img/img-08.jpg 1280w" sizes="(max-width: 620px) 100vw, 580px" alt="Cartagena de Indias" width="1280" height="960" loading="lazy" />
+            </picture>
+          </div>
+          <div class="blog-post__body">
+            <div class="blog-meta"><span class="blog-chip">Comida</span><span>Guía · Cartagena</span></div>
+            <h2 class="blog-post__title">Cocina del Caribe</h2>
+            <p class="blog-post__text">Sabores de la costa, del puesto callejero al restaurante.</p>
+          </div>
+        </article>
+        <article class="blog-post" data-city="Medellín" data-kind="guía">
+          <div class="blog-post__img">
+            <picture>
+              <source srcset="static/img/img-02-640.avif 640w, static/img/img-02-960.avif 960w, static/img/img-02.avif 1280w" sizes="(max-width: 620px) 100vw, 580px" type="image/avif" />
+              <source srcset="static/img/img-02-640.webp 640w, static/img/img-02-960.webp 960w, static/img/img-02.webp 1280w" sizes="(max-width: 620px) 100vw, 580px" type="image/webp" />
+              <img src="static/img/img-02-640.jpg" srcset="static/img/img-02-640.jpg 640w, static/img/img-02-960.jpg 960w, static/img/img-02.jpg 1280w" sizes="(max-width: 620px) 100vw, 580px" alt="Medellín" width="1280" height="960" loading="lazy" />
+            </picture>
+          </div>
+          <div class="blog-post__body">
+            <div class="blog-meta"><span class="blog-chip">Comida</span><span>Guía · Medellín</span></div>
+            <h2 class="blog-post__title">Escena gastronómica en Medellín</h2>
+            <p class="blog-post__text">Dónde comer bien esta semana, según quienes viven ahí.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <aside class="blog-side" aria-labelledby="blog-rank-title">
+      <h2 id="blog-rank-title">Próximas fechas</h2>
+      <ol class="blog-rank">
+            <li data-date="2027-01-09" data-end="2027-01-17">
+              <span class="blog-rank__n" aria-hidden="true"></span>
+              <div><a href="https://cartagenamusicfestival.com" target="_blank" rel="noopener noreferrer">Festival de Música de Cartagena</a><small>Cartagena · <span class="blog-rank__when">9–17 ene 2027</span></small></div>
+            </li>
+            <li data-date="2027-01-28" data-end="2027-01-31">
+              <span class="blog-rank__n" aria-hidden="true"></span>
+              <div><a href="https://www.hayfestival.com/cartagena" target="_blank" rel="noopener noreferrer">Hay Festival Cartagena</a><small>Cartagena · <span class="blog-rank__when">28–31 ene 2027</span></small></div>
+            </li>
+            <li>
+              <span class="blog-rank__n" aria-hidden="true"></span>
+              <div><a href="https://www.medellin.gov.co/es/feria-de-flores/" target="_blank" rel="noopener noreferrer">Feria de las Flores</a><small>Medellín · <span class="blog-rank__when">Ago 2027, por confirmar</span></small></div>
+            </li>
+            <li>
+              <span class="blog-rank__n" aria-hidden="true"></span>
+              <div><a href="https://rockalparque.gov.co" target="_blank" rel="noopener noreferrer">Rock al Parque</a><small>Bogotá · <span class="blog-rank__when">2027, por anunciar</span></small></div>
+            </li>
+      </ol>
+    </aside>
+  </div>
+</main>
+
+<!-- Footer -->
+<footer class="footer" id="contacto" aria-label="Información de contacto">
+  <a href="/#inicio" class="footer-badge"><span class="footer-badge-dot" aria-hidden="true"></span>CityStream</a>
+
+  <div class="footer-dot-eyes" aria-hidden="true">
+    <span class="footer-dot-eye"></span>
+    <span class="footer-dot-eye"></span>
+  </div>
+
+  <div class="footer-grid">
+    <div class="footer-col">
+      <h2 class="footer-title">CityStream</h2>
+      <ul>
+        <li><a href="/#inicio">Inicio</a></li>
+        <li><a href="/#features">Características</a></li>
+        <li><a href="/#ciudades">Ciudades</a></li>
+        <li><a href="/blog.html">Blog</a></li>
+        <li><a href="/#contacto">Contacto</a></li>
+        <li><a href="/login.html">Iniciar sesión</a></li>
+        <li><a href="/registro.html">Crear cuenta</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h2 class="footer-title">Ciudades</h2>
+      <ul>
+        <li><a href="/#ciudades" data-city="bogota">Bogotá</a></li>
+        <li><a href="/#ciudades" data-city="medellin">Medellín</a></li>
+        <li><a href="/#ciudades" data-city="cartagena">Cartagena</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h2 class="footer-title">Legal</h2>
+      <ul>
+        <li><a href="/terminos.html">Términos de Uso</a></li>
+        <li><a href="/privacidad.html">Privacidad</a></li>
+        <li><a href="/privacidad.html">Cookies</a></li>
+      </ul>
+      <p class="footer-compliance">
+        <i class="ri-shield-check-line" aria-hidden="true"></i>
+        Cumplimos la Ley 1581 de 2012 · <a href="/privacidad.html">Habeas Data</a>
+      </p>
+    </div>
+    <div class="footer-col">
+      <h2 class="footer-title">Contacto</h2>
+      <ul>
+        <li><a href="mailto:citystreamCO@pm.me">citystreamCO@pm.me</a></li>
+        <li><a href="mailto:citystreamCO@pm.me">Soporte</a></li>
+        <li><a href="/#preguntas">Preguntas frecuentes</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <p>&copy; 2026 CityStream. Todos los derechos reservados.</p>
+    <nav class="footer-social" aria-label="Redes sociales">
+      <a href="https://www.youtube.com/@CityStream-CO" target="_blank" rel="noopener noreferrer">YouTube</a>,
+      <a href="https://www.facebook.com/citystream" target="_blank" rel="noopener noreferrer">Facebook</a>,
+      <a href="https://www.instagram.com/citystream.co/" target="_blank" rel="noopener noreferrer">Instagram</a>,
+      <a href="https://twitter.com/citystream" target="_blank" rel="noopener noreferrer">Twitter</a>
+    </nav>
+  </div>
+</footer>
+
+<script defer src="static/js/main.js"></script>
+<script defer src="static/js/blog.js"></script>
+</body>
+</html>

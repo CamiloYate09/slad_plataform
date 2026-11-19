@@ -8,7 +8,7 @@
  *  evento `activate` limpia caches obsoletas automaticamente.
  * ============================================================ */
 
-const CACHE_VERSION = 'v28'; // v28: animaciones de pestañas, eventos y bento
+const CACHE_VERSION = 'v29'; // v29: blog de eventos (blog.html) y enlace en la barra y el pie
 const CACHE_NAME = `citystream-${CACHE_VERSION}`;
 
 // Shell estatico: archivos cacheados en install para offline-first

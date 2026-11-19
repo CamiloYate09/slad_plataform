@@ -1,0 +1,391 @@
+/* ============================================
+   BLOG — portada de medio con CSS Grid
+   Solo lo carga blog.html, después de style.min.css (tokens y barra/pie).
+   La cuadrícula es nativa: el primer artículo visible (el más relevante) ocupa
+   todo el ancho, los dos siguientes van a media columna y el resto son tarjetas.
+   blog.js reparte las clases is-main / is-hero según el filtro y la fecha.
+   ============================================ */
+.blog {
+  position: relative;
+  z-index: 1;
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 3rem var(--px-mobile) var(--section-gap);
+}
+
+.blog-head {
+  margin-bottom: 2.5rem;
+  text-align: center;
+}
+
+.blog-head h1 {
+  margin: 0.5rem 0;
+  font-family: var(--font-serif);
+  font-size: var(--fs-h2);
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+
+.blog-head p {
+  color: var(--text-secondary);
+}
+
+/* Lo último: cinta de fechas que se desplaza */
+.blog-ticker {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  padding: 0.55rem 1rem;
+  border: 1px solid var(--border-base);
+  border-radius: 999px;
+  background: var(--bg-card);
+  font-size: var(--fs-sm);
+}
+
+.blog-ticker b {
+  flex: none;
+  padding-right: 1rem;
+  border-right: 1px solid var(--border-hover);
+  font-size: var(--fs-xs);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent-ink);
+}
+
+.blog-ticker__clip {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.blog-ticker__track {
+  display: flex;
+  width: max-content;
+}
+
+.blog-ticker__set {
+  display: flex;
+  gap: 3rem;
+  padding-right: 3rem;
+  white-space: nowrap;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .blog-ticker__track {
+    animation: blog-ticker 30s linear infinite;
+  }
+
+  .blog-ticker:hover .blog-ticker__track {
+    animation-play-state: paused;
+  }
+
+  @keyframes blog-ticker {
+    to { transform: translateX(-50%); }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .blog-ticker__clip {
+    overflow-x: auto;
+  }
+}
+
+.blog-layout {
+  display: grid;
+  gap: 2.5rem;
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.blog-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.blog-bar h2,
+.blog-side h2 {
+  font-family: var(--font-serif);
+  font-size: 1.6rem;
+  font-weight: 400;
+}
+
+.blog-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.blog-filter[hidden] {
+  display: none;
+}
+
+.blog-filter button {
+  min-height: 44px;
+  padding: 0 1rem;
+  border: 1px solid var(--border-base);
+  border-radius: 999px;
+  background: var(--bg-card);
+  color: var(--text-secondary);
+  font: 500 var(--fs-sm) var(--font-sans);
+  cursor: pointer;
+  transition: background var(--duration-base), color var(--duration-base);
+}
+
+.blog-filter button:hover {
+  color: var(--text-primary);
+}
+
+.blog-filter button[aria-pressed="true"] {
+  border-color: transparent;
+  background: var(--text-primary);
+  color: var(--bg-dark);
+}
+
+.blog-filter button:focus-visible,
+.blog-post a:focus-visible,
+.blog-rank a:focus-visible {
+  outline: 2px solid var(--accent-ink);
+  outline-offset: 2px;
+}
+
+/* ---------- Cuadrícula ---------- */
+.blog-grid {
+  display: grid;
+  gap: 1.25rem;
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.blog-post {
+  position: relative;
+  display: grid;
+  gap: 0.9rem;
+  align-content: start;
+}
+
+.blog-post[hidden] {
+  display: none;
+}
+
+.blog-post__img {
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+}
+
+.blog-post__img img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.7s var(--ease-out);
+}
+
+.blog-post:hover .blog-post__img img {
+  transform: scale(1.06);
+}
+
+.blog-post__body {
+  display: grid;
+  gap: 0.4rem;
+}
+
+.blog-post__title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+/* El enlace del título cubre toda la tarjeta */
+.blog-post__title a::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+}
+
+.blog-post__title a:hover {
+  color: var(--accent-orange-hover);
+}
+
+.blog-post__text {
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: var(--text-secondary);
+}
+
+.blog-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: var(--fs-xs);
+  color: var(--text-secondary);
+}
+
+.blog-chip {
+  padding: 0.15rem 0.6rem;
+  border: 1px solid var(--border-hover);
+  border-radius: 999px;
+  font-weight: 600;
+}
+
+/* Destacados: la foto ocupa todo el recuadro y el texto va encima */
+.blog-post.is-hero {
+  display: block;
+  min-height: 260px;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  isolation: isolate;
+}
+
+.blog-post.is-hero .blog-post__img {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  aspect-ratio: auto;
+  border-radius: 0;
+}
+
+.blog-post.is-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(180deg, transparent 30%, rgba(0, 0, 0, 0.85));
+}
+
+.blog-post.is-hero .blog-post__body {
+  position: absolute;
+  inset: auto 0 0;
+  padding: 1.5rem;
+  color: #fff;
+}
+
+.blog-post.is-hero .blog-meta {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.blog-post.is-hero .blog-chip {
+  border-color: transparent;
+  background: var(--grad-brand);
+  color: #fff;
+}
+
+.blog-post.is-hero .blog-post__title {
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  font-weight: 400;
+}
+
+.blog-post.is-hero .blog-post__title,
+.blog-post.is-hero .blog-post__title a {
+  color: #fff;
+}
+
+.blog-post.is-hero .blog-post__title a:hover {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.blog-post.is-hero .blog-post__text {
+  display: none;
+  max-width: 56ch;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.blog-post.is-main {
+  min-height: 340px;
+}
+
+.blog-post.is-main .blog-post__title {
+  font-size: clamp(1.75rem, 4vw, 2.75rem);
+  line-height: 1.1;
+}
+
+.blog-post.is-main .blog-post__text {
+  display: block;
+}
+
+.blog-post.is-past {
+  opacity: 0.6;
+}
+
+@media (min-width: 620px) {
+  .blog-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .blog-post.is-main {
+    grid-column: 1 / -1;
+    min-height: 420px;
+  }
+}
+
+/* ---------- Próximas fechas ---------- */
+.blog-side {
+  align-self: start;
+  padding: 1.25rem;
+  border: 1px solid var(--border-base);
+  border-radius: var(--radius-lg);
+  background: var(--bg-card);
+}
+
+.blog-rank {
+  display: grid;
+  gap: 1rem;
+  margin-top: 1rem;
+  list-style: none;
+  counter-reset: rank;
+}
+
+.blog-rank li {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.9rem;
+  align-items: start;
+}
+
+.blog-rank__n::before {
+  counter-increment: rank;
+  content: counter(rank);
+  font-family: var(--font-serif);
+  font-size: 2rem;
+  line-height: 1;
+  color: var(--accent-ink);
+}
+
+.blog-rank a {
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.blog-rank a:hover {
+  color: var(--accent-orange-hover);
+}
+
+.blog-rank small {
+  display: block;
+  margin-top: 0.15rem;
+  color: var(--text-secondary);
+}
+
+@media (min-width: 1000px) {
+  .blog-layout {
+    grid-template-columns: minmax(0, 1fr) 300px;
+  }
+
+  .blog-side {
+    position: sticky;
+    top: 90px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .blog-post__img img {
+    transition: none;
+  }
+}

@@ -9,6 +9,7 @@ GitHub Pages en el dominio `citystream.tech` (archivo `CNAME`).
 | Ruta | Contenido |
 |---|---|
 | `index.html` | Landing (ciudades, eventos, personas, conciertos) |
+| `blog.html` | Blog de eventos (`static/css/blog.css`, `static/js/blog.js`): el orden de los `<article>` es la relevancia; el primero abre la portada |
 | `login.html`, `registro.html`, `cuenta.html`, `olvide-password.html`, `reset-password/` | Cuenta de usuario. Hablan con `https://api.citystream.tech/api/v1/auth` (`static/js/auth.js`) |
 | `privacidad.html`, `terminos.html` | Textos legales |
 | `offline.html`, `sw.js`, `manifest.webmanifest` | PWA: service worker y página sin conexión |
