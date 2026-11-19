@@ -149,6 +149,8 @@ if (cityTabs) {
     panel.tabIndex = 0;
   });
 
+  let shownCity = 0;
+  let cityEntered = false; // la primera selección (al cargar) no anima
   function selectCity(index, focus) {
     tabs.forEach((tab, i) => {
       const selected = i === index;
@@ -159,6 +161,16 @@ if (cityTabs) {
     if (focus) tabs[index].focus();
     // El mapa (city-map.js) sigue a la pestaña elegida
     cityPicker.dispatchEvent(new CustomEvent('citychange', { detail: { index } }));
+    // El panel entra con su animación (CSS), hacia el lado al que se va
+    if (cityEntered && !prefersReducedMotion && index !== shownCity) {
+      const panel = panels[index];
+      panel.dataset.dir = index > shownCity ? '1' : '-1';
+      panel.querySelectorAll('.city-plan').forEach((plan, n) => plan.style.setProperty('--n', n));
+      panel.classList.remove('is-entering');
+      void panel.offsetWidth;
+      panel.classList.add('is-entering');
+    }
+    shownCity = index;
   }
 
   tabs.forEach((tab, i) => tab.addEventListener('click', () => selectCity(i, false)));
@@ -183,6 +195,7 @@ if (cityTabs) {
   cityPicker.classList.add('is-enhanced');
   citySelect.hidden = false;
   selectCity(0, false);
+  cityEntered = true;
 }
 
 // ============================================
@@ -357,6 +370,101 @@ if (!prefersReducedMotion && window.matchMedia('(hover: hover) and (pointer: fin
   const heroDemo = document.querySelector('.hero-demo');
   if (heroDemo) tilt(heroDemo, heroDemo.closest('.hero'));
   document.querySelectorAll('.bento-card').forEach((card) => tilt(card));
+}
+
+// ============================================
+// EVENTOS (cuenta atrás) Y BENTO (escenas) — movimiento interno
+// El CSS (bloque MOVIMIENTO INTERNO) pone lo que se ve; aquí solo se cuentan
+// las cifras y se activan las tarjetas del bento al entrar en pantalla.
+// ============================================
+const easeOutCubic = (t) => 1 - Math.pow(1 - t, 3);
+
+// Cifra que sube de 0 a `to`; `format` la pinta
+function countUp(el, to, format, ms = 1300) {
+  let t0;
+  const step = (t) => {
+    t0 ??= t;
+    const p = Math.min(1, (t - t0) / ms);
+    el.textContent = format(Math.round(to * easeOutCubic(p)));
+    if (p < 1) el.countFrame = requestAnimationFrame(step);
+  };
+  cancelAnimationFrame(el.countFrame);
+  el.countFrame = requestAnimationFrame(step);
+}
+
+// Tarjetas con fecha cierta (data-date): "Faltan N días" con la cifra subiendo.
+// Sin fecha ("por confirmar") no se pone nada; pasada la fecha tampoco.
+document.querySelectorAll('.news-card[data-date]').forEach((card) => {
+  const days = Math.ceil((new Date(`${card.dataset.date}T00:00:00`) - Date.now()) / 864e5);
+  if (days <= 0) return;
+  const chip = document.createElement('span');
+  chip.className = 'news-countdown';
+  const num = document.createElement('b');
+  num.textContent = days;
+  chip.append('Faltan ', num, days === 1 ? ' día' : ' días');
+  card.querySelector('.news-tag').after(chip);
+  if (prefersReducedMotion || !('IntersectionObserver' in window)) return;
+  const io = new IntersectionObserver((entries) => {
+    if (!entries.some((e) => e.isIntersecting)) return;
+    io.disconnect();
+    countUp(num, days, String, 1500);
+  }, { threshold: 0.6 });
+  io.observe(card);
+});
+
+// Bento: .is-playing mientras la tarjeta se ve; al salir se quita, y al volver
+// la escena se repite. Los estados de partida del CSS cuelgan de .is-animated.
+const bento = document.querySelector('.bento');
+if (bento && !prefersReducedMotion && 'IntersectionObserver' in window) {
+  bento.classList.add('is-animated');
+  const numberFormat = new Intl.NumberFormat('es-CO');
+  const timers = new Map();
+
+  // Mueve la clase is-active por los elementos, como si alguien los tocara
+  const cycle = (items, after) => {
+    let i = items.findIndex((el) => el.classList.contains('is-active'));
+    return setInterval(() => {
+      items[i].classList.remove('is-active');
+      i = (i + 1) % items.length;
+      items[i].classList.add('is-active');
+      if (after) after(items[i]);
+    }, 2200);
+  };
+
+  const play = (card) => {
+    card.classList.add('is-playing');
+    const big = card.querySelector('.bento-big');
+    if (big) {
+      big.dataset.final ??= big.textContent;
+      const [, prefix, digits, suffix] = big.dataset.final.match(/^(\$?)([\d.]+)(.*)$/);
+      countUp(big, parseInt(digits.replace(/\./g, ''), 10), (n) => `${prefix}${numberFormat.format(n)}${suffix}`);
+    }
+    const running = [];
+    const filters = [...card.querySelectorAll('.bento-tabs span')];
+    if (filters.length) running.push(cycle(filters));
+    const cities = [...card.querySelectorAll('.bento-row')].slice(0, 3);
+    if (cities.length) {
+      const arrow = card.querySelector('.bento-row__end');
+      running.push(cycle(cities, (row) => arrow && row.appendChild(arrow)));
+    }
+    timers.set(card, running);
+  };
+
+  const stop = (card) => {
+    card.classList.remove('is-playing');
+    (timers.get(card) || []).forEach(clearInterval);
+    timers.delete(card);
+    const big = card.querySelector('.bento-big');
+    if (big && big.dataset.final) {
+      cancelAnimationFrame(big.countFrame);
+      big.textContent = big.dataset.final;
+    }
+  };
+
+  const bentoObserver = new IntersectionObserver((entries) => {
+    entries.forEach((e) => (e.isIntersecting ? play(e.target) : stop(e.target)));
+  }, { threshold: 0.6 });
+  bento.querySelectorAll('.bento-card').forEach((card) => bentoObserver.observe(card));
 }
 
 /* ============================================

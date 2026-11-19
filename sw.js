@@ -8,7 +8,7 @@
  *  evento `activate` limpia caches obsoletas automaticamente.
  * ============================================================ */
 
-const CACHE_VERSION = 'v27'; // v27: mapa de Colombia como selector de ciudad
+const CACHE_VERSION = 'v28'; // v28: animaciones de pestañas, eventos y bento
 const CACHE_NAME = `citystream-${CACHE_VERSION}`;
 
 // Shell estatico: archivos cacheados en install para offline-first

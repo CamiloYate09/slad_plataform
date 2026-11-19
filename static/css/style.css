@@ -3437,3 +3437,192 @@ body.light-theme .auth-page {
     padding-right: var(--px-mobile);
   }
 }
+
+/* ============================================================
+   MOVIMIENTO INTERNO — pestañas de ciudad, eventos y bento
+   Los estados de partida (barras a cero, filas ocultas) cuelgan de
+   .bento.is-animated, que pone main.js solo con movimiento permitido: sin
+   JS o con movimiento reducido todo se ve completo y quieto.
+   ============================================================ */
+.news-countdown {
+  display: inline-flex;
+  align-items: baseline;
+  align-self: flex-start;
+  gap: 0.3rem;
+  margin: 0.15rem 0 0.4rem;
+  padding: 0.2rem 0.7rem;
+  border: 1px solid var(--glass-border);
+  border-radius: 999px;
+  background: var(--glass-bg);
+  font-size: var(--fs-xs);
+  color: var(--text-secondary);
+}
+
+.news-countdown b {
+  font-size: 0.95rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--accent-ink);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes content-rise {
+    from { opacity: 0; transform: translateY(14px); }
+  }
+
+  /* Pestañas: la foto se abre con un barrido (del lado al que vas) y los planes
+     entran en cascada. --n lo pone main.js en cada plan */
+  .city-panel.is-entering .city-photo {
+    animation: photo-wipe 0.9s var(--ease-out) both;
+  }
+
+  .city-panel.is-entering[data-dir="-1"] .city-photo {
+    animation-name: photo-wipe-back;
+  }
+
+  .city-panel.is-entering .city-photo img {
+    animation: photo-zoom 1.4s var(--ease-out) both;
+  }
+
+  .city-panel.is-entering .city-panel__tag,
+  .city-panel.is-entering .city-panel__desc {
+    animation: content-rise 0.6s var(--ease-out) 0.15s both;
+  }
+
+  .city-panel.is-entering .city-plan {
+    animation: content-rise 0.6s var(--ease-out) calc(0.3s + var(--n, 0) * 0.1s) both;
+  }
+
+  @keyframes photo-wipe {
+    from { clip-path: inset(0 100% 0 0 round var(--radius-lg)); }
+    to { clip-path: inset(0 0 0 0 round var(--radius-lg)); }
+  }
+
+  @keyframes photo-wipe-back {
+    from { clip-path: inset(0 0 0 100% round var(--radius-lg)); }
+    to { clip-path: inset(0 0 0 0 round var(--radius-lg)); }
+  }
+
+  @keyframes photo-zoom {
+    from { transform: scale(1.18); }
+  }
+
+  /* Eventos: el contenido de cada tarjeta entra tras la tarjeta */
+  .news-card.is-revealed > * {
+    animation: content-rise 0.6s var(--ease-out) both;
+  }
+
+  .news-card.is-revealed > :nth-child(1) { animation-delay: calc(var(--reveal-delay, 0s) + 0.25s); }
+  .news-card.is-revealed > :nth-child(2) { animation-delay: calc(var(--reveal-delay, 0s) + 0.35s); }
+  .news-card.is-revealed > :nth-child(3) { animation-delay: calc(var(--reveal-delay, 0s) + 0.45s); }
+  .news-card.is-revealed > :nth-child(4) { animation-delay: calc(var(--reveal-delay, 0s) + 0.55s); }
+  .news-card.is-revealed > :nth-child(5) { animation-delay: calc(var(--reveal-delay, 0s) + 0.65s); }
+
+  /* Bento: cada tarjeta juega su pequeña escena al entrar en pantalla
+     (.is-playing, que quita main.js al salir para que se repita) */
+  .bento.is-animated .bento-bars i {
+    transform-origin: bottom;
+    transition: transform 0.8s var(--ease-out);
+  }
+
+  .bento.is-animated .bento-bars i:nth-child(2) { transition-delay: 0.06s; }
+  .bento.is-animated .bento-bars i:nth-child(3) { transition-delay: 0.12s; }
+  .bento.is-animated .bento-bars i:nth-child(4) { transition-delay: 0.18s; }
+  .bento.is-animated .bento-bars i:nth-child(5) { transition-delay: 0.24s; }
+  .bento.is-animated .bento-bars i:nth-child(6) { transition-delay: 0.3s; }
+  .bento.is-animated .bento-bars i:nth-child(7) { transition-delay: 0.36s; }
+
+  .bento.is-animated .bento-card:not(.is-playing) .bento-bars i {
+    transform: scaleY(0);
+    transition: none;
+  }
+
+  .bento.is-animated .bento-meter i {
+    transform-origin: left;
+    transition: transform 1.4s var(--ease-out) 0.3s;
+  }
+
+  .bento.is-animated .bento-card:not(.is-playing) .bento-meter i {
+    transform: scaleX(0);
+    transition: none;
+  }
+
+  .bento.is-animated .is-playing .bento-pill--hot {
+    animation: bento-pulse 1.8s ease-in-out 1.6s infinite;
+  }
+
+  @keyframes bento-pulse {
+    50% { box-shadow: 0 0 0 5px rgba(217, 119, 6, 0.18); }
+  }
+
+  .bento.is-animated .bento-tl {
+    transition: opacity 0.6s var(--ease-out), transform 0.6s var(--ease-out);
+  }
+
+  .bento.is-animated .bento-tl:nth-child(2) { transition-delay: 0.25s; }
+  .bento.is-animated .bento-tl:nth-child(3) { transition-delay: 0.5s; }
+
+  .bento.is-animated .bento-card:not(.is-playing) .bento-tl {
+    opacity: 0;
+    transform: translateX(-14px);
+    transition: none;
+  }
+
+  .bento.is-animated .bento-row {
+    transition: background 0.4s, color 0.4s, transform 0.4s var(--ease-out);
+  }
+
+  .bento.is-animated .bento-row.is-active {
+    transform: translateX(4px);
+  }
+
+  .bento.is-animated .bento-tabs span {
+    transition: background 0.4s, color 0.4s;
+  }
+
+  .bento.is-animated .bento-row__end {
+    animation: bento-nudge 1.2s ease-in-out infinite;
+  }
+
+  @keyframes bento-nudge {
+    50% { transform: translateX(3px); }
+  }
+
+  .bento.is-animated .is-playing .bento-connect {
+    animation: bento-press 4.4s ease-in-out 1.2s infinite;
+  }
+
+  @keyframes bento-press {
+    0%, 12%, 100% { transform: none; }
+    6% { transform: scale(0.9); background: var(--accent-green); }
+  }
+
+  .bento.is-animated .bento-tags span {
+    transition: opacity 0.4s var(--ease-out), transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .bento.is-animated .bento-tags span:nth-child(2) { transition-delay: 0.1s; }
+  .bento.is-animated .bento-tags span:nth-child(3) { transition-delay: 0.2s; }
+  .bento.is-animated .bento-tags span:nth-child(4) { transition-delay: 0.3s; }
+
+  .bento.is-animated .bento-card:not(.is-playing) .bento-tags span {
+    opacity: 0;
+    transform: scale(0.6);
+    transition: none;
+  }
+
+  .bento.is-animated .is-playing .bento-toggle__track {
+    animation: bento-track 0.5s ease 1.1s both;
+  }
+
+  .bento.is-animated .is-playing .bento-toggle__track::after {
+    animation: bento-knob 0.5s var(--ease-out) 1.1s both;
+  }
+
+  @keyframes bento-track {
+    from { background: var(--border-hover); }
+  }
+
+  @keyframes bento-knob {
+    from { transform: translateX(-14px); }
+  }
+}
