@@ -71,3 +71,6 @@ Temporary Items
 /google-cloud-cli-*.tar.gz
 /cloud-sql-proxy
 /.codex/
+
+# Video original de Veo (7 MB, con audio): se guarda fuera del repo; el sitio usa static/media/blog-ciudad.mp4
+/static/media/uno.mp4

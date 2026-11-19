@@ -8,7 +8,7 @@
  *  evento `activate` limpia caches obsoletas automaticamente.
  * ============================================================ */
 
-const CACHE_VERSION = 'v30'; // v30: portadas propias del blog (cover.js) en lugar de fotos
+const CACHE_VERSION = 'v31'; // v31: banda del blog con video; el video no pasa por el service worker
 const CACHE_NAME = `citystream-${CACHE_VERSION}`;
 
 // Shell estatico: archivos cacheados en install para offline-first
@@ -79,6 +79,10 @@ self.addEventListener('fetch', (event) => {
   if (url.origin !== self.location.origin || isAuthPage(url)) {
     return; // dejar que el navegador maneje
   }
+
+  // 1b. Video: el navegador lo pide por rangos (206); una copia cacheada
+  //     completa rompería la reproducción en Safari. Siempre red.
+  if (url.pathname.startsWith('/static/media/')) return;
 
   // 2. Mismo origen: cache-first con network update en background
   event.respondWith(

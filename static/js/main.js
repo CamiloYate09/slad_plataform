@@ -248,6 +248,7 @@ if (!prefersReducedMotion) {
   reveal('.bento-card', { trigger: '.bento', stagger: 0.08 });
   reveal('.cta-card', { trigger: '.cta-section' });
   reveal('.how-step', { trigger: '.how-steps', tilt: 35, stagger: 0.1 });
+  reveal('.film-card', { trigger: '.film' });
   reveal('.news-card', { trigger: '.news-grid', stagger: 0.1 });
   reveal('.footer', { y: 30, at: 0.9 });
   reveal('.footer-col', { trigger: '.footer-grid', y: 20, stagger: 0.1, at: 0.9 });
@@ -465,6 +466,66 @@ if (bento && !prefersReducedMotion && 'IntersectionObserver' in window) {
     entries.forEach((e) => (e.isIntersecting ? play(e.target) : stop(e.target)));
   }, { threshold: 0.6 });
   bento.querySelectorAll('.bento-card').forEach((card) => bentoObserver.observe(card));
+}
+
+// ============================================
+// BANDA DEL BLOG — video silencioso, 2 repeticiones y luego reposo
+// Arranca al entrar en pantalla y se detiene al salir. Con movimiento reducido
+// o ahorro de datos no arranca solo: queda el póster y un botón de reproducir
+// (WCAG 2.2.2: el botón de pausa está siempre a la vista). Sin JS, solo el póster.
+// ============================================
+const filmCard = document.querySelector('.film-card');
+if (filmCard) {
+  const film = filmCard.querySelector('.film-video');
+  const toggle = filmCard.querySelector('.film-toggle');
+  const PLAYS = 2;
+  const saveData = Boolean(navigator.connection && navigator.connection.saveData);
+  const autoplay = !prefersReducedMotion && !saveData;
+  let plays = 0;
+  let wantsPlay = false; // el visitante lo pausó: no se reanuda solo
+
+  const setState = (state) => {
+    filmCard.dataset.state = state;
+    toggle.setAttribute('aria-label', { playing: 'Pausar video', paused: 'Reproducir video', rest: 'Repetir video' }[state]);
+  };
+  const play = () => film.play().catch(() => setState('paused'));
+
+  film.addEventListener('play', () => setState('playing'));
+  film.addEventListener('pause', () => { if (!film.ended) setState('paused'); });
+  // El video trae su propia tarjeta final (data-endcard, en segundos): el texto de la banda se aparta
+  const endCard = parseFloat(film.dataset.endcard) || Infinity;
+  film.addEventListener('timeupdate', () => filmCard.classList.toggle('is-endcard', film.currentTime >= endCard));
+  film.addEventListener('ended', () => {
+    plays += 1;
+    film.currentTime = 0;
+    if (plays < PLAYS) play(); else setState('rest'); // en reposo vuelve al primer fotograma
+  });
+
+  toggle.addEventListener('click', () => {
+    if (filmCard.dataset.state === 'playing') { wantsPlay = false; film.pause(); return; }
+    wantsPlay = true;
+    if (filmCard.dataset.state === 'rest') plays = 0;
+    film.preload = 'auto';
+    play();
+  });
+
+  setState('paused');
+  toggle.hidden = false;
+  wantsPlay = autoplay;
+
+  if ('IntersectionObserver' in window) {
+    // El video empieza a cargarse algo antes de verse; solo se reproduce si toca
+    new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          film.preload = 'auto';
+          if (wantsPlay && plays < PLAYS && film.paused) play();
+        } else if (!film.paused) {
+          film.pause();
+        }
+      });
+    }, { threshold: 0.5, rootMargin: '200px 0px' }).observe(filmCard);
+  }
 }
 
 /* ============================================
