@@ -1,0 +1,67 @@
+name: Pages (build + eventos)
+
+# Publica el sitio en GitHub Pages y, cada 3 horas, trae eventos nuevos de
+# Tuboleta al blog (scripts/eventos.mjs). Requiere Settings → Pages → Source:
+# "GitHub Actions"; con esa fuente, Pages ya no se publica solo al hacer push,
+# por eso este workflow también corre con cada push a main.
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: '17 */3 * * *' # cada 3 h (UTC), fuera del minuto 0, que GitHub retrasa o descarta
+  workflow_dispatch:
+
+# Solo lee el repo: no hace commits. El estado entre runs es el eventos.json publicado.
+# Publicar (pages/id-token) solo lo puede el job deploy, que no corre código de terceros.
+permissions:
+  contents: read
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      # Actions fijadas por SHA de commit (ver lighthouse.yml); el comentario dice la versión.
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5.0.0
+        with:
+          node-version: '22'
+
+      - name: Probar el script de eventos
+        run: node scripts/eventos.test.mjs
+
+      # En push solo se re-pinta desde lo ya publicado: Tuboleta se consulta cada 3 h, no en cada commit.
+      # Si Tuboleta falla, el script deja los eventos del run anterior y la publicación sigue.
+      - name: Traer eventos de Tuboleta
+        run: node scripts/eventos.mjs
+        env:
+          SCRAPE: ${{ github.event_name == 'push' && '0' || '1' }}
+
+      - uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6.0.0
+
+      - uses: actions/jekyll-build-pages@44a6e6beabd48582f863aeeb6cb2151cc1716697 # v1.0.13
+        with:
+          source: ./
+          destination: ./_site
+
+      - uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1

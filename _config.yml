@@ -17,4 +17,5 @@ exclude:
   - scripts/
   - factory/
   - app-demos/
+  - docs/
   - static/vendor/README.md
