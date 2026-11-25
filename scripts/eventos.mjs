@@ -21,14 +21,31 @@ const BUDGET = 8 * 60e3; // el job tiene 15 min: el scrape para a los 8 y public
 const GRID = 9; // eventos automáticos en la cuadrícula
 const RANK = 5; // y en "Próximas fechas"
 const CITIES = { bogota: 'Bogotá', medellin: 'Medellín', cartagena: 'Cartagena' };
-const FECHA = /^\d{4}-\d{2}-\d{2}$/;
+const FORMA = /^\d{4}-\d{2}-\d{2}$/;
+// AAAA-MM-DD que existe en el calendario (2027-02-30 no)
+const FECHA = {
+  test: (d) => {
+    if (typeof d !== 'string' || !FORMA.test(d)) return false;
+    const t = Date.parse(`${d}T12:00:00Z`);
+    return !Number.isNaN(t) && new Date(t).toISOString().slice(0, 10) === d;
+  },
+};
 const MES = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'];
 const DIA = ['dom', 'lun', 'mar', 'mié', 'jue', 'vie', 'sáb'];
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const get = (url) => fetch(url, { headers: UA, signal: AbortSignal.timeout(15000) });
 const esc = (s) => String(s).replace(/[&<>"']/g, (c) => `&#${c.charCodeAt(0)};`);
-const unesc = (s) => String(s).replace(/&amp;/g, '&').replace(/&quot;/g, '"').replace(/&#0?39;/g, "'").replace(/&lt;/g, '<').replace(/&gt;/g, '>');
+// Entidades HTML en una sola pasada (así "&amp;quot;" queda "&quot;", no '"'): numéricas y las del español
+const NAMED = { amp: '&', quot: '"', apos: "'", lt: '<', gt: '>', nbsp: ' ', ndash: '–', mdash: '—', iexcl: '¡', iquest: '¿', laquo: '«', raquo: '»', ntilde: 'ñ', Ntilde: 'Ñ', uuml: 'ü', Uuml: 'Ü' };
+for (const v of 'aeiouAEIOU') NAMED[`${v}acute`] = `${v}\u0301`.normalize('NFC');
+const unesc = (s) => String(s).replace(/&(#x[0-9a-f]+|#\d+|[a-z]+);/gi, (m, k) => {
+  if (k[0] !== '#') return NAMED[k] ?? m;
+  const n = k[1] === 'x' || k[1] === 'X' ? parseInt(k.slice(2), 16) : Number(k.slice(1));
+  return n > 0 && n <= 0x10ffff ? String.fromCodePoint(n) : m;
+});
+// name en JSON-LD puede ser texto, lista o {"@value": …}
+const text = (v) => (typeof v === 'string' ? v : Array.isArray(v) ? text(v.find((x) => text(x))) : typeof v?.['@value'] === 'string' ? v['@value'] : '');
 const plain = (s) => String(s).normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
 const key = (s) => plain(s).replace(/[^a-z0-9]+/g, ' ').trim();
 const today = new Date().toLocaleDateString('en-CA', { timeZone: 'America/Bogota' }); // YYYY-MM-DD
@@ -81,7 +98,7 @@ export function parseEvent(html, url) {
     const fin = day(ev.endDate);
     const e = {
       url,
-      nombre: unesc(ev.name || '').trim().replace(/[\s:–-]+$/, '').slice(0, 120),
+      nombre: unesc(text(ev.name)).trim().replace(/[\s:–-]+$/, '').slice(0, 120),
       inicio,
       fin: FECHA.test(fin) && fin >= inicio ? fin : inicio, // "Por confirmar" o anterior al inicio -> un solo día
       ciudad: cityOf(ev.location),
@@ -167,16 +184,19 @@ async function scrape(state) {
   const res0 = await get(SITEMAP);
   if (!res0.ok) throw new Error(`sitemap: HTTP ${res0.status}`);
   const xml = await res0.text();
+  // Si Drupal parte el sitemap en varios (sitemapindex), este script no lo sabe leer: mejor no tocar nada
+  if (/<sitemapindex/.test(xml)) throw new Error('el sitemap ahora es un índice de varios sitemaps: hay que adaptar el script');
   const urls = [...xml.matchAll(/<url>([\s\S]*?)<\/url>/g)]
     .map(([, block]) => ({ loc: (block.match(/<loc>([^<]+)<\/loc>/)?.[1] || '').trim(), lastmod: block.match(/<lastmod>([^<]+)<\/lastmod>/)?.[1] || '' }))
     .filter(({ loc }) => loc.startsWith(PREFIX));
   if (!urls.length) throw new Error('sitemap sin /es/eventos/');
   const live = new Set(urls.map(({ loc }) => loc));
+  const known = Object.keys(state.vistos).length;
+  if (known && live.size < known / 2) throw new Error(`sitemap incompleto: ${live.size} fichas frente a ${known} conocidas`);
   for (const loc of Object.keys(state.vistos)) if (!live.has(loc)) delete state.vistos[loc]; // fuera del sitemap: se olvida
   // Se quitan del blog: fichas que salieron del sitemap (canceladas) y las revisadas de nuevo que
   // están borradas (404/410) o cuyo Event ya no pasa (otra ciudad, sin fecha)
   const gone = new Set(state.eventos.map((e) => e.url).filter((u) => !live.has(u)));
-  const published = new Set(state.eventos.map((e) => e.url));
   const time = (m) => Date.parse(m) || 0; // sin lastmod: al final
   const pending = urls
     .filter(({ loc, lastmod }) => state.vistos[loc] !== lastmod)
@@ -184,6 +204,7 @@ async function scrape(state) {
     .slice(0, MAX);
   const found = [];
   let done = 0;
+  let odd = 0; // respuestas 200 seguidas que no parecen de Tuboleta (reto anti-bot)
   for (const { loc, lastmod } of pending) {
     if (Date.now() > deadline) { console.warn('Se acabó el tiempo del run; sigue en el próximo'); break; }
     try {
@@ -194,12 +215,22 @@ async function scrape(state) {
         gone.add(loc);
         state.vistos[loc] = lastmod;
       } else if (res.ok) {
-        const ev = parseEvent(await res.text(), loc);
+        const html = await res.text();
+        const ev = parseEvent(html, loc);
         if (ev) found.push(ev);
         else if (ev === null) gone.add(loc);
-        // Sin datos de Event en una ficha que ya publicamos: HTML cambiado o reto anti-bot,
-        // no un evento borrado. Se conserva y se vuelve a pedir en el próximo run.
-        if (ev !== undefined || !published.has(loc)) state.vistos[loc] = lastmod;
+        // Sin datos de Event: si es una página real de Tuboleta (redirige a otra sección, como
+        // /es/eventos/parquea-tuboleta, o se enlaza a sí misma) no es un evento y se marca vista.
+        // Si no, puede ser un reto anti-bot o HTML cambiado: no se marca, el evento publicado
+        // se conserva y se vuelve a pedir. 5 seguidas así = paro, como con 403/429.
+        const real = ev !== undefined || (res.redirected && new URL(res.url).hostname.endsWith('tuboleta.com')) || html.includes(`href="${loc}"`);
+        if (real) {
+          state.vistos[loc] = lastmod;
+          odd = 0;
+        } else if (++odd >= 5) {
+          console.warn('5 páginas seguidas sin datos de Tuboleta (¿reto anti-bot?); paro');
+          break;
+        }
       }
       done += 1;
     } catch (err) {

@@ -33,6 +33,15 @@ assert.equal(day('2027-02-02T01:00:00Z'), '2027-02-01', 'UTC -> día en Bogotá'
 assert.equal(day('2025-09-20T07:00:00-0500'), '2025-09-20', 'desfase sin dos puntos (Tuboleta)');
 assert.equal(day('2027-02-01T23:30:00'), '2027-02-01', 'sin zona: tal cual');
 assert.equal(day('2027-02-01'), '2027-02-01');
+
+const nombre = (name) => parseEvent(ld({ ...event, name }), url)?.nombre;
+assert.equal(nombre('Canci&oacute;n &ntilde; &#8211; &#xE9;'), 'Canción ñ – é', 'entidades del español y numéricas');
+assert.equal(nombre('A &amp;quot; B'), 'A &quot; B', 'una sola pasada');
+assert.equal(nombre({ '@value': 'Festival X', '@language': 'es' }), 'Festival X', 'name como objeto');
+assert.equal(nombre(['', 'Festival Y']), 'Festival Y', 'name como lista');
+assert.equal(parseEvent(ld({ ...event, name: { foo: 1 } }), url), null, 'name sin texto');
+assert.equal(parseEvent(ld({ ...event, startDate: '2027-02-30' }), url), null, 'fecha que no existe');
+assert.ok(!valid({ ...ev, fin: '2027-13-01' }));
 const venue = { '@type': 'Place', name: 'Movistar Arena', address: { addressLocality: 'Bogotá D.C.' } };
 assert.equal(parseEvent(ld({ ...base, '@type': 'Event', location: venue }), url)?.ciudad, 'Bogotá', 'ciudad en address');
 assert.equal(parseEvent(ld({ ...base, '@type': 'Event', location: [venue] }), url)?.ciudad, 'Bogotá', 'location en lista');
