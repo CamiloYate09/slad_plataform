@@ -58,26 +58,38 @@ export const valid = (e) => Boolean(e) && typeof e.url === 'string' && e.url.sta
 // Event y sus subtipos de schema.org (MusicEvent, TheaterEvent, Festival…), también en lista
 const isEvent = (n) => Boolean(n) && [].concat(n['@type']).some((t) => typeof t === 'string' && (/Event$/.test(t) || t === 'Festival'));
 
-// Ficha HTML -> evento o null
+// Fecha de schema.org -> YYYY-MM-DD en Bogotá. Con zona horaria (Z, -05:00, -0500) se convierte:
+// las 8 p. m. de Bogotá en UTC ya son el día siguiente. Sin zona se toma tal cual.
+export function day(value) {
+  const s = String(value || '').trim();
+  if (!/T.*(Z|[+-]\d{2}:?\d{2})$/.test(s)) return s.slice(0, 10);
+  const t = Date.parse(s.replace(/([+-]\d{2})(\d{2})$/, '$1:$2'));
+  return Number.isNaN(t) ? s.slice(0, 10) : new Date(t).toLocaleDateString('en-CA', { timeZone: 'America/Bogota' });
+}
+
+// Ficha HTML -> evento válido | null (hay Event pero no pasa: otra ciudad, sin fecha…)
+// | undefined (no hay datos de Event: página que no es evento, o HTML que cambió o reto anti-bot)
 export function parseEvent(html, url) {
-  for (const [, raw] of html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)) {
+  for (const [, raw] of html.matchAll(/<script[^>]*type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/g)) {
     let data;
     try { data = JSON.parse(raw); } catch { continue; }
-    const ev = [data, ...(data['@graph'] || [])].find(isEvent);
+    if (!data || typeof data !== 'object') continue;
+    const nodes = Array.isArray(data) ? data : [data, ...[].concat(data['@graph'] || [])];
+    const ev = nodes.find(isEvent);
     if (!ev) continue;
-    const inicio = String(ev.startDate || '').slice(0, 10);
-    const fin = String(ev.endDate || ev.startDate || '').slice(0, 10);
+    const inicio = day(ev.startDate);
+    const fin = day(ev.endDate);
     const e = {
       url,
       nombre: unesc(ev.name || '').trim().replace(/[\s:–-]+$/, '').slice(0, 120),
       inicio,
-      fin: fin < inicio ? inicio : fin,
+      fin: FECHA.test(fin) && fin >= inicio ? fin : inicio, // "Por confirmar" o anterior al inicio -> un solo día
       ciudad: cityOf(ev.location),
       fuente: 'Tuboleta',
     };
     return valid(e) ? e : null;
   }
-  return null;
+  return undefined;
 }
 
 function cuando({ inicio, fin }) {
@@ -124,9 +136,9 @@ export function region(html, name, body) {
 // el título de un evento curado (las guías no cuentan)
 export function curatedBy(html) {
   const curated = html.replace(/<!-- eventos:auto:(\w+) -->[\s\S]*?<!-- \/eventos:auto:\1 -->/g, '');
-  const hrefs = new Set([...curated.matchAll(/href="([^"]+)"/g)].map(([, h]) => h));
+  const hrefs = new Set([...curated.matchAll(/href="([^"]+)"/g)].map(([, h]) => unesc(h)));
   const titles = [...curated.matchAll(/<article[^>]*data-kind="evento"[\s\S]*?<\/article>/g)]
-    .map(([block]) => key(block.match(/class="blog-post__title">(?:<a[^>]*>)?([^<]+)/)?.[1] || ''))
+    .map(([block]) => key(unesc(block.match(/class="blog-post__title">(?:<a[^>]*>)?([^<]+)/)?.[1] || '')))
     .filter((t) => t.length >= 8);
   return (e) => hrefs.has(e.url) || titles.some((t) => ` ${key(e.nombre)} `.includes(` ${t} `));
 }
@@ -155,16 +167,20 @@ async function scrape(state) {
   const res0 = await get(SITEMAP);
   if (!res0.ok) throw new Error(`sitemap: HTTP ${res0.status}`);
   const xml = await res0.text();
-  const urls =[...xml.matchAll(/<url>([\s\S]*?)<\/url>/g)]
+  const urls = [...xml.matchAll(/<url>([\s\S]*?)<\/url>/g)]
     .map(([, block]) => ({ loc: (block.match(/<loc>([^<]+)<\/loc>/)?.[1] || '').trim(), lastmod: block.match(/<lastmod>([^<]+)<\/lastmod>/)?.[1] || '' }))
     .filter(({ loc }) => loc.startsWith(PREFIX));
   if (!urls.length) throw new Error('sitemap sin /es/eventos/');
   const live = new Set(urls.map(({ loc }) => loc));
   for (const loc of Object.keys(state.vistos)) if (!live.has(loc)) delete state.vistos[loc]; // fuera del sitemap: se olvida
-  const gone = new Set(); // revisadas de nuevo sin evento válido: borradas, movidas de ciudad, ya no son Event
+  // Se quitan del blog: fichas que salieron del sitemap (canceladas) y las revisadas de nuevo que
+  // están borradas (404/410) o cuyo Event ya no pasa (otra ciudad, sin fecha)
+  const gone = new Set(state.eventos.map((e) => e.url).filter((u) => !live.has(u)));
+  const published = new Set(state.eventos.map((e) => e.url));
+  const time = (m) => Date.parse(m) || 0; // sin lastmod: al final
   const pending = urls
     .filter(({ loc, lastmod }) => state.vistos[loc] !== lastmod)
-    .sort((a, b) => Date.parse(b.lastmod || 0) - Date.parse(a.lastmod || 0)) // lo recién cambiado primero
+    .sort((a, b) => time(b.lastmod) - time(a.lastmod)) // lo recién cambiado primero
     .slice(0, MAX);
   const found = [];
   let done = 0;
@@ -174,11 +190,16 @@ async function scrape(state) {
       const res = await get(loc);
       if (res.status === 403 || res.status === 429) { console.warn(`Tuboleta respondió ${res.status}; paro`); break; }
       // Vista = leída o borrada. Un 5xx se reintenta en el próximo run.
-      if (res.ok || res.status === 404 || res.status === 410) {
-        const ev = res.ok ? parseEvent(await res.text(), loc) : null;
-        if (ev) found.push(ev);
-        else gone.add(loc);
+      if (res.status === 404 || res.status === 410) {
+        gone.add(loc);
         state.vistos[loc] = lastmod;
+      } else if (res.ok) {
+        const ev = parseEvent(await res.text(), loc);
+        if (ev) found.push(ev);
+        else if (ev === null) gone.add(loc);
+        // Sin datos de Event en una ficha que ya publicamos: HTML cambiado o reto anti-bot,
+        // no un evento borrado. Se conserva y se vuelve a pedir en el próximo run.
+        if (ev !== undefined || !published.has(loc)) state.vistos[loc] = lastmod;
       }
       done += 1;
     } catch (err) {

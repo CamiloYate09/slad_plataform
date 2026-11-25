@@ -9,6 +9,9 @@ on:
     branches: [main]
   schedule:
     - cron: '17 */3 * * *' # cada 3 h (UTC), fuera del minuto 0, que GitHub retrasa o descarta
+    # OJO: GitHub apaga los cron de un repo público tras 60 días sin actividad, y este workflow
+    # no hace commits. Si los eventos dejan de cambiar (mira "generado" en /eventos.json),
+    # reactívalo en Actions → "Pages (build + eventos)" → Enable workflow.
   workflow_dispatch:
 
 # Solo lee el repo: no hace commits. El estado entre runs es el eventos.json publicado.

@@ -1,7 +1,7 @@
 // node scripts/eventos.test.mjs — sin red; falla si se rompe el parseo, el filtro de ciudad, el escape o los duplicados.
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
-import { city, parseEvent, article, region, valid, curatedBy } from './eventos.mjs';
+import { city, day, parseEvent, article, region, valid, curatedBy } from './eventos.mjs';
 
 const ld = (o) => `<script type="application/ld+json">${JSON.stringify({ '@context': 'https://schema.org', '@graph': [o] })}</script>`;
 const url = 'https://www.tuboleta.com/es/eventos/x';
@@ -17,11 +17,22 @@ const ev = parseEvent(ld({ ...base, '@type': 'Event', name: 'A &amp; B', startDa
 assert.deepEqual(ev, { url, nombre: 'A & B', inicio: '2027-02-01', fin: '2027-02-01', ciudad: 'Bogotá', fuente: 'Tuboleta' });
 assert.ok(parseEvent(ld({ ...base, '@type': 'MusicEvent' }), url), 'subtipos de Event');
 assert.ok(parseEvent(ld({ ...base, '@type': ['Festival'] }), url), '@type en lista');
-assert.equal(parseEvent(ld({ ...base, '@type': 'Place' }), url), null);
+assert.equal(parseEvent(ld({ ...base, '@type': 'Place' }), url), undefined, 'sin Event: no es un evento borrado');
 assert.equal(parseEvent(ld({ ...base, '@type': 'Event', startDate: 'mañana' }), url), null);
 assert.equal(parseEvent(ld({ ...base, '@type': 'Event', location: { name: 'Cali' } }), url), null);
 assert.equal(parseEvent(ld({ ...base, '@type': 'Event', name: ' - ' }), url), null, 'nombre vacío tras limpiar');
-assert.equal(parseEvent('<p>sin JSON-LD</p>', url), null);
+assert.equal(parseEvent('<p>sin JSON-LD</p>', url), undefined);
+assert.equal(parseEvent('<script type="application/ld+json">null</script>', url), undefined, 'JSON-LD null');
+const event = { ...base, '@type': 'Event' };
+assert.ok(parseEvent(`<script type="application/ld+json">${JSON.stringify({ '@graph': event })}</script>`, url), '@graph como objeto');
+assert.ok(parseEvent(`<script type="application/ld+json">${JSON.stringify([event])}</script>`, url), 'JSON-LD como lista');
+assert.ok(parseEvent(`<script data-x="1" type="application/ld+json">${JSON.stringify(event)}</script>`, url), 'script con más atributos');
+assert.equal(parseEvent(ld({ ...event, endDate: 'Por confirmar' }), url)?.fin, '2027-02-01', 'fin inválido -> un día');
+
+assert.equal(day('2027-02-02T01:00:00Z'), '2027-02-01', 'UTC -> día en Bogotá');
+assert.equal(day('2025-09-20T07:00:00-0500'), '2025-09-20', 'desfase sin dos puntos (Tuboleta)');
+assert.equal(day('2027-02-01T23:30:00'), '2027-02-01', 'sin zona: tal cual');
+assert.equal(day('2027-02-01'), '2027-02-01');
 const venue = { '@type': 'Place', name: 'Movistar Arena', address: { addressLocality: 'Bogotá D.C.' } };
 assert.equal(parseEvent(ld({ ...base, '@type': 'Event', location: venue }), url)?.ciudad, 'Bogotá', 'ciudad en address');
 assert.equal(parseEvent(ld({ ...base, '@type': 'Event', location: [venue] }), url)?.ciudad, 'Bogotá', 'location en lista');
@@ -36,6 +47,7 @@ assert.ok(!html.includes('<script>'), 'el nombre de terceros se escapa');
 assert.ok(html.includes('class="blog-post__title"'), 'cover.js necesita el título');
 
 const page = `<article class="blog-post" data-kind="evento"><h2 class="blog-post__title"><a href="${url}-largo">Hay Festival Cartagena</a></h2></article>
+  <article class="blog-post" data-kind="evento"><h2 class="blog-post__title">Rock &amp; Roll Fest</h2></article>
   <article class="blog-post" data-kind="guía"><h2 class="blog-post__title">Amanecer en Monserrate</h2></article>
   <!-- eventos:auto:grid -->
   <!-- /eventos:auto:grid -->`;
@@ -45,6 +57,7 @@ assert.ok(!isCurated({ ...ev, nombre: 'Rock en Cartagena' }));
 assert.ok(isCurated({ ...ev, url: `${url}-largo`, nombre: 'Otro' }), 'mismo enlace exacto');
 assert.ok(!isCurated(ev), 'un enlace que es prefijo de otro no cuenta');
 assert.ok(!isCurated({ ...ev, nombre: 'Concierto Amanecer en Monserrate' }), 'las guías no cuentan');
+assert.ok(isCurated({ ...ev, nombre: 'Rock & Roll Fest 2027' }), 'título curado con &amp;');
 assert.equal(region(region(page, 'grid', html), 'grid', ''), page, 'reescribir la región es idempotente');
 
 const blog = await readFile(new URL('../blog.html', import.meta.url), 'utf8');
