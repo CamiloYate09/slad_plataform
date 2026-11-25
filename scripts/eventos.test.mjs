@@ -33,6 +33,8 @@ assert.equal(day('2027-02-02T01:00:00Z'), '2027-02-01', 'UTC -> día en Bogotá'
 assert.equal(day('2025-09-20T07:00:00-0500'), '2025-09-20', 'desfase sin dos puntos (Tuboleta)');
 assert.equal(day('2027-02-01T23:30:00'), '2027-02-01', 'sin zona: tal cual');
 assert.equal(day('2027-02-01'), '2027-02-01');
+assert.equal(day('2027-02-01T00:00:00Z'), '2027-02-01', 'medianoche UTC = fecha sin hora, no el día anterior');
+assert.equal(day('2027-02-01T00:00:00.000+00:00'), '2027-02-01');
 
 const nombre = (name) => parseEvent(ld({ ...event, name }), url)?.nombre;
 assert.equal(nombre('Canci&oacute;n &ntilde; &#8211; &#xE9;'), 'Canción ñ – é', 'entidades del español y numéricas');

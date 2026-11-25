@@ -76,10 +76,11 @@ export const valid = (e) => Boolean(e) && typeof e.url === 'string' && e.url.sta
 const isEvent = (n) => Boolean(n) && [].concat(n['@type']).some((t) => typeof t === 'string' && (/Event$/.test(t) || t === 'Festival'));
 
 // Fecha de schema.org -> YYYY-MM-DD en Bogotá. Con zona horaria (Z, -05:00, -0500) se convierte:
-// las 8 p. m. de Bogotá en UTC ya son el día siguiente. Sin zona se toma tal cual.
+// las 8 p. m. de Bogotá en UTC ya son el día siguiente. Sin zona se toma tal cual, y la medianoche
+// UTC exacta también: es como se serializa una fecha sin hora (moverla daría el día anterior).
 export function day(value) {
   const s = String(value || '').trim();
-  if (!/T.*(Z|[+-]\d{2}:?\d{2})$/.test(s)) return s.slice(0, 10);
+  if (!/T.*(Z|[+-]\d{2}:?\d{2})$/.test(s) || /T00:00(:00(\.0+)?)?(Z|[+-]00:?00)$/.test(s)) return s.slice(0, 10);
   const t = Date.parse(s.replace(/([+-]\d{2})(\d{2})$/, '$1:$2'));
   return Number.isNaN(t) ? s.slice(0, 10) : new Date(t).toLocaleDateString('en-CA', { timeZone: 'America/Bogota' });
 }
@@ -222,15 +223,16 @@ async function scrape(state) {
         const ev = parseEvent(html, loc);
         if (ev) found.push(ev);
         else if (ev === null) gone.add(loc);
-        // Sin datos de Event: si es una página real de Tuboleta (redirige a otra sección, como
-        // /es/eventos/parquea-tuboleta, o se enlaza a sí misma) no es un evento y se marca vista.
-        // Si no, puede ser un reto anti-bot o HTML cambiado: no se marca, el evento publicado
-        // se conserva y se vuelve a pedir. 5 seguidas así = paro, como con 403/429.
-        // Redirige a otra sección de Tuboleta (no a un reto: challenge, captcha, cdn-cgi)
+        // Sin datos de Event: si redirige a otra sección de Tuboleta (como /es/eventos/parquea-tuboleta,
+        // que es un 301) no es un evento y se marca vista. Si no redirige, puede ser un reto anti-bot
+        // o HTML cambiado: no se marca, el evento publicado se conserva y se vuelve a pedir; 5 seguidas
+        // así = paro. (Que la página se enlace a sí misma no prueba nada: todas traen <link rel=canonical>.)
+        // Una redirección no quita el evento: puede ser una fila virtual o un login durante una venta
+        // grande. Los cancelados se quitan cuando salen del sitemap.
         const final = new URL(res.url);
-        const away = res.redirected && final.hostname.endsWith('tuboleta.com') && !/challenge|captcha|cdn-cgi|bot/i.test(final.href);
-        if (ev === undefined && away) gone.add(loc); // un evento publicado que ahora redirige: cancelado
-        const real = ev !== undefined || away || html.includes(`href="${loc}"`);
+        const tuboleta = final.hostname === 'tuboleta.com' || final.hostname.endsWith('.tuboleta.com');
+        const away = res.redirected && tuboleta && !/challenge|captcha|cdn-cgi|bot|login|user|fila|queue/i.test(final.href);
+        const real = ev !== undefined || away;
         if (real) {
           state.vistos[loc] = lastmod;
           odd = 0;
