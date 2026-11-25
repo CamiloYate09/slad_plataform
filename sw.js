@@ -8,7 +8,7 @@
  *  evento `activate` limpia caches obsoletas automaticamente.
  * ============================================================ */
 
-const CACHE_VERSION = 'v31'; // v31: banda del blog con video; el video no pasa por el service worker
+const CACHE_VERSION = 'v32'; // v32: blog.js ordena "Próximas fechas" (eventos automáticos de Tuboleta)
 const CACHE_NAME = `citystream-${CACHE_VERSION}`;
 
 // Shell estatico: archivos cacheados en install para offline-first
