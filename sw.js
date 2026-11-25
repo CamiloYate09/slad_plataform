@@ -8,7 +8,7 @@
  *  evento `activate` limpia caches obsoletas automaticamente.
  * ============================================================ */
 
-const CACHE_VERSION = 'v32'; // v32: blog.js ordena "Próximas fechas" (eventos automáticos de Tuboleta)
+const CACHE_VERSION = 'v33'; // v33: blog.html va red primero (cambia cada 3 h con los eventos automáticos)
 const CACHE_NAME = `citystream-${CACHE_VERSION}`;
 
 // Shell estatico: archivos cacheados en install para offline-first
@@ -83,6 +83,22 @@ self.addEventListener('fetch', (event) => {
   // 1b. Video: el navegador lo pide por rangos (206); una copia cacheada
   //     completa rompería la reproducción en Safari. Siempre red.
   if (url.pathname.startsWith('/static/media/')) return;
+
+  // 1c. El blog cambia cada 3 h (eventos automáticos): red primero, caché solo sin conexión.
+  if (url.pathname.replace(/\.html$/, '') === '/blog') {
+    event.respondWith(
+      fetch(req)
+        .then((response) => {
+          if (response && response.status === 200 && response.type === 'basic') {
+            const clone = response.clone();
+            caches.open(CACHE_NAME).then((c) => c.put(req, clone));
+          }
+          return response;
+        })
+        .catch(() => caches.match(req).then((cached) => cached || caches.match('/offline.html')))
+    );
+    return;
+  }
 
   // 2. Mismo origen: cache-first con network update en background
   event.respondWith(

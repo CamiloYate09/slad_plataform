@@ -33,10 +33,21 @@ const plain = (s) => String(s).normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerC
 const key = (s) => plain(s).replace(/[^a-z0-9]+/g, ' ').trim();
 const today = new Date().toLocaleDateString('en-CA', { timeZone: 'America/Bogota' }); // YYYY-MM-DD
 
+// La ciudad como palabra en cualquier parte del texto: "Bogotá D.C.", "Teatro Colsubsidio, Bogotá"
 export function city(name) {
-  const k = plain(name).trim();
-  const hit = Object.keys(CITIES).find((c) => k === c || k.startsWith(`${c} `) || k.startsWith(`${c},`));
+  const k = ` ${key(name)} `;
+  const hit = Object.keys(CITIES).find((c) => k.includes(` ${c} `));
   return hit ? CITIES[hit] : null;
+}
+
+// location puede ser City, Place con address, texto o una lista de ellos
+function cityOf(location) {
+  for (const loc of [].concat(location || [])) {
+    const a = typeof loc === 'object' && loc ? loc.address : null;
+    const texts = typeof loc === 'string' ? [loc] : [loc?.name, ...(typeof a === 'string' ? [a] : [a?.addressLocality, a?.addressRegion])];
+    for (const t of texts) if (typeof t === 'string' && city(t)) return city(t);
+  }
+  return null;
 }
 
 // Las mismas reglas para lo recién leído y para lo que vuelve del eventos.json publicado
@@ -61,7 +72,7 @@ export function parseEvent(html, url) {
       nombre: unesc(ev.name || '').trim().replace(/[\s:–-]+$/, '').slice(0, 120),
       inicio,
       fin: fin < inicio ? inicio : fin,
-      ciudad: city(ev.location?.name || ''),
+      ciudad: cityOf(ev.location),
       fuente: 'Tuboleta',
     };
     return valid(e) ? e : null;
@@ -109,21 +120,27 @@ export function region(html, name, body) {
   return html.replace(re, (_, open, close) => `${open}${body ? `\n${body}` : ''}${close}`);
 }
 
-// ¿Ya está a mano en blog.html? Por enlace o porque el nombre contiene un título curado
+// ¿Ya está a mano en blog.html? Por enlace exacto o porque el nombre contiene
+// el título de un evento curado (las guías no cuentan)
 export function curatedBy(html) {
   const curated = html.replace(/<!-- eventos:auto:(\w+) -->[\s\S]*?<!-- \/eventos:auto:\1 -->/g, '');
-  const titles = [...curated.matchAll(/class="blog-post__title">(?:<a[^>]*>)?([^<]+)/g)].map(([, t]) => key(t)).filter((t) => t.length >= 8);
-  return (e) => curated.includes(e.url) || titles.some((t) => ` ${key(e.nombre)} `.includes(` ${t} `));
+  const hrefs = new Set([...curated.matchAll(/href="([^"]+)"/g)].map(([, h]) => h));
+  const titles = [...curated.matchAll(/<article[^>]*data-kind="evento"[\s\S]*?<\/article>/g)]
+    .map(([block]) => key(block.match(/class="blog-post__title">(?:<a[^>]*>)?([^<]+)/)?.[1] || ''))
+    .filter((t) => t.length >= 8);
+  return (e) => hrefs.has(e.url) || titles.some((t) => ` ${key(e.nombre)} `.includes(` ${t} `));
 }
 
-// El estado vive en el sitio publicado. 404 = nunca se publicó (primer run).
-// Cualquier otro fallo detiene el build: mejor dejar el sitio como está que publicarlo vacío.
+// El estado vive en el sitio publicado; se pide saltando la caché del CDN (max-age=600),
+// o un push justo después de un cron publicaría el estado anterior.
+// 404 = nunca se publicó: solo se acepta con INIT=1 (ejecución manual). En cron o push,
+// un 404 o cualquier otro fallo detiene el build: mejor dejar el sitio como está que vaciarlo.
 async function loadState() {
   for (let i = 1; ; i++) {
     try {
-      const r = await get(SITE);
-      if (r.status === 404) return { eventos: [], vistos: {} };
-      if (!r.ok) throw new Error(`HTTP ${r.status}`);
+      const r = await fetch(`${SITE}?t=${Date.now()}`, { headers: { ...UA, 'cache-control': 'no-cache' }, signal: AbortSignal.timeout(15000) });
+      if (r.status === 404 && process.env.INIT === '1') return { eventos: [], vistos: {} };
+      if (!r.ok) throw new Error(`HTTP ${r.status}${r.status === 404 ? ' (primer run: lánzalo a mano desde Actions)' : ''}`);
       const data = await r.json();
       return { eventos: Array.isArray(data.eventos) ? data.eventos : [], vistos: data.vistos && typeof data.vistos === 'object' ? data.vistos : {} };
     } catch (err) {
@@ -135,11 +152,16 @@ async function loadState() {
 
 async function scrape(state) {
   const deadline = Date.now() + BUDGET;
-  const xml = await (await get(SITEMAP)).text();
-  const urls = [...xml.matchAll(/<url>([\s\S]*?)<\/url>/g)]
+  const res0 = await get(SITEMAP);
+  if (!res0.ok) throw new Error(`sitemap: HTTP ${res0.status}`);
+  const xml = await res0.text();
+  const urls =[...xml.matchAll(/<url>([\s\S]*?)<\/url>/g)]
     .map(([, block]) => ({ loc: (block.match(/<loc>([^<]+)<\/loc>/)?.[1] || '').trim(), lastmod: block.match(/<lastmod>([^<]+)<\/lastmod>/)?.[1] || '' }))
     .filter(({ loc }) => loc.startsWith(PREFIX));
   if (!urls.length) throw new Error('sitemap sin /es/eventos/');
+  const live = new Set(urls.map(({ loc }) => loc));
+  for (const loc of Object.keys(state.vistos)) if (!live.has(loc)) delete state.vistos[loc]; // fuera del sitemap: se olvida
+  const gone = new Set(); // revisadas de nuevo sin evento válido: borradas, movidas de ciudad, ya no son Event
   const pending = urls
     .filter(({ loc, lastmod }) => state.vistos[loc] !== lastmod)
     .sort((a, b) => Date.parse(b.lastmod || 0) - Date.parse(a.lastmod || 0)) // lo recién cambiado primero
@@ -151,12 +173,13 @@ async function scrape(state) {
     try {
       const res = await get(loc);
       if (res.status === 403 || res.status === 429) { console.warn(`Tuboleta respondió ${res.status}; paro`); break; }
-      if (res.ok) {
-        const ev = parseEvent(await res.text(), loc);
-        if (ev) found.push(ev);
-      }
       // Vista = leída o borrada. Un 5xx se reintenta en el próximo run.
-      if (res.ok || res.status === 404 || res.status === 410) state.vistos[loc] = lastmod;
+      if (res.ok || res.status === 404 || res.status === 410) {
+        const ev = res.ok ? parseEvent(await res.text(), loc) : null;
+        if (ev) found.push(ev);
+        else gone.add(loc);
+        state.vistos[loc] = lastmod;
+      }
       done += 1;
     } catch (err) {
       console.warn(`${loc}: ${err.message}`);
@@ -164,17 +187,18 @@ async function scrape(state) {
     await sleep(1000);
   }
   console.log(`${urls.length} fichas en el sitemap, ${done}/${pending.length} revisadas, ${found.length} eventos válidos`);
-  return found;
+  return { found, gone };
 }
 
 async function main() {
   const state = await loadState();
   let found = [];
+  let gone = new Set();
   if (SCRAPE) {
-    try { found = await scrape(state); } catch (err) { console.warn(`Sin datos nuevos: ${err.message}`); }
+    try { ({ found, gone } = await scrape(state)); } catch (err) { console.warn(`Sin datos nuevos: ${err.message}`); }
   }
 
-  const old = state.eventos.filter(valid); // lo publicado también se revalida
+  const old = state.eventos.filter((e) => valid(e) && !gone.has(e.url)); // lo publicado también se revalida
   const eventos = [...new Map([...old, ...found].map((e) => [e.url, e])).values()]
     .filter((e) => e.fin >= today)
     .sort((a, b) => a.inicio.localeCompare(b.inicio) || a.nombre.localeCompare(b.nombre));

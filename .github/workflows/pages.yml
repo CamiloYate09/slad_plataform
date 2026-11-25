@@ -24,6 +24,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    permissions:
+      contents: read
+      pages: read # configure-pages lee la configuración de Pages; publicar es del job deploy
     steps:
       # Actions fijadas por SHA de commit (ver lighthouse.yml); el comentario dice la versión.
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
@@ -39,10 +42,13 @@ jobs:
 
       # En push solo se re-pinta desde lo ya publicado: Tuboleta se consulta cada 3 h, no en cada commit.
       # Si Tuboleta falla, el script deja los eventos del run anterior y la publicación sigue.
+      # Si no hay eventos.json publicado, solo una ejecución manual arranca de cero (INIT);
+      # en cron o push el build falla y el sitio se queda como está.
       - name: Traer eventos de Tuboleta
         run: node scripts/eventos.mjs
         env:
           SCRAPE: ${{ github.event_name == 'push' && '0' || '1' }}
+          INIT: ${{ github.event_name == 'workflow_dispatch' && '1' || '0' }}
 
       - uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6.0.0
 
