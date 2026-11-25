@@ -8,7 +8,7 @@
  *  evento `activate` limpia caches obsoletas automaticamente.
  * ============================================================ */
 
-const CACHE_VERSION = 'v33'; // v33: blog.html va red primero (cambia cada 3 h con los eventos automáticos)
+const CACHE_VERSION = 'v34'; // v34: sin red, una página sin caché cae a offline.html
 const CACHE_NAME = `citystream-${CACHE_VERSION}`;
 
 // Shell estatico: archivos cacheados en install para offline-first
@@ -112,7 +112,8 @@ self.addEventListener('fetch', (event) => {
           return response;
         })
         .catch(() => null);
-      return cached || fetchPromise || caches.match('/offline.html');
+      // fetchPromise siempre es una promesa: sin red resuelve a null y hay que caer a offline.html
+      return cached || fetchPromise.then((r) => r || caches.match('/offline.html'));
     })
   );
 });

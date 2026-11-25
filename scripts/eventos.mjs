@@ -16,7 +16,7 @@ const SITEMAP = 'https://www.tuboleta.com/sitemap.xml';
 const PREFIX = 'https://www.tuboleta.com/es/eventos/';
 const UA = { 'user-agent': 'CityStreamBot/1.0 (+https://citystream.tech)' };
 const SCRAPE = process.env.SCRAPE !== '0';
-const MAX = Number(process.env.MAX || 120); // fichas por run: el primer run tiene ~500
+const MAX = Number.parseInt(process.env.MAX, 10) || 120; // fichas por run: el primer run tiene ~500
 const BUDGET = 8 * 60e3; // el job tiene 15 min: el scrape para a los 8 y publica lo que lleve
 const GRID = 9; // eventos automáticos en la cuadrícula
 const RANK = 5; // y en "Próximas fechas"
@@ -150,11 +150,13 @@ export function region(html, name, body) {
 }
 
 // ¿Ya está a mano en blog.html? Por enlace exacto o porque el nombre contiene
-// el título de un evento curado (las guías no cuentan)
+// el título de un evento curado vigente (las guías y los curados ya terminados no cuentan:
+// "Hay Festival Cartagena" de 2027 no debe tapar la edición de 2028)
 export function curatedBy(html) {
   const curated = html.replace(/<!-- eventos:auto:(\w+) -->[\s\S]*?<!-- \/eventos:auto:\1 -->/g, '');
   const hrefs = new Set([...curated.matchAll(/href="([^"]+)"/g)].map(([, h]) => unesc(h)));
   const titles = [...curated.matchAll(/<article[^>]*data-kind="evento"[\s\S]*?<\/article>/g)]
+    .filter(([block]) => !(block.match(/^<article[^>]*data-end="([^"]+)"/)?.[1] < today))
     .map(([block]) => key(unesc(block.match(/class="blog-post__title">(?:<a[^>]*>)?([^<]+)/)?.[1] || '')))
     .filter((t) => t.length >= 8);
   return (e) => hrefs.has(e.url) || titles.some((t) => ` ${key(e.nombre)} `.includes(` ${t} `));
@@ -210,6 +212,7 @@ async function scrape(state) {
     try {
       const res = await get(loc);
       if (res.status === 403 || res.status === 429) { console.warn(`Tuboleta respondió ${res.status}; paro`); break; }
+      if (!res.ok) odd = 0; // la racha anti-bot es solo de 200 seguidos sin datos
       // Vista = leída o borrada. Un 5xx se reintenta en el próximo run.
       if (res.status === 404 || res.status === 410) {
         gone.add(loc);
@@ -223,7 +226,11 @@ async function scrape(state) {
         // /es/eventos/parquea-tuboleta, o se enlaza a sí misma) no es un evento y se marca vista.
         // Si no, puede ser un reto anti-bot o HTML cambiado: no se marca, el evento publicado
         // se conserva y se vuelve a pedir. 5 seguidas así = paro, como con 403/429.
-        const real = ev !== undefined || (res.redirected && new URL(res.url).hostname.endsWith('tuboleta.com')) || html.includes(`href="${loc}"`);
+        // Redirige a otra sección de Tuboleta (no a un reto: challenge, captcha, cdn-cgi)
+        const final = new URL(res.url);
+        const away = res.redirected && final.hostname.endsWith('tuboleta.com') && !/challenge|captcha|cdn-cgi|bot/i.test(final.href);
+        if (ev === undefined && away) gone.add(loc); // un evento publicado que ahora redirige: cancelado
+        const real = ev !== undefined || away || html.includes(`href="${loc}"`);
         if (real) {
           state.vistos[loc] = lastmod;
           odd = 0;

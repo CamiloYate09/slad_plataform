@@ -67,6 +67,8 @@ assert.ok(isCurated({ ...ev, url: `${url}-largo`, nombre: 'Otro' }), 'mismo enla
 assert.ok(!isCurated(ev), 'un enlace que es prefijo de otro no cuenta');
 assert.ok(!isCurated({ ...ev, nombre: 'Concierto Amanecer en Monserrate' }), 'las guías no cuentan');
 assert.ok(isCurated({ ...ev, nombre: 'Rock & Roll Fest 2027' }), 'título curado con &amp;');
+const pasado = curatedBy(`<article class="blog-post" data-kind="evento" data-date="2020-01-01" data-end="2020-01-02"><h2 class="blog-post__title">Hay Festival Cartagena</h2></article>`);
+assert.ok(!pasado({ ...ev, nombre: 'Hay Festival Cartagena 2028' }), 'un curado terminado no tapa la edición nueva');
 assert.equal(region(region(page, 'grid', html), 'grid', ''), page, 'reescribir la región es idempotente');
 
 const blog = await readFile(new URL('../blog.html', import.meta.url), 'utf8');
