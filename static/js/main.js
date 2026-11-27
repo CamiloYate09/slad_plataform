@@ -83,6 +83,36 @@ document.querySelectorAll('form[data-signup]').forEach((form) => {
 });
 
 // ============================================
+// HERO — la palabra en degradado del título cambia sola (data-rotor="a|b|c")
+// La que sale se desvanece hacia arriba y la nueva sube desenfocada (style.css,
+// .hero-rotor). Con movimiento reducido se queda la primera. Se detiene con la
+// pestaña oculta para no gastar batería.
+// ============================================
+document.querySelectorAll('[data-rotor]').forEach((rotor) => {
+  const words = rotor.dataset.rotor.split('|').filter(Boolean);
+  if (prefersReducedMotion || words.length < 2) return;
+  let i = 0;
+  let timer = null;
+  const swap = () => {
+    const old = rotor.querySelector('.hero-rotor__word:not(.is-out)');
+    if (old) {
+      old.classList.remove('is-in');
+      old.classList.add('is-out');
+      setTimeout(() => old.remove(), 450);
+    }
+    i = (i + 1) % words.length;
+    const next = document.createElement('span');
+    next.className = 'hero-rotor__word is-in';
+    next.textContent = words[i];
+    rotor.append(next);
+  };
+  const start = () => { if (!timer) timer = setInterval(swap, 2400); };
+  const stop = () => { clearInterval(timer); timer = null; };
+  document.addEventListener('visibilitychange', () => (document.hidden ? stop() : start()));
+  start();
+});
+
+// ============================================
 // MOBILE HAMBURGER MENU
 // ============================================
 const navToggle = document.querySelector('.nav-toggle');

@@ -8,7 +8,7 @@
  *  evento `activate` limpia caches obsoletas automaticamente.
  * ============================================================ */
 
-const CACHE_VERSION = 'v35'; // v35: sin red, solo las páginas caen a offline.html; /blog/ también va red primero
+const CACHE_VERSION = 'v36'; // v36: hero con la palabra que rota (index.html, main.js, style.min.css)
 const CACHE_NAME = `citystream-${CACHE_VERSION}`;
 
 // Shell estatico: archivos cacheados en install para offline-first

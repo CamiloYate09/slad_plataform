@@ -542,7 +542,28 @@ body.no-transitions *::after {
   line-height: 1;
   letter-spacing: -0.02em;
   margin-bottom: 1.5rem;
-  max-width: 16ch;
+  max-width: 20ch; /* "de la ciudad, en una app" en una línea */
+}
+
+/* Palabra que rota en el título (main.js, data-rotor). Las palabras que entran y salen
+   comparten la misma celda: la que sale se desvanece hacia arriba mientras la nueva
+   sube desenfocada. Sin JS o con movimiento reducido se queda la primera. */
+.hero-rotor {
+  display: inline-grid;
+  justify-items: start; /* la palabra nueva arranca pegada a "Tus" aunque la vieja aún ocupe espacio */
+  text-align: left;
+  vertical-align: bottom;
+  padding-bottom: 0.08em; /* que no se corten los descendentes al recortar */
+  overflow: hidden;
+}
+
+.hero-rotor__word {
+  grid-area: 1 / 1;
+  white-space: nowrap;
+  background: var(--grad-brand);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
 .hero-subtitle {
@@ -3180,6 +3201,15 @@ body.light-theme .auth-page {
     animation: hero-fade 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.5s both;
   }
 
+  /* Palabra que rota: entra desde abajo con desenfoque y sale hacia arriba */
+  .hero-rotor__word.is-in {
+    animation: hero-rotor-in 0.5s var(--ease-out) both;
+  }
+
+  .hero-rotor__word.is-out {
+    animation: hero-rotor-out 0.45s ease-in both;
+  }
+
   /* --reveal-tilt (reveal({ tilt })): el bloque entra recostado hacia atrás.
      transform no se usa aquí: queda libre para la inclinación con el puntero
      ([data-tilt]), con su propia transición y sin el retraso del escalonado */
@@ -3253,6 +3283,14 @@ body.light-theme .auth-page {
 
 @keyframes hero-fade {
   from { opacity: 0; transform: translateY(20px); }
+}
+
+@keyframes hero-rotor-in {
+  from { opacity: 0; transform: translateY(0.6em); filter: blur(8px); }
+}
+
+@keyframes hero-rotor-out {
+  to { opacity: 0; transform: translateY(-0.6em); filter: blur(8px); }
 }
 
 /* ============================================================
