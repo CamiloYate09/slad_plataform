@@ -1,7 +1,7 @@
 // node scripts/eventos.test.mjs — sin red; falla si se rompe el parseo, el filtro de ciudad, el escape o los duplicados.
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
-import { city, day, parseEvent, article, region, valid, curatedBy } from './eventos.mjs';
+import { city, day, parseEvent, article, region, valid, curatedBy, order } from './eventos.mjs';
 
 const ld = (o) => `<script type="application/ld+json">${JSON.stringify({ '@context': 'https://schema.org', '@graph': [o] })}</script>`;
 const url = 'https://www.tuboleta.com/es/eventos/x';
@@ -75,4 +75,9 @@ assert.equal(region(region(page, 'grid', html), 'grid', ''), page, 'reescribir l
 
 const blog = await readFile(new URL('../blog.html', import.meta.url), 'utf8');
 region(region(blog, 'grid', ''), 'rank', ''); // lanza si falta alguna región
+const hoy = '2026-11-27';
+const e = (nombre, inicio, fin) => ({ nombre, inicio, fin });
+const orden = [e('Totoro', '2026-11-01', '2026-12-20'), e('Concierto', '2026-12-05', '2026-12-05'), e('Obra', '2026-11-10', '2026-11-30'), e('Hoy', '2026-11-27', '2026-11-27')]
+  .sort((x, y) => order(x, y, hoy)).map((x) => x.nombre);
+assert.deepEqual(orden, ['Hoy', 'Concierto', 'Obra', 'Totoro'], 'primero lo que viene; lo que ya empezó después, por fecha de fin');
 console.log('ok');

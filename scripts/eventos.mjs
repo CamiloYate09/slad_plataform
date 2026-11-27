@@ -50,6 +50,16 @@ const plain = (s) => String(s).normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerC
 const key = (s) => plain(s).replace(/[^a-z0-9]+/g, ' ').trim();
 const today = new Date().toLocaleDateString('en-CA', { timeZone: 'America/Bogota' }); // YYYY-MM-DD
 
+// Orden del blog: primero lo que está por venir (del más cercano al más lejano) y después lo que
+// ya empezó y sigue en curso (lo que termina antes, primero). Así una obra que lleva semanas en
+// cartelera no le quita el primer lugar a un concierto de la próxima semana.
+export const order = (a, b, hoy = today) => {
+  const enCurso = (e) => (e.inicio < hoy ? 1 : 0);
+  return enCurso(a) - enCurso(b)
+    || (enCurso(a) ? a.fin.localeCompare(b.fin) : a.inicio.localeCompare(b.inicio))
+    || a.nombre.localeCompare(b.nombre);
+};
+
 // La ciudad como palabra en cualquier parte del texto: "Bogotá D.C.", "Teatro Colsubsidio, Bogotá"
 export function city(name) {
   const k = ` ${key(name)} `;
@@ -262,7 +272,7 @@ async function main() {
   const old = state.eventos.filter((e) => valid(e) && !gone.has(e.url)); // lo publicado también se revalida
   const eventos = [...new Map([...old, ...found].map((e) => [e.url, e])).values()]
     .filter((e) => e.fin >= today)
-    .sort((a, b) => a.inicio.localeCompare(b.inicio) || a.nombre.localeCompare(b.nombre));
+    .sort(order);
 
   // eventos.json guarda todo lo próximo; solo al pintar se quita lo que ya está a mano
   const html = await readFile('blog.html', 'utf8');
