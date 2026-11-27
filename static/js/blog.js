@@ -73,6 +73,10 @@
     if (category) category.after(chip);
   });
 
+  // Próximas fechas en orden de fecha (los eventos automáticos se mezclan con los curados); sin fecha, al final
+  const rank = document.querySelector('.blog-rank');
+  if (rank) rank.prepend(...[...rank.querySelectorAll('li[data-date]')].sort((a, b) => a.dataset.date.localeCompare(b.dataset.date)));
+
   // Próximas fechas: lo mismo junto a la fecha
   document.querySelectorAll('.blog-rank li[data-date]').forEach((item) => {
     const when = item.querySelector('.blog-rank__when');

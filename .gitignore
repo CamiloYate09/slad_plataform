@@ -74,3 +74,6 @@ Temporary Items
 
 # Video original de Veo (7 MB, con audio): se guarda fuera del repo; el sitio usa static/media/blog-ciudad.mp4
 /static/media/uno.mp4
+
+# Lo genera scripts/eventos.mjs en el workflow de Pages; el estado vive en el sitio publicado
+eventos.json

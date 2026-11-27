@@ -8,7 +8,7 @@
  *  evento `activate` limpia caches obsoletas automaticamente.
  * ============================================================ */
 
-const CACHE_VERSION = 'v31'; // v31: banda del blog con video; el video no pasa por el service worker
+const CACHE_VERSION = 'v35'; // v35: sin red, solo las páginas caen a offline.html; /blog/ también va red primero
 const CACHE_NAME = `citystream-${CACHE_VERSION}`;
 
 // Shell estatico: archivos cacheados en install para offline-first
@@ -84,6 +84,22 @@ self.addEventListener('fetch', (event) => {
   //     completa rompería la reproducción en Safari. Siempre red.
   if (url.pathname.startsWith('/static/media/')) return;
 
+  // 1c. El blog cambia cada 3 h (eventos automáticos): red primero, caché solo sin conexión.
+  if (url.pathname.replace(/(\/index)?\.html$/, '').replace(/\/$/, '') === '/blog') {
+    event.respondWith(
+      fetch(req)
+        .then((response) => {
+          if (response && response.status === 200 && response.type === 'basic') {
+            const clone = response.clone();
+            caches.open(CACHE_NAME).then((c) => c.put(req, clone));
+          }
+          return response;
+        })
+        .catch(() => caches.match(req).then((cached) => cached || caches.match('/offline.html')))
+    );
+    return;
+  }
+
   // 2. Mismo origen: cache-first con network update en background
   event.respondWith(
     caches.match(req).then((cached) => {
@@ -96,7 +112,11 @@ self.addEventListener('fetch', (event) => {
           return response;
         })
         .catch(() => null);
-      return cached || fetchPromise || caches.match('/offline.html');
+      // fetchPromise siempre es una promesa: sin red resuelve a null. Solo una página (navegación)
+      // cae a offline.html; un script, imagen o fetch() recibe un error de red normal, no HTML.
+      return cached || fetchPromise
+        .then((r) => r || (req.mode === 'navigate' ? caches.match('/offline.html') : null))
+        .then((r) => r || Response.error());
     })
   );
 });
